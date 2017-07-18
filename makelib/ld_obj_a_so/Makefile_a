@@ -1,0 +1,26 @@
+
+AR = ar r
+RM = rm -f
+CXX = g++
+CXXFLAGS = -Wall -g -c #-DNDEBUG
+LIB_OBJS = hello.a.o bye.a.o
+LIB_NAME = libhello_bye.a
+
+.PHONY: all
+all: $(LIB_NAME)
+	@echo "build OK!"
+
+.PHONY: clean
+clean:
+	$(RM) $(TARGETS)
+
+.PHONY: distclean
+distclean:
+	$(RM) $(TARGETS) *.o *.a
+
+$(LIB_NAME): $(LIB_OBJS)
+	$(AR) $(LIB_NAME) $(LIB_OBJS)
+
+$(LIB_OBJS):%.a.o: %.cpp
+	$(CXX) -o $@ $(CXXFLAGS) $^
+

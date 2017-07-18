@@ -1,0 +1,37 @@
+1. 只对输入文件执行预处理操作
+$ gcc -E <input file> -o <output preprocessed file>.i
+$ gcc -E -P <input file> -o <output preprocessed file>.i
+[demo]
+$ gcc -E function.c	// 默认输出到标准输出
+$ gcc -E -P function.c // 更简洁的输出方式
+
+2. 将输入文件的源代码转换成对应ASCII的汇编文件
+$ gcc -S <input file> -o <output assembler file>.s
+[demo]
+$ gcc -S -masm=att function.c -o function.s	// 输出AT&T汇编格式
+$ gcc -S -masm=intel function.c -o function.s	// 输出Intel汇编格式
+
+3. 编译输入文件的源代码转换成对应二进制目标文件, ELF格式规范
+$ gcc -c <input file> -o <output file>.o
+[demo]
+$ gcc -c function.c	// 默认输出到function.o
+
+4. 反汇编二进制文件
+$ objdump -D <input file>.o
+$ objdump -D -M intel <input file>.o
+[demo]
+$ objdump -D function.o	// 默认输出AT&T汇编格式
+$ objdump -D -M intel function.o	// 输出Intel汇编格式
+
+5. 链接示例
+[demo1]
+$ gcc -c function.c main.c
+$ gcc function.o main.o -o demoApp
+[demo2]
+$ gcc function.c main.c -o demoApp
+[demo3]
+$ objdump -D -M intel main.o	// 反汇编main.o
+[demo4]
+$ objdump -D -M intel demoApp	// 反汇编main.o
+[demo5]
+$ objdump -x -j .bss demoApp

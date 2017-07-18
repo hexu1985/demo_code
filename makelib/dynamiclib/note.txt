@@ -1,0 +1,4 @@
+1. 创建动态库
+[demo]
+$ gcc -fPIC -c first.c second.c
+$ gcc -shared first.o second.o -o libstaticlib.so

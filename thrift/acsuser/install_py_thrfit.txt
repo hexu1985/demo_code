@@ -1,0 +1,9 @@
+1) easy_install
+# wget http://pypi.python.org/packages/source/s/setuptools/setuptools-0.6c11.tar.gz#md5=7df2a529a074f613b509fb44feefe74e
+# tar xzvf setuptools-0.6c11.tar.gz
+# cd setuptools-0.6c11
+# python setup.py install
+
+2) install thrift
+# sudo easy_install-2.7 thrift
+

@@ -1,0 +1,11 @@
+1) 编译lib
+# cd lib
+# make
+2) 编译test
+# cd test
+# make
+3) 运行test
+# cd test
+# ./test file
+例如test.c
+4) 需要

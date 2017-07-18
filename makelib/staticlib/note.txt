@@ -1,0 +1,4 @@
+1. 创建静态库
+[demo]
+$ gcc -c first.c second.c
+$ ar rcs libstaticlib.a first.o second.o

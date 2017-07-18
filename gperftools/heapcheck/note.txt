@@ -1,0 +1,11 @@
+1) 需要安装gperftools和libunwind和libtcmalloc
+2) 编译: make
+# g++ -o leak leak.cpp -lprofiler -lunwind -ltcmalloc   #tcmalloc放在最后
+3) 运行, 生成leak.heap文件: heapprof.sh ./leak
+# export PPROF_PATH=$(which pprof)
+# env HEAPCHECK=normal LD_PRELOAD="/usr/lib/libtcmalloc.so" ./leak
+4) 显示text结果:
+# pprof --text ./leak "/tmp/leak.1471._main_-end.heap"
+5) 显示pdf结果, 需要提前安装graphviz: ./memleak.sh ./tmp/leak.0001.heap
+# pprof --pdf leak "/tmp/leak.1471._main_-end.heap" > leak.pdf
+

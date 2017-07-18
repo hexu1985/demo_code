@@ -1,0 +1,23 @@
+#include <gtest/gtest.h>
+#include <string>
+
+TEST(StringCmpTest, Demo)
+{
+	const char* pszCoderZh = "CoderZh";
+	const wchar_t* wszCoderZh = L"CoderZh";
+	std::string strCoderZh = "CoderZh";
+	std::wstring wstrCoderZh = L"CoderZh";
+
+	EXPECT_STREQ("CoderZh", pszCoderZh);
+	EXPECT_STREQ(L"CoderZh", wszCoderZh);
+
+	EXPECT_STRNE("CnBlogs", pszCoderZh);
+	EXPECT_STRNE(L"CnBlogs", wszCoderZh);
+
+	EXPECT_STRCASEEQ("coderzh", pszCoderZh);
+
+	//EXPECT_STRCASEEQ(L"coderzh", wszCoderZh); 不支持
+
+	EXPECT_STREQ("CoderZh", strCoderZh.c_str());
+	EXPECT_STREQ(L"CoderZh", wstrCoderZh.c_str());
+}

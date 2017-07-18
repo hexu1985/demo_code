@@ -1,0 +1,5 @@
+/*! \mainpage My test page
+    contents
+    ...
+    more contents
+*/

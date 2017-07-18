@@ -1,0 +1,4 @@
+http://bj.esf.sina.com.cn/house/a7-b13-d50,100-c100,300/ ft-jiaomen
+http://bj.esf.sina.com.cn/house/a7-b20-d50,100-c100,300/ ft-majiapu
+http://bj.esf.sina.com.cn/house/a7-b30-d50,100-c100,300/ ft-youanmen
+http://bj.esf.sina.com.cn/house/a8-b12-d50,100-c100,300/ xw-xuanwumen

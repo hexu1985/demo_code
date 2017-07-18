@@ -1,0 +1,1207 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+
+            <link rel="canonical" href="http://blog.csdn.net/sndaxdrs/article/details/6175615"/> 
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+       
+    <title>boost::pool - 笑对人生的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="&#160;Boost库的pool提供了一个内存池分配器，用于管理在一个独立的、大的分配空间里的动态内存分配。Boost库的pool主要适用于快速分配同样大小的内存块，尤其是反复分配和释放同样大小的内存块的情况。使用pool内存池主要有以下两个优点：1. 能够有效地管理许多小型对象的分配和释放工作，避免了自己去管理内存而产生的内存碎片和效率低下问题。2.&#160; 告别程序内存泄漏的烦恼，pool库会在内部对内存自动进行管理，避免了程序员一不小心而造成的内存泄漏问题。&#160;&#160;&#160;&#160;&#160;pool库主要提供了四种内存池接口，分别是p" />
+
+    <meta name="keywords" content="object,class,string" />
+
+   
+    <script src="http://static.blog.csdn.net/scripts/blog_static_head.min.js" type="text/javascript"></script>
+
+    
+        <!--new top-->
+                      <!--new top-->
+    
+      <!-- ad begin -->
+         
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+
+    
+
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/sndaxdrs/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+
+
+    <link href="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.css" type="text/css" rel="stylesheet" />
+     
+         <link rel="stylesheet" href="http://static.blog.csdn.net/css/csdn_blog_detail.min.css" />
+
+  
+
+
+    <!-- 请置于所有广告位代码之前 --> 
+            <script src="http://dup.baidustatic.com/js/ds.js"></script>
+
+</head>
+
+
+<body>
+        <div class="tracking-ad" data-view="true" data-mod="ad_popu_72"  data-mtp="62" data-order="40" data-con="ad_content_2072" >
+                     <script id="popuLayer_js_q" src="http://ads.csdn.net/js/popuLayer.js" defer="defer"  type="text/javascript"></script>
+                <div id="layerd" style="position: fixed;bottom:0px;right:0px;line-height:0px;z-index:1000">
+    	                <div class="J_close layer_close" style="display:;background-color:#efefef;padding:0px;color:#333;font:12px/24px Helvetica,Tahoma,Arial,sans-serif;text-align:right;">关闭</div><!-- 广告占位容器 --><div id="cpro_u2895327"></div></div>
+                <script>  document.getElementById("popuLayer_js_q").onload = function () { var styObjd = styObj = { width: "300px", "height": parseInt(250) + 28 }; window.CSDN.Layer.PopuLayer("#layerd", { storageName: "layerd", styleObj: styObjd, total: 50, expoire: 1000 * 60 }); }</script><!-- 投放代码 --><script type="text/javascript">                /*服务器频道首页置顶Banner960*90，创建于2014-7-3*/    (window.cproArray = window.cproArray || []).push({ id: "u2895327" });  </script>  <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+     
+        </div>
+
+    <!-- 广告位开始 -->
+        
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/sndaxdrs">笑对人生的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/sndaxdrs?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/sndaxdrs?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/sndaxdrs/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "sndaxdrs";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/sndaxdrs";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://bss.csdn.net/cview/reg/?project_id=3560&identy_id=1855">
+<font color=red><strong>福利 | 百度 AI 开发者大会免费门票领取</strong></font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/73840694">
+<font color=blue><strong>CSDN日报20170628——《实习，背后的选择？》</strong></font></a>
+&nbsp;&nbsp;&nbsp;&nbsp
+
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/426?ref=blog&loc=r0">
+<font color=red><strong>【直播】探究Linux的总线、设备、驱动模型！</strong></font></a>
+
+
+</div>                        </div>
+
+                        
+
+
+
+  
+
+
+
+
+
+
+<script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+      var isBole = false; 
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=boost%3a%3apool&u=http://blog.csdn.net/sndaxdrs/article/details/6175615"
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+    <h1>
+        <span class="link_title"><a href="/sndaxdrs/article/details/6175615">
+        boost::pool        
+           
+        </a>
+        </span>
+
+         
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/object' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">object</a><a href='http://www.csdn.net/tag/class' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">class</a><a href='http://www.csdn.net/tag/string' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">string</a><a href='http://www.csdn.net/tag/struct' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">struct</a><a href='http://www.csdn.net/tag/%e6%89%a9%e5%b1%95' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">扩展</a><a href='http://www.csdn.net/tag/%e6%b5%8b%e8%af%95' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">测试</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2011-02-09 15:45</span>
+            <span class="link_view" title="阅读次数">15907人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('boost%3a%3apool','6175615');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(6175615,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+
+<div id="article_content" class="article_content tracking-ad" data-mod=popu_307  data-dsm = "post" >
+<p>&nbsp;</p>
+<p class="MsoNormal"><span lang="EN-US">&nbsp;Boost</span>库的<span lang="EN-US">pool</span>提供了一个内存池分配器，用于管理在一个独立的、大的分配空间里的动态内存分配。<span lang="EN-US">Boost</span>库的<span lang="EN-US">pool</span>主要适用于快速分配同样大小的内存块，尤其是反复分配和释放同样大小的内存块的情况。使用<span lang="EN-US">pool</span>内存池主要有以下两个优点：</p>
+<p class="MsoNormal">　　<span lang="EN-US">1. </span>能够有效地管理许多小型对象的分配和释放工作，避免了自己去管理内存而产生的内存碎片和效率低下问题。</p>
+<p class="MsoNormal">　　<span lang="EN-US">2.&nbsp; </span>告别程序内存泄漏的烦恼，<span lang="EN-US">pool</span>库会在内部对内存自动进行管理，避免了程序员一不小心而造成的内存泄漏问题。</p>
+<p class="MsoNormal"><span lang="EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+pool</span>库主要提供了四种内存池接口，分别是<span lang="EN-US">pool</span>、<span lang="EN-US">object_pool</span>、<span lang="EN-US">singleton_pool</span>和<span lang="EN-US">pool_allocator</span>（<span lang="EN-US">fast_pool_allocator</span>）。</p>
+<p class="MsoNormal">&nbsp;</p>
+<p><strong>1. &nbsp; pool</strong></p>
+<p><strong><br /></strong></p>
+<p><span style="white-space: pre;">	</span>pool是最简单也最容易使用的内存池类，可以返回一个简单数据类型（POD） 
+的内存指针。它</p>
+<p><span style="white-space: pre;">	</span>pool很容易使用，可以像C中的malloc()一样分配内存，然后随意使用。除非有特殊要求，否则不必对分配的内存调用free()释放，pool会很好地管理内存。例如：</p>
+<p><textarea cols="50" rows="15" name="code" class="cpp">#include &lt;boost/pool/pool.hpp&gt;  
+using namespace boost;  
+int main()  
+{      
+	pool&lt;&gt; pl(sizeof(int));             //一个可分配int的内存池       
+	int *p = (int *)pl.malloc();        //必须把void*转换成需要的类型      
+	assert(pl.is_from(p));       
+	pl.free(p);                         //释放内存池分配的内存块      
+	for (int i = 0;i &lt; 100; ++i)        //连续分配大量的内存      
+	{   
+		pl.ordered_malloc(10);  
+	}  
+} </textarea>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>2. &nbsp;object_pool</strong></p>
+<p>&nbsp;</p>
+<p><strong><span style="white-space: pre;">	</span></strong>object_pool是用于类实例（对象）的内存池，它的功能与pool类似，但会在析构时对所有已经分配的内存块调用析构函数，从而正确地释放资源。</p>
+<p>&nbsp;</p>
+<p><span style="white-space: pre;">	</span>malloc()和free()函数分别分配和释放一块类型为ElementType*的内存块，同样，可以用is_from()来测试内存块的归属，只有是本内存池分配的内存才能被free()释放。但它们被调用时并不调用类的构造函数和析构函数，也就是说操作的是一块原始内存块，里面的值是未定义的，因此我们应当尽量少使用malloc()和free()。</p>
+<p><span style="white-space: pre;">	</span>object_pool的特殊之处是construct()和destroy()函数，这两个函数是object_ 
+pool的真正价值所在。construct()实际上是一组函数，有多个参数的重载形式（目前最多支持3个参数，但可以扩展），它先调用malloc()分配内存，然后再在内存块上使用传入的参数调用类的构造函数，返回的是一个已经初始化的对象指针。destory()则先调用对象的析构函数，然后再用free()释放内存块。</p>
+<p>这些函数都不会抛出异常，如果内存分配失败，将返回0。</p>
+<p>&nbsp;</p>
+<p><span style="white-space: pre;">	</span>object_pool的用法也是很简单，我们既可以像pool那样分配原始内存块，也可以使用construct()来直接在内存池中创建对象。当然，后一种使用方法是最方便的，也是本书所推荐的。</p>
+<p>&nbsp;</p>
+<p>下面的代码示范了object_pool的用法：</p>
+<p><textarea cols="50" rows="15" name="code" class="cpp">#include &lt;boost/pool/object_pool.hpp&gt; 
+using namespace boost;  
+struct demo_class                           //一个示范用的类  
+{  
+public:      
+	int a,b,c;      
+	demo_class(int x = 1, int y = 2, int z = 3):a(x),b(y),c(z){}  
+};  
+int main()  
+{      
+	object_pool&lt;demo_class&gt; pl;             //对象内存池       
+	demo_class *p = pl.malloc();            //分配一个原始内存块      
+	assert(pl.is_from(p));       //p指向的内存未经过初始化      
+	assert(p-&gt;a!=1 || p-&gt;b != 2 || p-&gt;c !=3);       
+	p = pl.construct(7, 8, 9);              //构造一个对象,可以传递参数      
+	assert(p-&gt;a == 7);       
+	object_pool&lt;string&gt; pls;                //定义一个分配string对象的内存池      
+	for (int i = 0; i &lt; 10 ; ++i)           //连续分配大量string对象      
+	{          
+		string *ps = pls.construct("hello object_pool");          
+		cout &lt;&lt; *ps &lt;&lt; endl;      
+	}  
+}                                           //所有创建的对象在这里都被正确析构、释放内存 </textarea>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>3. &nbsp; singleton_pool</strong></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="white-space:pre">	</span>singleton_pool与pool的接口完全一致，可以分配简单数据类型（POD）的内存指针，但它是一个单件，并提供线程安全。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="white-space:pre">	</span>singleton_pool主要有两个模板类型参数（其余的可以使用缺省值）。第一个Tag仅仅是用于标记不同的单件，可以是空类，甚至是声明（这个用法还被用于boost.exception，参见4.9小节，136页）。第二个参数RequestedSize等同于pool构造函数中的整数requested_ 
+size，指示pool分配内存块的大小。</p>
+<p><span style="white-space:pre">	</span><span style="font-family: mceinline;"><strong>singleton_pool的接口与pool完全一致，但成员函数均是静态的，因此不需要声明singleton_pool的实例 
+，直接用域操作符::来调用静态成员函数。因为singleton_pool是单件，所以它的生命周期与整个程序同样长，除非手动调用release_memory()或purge_memory()，否则singleton_pool不会自动释放所占用的内存</strong></span><strong>。除了这两点，singleton_pool的用法与pool完全相同。</strong></p>
+<p>下面的代码示范了singleton_pool的用法：</p>
+<p><textarea cols="50" rows="15" name="code" class="cpp">#include &lt;boost/pool/singleton_pool.hpp&gt;  
+using namespace boost;  
+struct pool_tag{};                                  //仅仅用于标记的空类  
+typedef singleton_pool&lt;pool_tag, sizeof(int)&gt; spl;  //内存池定义  
+int main()  
+{      
+	int *p = (int *)spl::malloc();                      //分配一个整数内存块      
+	assert(spl::is_from(p));      
+	spl::release_memory();                              //释放所有未被分配的内存  
+}                                                       //spl的内存直到程序结束才完 </textarea>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>singleton_pool在使用时最好使用typedef来简化名称，否则会使得类型名过于冗长而难以使用。如代码中所示:</p>
+<p><textarea cols="50" rows="15" name="code" class="cpp">typedef singleton_pool&lt;pool_tag, sizeof(int)&gt; spl; </textarea>&nbsp;</p>
+<p>用于标记的类pool_tag可以再进行简化，直接在模板参数列表中声明tag类，这样可以在一条语句中完成对singleton_pool的类型定义，例如：</p>
+<p>&nbsp;</p>
+<p><textarea cols="50" rows="15" name="code" class="cpp">typedef singleton_pool&lt;struct pool_tag, sizeof(int)&gt; spl; </textarea>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   
+
+<!--172.16.140.13-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+
+
+ 
+
+
+        <div id="digg" ArticleId="6175615" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>1</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/sndaxdrs/article/details/6175560';">上一篇</span><a href="/sndaxdrs/article/details/6175560" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">最快速度找到内存泄漏</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/sndaxdrs/article/details/6175701';">下一篇</span><a href="/sndaxdrs/article/details/6175701" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">shared_ptr </a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+            <div class="similar_article"   >
+                    <h4></h4>
+                    <div class="similar_c"style="margin:20px 0px 0px 0px">
+                        <div class="similar_c_t">
+                          &nbsp;&nbsp;相关文章推荐
+                        </div>
+                   
+                        <div class="similar_wrap tracking-ad" data-mod="popu_36" >                       
+                            <ul class="similar_list fl">    
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/lqk1985/article/details/3159148" title=" boost pool 内存池" strategy="BlogCommendFromCsdn" target="_blank"> boost pool 内存池</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://xwk.iteye.com/blog/2138555" title="C++内存管理变革(4)：boost::object_pool与gc allocator" strategy="BlogCommendFromCsdn" target="_blank">C++内存管理变革(4)：boost::object_pool与gc allocator</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/magiclyj/article/details/73457909" title="关于boost库里的内存池pool" strategy="BlogCommendFromCsdn" target="_blank">关于boost库里的内存池pool</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://javasogo.iteye.com/blog/1062157" title="定长内存池之BOOST::pool" strategy="BlogCommendFromCsdn" target="_blank">定长内存池之BOOST::pool</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/yshuise/article/details/4052096" title="Boost::pool(笔记)" strategy="BlogCommendFromCsdn" target="_blank">Boost::pool(笔记)</a>
+                                   </li>
+                            </ul>
+                              <ul class="similar_list fr">      
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://xwk.iteye.com/blog/2138504" title="boost::pool与内存池技术" strategy="BlogCommendFromCsdn" target="_blank">boost::pool与内存池技术</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/zyyoung/article/details/6120375" title="boost pool 集中展示" strategy="BlogCommendFromCsdn" target="_blank">boost pool 集中展示</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/a345252622/article/details/43792659" title="实现boost::obj_pool，大神请绕道" strategy="BlogCommendFromCsdn" target="_blank">实现boost::obj_pool，大神请绕道</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://yangzhiyong77.iteye.com/blog/1414871" title="Boost程序库完全开发指南:深入C++“准”标准库" strategy="BlogCommendFromCsdn" target="_blank">Boost程序库完全开发指南:深入C++“准”标准库</a>
+                                   </li>
+                                   <li>
+                                       <em>•</em>
+                                       <a href="http://blog.csdn.net/wxwd1/article/details/37941105" title="初探boost之pool库学习笔记" strategy="BlogCommendFromCsdn" target="_blank">初探boost之pool库学习笔记</a>
+                                   </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>   
+      
+</div>
+
+    <div>
+        
+
+        <script type="text/javascript">
+            /*博客内容页下方Banner1-728*90，创建于2016-12-13*/
+            var cpro_id = "u2843949";
+        </script>
+        <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+
+     </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/sndaxdrs/svc/GetSuggestContent/6175615",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+ 
+
+ 
+
+<dl class="blog-ass-articl tracking-ad" id="res-relatived" data-mod="popu_84"  > 
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+    
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/detail/422?ref=blog&amp;loc=r1" title="深度学习基础与TensorFlow实践" strategy="undefined" target="_blank">深度学习基础与TensorFlow实践</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/series_detail/43?ref=blog&amp;loc=r1" title="【在线峰会】前端开发重点难点技术剖析与创新实践" strategy="undefined" target="_blank">【在线峰会】前端开发重点难点技术剖析与创新实践</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/series_detail/42?ref=blog&amp;loc=r1" title="【在线峰会】一天掌握物联网全栈开发之道" strategy="undefined" target="_blank">【在线峰会】一天掌握物联网全栈开发之道</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/series_detail/41?ref=blog&amp;loc=r1" title="【在线峰会】如何高质高效的进行Android技术开发" strategy="undefined" target="_blank">【在线峰会】如何高质高效的进行Android技术开发</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/detail/404?ref=blog&amp;loc=r1" title="机器学习40天精英计划" strategy="undefined" target="_blank">机器学习40天精英计划</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/huiyiCourse/detail/402?ref=blog&amp;loc=r1" title="Python数据挖掘与分析速成班" strategy="undefined" target="_blank">Python数据挖掘与分析速成班</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/course/detail/3011?ref=blog&amp;loc=r1" title="微信小程序开发实战" strategy="undefined" target="_blank">微信小程序开发实战</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/course/detail/1968?ref=blog&amp;loc=r1" title="JFinal极速开发企业实战" strategy="undefined" target="_blank">JFinal极速开发企业实战</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/combo/detail/23?ref=blog&amp;loc=r1" title="备战2017软考 系统集成项目管理工程师 学习套餐" strategy="undefined" target="_blank">备战2017软考 系统集成项目管理工程师 学习套餐</a>
+                </dd>
+                <dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px; white-space: nowrap;">
+                     <a href="http://edu.csdn.net/course/detail/3338?ref=blog&amp;loc=r1" title="Python大型网络爬虫项目开发实战（全套）" strategy="undefined" target="_blank">Python大型网络爬虫项目开发实战（全套）</a>
+                </dd>
+
+    
+
+    
+   
+</dl>
+
+
+
+
+
+    <div id="ad_cen">        
+                <div>
+                              <script type="text/javascript">
+                                  /*博客内容页下方Banner-728*90，创建于2014-7-3*/
+                                  var cpro_id = "u1607657";
+                                            </script>
+                              <script type="text/javascript" src="http://cpro.baidustatic.com/cpro/ui/c.js"></script>
+                    </div>
+    </div>  
+
+        <!-- 广告位开始 -->
+        <!-- 广告位结束 -->
+
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '6175615';
+    var commentscount = 0;
+    var islock = false
+</script>
+
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){        
+        
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+    var articletitle='boost::pool';
+
+</script>
+
+
+
+
+
+
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/sndaxdrs" target="_blank">
+    <img src="http://avatar.csdn.net/E/D/1/1_sndaxdrs.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/sndaxdrs" class="user_name" target="_blank">sndaxdrs</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=sndaxdrs','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>138557次</span></li>
+    <li>积分：<span>875</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog3.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：875 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>8篇</span></li>
+    <li>转载：<span>12篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>16条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body" class="form_search">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search csdn-tracking-statistics" target="_blank"  data-mod="popu_306">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+   
+    $(function () {
+        $("#btnSubmit").unbind("click");
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {           
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            if ($("#inputSearch").val() == "") {               
+                alert("请录入搜索关键词！");                         
+                return false;
+            }
+            //var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";           
+            var url = "https://www.baidu.com/s?wd=" + encodeURIComponent($("#inputSearch").val()) + "%20site%3Ablog.csdn.net"
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/sndaxdrs/article/month/2011/06">2011年06月</a><span>(4)</span></li><li><a href="/sndaxdrs/article/month/2011/04">2011年04月</a><span>(2)</span></li><li><a href="/sndaxdrs/article/month/2011/03">2011年03月</a><span>(2)</span></li><li><a href="/sndaxdrs/article/month/2011/02">2011年02月</a><span>(12)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/sndaxdrs/article/details/6175701" title="shared_ptr ">shared_ptr </a><span>(58103)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6230999" title="lua与c++的相互调用">lua与c++的相互调用</a><span>(40031)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6175615" title="boost::pool">boost::pool</a><span>(15899)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6337846" title="[DENETLTB][ConnectionOpen(Connect()).]SQL Server不存在或拒绝访问 ">[DENETLTB][ConnectionOpen(Connect()).]SQL Server不存在或拒绝访问 </a><span>(2638)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6252685" title="ANSI字符集和Unicode字符集">ANSI字符集和Unicode字符集</a><span>(2118)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6176453" title="【读书笔记】当析构函数遇到多线程 ── C++中线程安全的对象回调  ">【读书笔记】当析构函数遇到多线程 ── C++中线程安全的对象回调  </a><span>(1958)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6175560" title="最快速度找到内存泄漏">最快速度找到内存泄漏</a><span>(1828)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6183472" title="继承和组合的比较">继承和组合的比较</a><span>(1725)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6176599" title="bridge模式">bridge模式</a><span>(1722)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6179133" title="Factory模式和AbstractFactory模式">Factory模式和AbstractFactory模式</a><span>(1373)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/sndaxdrs/article/details/6175701" title="shared_ptr ">shared_ptr </a><span>(9)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6230999" title="lua与c++的相互调用">lua与c++的相互调用</a><span>(7)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6179368" title="C/C++编译过程 ">C/C++编译过程 </a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6179264" title="Observer模式">Observer模式</a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6179133" title="Factory模式和AbstractFactory模式">Factory模式和AbstractFactory模式</a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6176599" title="bridge模式">bridge模式</a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6176453" title="【读书笔记】当析构函数遇到多线程 ── C++中线程安全的对象回调  ">【读书笔记】当析构函数遇到多线程 ── C++中线程安全的对象回调  </a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6175615" title="boost::pool">boost::pool</a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6175560" title="最快速度找到内存泄漏">最快速度找到内存泄漏</a><span>(0)</span>
+</li>
+<li>
+<a href="/sndaxdrs/article/details/6541401" title=" VC内存泄漏检测工具_Visual Leak Detector"> VC内存泄漏检测工具_Visual Leak Detector</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/blogdevteam/article/details/73840694" target="_blank">* CSDN日报20170628——《实习，背后的选择？》</a></li>
+<li><a href="http://blog.csdn.net/pistolove/article/details/73610588" 
+target="_blank">* 【Java高级开发工程师】近一个月的面试总结</a></li>
+<li><a href="http://blog.csdn.net/reboot123/article/details/73266776"target="_blank">* 一个文科生的工程师之路</a></li>
+<li><a href="http://blog.csdn.net/lqw_student/article/details/73646768" 
+target="_blank">* JavaWeb 与 MySQL 人鬼情未了</a></li>
+<li><a href="http://blog.csdn.net/totond/article/details/73648103" 
+target="_blank">* PermissionsDispatcher、RxPermissions和easypermissions的使用和对比</a></li>
+<li><a href="http://blog.csdn.net/broadview2006/article/details/73550412" 
+target="_blank">* 每周荐书：架构、Scratch、增长黑客（评论送书）</a></li>
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6175701#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/qq_36336522" class="user_name">qq_36336522</a>:
+很有帮助
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6175701#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/ty735195006" class="user_name">ty735195006</a>:
+C++11引入了shared_ptr unique_ptr weak_ptr 比boost下的智能指...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">lua与c++的相互调用</a>
+    <p style="margin:0px;"><a href="/hemengsi123" class="user_name">hemengsi123</a>:
+很清晰，谢谢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/MAYONGJIAN2009" class="user_name">MAYONGJIAN2009</a>:
+请问一下，语义拷贝是不是深拷贝啊
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/blueboy0722" class="user_name">blueboy0722</a>:
+@u012232386:按我自己的理解，第一段中的指针是指智能指针，而第二段中的指针则是指原始指针
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/u012232386" class="user_name">u012232386</a>:
+另一种用法是将shared_ptr作为容器的元素，如vector&lt;shared_ptr &gt;，因为sh...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">lua与c++的相互调用</a>
+    <p style="margin:0px;"><a href="/yaoyue1019" class="user_name">yaoyue1019</a>:
+有没有可能存在这样的情况在其他地方 往堆栈里压入了一个或多个的值 但是一直没处理掉而此时你在取出堆栈...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">shared_ptr </a>
+    <p style="margin:0px;"><a href="/HXQ_88888888" class="user_name">HXQ_88888888</a>:
+为什么讲的时候都用INT，不用一个类类型呢？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">lua与c++的相互调用</a>
+    <p style="margin:0px;"><a href="/tingyux" class="user_name">tingyux</a>:
+很好很强大！！已吸收
+    </p>
+    </li>
+    <li>
+   
+         <a href="/sndaxdrs/article/details/6230999#comments">lua与c++的相互调用</a>
+    <p style="margin:0px;"><a href="/mumuqingwei" class="user_name">mumuqingwei</a>:
+正好需要，感谢总结
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 -->                    <!-- 广告位结束 -->
+                   <div class="tracking-ad" data-view="true"  data-mtp="63" data-order="40" data-con="ad_content_1260" style="width: 200px; height: 200px;">
+                         <div id="nav_show_top_stop" style="width: 200px;height: 200px;z-index:1000"><div id="cpro_u2734128"></div></div>
+                   </div>
+    <script type="text/javascript">    
+        setTimeout(function () {
+            var naviga_offsetTop = 0;
+            function naviga_stay_top() { var scrollTop = jQuery(document).scrollTop(); if (scrollTop > naviga_offsetTop) { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": "0px" }); } else { jQuery("#nav_show_top_stop").css({ "position": "fixed" }); jQuery("#nav_show_top_stop").css({ "top": naviga_offsetTop - scrollTop + "px" }); } }
+            function onload_function() { naviga_offsetTop = jQuery("#nav_show_top_stop").position().top; jQuery(window).bind("scroll", naviga_stay_top); jQuery(window).bind("mousewheel", naviga_stay_top); jQuery(document).bind("scroll", naviga_stay_top); jQuery(document).bind("mousewheel", naviga_stay_top); } jQuery(document).ready(onload_function);
+               
+        }, 200);    
+    </script>
+<script type="text/javascript">(window.cproArray = window.cproArray || []).push({ id: "u2734128" });  </script> 
+                    <script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script> 
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+
+
+
+
+
+
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+
+     
+
+   
+        <!--new top-->
+   
+   
+
+    
+    
+    
+   
+
+   
+
+
+       <script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+          <script type="text/javascript">
+              //$(function () {
+              //    setTimeout(function () {
+              //        var searchtitletags = articletitle + ',' + $("#tags").html();
+              //        searchService({
+              //            index: 'blog',
+              //            query: searchtitletags,
+              //            from: 5,
+              //            size: 5,
+              //            appendTo: '#res',
+              //            url: 'recommend',
+              //            his: 2,
+              //            client: "blog_cf_enhance",
+              //            tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+              //        });
+              //    }, 1000);
+              //});
+
+         </script>
+    
+    <script src="http://static.blog.csdn.net/scripts/csdn_blog_detail.min.js" type="text/javascript"></script>
+        
+    <script type="text/javascript" src="http://c.csdnimg.cn/blog/csdn_public_blog_detail.min.js?20170626001"></script>
+
+    <script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1019990"></script>
+
+     
+    
+
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    
+    
+        
+     
+
+    
+          
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+    </div>
+
+
+        <script type="text/javascript">
+
+            $(function () {
+                var fromjs = $("#fromjs");
+                if (fromjs.length > 0) {
+                    $("#fromjs .markdown_views pre").addClass("prettyprint");
+                    prettyPrint();
+
+                    $('pre.prettyprint code').each(function () {
+                        var lines = $(this).text().split('\n').length;
+                        var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+                        $(this).addClass('has-numbering').parent().append($numbering);
+                        for (i = 1; i <= lines; i++) {
+                            $numbering.append($('<li/>').text(i));
+                        };
+                        $numbering.fadeIn(1700);
+                    });
+
+                    $('.pre-numbering li').css("color", "#999");
+                }
+            });
+           
+            $(".markdown_views a[target!='_blank']").attr("target", "_blank");
+
+            //$(".toc a[target='_blank']").attr("target", "");
+
+            setTimeout(function () {
+                $(".toc a[target='_blank']").attr("target", "");
+            },500);
+
+        </script>
+
+</body>
+</html>   
+ 

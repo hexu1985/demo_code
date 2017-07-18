@@ -1,0 +1,9 @@
+1) 下载并解压nginx-1.13.0
+2) 将upstream_check/目录复制到nginx-1.13.0/src/stream/目录下
+3) 将stream.conf复制到nginx-1.13.0/conf目录下
+4) 在nginx-1.13.0/conf/nginx.conf后面追加include stream.conf;
+5) 将bootstrap.sh复制到nginx-1.13.0/目录下
+6) 将stream_check_1.13.0.patch复制到nginx-1.13.0/目录下, 并在nginx-1.13.0/目录下执行patch -p2 < stream_check_1.13.0.patch
+7) 在nginx-1.13.0/目录下执行./objs/nginx -p .启动nginx
+8) 测试方法参考udp_load_balance和http_health_check
+9) upstream server上下限日志在error.log中, 前提是打开error配置

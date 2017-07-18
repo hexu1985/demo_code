@@ -1,0 +1,7 @@
+# 为nginx的stream模块增加一个叫front4bytes的变量，取TCP/UDP报文数据的前4个字节的内容
+1) 将ngx_stream_variable.c追加到nginx的src/ngx_stream_variable.c中
+2) 将stream.conf复制到nginx的conf目录下, 将nginx.conf中内容追加到nginx的conf/nginx.conf, 重新加载nginx配置文件
+3) 重新编译并运行nginx
+# ./configure --with-stream --with-debug && make
+4) 用udp_load_balance的测试方法测试
+5) 查看nignx的logs/stream.log

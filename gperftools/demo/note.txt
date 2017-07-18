@@ -1,0 +1,9 @@
+1) 需要安装gperftools和libunwind
+2) 编译:
+# g++ -o demo demo.cpp -lprofiler -lunwind
+3) 运行, 生成demo.prof文件
+# ./demo
+4) 显示text结果:
+# pprof --text demo demo.prof
+5) 显示pdf结果, 需要提前安装graphviz
+# pprof --pdf demo demo.prof > demo.pdf

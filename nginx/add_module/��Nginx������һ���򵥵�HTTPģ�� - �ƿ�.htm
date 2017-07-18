@@ -1,0 +1,807 @@
+<!DOCTYPE HTML>
+
+<!--
+ ______________ 
+< TUICOOL.COM >
+ -------------- 
+        \   ^__^
+         \  (**)\__$__$__
+            (__)\       )\/\
+             U  ||------|
+                ||     ||
+-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="authenticity_token" name="csrf-param" />
+<meta content="vLTDv8oq5Q1dlRJ6RW7aY1gQTElbG+bCZL7Q8N2RvDw=" name="csrf-token" />
+    <title>
+            【Nginx】开发一个简单的HTTP模块 - 推酷
+   </title>
+    <meta name="description" content="【Nginx】开发一个简单的HTTP模块"/>
+  <link rel="shortcut icon" href="http://static0.tuicool.com/favicon.ico" type="image/x-icon" />
+  <link href="http://static0.tuicool.com/images/icon114.png" rel="Bookmark" />
+  <link rel="apple-touch-icon" sizes="57x57" href="http://static1.tuicool.com/images/icon57.png" /> 
+  <link rel="apple-touch-icon" sizes="72x72" href="http://static2.tuicool.com/images/icon72.png" />  
+  <link rel="apple-touch-icon" sizes="114x114" href="http://static0.tuicool.com/images/icon114.png" />    
+  <link rel="apple-touch-icon" sizes="144x144" href="http://static1.tuicool.com/images/icon144.png"/>
+  <link href="http://asset.tuicool.com/assets/pub.css" rel="stylesheet">
+  <link href="http://asset.tuicool.com/assets/application-e90ef7ce56579081ef4f956c640f005f.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="http://static0.tuicool.com/assets/font-awesome.min.css" rel="stylesheet">
+  <script type="text/javascript" src="http://asset.tuicool.com/assets/pub.js"></script>
+  <script src="http://asset.tuicool.com/assets/application-f8dd22e38da72b470d036c6151afa4cc.js" type="text/javascript"></script>
+  
+      <style type="text/css">
+      .btn-large {
+        padding: 0;
+      }
+      .load-fail {
+        display: none;
+      }
+    </style>
+
+</head>
+<body>
+  
+  <div id="header" class="navbar-fixed-top">
+    <div class="container">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> 
+            <span class="icon-bar"></span> 
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span> 
+          </a>
+          <a href="http://www.tuicool.com/" class="brand">推酷</a>        
+        <nav class="nav-collapse collapse">
+            <ul class="nav navbar primary-nav">                            
+              <li class="active">
+                <a href="http://www.tuicool.com/ah">
+                  文章
+                </a>
+              </li>              
+              <li class="">
+                <a href="http://www.tuicool.com/sites/hot">
+                  站点
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/topics">
+                  主题
+                </a>
+              </li>
+              <li class="">
+                <a href="http://huodong.tuicool.com/">
+                  活动
+                </a>
+              </li>
+              <li class="">
+                <a href="http://www.tuicool.com/mobile">
+                  APP
+                    <sup style="font-size:0.8em;color: #16A085;">荐</sup>
+                </a>
+              </li>
+              <li class="dropdown  ">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">周刊 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://www.tuicool.com/mags">编程狂人</a></li>
+                  <li><a href="http://www.tuicool.com/mags/design">设计匠艺</a></li> 
+                  <li><a href="http://www.tuicool.com/mags/startup">创业周刊</a></li> 
+                  <li><a href="http://www.tuicool.com/mags/tech">科技周刊</a></li>      
+                  <li><a href="http://www.tuicool.com/articles/weekly">一周拾遗</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">更多 <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="http://course.tuicool.com/">
+                    公开课
+                  </a>
+                  </li>
+                  <li><a href="http://www.tuicool.com/daily_news">今日酷闻</a></li>
+                  <li><a href="http://www.tuicool.com/bbs/go/issues">意见反馈</a></li>
+                </ul>
+              </li>
+              </ul>
+            <form class="navbar-search pull-left" action="http://www.tuicool.com/search">
+              <input type="text" class="search-query span2" name="kw" placeholder="搜索">
+            </form>
+            <ul class="nav pull-right">
+                <li><a href="http://www.tuicool.com/login">登录</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+  </div>   
+</div>
+  <div id ="flash_container" class="noPrint">    
+  </div>
+  
+  <div class="container-fluid">  
+      
+<div class="row-fluid article_row_fluid">
+    <div class="span8 contant article_detail_bg">
+        <h1>【Nginx】开发一个简单的HTTP模块</h1>
+        <div class="article_meta">
+            <div style="margin-bottom: 5px;">
+            <span class="timestamp">时间&nbsp;2014-06-17 21:56:07
+            </span>
+            <span class="from">
+                <i class="icon-globe"></i>
+                    <a class="cut cut28 from" href="/sites/vQZRB3" target="_blank">CSDN博客
+                    </a>
+            </span>
+            </div>
+            <div class="source">
+                <i style="float:left;">原文</i>&nbsp; 
+                <a class="cut cut70" href="http://blog.csdn.net/nestler/article/details/31825335?utm_source=tuicool&amp;utm_medium=referral" style="display:inline-block;">http://blog.csdn.net/nestler/article/details/31825335</a>
+            </div>
+            <div>
+                <span>主题</span>
+                <a href="/topics/11090010" target='_blank' >
+                    <span class="new-label">HTTP</span>
+                </a>
+                <a href="/topics/11090014" target='_blank' >
+                    <span class="new-label">Nginx</span>
+                </a>
+            </div>
+        </div>
+        <div class="article_body" id="nei">
+            <div>
+  <p>首先来分析一下HTTP模块是如何介入Nginx的。</p>
+  <div>
+    <br/>
+  </div>
+  <p>
+    <span>当master进程fork出若干个workr子进程后，每个worker子进程都会在自己的for死循环中不断调用事件模块：</span>
+  </p>
+  <pre class="prettyprint">for ( ;; ) {
+        ....
+        ngx_process_events_and_timers(cycle);   /* 调用事件模块 */
+        ....
+    }</pre>
+  <p>事件模块检测是否有TCP连接请求，当收到一个SYN包后，由事件模块建立一条TCP连接。连接建立成功后，交由HTTP框架处理，HTTP框架负责接收HTTP头部，并根据头部信息将HTTP请求分发到不同的HTTP模块。最常见的分发策略就是根据HTTP头部的URI和配置文件nginx.conf里的location配置项的匹配度来决定如何分发。假设配置文件中有如下配置块：</p>
+  <div>
+    <pre class="prettyprint">location /name {
+    test;
+}</pre>
+  </div>
+  <p>并假设服务器域名为www.nestle.com。那么，当客户端发来的URL请求为“www.nestle.com/name”时，HTTP框架就会根据配置文件调用test模块，将这个HTTP请求交给test模块处理。</p>
+  <div>
+    <br/>
+  </div>
+  <p>HTTP模块在处理完请求后，会自动依次调用HTTP过滤模块对准备返回的响应信息做预处理，比如是否压缩。以下是HTTP模块调用的大致流程图：</p>
+  <div>
+    <img src="http://img2.tuicool.com/i2UFV3.jpg!web" alt="" />
+  </div>
+  <div>
+    <br/>
+  </div>
+  <div>
+    <div>
+      <p>下面开始讲解如何定义一个HTTP模块。</p>
+      <div>
+        <br/>
+      </div>
+      <p>凡是模块，都需要一个模块结构体，这个结构体是ngx_module_t，它的定义如下：</p>
+      <div>
+        <pre class="prettyprint">struct ngx_module_s {
+	ngx_uint_t			ctx_index;	/* 当前模块在同类模块中的序号 */
+	ngx_uint_t			index;		/* 当前模块在ngx_modules数组中的序号 */
+ 
+	ngx_uint_t			spare0;	   /* 保留 */
+	ngx_uint_t			spare1;	   /* 保留 */
+	ngx_uint_t			spare2;	   /* 保留 */
+	ngx_uint_t			spare3;	   /* 保留 */
+ 
+	ngx_uint_t			version;	  /* 模块版本，目前为1 */
+ 
+	void				 *ctx;		  /* 指向特定类型模块的公共接口 */
+	ngx_command_t		*commands;	 /* 用于处理配置文件nginx.conf中的配置项 */
+	ngx_uint_t			type;		 /* 当前模块类型 */
+ 
+	/* 以下7个函数指针表示7个执行点，这些执行点将在Nginx启动和退出过程中被调用
+	 * 如果不需要则设置为NULL
+	 */
+	ngx_int_t		   (*init_master)(ngx_log_t *log);	 /* 从未被调用，设为NULL */
+ 
+	ngx_int_t		   (*init_module)(ngx_cycle_t *cycle); /* 启动worker子进程前调用 */
+ 
+	ngx_int_t		   (*init_process)(ngx_cycle_t *cycle);/* 启动worker子进程后调用 */
+	ngx_int_t		   (*init_thread)(ngx_cycle_t *cycle); /* 从未被调用，设为NULL */
+	void				(*exit_thread)(ngx_cycle_t *cycle); /* 从未被调用，设为NULL */
+	void				(*exit_process)(ngx_cycle_t *cycle);/* worker子进程推出前调用 */
+ 
+	void				(*exit_master)(ngx_cycle_t *cycle); /* master进程退出前调用 */
+ 
+	/* 以下全为保留字段 */
+	uintptr_t			 spare_hook0;
+	uintptr_t			 spare_hook1;
+	uintptr_t			 spare_hook2;
+	uintptr_t			 spare_hook3;
+	uintptr_t			 spare_hook4;
+	uintptr_t			 spare_hook5;
+	uintptr_t			 spare_hook6;
+	uintptr_t			 spare_hook7;
+};</pre>
+      </div>
+      <p>HTTP模块的type字段必须设置为NGX_HTTP_MODULE，以表明此模块为HTTP模块。</p>
+      <div>
+        <br/>
+      </div>
+      <p>HTTP模块的ctx指针必须指向ngx_http_module_t结构体，它表示HTTP模块所定义的通用接口，结构体定义如下：</p>
+      <div>
+        <pre class="prettyprint">typedef struct {
+	ngx_int_t   (*preconfiguration)(ngx_conf_t *cf);	// 解析配置文件前调用
+	ngx_int_t   (*postconfiguration)(ngx_conf_t *cf);   // 解析完配置文件后调用
+ 
+	void	   *(*create_main_conf)(ngx_conf_t *cf);	// 创建存储直属于http{}的配置项的结构体
+	char	   *(*init_main_conf)(ngx_conf_t *cf, void *conf);  // 初始化main级别配置项
+ 
+	void	   *(*create_srv_conf)(ngx_conf_t *cf);	 // 创建存储直属于srv{}的配置项的结构体
+	char	   *(*merge_srv_conf)(ngx_conf_t *cf, void *prev, void *conf);  // 合并main级别和srv级别的同名配置项
+ 
+	void	   *(*create_loc_conf)(ngx_conf_t *cf);	 // 创建存储直属于loc{}的配置项的结构体
+	char	   *(*merge_loc_conf)(ngx_conf_t *cf, void *prev, void *conf);  // 合并srv级别和loc级别的同名配置项
+} ngx_http_module_t;</pre>
+      </div>
+      <p>HTTP框架会在启动过程中调用上述结构体中的各个阶段函数，设为NULL则不会调用它们。</p>
+      <div>
+        <br/>
+      </div>
+      <p>HTTP模块的commands数组由若干ngx_command_t链接而成。当Nginx在解析配置文件的一个配置项时，会遍历所有模块的commands数组，以找到对该配置项感兴趣的ngx_command_t结构体，从而找到相应的模块。ngx_command_t结构体定义如下：</p>
+      <div>
+        <pre class="prettyprint">struct ngx_command_s {
+	ngx_str_t			 name;	 // 配置项名称
+	ngx_uint_t			type;	 // 配置项类型，包括该配置项可以出现的位置和可以携带参数的个数
+ 
+	// 出现name配置项后，调用此方法解析配置项参数
+	char			   *(*set)(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
+	ngx_uint_t			conf;	 // 配置文件中的偏移量，确定将该配置项放入哪个存储结构体中
+	ngx_uint_t			offset;   // 将该配置项放在存储结构体的哪个字段
+	void				 *post;	 // 配置项读取后的处理方法
+};</pre>
+      </div>
+      <p>对于一个HTTP请求的处理，多个模块可以在不同阶段介入，关于阶段的定义和介入方法见“HTTP请求的11个处理阶段”。但对于NGX_HTTP_CONTENT_PHASE阶段还有另外一个介入的方法：把希望处理请求的ngx_http_handler_pt方法放入保存location块配置项的ngx_http_core_loc_t结构体的handler指针中。我们的模块就是运用这种方法使得该模块在NGX_HTTP_CONTENT_PHASE介入一个HTTP请求。</p>
+      <div>
+        <br/>
+      </div>
+      <p>现在来写Nginx模块，也就是填充ngx_module_t结构体。</p>
+      <p>1、定义ngx_module_t结构体中的commands数组：</p>
+      <div>
+        <pre class="prettyprint">static ngx_command_t ngx_http_mytest_commands[] = {
+	{
+		ngx_string(&quot;mytest&quot;),
+		NGX_HTTP_MAIN_CONF | NGX_HTTP_SRV_CONF | NGX_HTTP_LOC_CONF | NGX_HTTP_LMT_CONF | NGX_CONF_NOARGS,
+		ngx_http_mytest,		// 出现mytest配置项时，ngx_http_mytest函数被调用
+		NGX_HTTP_LOC_CONF_OFFSET,
+		0,
+		NULL,
+	},
+	ngx_null_command			// 以一个空的ngx_command_t作为结尾
+};</pre>
+      </div>
+      <p>下面是当配置文件中出现“mytest”配置项时会解析该配置项的方法ngx_http_mytest：</p>
+      <div>
+        <pre class="prettyprint">static char* ngx_http_mytest(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
+{
+	ngx_http_core_loc_conf_t *clcf;
+  
+	// 找到mytest配置项所属的配置块
+	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
+  
+	// 设置处理请求的方法，HTTP框架在处理用户请求进行到NGX_HTTP_CONTENT_PHASE阶段时
+	// 如果主机域名、URI和mytest模块所在配置块名称相同，就会调用函数ngx_http_mytest_handler
+	clcf-&gt;handler = ngx_http_mytest_handler;
+  
+	return NGX_CONF_OK;
+}</pre>
+      </div>
+      <p>处理HTTP请求的ngx_http_mytest_handler方法先跳过。</p>
+      <div>
+        <br/>
+      </div>
+      <p>2、定义ngx_module_t结构体中的ctx接口：</p>
+      <div>
+        <pre class="prettyprint">static ngx_http_module_t ngx_http_mytest_module_ctx = {
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+};</pre>
+      </div>
+      <p>HTTP框架在初始化时会调用每个HTTP模块的这8个方法，我们没有什么方法需要调用，所以设为NULL。</p>
+      <div>
+        <br/>
+      </div>
+      <p>定义完上述两个最重要的结构体成员，现在模块的定义如下：</p>
+      <div>
+        <pre class="prettyprint">ngx_module_t ngx_http_mytest_module = {
+	NGX_MODULE_V1,	  // 0,0,0,0,0,0,1
+	&ngx_http_mytest_module_ctx,
+	ngx_http_mytest_commands,
+	NGX_HTTP_MODULE,	// 定义模块类型
+ 
+	/* Nginx在启动和退出时会调用下面7个回调方法 */
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NULL,
+	NGX_MODULE_V1_PADDING,  // 0,0,0,0,0,0,0,0,保留字段
+};</pre>
+      </div>
+      <p>ngx_module_t结构体中开始的7个字段不需要在定义时赋值，所以由一个宏NGX_MODULE_V1来进行集体初始化。</p>
+      <div>
+        <br/>
+      </div>
+      <p>最后一个任务就是处理HTTP请求，下面就是处理请求并返回响应的函数ngx_http_mytest_handler：</p>
+      <div>
+        <pre class="prettyprint">// 请求的所有信息都存入ngx_http_request_t结构体中
+static ngx_int_t ngx_http_mytest_handler(ngx_http_request_t *r)
+{
+	// 请求的方法必须为GET或者HEAD
+	if (!(r-&gt;method & (NGX_HTTP_GET | NGX_HTTP_HEAD)))
+		return NGX_HTTP_NOT_ALLOWED;
+  
+	// 丢弃请求中的包体
+	ngx_int_t rc = ngx_http_discard_request_body(r);
+	if (rc != NGX_OK)
+		return rc;
+  
+	ngx_str_t type = ngx_string(&quot;text/plain&quot;);
+	ngx_str_t response = ngx_string(&quot;Hello World!&quot;);	// 包体内容
+  
+	// 设置响应的HTTP头部
+	r-&gt;headers_out.status = NGX_HTTP_OK;		   // 返回的响应码
+	r-&gt;headers_out.content_length_n = response.len;	// 响应包体长度
+	r-&gt;headers_out.content_type = type;				// Content-Type
+  
+	rc = ngx_http_send_header(r); // 发送HTTP头部
+	if (rc == NGX_ERROR || rc &gt; NGX_OK || r-&gt;header_only)
+		return rc;
+  
+   // 如果响应不包含包体，则在此处可以直接返回rc
+ 
+	// 分配响应包体空间，因为是异步发送，所以不要从栈中获得空间
+	ngx_buf_t *b = ngx_create_temp_buf(r-&gt;pool, response.len);
+  
+	if (b == NULL)
+		return NGX_HTTP_INTERNAL_SERVER_ERROR;
+  
+	ngx_memcpy(b-&gt;pos, response.data, response.len);
+	b-&gt;last = b-&gt;pos + response.len;  // 指向数据末尾
+	b-&gt;last_buf = 1;					// 声明这是最后一块缓冲区
+  
+	ngx_chain_t out;
+	out.buf = b;
+	out.next = NULL;
+  
+	return ngx_http_output_filter(r, &out);   // 向用户发送响应包
+}</pre>
+      </div>
+      <p>下面说明如何让写好的模块编译进Nginx。</p>
+      <p>1、在和源文件相同目录下创建一个名为config的文件，文件内容如下：</p>
+
+        <pre class="prettyprint">ngx_addon_name=ngx_http_mytest_module
+HTTP_MODULES=&quot;$HTTP_MODULES ngx_http_mytest_module&quot;
+NGX_ADDON_SRCS=&quot;$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_mytest_module.c&quot;</pre>
+            <div>
+        <ul>
+          <li>ngx_addon_name：模块名称</li>
+          <li>HTTP_MODULES：保存所有的HTTP模块名称，以空格符分隔</li>
+          <li>NGX_ADDON_SRCS：新增模块的源代码路径，变量ngx_addon_dir稍后说明</li>
+        </ul>
+        <div>路径如下所示：</div>
+      </div>
+    </div>
+    <img src="http://img0.tuicool.com/RrY3yuU.jpg!web" alt="" />
+  </div>
+  <div>
+    <br/>
+  </div>
+  <div>
+    <div>
+      <p>2、在configure时添加自定义模块的路径：</p>
+      <p>./configure --add-module=/work/nginx/modules/mytest</p>
+      <p>其中，路径/work/nginx/modules/mytest就对应了config文件中的ngx_addon_dir变量。现在configure程序便知道了我们定义的模块的绝对路径。</p>
+      <div>
+        <br/>
+      </div>
+      <div>3、make</div>
+      <div>
+        <br/>
+      </div>
+      <div>4、make install</div>
+      <p>最终会在/usr/local/nginx/sbin目录下生成可执行文件ngxin。</p>
+      <div>
+        <br/>
+      </div>
+      <p>5、在/usr/local/nginx/conf/nginx.conf配置文件中添加需要的配置项：</p>
+    </div>
+    <img src="http://img0.tuicool.com/qeEbEn.png!web" alt="" />
+  </div>
+  <div>
+    <br/>
+  </div>
+  <div>
+    <p>
+      <span>6、启动nginx，并在客户端浏览器中输入Nginx服务器的主机名：</span>
+    </p>
+    <img src="http://img0.tuicool.com/Z7ZF7vN.jpg!web" alt="" />
+  </div>
+
+    <div>
+      <p>可以看到，Nginx成功返回了我们设置的字符串。注意URI必须和/nestle完全匹配，因为location配置块后面是一个“=”符号，表示必须完全一致。</p>
+      <div>
+        <br/>
+      </div>
+      <div>参考：</div>
+      <p>《深入理解Nginx》第三章。</p>
+    </div>
+  </div>
+
+        </div>
+        <div class="article_social">
+         <div class="article_like">
+    <div class="circle circle-like" id="my_zan" data_id="aAR3uu">  </div>
+
+</div>
+        <div id="share_weixin_image">
+            <img width="100px" height="100px" src="http://s.jiathis.com/qrcode.php?url=http://www.tuicool.com/articles/aAR3uu?via=wechat_qr">
+        </div>
+<div class="article_share_fav">
+    <div class="share" id="ckepop">
+        <span>分享</span>
+        <button class="share_weibo" id="share_weibo_id"  title="分享到新浪微博"></button>
+        <button class="share_qq" id="share_qq_id"  title="分享到QQ空间"></button>
+        <button class="share_weixin" id="share_weixin_id"></button>
+    </div>
+    <div class="fav_correct">
+        <button id="my_fav" data_id="aAR3uu">
+            <i class="icon icon-star-empty"></i> <span id="fav_tip">收藏</span>
+        </button>
+        <button id="article-correct" data_id="aAR3uu" uid="0">
+            <i class="icon icon-warning-sign"></i>
+            <span>纠错</span>
+        </button>
+    </div>
+</div>
+<script type="text/javascript">
+$("#share_weibo_id").click( function() {
+   window.open("http://share.baidu.com/s?type=text&searchPic=0&sign=on&to=tsina&url=http://www.tuicool.com/articles/aAR3uu&title=%E3%80%90Nginx%E3%80%91%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E6%A8%A1%E5%9D%97++%28%E5%88%86%E4%BA%AB%E8%87%AA+%40%E6%8E%A8%E9%85%B7%E7%BD%91%29&key=3113829255");
+});
+$("#share_qq_id").click( function() {
+   window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.tuicool.com/articles/aAR3uu&title=%E3%80%90Nginx%E3%80%91%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84HTTP%E6%A8%A1%E5%9D%97&desc=&summary=&site=");
+});
+$("#share_weixin_id").click( function() {
+  $("#share_weixin_image").toggle();
+});
+</script>
+
+
+            <div class="bottom_plink huodong-detail-plink-banner clearfix">
+                    <a href="https://sspaas.com/" target="_blank"><img src="http://static1.tuicool.com/images/upload/sspaas700.jpg"/></a>
+
+            </div>
+        </div>
+        <div id="site_articles" style="clear:both;">
+              <div class="article-part-title">
+                <span>推荐文章</span>
+              </div>
+          <ul class="side_article_list">
+                <li class="side_article_list_item">
+                    1.<a href="/articles/UvIVFjn" target="_blank" title="Robinhood工程团队是如何实现度量的收集和监控的">
+                    Robinhood工程团队是如何实现度量的收集和监控的
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    2.<a href="/articles/MNr2ayu" target="_blank" title="数据中心操作人员：艰难地在针对VM构建的基础设施上运行容器">
+                    数据中心操作人员：艰难地在针对VM构建的基础设施上运行容器
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    3.<a href="/articles/IVrYJjm" target="_blank" title="容器监控方案 cAdvisor + Elasticsearch">
+                    容器监控方案 cAdvisor + Elasticsearch
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    4.<a href="/articles/NRfiyuu" target="_blank" title="如何解决分布式系统的Logical Time问题？（一）">
+                    如何解决分布式系统的Logical Time问题？（一）
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    5.<a href="/articles/Rr6NfyF" target="_blank" title="2017年，你应该关注哪些运维技术？">
+                    2017年，你应该关注哪些运维技术？
+                    </a>
+                </li>
+                <li class="side_article_list_item">
+                    6.<a href="/articles/uAZVJzA" target="_blank" title="关于TCP 半连接队列和全连接队列">
+                    关于TCP 半连接队列和全连接队列
+                    </a>
+                </li>
+          </ul>
+        </div>
+        <div id="kan_articles"></div>
+        <div id="article_weibo" style="display:none;">
+            <div class='article-part-title'>
+                <span>相关微博</span>
+                <sub>
+                    <a href="/articles/weibo_list/aAR3uu" target="_blank">(<i id="weibo_num"></i>)</a> 
+               </sub>
+            </div>
+            <div class="related-weibo-list"></div>
+        </div>
+        <div class="comments">
+    <div class="comments-area">
+    <div class="comments-header">
+        <h5>我来评几句</h5>
+        <div class="alert comment-alert alert-error" style="display:none;">
+            错误
+        </div>
+            <textarea cols="60" rows="5" id="comment-body" placeholder="请输入评论内容..." style="resize: none;"></textarea>
+            <span class="btn btn-medium btn-submit"  id="comment-submit">登录后评论</span>
+        <p style="margin-top: 5px;margin-left:10px;">
+            已发表评论数(<span class="comment_cnt"></span>)
+        </p>
+    </div>
+    <div class="comments-list">
+        <div class="empty-cmts alert alert-success" style="display:none;">
+            没有更多评论了^^
+        </div>
+    </div>
+    <div class="more-comments" style="display:none;">
+        <a href="">更多评论</a>
+    </div>
+    <div class="load-fail" style="display:none;">
+        评论加载失败，<a href="javascript:reload_comments('aAR3uu',1,0,-1);">重新加载</a>
+    </div>
+    </div>
+</div>
+
+    </div>
+        <div class="span4 article_right_side">
+            <div class="right_top">
+    <div class="article_related_site article_detail_bg">
+    <h4 class="article-part-title">相关站点</h4>
+    <div class="article_related_site_body clearfix">
+        <div class="logo">
+            <img src="http://stimg0.tuicool.com/vQZRB3.png"/>
+        </div>
+        <div class="name">
+            <div>
+                <a href="/sites/vQZRB3" target="_blank"> CSDN博客</a>
+            </div>
+            <div>
+                <div class="btn btn-success right_site_follow" id="my_follow" data_id="vQZRB3">＋订阅</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="right_site_articles" class="article_detail_bg">
+    <div class="article-part-title">
+        <span>热门文章</span>
+    </div>
+    <ul class="side_article_list">
+        <li class="side_article_list_item">
+            1.<a href="/articles/UvIVFjn" target="_blank" title="Robinhood工程团队是如何实现度量的收集和监控的"> Robinhood工程团队是如何实现度量的收集和监控的 </a>
+        </li>
+        <li class="side_article_list_item">
+            2.<a href="/articles/MNr2ayu" target="_blank" title="数据中心操作人员：艰难地在针对VM构建的基础设施上运行容器"> 数据中心操作人员：艰难地在针对VM构建的基础设施上运行容器 </a>
+        </li>
+        <li class="side_article_list_item">
+            3.<a href="/articles/IVrYJjm" target="_blank" title="容器监控方案 cAdvisor + Elasticsearch"> 容器监控方案 cAdvisor + Elasticsearch </a>
+        </li>
+        <li class="side_article_list_item">
+            4.<a href="/articles/NRfiyuu" target="_blank" title="如何解决分布式系统的Logical Time问题？（一）"> 如何解决分布式系统的Logical Time问题？（一） </a>
+        </li>
+        <li class="side_article_list_item">
+            5.<a href="/articles/Rr6NfyF" target="_blank" title="2017年，你应该关注哪些运维技术？"> 2017年，你应该关注哪些运维技术？ </a>
+        </li>
+    </ul>
+</div>
+
+
+      <div class="right-link">
+                <a href="https://sspaas.com/" target="_blank"><img src="http://static1.tuicool.com/images/upload/sspaas320.jpg"/></a>
+
+      </div>
+      <div class="right-link" style="margin-top: 5px">
+                <a href="https://www.mysubmail.com/sms?s=tuicool" target="_blank"><img src="http://static2.tuicool.com/images/upload/submail300.jpg"/></a>
+
+      </div>
+      <div class="right-link" style="margin-top: 5px">
+                <a href="https://www.mtyun.com/firework/newcustomer?site=tuicool&campaign=20170401sales?site=tuicool&campaign=20170401sales" target="_blank"><img src="http://static0.tuicool.com/images/upload/mos120.jpg"/></a>
+
+      </div>
+<div class="right-link" style="margin-top: 5px">
+        <a href="http://click.aliyun.com/m/17039/" target="_blank"><img src="http://static0.tuicool.com/images/upload/aliyun1200.jpg"/></a>
+
+</div>
+      <div class="right-link" style="margin-top: 5px">
+                <a href="http://www.w3cschool.cn/welcome?tnid=1002" target="_blank"><img src="http://static1.tuicool.com/images/upload/w3cschool301.jpg"/></a>
+
+      </div>
+<div class="right-link" style="margin-top: 5px">
+        <a href="https://activity.ksyun.com/1703/index.html?ch=00033.00018&hmsr=%E6%8E%A8%E9%85%B7&hmpl=1703&hmcu=&hmkw=&hmci=" target="_blank"><img src="http://static2.tuicool.com/images/upload/ksyun122.jpg"/></a>
+
+</div>
+<div class="right-link" style="margin-top: 5px">
+        <a href="http://ml-summit.org/?hmsr=tuicool&hmpl=banner&hmcu=&hmkw=&hmci=" target="_blank"><img src="http://static1.tuicool.com/images/upload/mlsummit300.jpg"/></a>
+
+</div>
+</div>
+<div class="operate_zone">
+      <div class="right-link" style="margin-top: 0px">
+                <a href="http://www.bagevent.com/event/268776?bag_track=tuicool" target="_blank"><img src="http://static0.tuicool.com/images/upload/phpdev300.jpg"/></a>
+
+      </div>
+        <div class="frd_pos">
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:250px"
+     data-ad-client="ca-pub-7054762349007490"
+     data-ad-slot="5705695566"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+        </div>
+</div>
+         </div>
+</div>
+
+<div>
+   <!-- add_article to kan -->
+<div id="add-article-to-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <span class="add-title">收藏到推刊</span>
+    <a href="#new-kan" class="btn pull-right" data-toggle="modal">创建推刊</a>
+    <i class="clearfix"></i>
+  </div>
+  <div class="modal-body">
+    <ul id="add-kan-list">
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <input type="hidden" value="aAR3uu" class="article-id" /> 
+    <button class="btn btn-primary pull-left add-to-btn">  收 藏  </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true" style="margin-right: 15px">取消</button>
+  </div>
+</div>
+
+   <div id="new-kan" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-body">
+    <input type="text" name="name" id="new-kan-name"  placeholder="推刊名(必填)" required data-validation-required-message="请填写推刊名" />
+    <span class="new-ness-name">请填写推刊名</span>
+    <br/>
+    <textarea name="desc" id="desc" rows="6" placeholder="推刊描述"></textarea>
+    <span class="new-ness-desc">描述不能大于100个字符!</span>
+    <br/>
+    权限设置：<input type="radio" name="type" value="1" checked="checked" /> 公开
+    <input type="radio" name="type" value="0"> 仅自己可见
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-left create-kan-btn" disabled>创建</button>
+    <button class="btn dismiss-new-kan" data-dismiss="modal" aria-hidden="true">取消</button>
+  </div>
+</div>
+
+
+</div>
+<div id="article-correct-modal" class="modal hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h3>文章纠错</h3>
+    </div>
+    <div class="modal-body">
+        <input type="hidden" value="aAR3uu" id="article-correct-source">
+        <div>
+            <label for="article-correct-email">
+                邮箱地址
+            </label>
+            <input type="email" id="article-correct-email" class="input-large" />
+        </div>
+        <div>
+            <label for="article-correct-select">
+                错误类型
+            </label>
+            <select id="article-correct-select">
+                <option value="正文不准确">正文不准确</option>
+                <option value="标题不准确">标题不准确</option>
+                <option value="排版有问题">排版有问题</option>
+                <option value="排版有问题">主题不准确</option>
+                <option value="没有分页内容">没有分页内容</option>
+                <option value="图片无法显示">图片无法显示</option>
+                <option value="视频无法显示">视频无法显示</option>
+                <option value="与原文不一致">与原文不一致</option>
+            </select>
+        </div>
+        <div>
+            <label for="article-correct-other">
+                补充信息
+            </label>
+            <textarea id="article-correct-other" class="span4"></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary pull-right huodong_correct_submit" id="article-correct-submit">
+            &nbsp;&nbsp;提交&nbsp;&nbsp;
+        </button>
+    </div>
+</div>
+      <link rel="stylesheet" href="http://static0.tuicool.com/stylesheets/highlight.default.css">
+      <script src="http://static2.tuicool.com/javascripts/highlight.pack.js"></script>
+<script type="text/javascript">
+    $('table').each(function(i) {
+        var size = $(this).children().size();
+        if (size > 1) {
+            $(this).attr('class',"table table-bordered");
+        } else if (size == 1) {
+            var e11 = $(this).children(":first");
+            var e1 = e11[0];
+            var name = e1.nodeName.toLowerCase();
+            if ("tbody" == name) {
+                if (e1.children.length > 1) {
+                    $(this).attr('class',"table table-bordered");
+                } else if (e1.children.length == 1){
+                    var e12 = e1.children[0];
+                    var name2 = e12.nodeName.toLowerCase();
+                    if ("tr" == name2) {
+                       if (e12.children.length > 1) {
+                         $(this).attr('class',"table table-bordered");
+                       }
+                    }
+                }
+            }
+        }
+    });
+        window.page = 0;
+        window.last = 0;    
+        window.first = true;
+        resize_article_image('#nei', 550);
+                load_comments("aAR3uu",1,0,-1);
+                window.uid = -1;
+        open_add_article_to_kan("false");
+        async_do_zan_article();
+      $('pre').each(function(i, e) {
+        hljs.highlightBlock(e, "<span class='indent'>  </span>", false)
+      });
+          
+       handle_follow_site("#my_follow","已订阅","+ 订阅");
+</script>
+
+
+    <div class="loader-inner ball-pulse ball-loading-center" id="page-loading" style="display: none">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="read-later-alert"></div>
+  </div>
+
+        <div class="footer">
+      <div class="footer-inner" style="padding-top: 50px;padding-bottom: 50px">
+        <a href="http://www.tuicool.com/about" target="_blank">关于我们</a>
+        <a href="http://www.tuicool.com/mobile" target="_blank">移动应用</a>
+        <a href="http://www.tuicool.com/bbs/go/issues" target="_blank">意见反馈</a>
+        <a target="_blank" href="http://e.weibo.com/tuicool2012">官方微博</a>
+      </div>
+    </div>
+    <div style="display:none;">
+      <script src="http://s22.cnzz.com/stat.php?id=5541078&web_id=5541078&show=pic" language="JavaScript"></script>
+    </div>
+
+    <script type="text/javascript" src="http://static2.tuicool.com/assets/tip.js?t=3" async></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+1) 将http.conf复制到nginx的conf目录下, 修改nginx的conf/nginx.conf, 增加"include http.conf;", 并且注释掉http {...}块
+2) 在home目录下分别启动两个httpserver:
+# python2 simplehttpserver.py 127.0.0.2 18080
+# python2 simplehttpserver.py 127.0.0.3 18080
+3) 用浏览器访问8080端口
+4) 通过访问8080端口的/status查看健康状态
+5) check命令可以配置健康检查端口"port=xxx", 而不同于upstream的服务端口
+6) http health check需要安装第三方模块, 参见: https://github.com/yaoweibin/nginx_upstream_check_module
+7) http2.conf采用的是tcp方式health check, 配套的server请使用tcpcheckserver.py

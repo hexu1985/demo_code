@@ -1,0 +1,4 @@
+1) 参考add_variables为nginx增加自定义变量
+2) 将stream.conf复制到nginx的conf目录下, 将nginx.conf中内容追加到nginx的conf/nginx.conf
+3) 重启nginx
+4) 参考udp_load_balance的python脚本测试

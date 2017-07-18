@@ -1,0 +1,5 @@
+1) 将http.conf复制到nginx的conf目录下, 修改nginx的conf/nginx.conf, 增加"include http.conf;", 并且注释掉http {...}块
+2) 在home目录下分别启动两个httpserver:
+# python2 simplehttpserver.py 127.0.0.2 18080
+# python2 simplehttpserver.py 127.0.0.3 18080
+3) 用浏览器访问8080端口

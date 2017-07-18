@@ -1,0 +1,13 @@
+1) 将http_mytest复制到nginx的src目录下, 假设nginx的根目录为$NGINX
+# cp -r http_mytest $NGINX/src
+2) 重新编译nginx
+# cd $NGINX
+# ./configure --add-module=./src/http_mytest
+# make
+# make install
+3) 在nginx.conf中增加mytest选项, 并且把daemon off选项 
+# cd $NGINX
+# vim ./conf/nginx.conf
+4) 重启nginx
+# cd $NGINX
+# ./objs/nginx -p .

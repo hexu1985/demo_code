@@ -1,0 +1,26 @@
+
+CREATE_SO = g++ -shared
+RM = rm -f
+CXX = g++
+CXXFLAGS = -Wall -g -c #-DNDEBUG
+LIB_OBJS = hello.so.o bye.so.o
+LIB_NAME = libhello_bye.so
+
+.PHONY: all
+all: $(LIB_NAME)
+	@echo "build OK!"
+
+.PHONY: clean
+clean:
+	$(RM) $(TARGETS)
+
+.PHONY: distclean
+distclean:
+	$(RM) $(TARGETS) *.o *.so
+
+$(LIB_NAME): $(LIB_OBJS)
+	$(CREATE_SO) $(LIB_OBJS) -o $(LIB_NAME) 
+
+$(LIB_OBJS):%.so.o: %.cpp
+	$(CXX) -o $@ $(CXXFLAGS) -fPIC $^
+

@@ -1,0 +1,14 @@
+测试环境：
+CPU：Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz
+4核
+4G内存
+
+nginx配置为1一个工作进程，根据noc_conn_id进行hash。
+
+性能测试结果：
+每种测试场景都分别测试了：下行带宽为上行带宽的1.5倍、3倍、9倍这三种情况
+1client-1server：nginx带宽基本都在1.5GBit/s左右
+1000client-1server：nginx带宽基本都在1.2GBit/s左右
+2000client-2server：nginx带宽基本都在1.1-1.2GBit/s左右
+
+通过top看到nginx的工作进程测cpu占用率基本达到95%-100%，内存占用率不足1%。
