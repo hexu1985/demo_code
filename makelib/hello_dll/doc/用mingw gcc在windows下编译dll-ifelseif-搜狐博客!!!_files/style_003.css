@@ -1,0 +1,161 @@
+#popup{
+	width: 400px;
+	height:  252px;
+	background-color: #fff;
+	position: fixed;
+	right: 0;
+	bottom: 0;
+}
+#popup .pop-wrapper{
+	width: 398px;
+	height: 250px;
+	border: 1px solid #e1e1e1;
+	border-radius: 4px 4px 4px 4px;
+	box-shadow: 0 1px 1px 1px #f2f2f2;
+}
+#popup .pop-wrapper .title{
+	height: 22px;
+	width: 100%;
+	background: #f7f7f7 url("bg_blog_poping.gif") no-repeat scroll 8px 2px;
+	border-bottom: 1px solid #d2d2d2;
+	overflow: hidden;
+}
+#popup .pop-wrapper .title h4{
+	background:url("img_title.gif") no-repeat scroll 32px 0;
+	height: 22px;
+	width: 56px;
+	padding-left: 32px;
+	margin: 0;
+}
+#popup .pop-wrapper .title .close{
+	float: right;
+	height: 11px;
+	line-height: 11px;
+	padding: 6px 4px 0 0;
+}
+#popup .pop-wrapper .title .close a{
+	float: left;
+	width: 11px;
+	height: 11px;
+	margin-left: 8px;
+	cursor: pointer;
+
+}
+#popup .pop-wrapper .title .close i{
+	display: inline-block;
+	width: 11px;
+	height: 11px;
+	background:url("bg_blog_poping.gif") no-repeat scroll 0 0;
+}
+#popup .pop-wrapper .title .close i.icon-hide{
+	background-position: 0 -49px;
+}
+#popup .pop-wrapper .title .close i.icon-close{
+	background-position: 0 -31px;
+}
+#popup .pop-wrapper .con{
+	padding: 3px 0 0 2px;
+}
+#popup .pop-wrapper .con .photo{
+    float: left;
+    height: 222px;
+    margin-right: 9px;
+    position: relative;
+    width: 166px;
+    _display: inline;
+    overflow: hidden;
+}
+#popup .pop-wrapper .con .photo img {
+    border: 0 none;
+    height: 222px;
+    width: 166px;
+}
+#popup .pop-wrapper .con .photo span.bg {
+    background-color: #000000;
+    bottom: 0;
+    display: block;
+    height: 22px;
+    left: 0;
+    opacity: 0.6;
+    filter:alpha(opacity=60);
+    position: absolute;
+    width: 166px;
+}
+#popup .pop-wrapper .con .photo a.xg {
+    bottom: 0;
+    color: #FFFFFF;
+    display: block;
+    left: 0;
+    line-height: 22px;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    width: 166px;
+    font-size: 12px;
+}
+#popup .pop-wrapper .con .txt{
+	width: 214px;
+	float: left;
+}
+#popup .pop-wrapper .con .txt .info{
+	width: 100%;
+	border-bottom: 1px dotted #c5c5c5;
+	padding:  4px 0 8px 0;
+}
+
+#popup .pop-wrapper .con .txt .info h3{
+	color: #4478a9;
+	font-size: 14px;
+	height: 22px;
+	line-height: 22px;
+	font-weight: 600;
+	padding: 4px 0;
+}
+#popup .pop-wrapper .con .txt .info h3 a{
+	color: #4478a9;
+	font-size: 14px;
+	line-height: 22px;
+	font-weight: 600;
+	text-decoration: none;
+}
+#popup .pop-wrapper .con .txt .info h3 a:hover{
+	text-decoration: underline;
+}
+#popup .pop-wrapper .con .txt .info p{
+	line-height: 20px;
+	font-size: 12px;
+	color: #666;
+	margin: 0;
+}
+#popup .pop-wrapper .con .txt .info p a.more{
+	color: #4478a9;
+	text-decoration: none;
+}
+#popup .pop-wrapper .con .txt .info p a.more:hover{
+	text-decoration: underline;
+}
+#popup .pop-wrapper .con .txt .list{
+	padding-top: 6px;
+}
+#popup .pop-wrapper .con .txt .list ul{
+	margin: 0;
+	padding: 0;
+}
+#popup .pop-wrapper .con .txt .list ul li{
+	height: 26px;
+	line-height: 26px;
+	overflow: hidden;
+	font-size: 14px;
+	list-style: none;
+	background:url("bg_blog_poping.gif") no-repeat scroll 0 -63px;
+	padding-left: 10px;
+}
+#popup .pop-wrapper .con .txt .list ul li a{
+	color: #333;
+	font-size: 14px;
+	text-decoration: none;
+}
+#popup .pop-wrapper .con .txt .list ul li a:hover{
+	color: #ff0000;
+	text-decoration: underline;
+}

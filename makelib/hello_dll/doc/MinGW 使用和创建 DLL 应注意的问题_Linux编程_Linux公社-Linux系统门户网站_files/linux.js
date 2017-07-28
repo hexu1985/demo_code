@@ -1,0 +1,1 @@
+document.writeln("<a href=\'http://www.yutianedu.cn/news/openstackgz.html\' target=\'_blank\'><img src=\'/linuxfile/yutian70060.jpg\' alt=\'\' width=\'700\' height=\'60\' /></a>");

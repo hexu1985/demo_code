@@ -1,0 +1,193 @@
+@charset "gbk";
+/* Sohu NewPP theme(theme/p0001/style.css) style sheet
+ * Created: 2010-08
+ * Update: 2010-10-12
+ * Author: Jiangtao Lv
+ * Copyright: Sohu.com Inc.
+*/
+/* Main */
+#topPadding{display:none}
+.modCtnInfo-private{overflow:hidden;height:30px;padding:2px 35px 0;border-style:solid;border-width:0 1px 1px;line-height:30px}
+.modCtnInfo-noMod{padding:15px 0}
+#modContainer{padding:15px 5px 0}
+.clear{border:0 none}
+
+/* Header */
+#header{overflow:hidden;height:125px;border:0 none}
+#blogTitle{padding:10px 0 0 12px}
+#blogUrl{padding:12px 0 0}
+#blogDesc {padding:15px 0 0 12px}
+
+/* NavBar */
+#navBar{overflow:hidden;height:33px;border:0 none}
+#innerNavBar{padding:0 15px}
+#mainNav li{margin:4px 3px 0 0;padding:2px 8px 5px 8px!important;padding:3px 8px 4px 8px;border-style:solid;border-width:1px 1px 0}
+#mainNav li.active{margin:2px 3px 0 0;padding:4px 8px 7px 8px!important;padding:4px 8px 6px 8px;border-width:1px 1px 0}
+*+html #mainNav li a span{padding-top:2px!important}
+#optionNav li{margin-left:15px}
+
+/* Footer */
+#innerFooter{padding:10px 20px;text-align:center}
+#powered{margin:15px 0}
+#contact,#copyright{margin:0}
+
+/* Mod */
+.mod{margin:0px 5px 10px;border:0 none}
+.mod .modFrame{border-style:solid;border-width:1px}
+.mod .mheader{border-style:solid;border-width:0 0 1px}
+.mod .modEditCon{margin:0px 1px 1px 1px;padding:10px 0 10px 10px;border-style:solid;border-width:0 0 1px}
+.mod .lt,.mod .rt{overflow:hidden;width:0}
+.mod .t{height:27px;padding:0 5px;border-style:solid;border-width:0 0 1px}
+.mod .c{padding:10px}
+.mod hr{height:1px;border-style:solid;border-width:1px 0 0}
+	
+.msg,.profileMng,.musicMng,.mngBtn,.linksAdd{margin-bottom:5px!important;padding-bottom:5px!important}
+#innerContentLabelBox{padding:15px 0 0}
+.item-content{padding:5px 0}
+
+.links-content .editFrame,.Custom_Links-content .editFrame{border:0 none}
+
+/*** Background,Color & Font ***/
+/* Background */
+body{background:#c2d1f2 url(images/body_bg.jpg) no-repeat center top}
+#header{background:none}
+#mainWrapper{background:#fff url(images/navbar_bg.jpg) 0 -1px repeat-x}
+#navBar{background:url(images/navbar_bg.jpg) 0 32px repeat-x}
+
+#mainNav li{background:#c4d3f1}
+#mainNav li.active{background:#fff}
+#mainNav li.private{background:#FFD682 url(images/tab_bg_private.jpg) 0 0 repeat-x}
+
+.modCtnInfo-private{background:#FFD682 url(images/ico_light.gif) 15px 50% no-repeat}
+.mod .t{background:#EFEAFE url(images/mod_t_bg.jpg) 0 0 repeat-x}
+
+/* Link Color */
+a,.item-title h3 a,.item-label a,.item-info a{color:#5d6881}
+
+a:hover,.item-title h3 a:hover,.item-label a:hover,.item-info a:hover{color:red}
+
+/* Font Color */
+body,table{color:#5d6881}
+
+#blogTitle,#blogTitle a,#blogTitle input{color:#f03309}
+#blogUrl a,#blogDesc{color:#595959}
+	
+#mainNav li *{color:#595959}
+#mainNav li.active *{color:#595959}
+#mainNav li.private *,.modCtnInfo-private{color:red}
+	
+.mod{background:#fff}
+.mod .modTitle{color:#5d6881}
+
+	/* entry */
+.modCon .entriesAdd a{color:red}	/* write */
+#innerContentLabelBox{}	/* crumbs */
+.item-title h3{color:#333}	/* = .mod .modTitle */
+.item-info{}	/* bottom info */
+
+#footer,#footer a{color:#666}
+
+/* Font Style */
+#blogTitle,#blogTitle a,#blogTitle input{font:bold 20px/1.2em "Microsoft YaHei","Î¢ÈíÑÅºÚ",Verdana,Arial,sans-serif,"ËÎÌå"}
+#blogDesc{line-height:20px}
+	
+#mainNav li *{font-weight:normal!important}
+#mainNav li.active *{font-weight:bold!important}
+	
+.mod .modTitle,.entries-content .entriesAdd a{font-weight:bold}
+.item-title h3,.item-title h3 a{font-size:14px}
+.categories-content li,.latest_comments-content li{line-height:22px}
+.categories-content a,.latest_comments-content a{line-height:22px}
+.refer-content a{line-height:18px}
+input.text{font-size:12px}
+
+#contact,#copyright{line-height:20px}
+
+/* Border Color */
+.mod,.mod hr,.mod li,.mod .mheader,.mod .lt,.mod .rt,.mod .modFrame,.mod .mneck,.mod .mbody,.mod .modEditCon,.modCon hr,.modCon .act,.modCon .action,.modCon .collect .collectIco,.modCon .messagesMng,.modCon .miniblog-content h1,.modCon .miniblog-content .content li,.modCon .mngBtn,.modCon .msg,.modCon .musicMng,.modCon .nav,.modCon .newsong_list td,.modCon .link,.modCon .linksAdd,.modCon .ppMng,.modCon .ppsetText h5,.modCon .profile,.modCon .profileMng,.modCon .recpost,.modCon .referIco,.modCon .reply,.modCon .rplFormBox,.modCon .unread,.item hr,.item .item-title,.item .item-content,.item .info-content blockquote,.panel .panel-title,#mainWrapper,#mainNav li,#mainNav li.active,#mainNav li.private,.modCtnInfo-private,#articleInnerContent,#footer{border-color:#a8beef!important}
+
+#mainNav li{border-color:#96abda!important}
+
+/* Fix Navbar */
+.navPP3 a.navNewMod{background-image:url(http://js2.pp.sohu.com.cn/ppp/album/i/icon_alb_06.gif)!important}
+.navPP3 a.navEditTheme{background-image:url(http://js2.pp.sohu.com.cn/ppp/album/i/icon_alb_07.gif)!important}
+.navPP3 a.navSysOpt{background-image:url(http://js2.pp.sohu.com.cn/ppp/album/i/icon_alb_08.gif)!important}
+
+/* normal Fix */
+body{background:#c2d1f2 url(images/body_bg.jpg) no-repeat center top; color:#5d6881}
+#wrapper a{color:#5d6881}
+#modContainer a:hover{color:#f00!important}
+.mod{background:#fff!important}
+.mod .modTitle{color:#5d6881}
+/* header Fix */
+#header{height:175px; position:relative;}
+#header #innerHeader{padding:25px 30px 5px 30px}
+#header #blogTitle{position:absolute; height:2!important; padding:0; top:40px;}
+#header #blogUrl{position:absolute; margin:0; padding:0; top:117px; left:18px; font-size:14px;overflow:hidden}
+#header #blogUrl a{ font-size:14px; border-left:1px dotted; margin:0 0 0 -1px; padding:0 12px; text-decoration:none}
+#header #blogUrl a.on{font-weight:bold}
+#header #blogUrl a .i-albTop{background:url(images/icon-alb-30.gif) no-repeat 0 0; width:24px}
+#header #blogDesc{ position:absolute; top:70px; padding:0; color:#5D6881}
+
+/* Navbar Fix */
+#navBar{background:url(images/navbar_bg.jpg) repeat-x scroll 0 31px transparent;height:32px}
+#innerNavBar{padding:0 30px}
+
+/* profile */
+.revoBtns00{color:#676767}
+.revoBtns01{background:#E5EDFA; border:1px solid #A8BEEF;color:#5D6881;}
+.revoBtns03{
+	clear:both;
+	line-height:20px;
+	padding:10px 0;
+	}
+
+/* For space */
+.spc{}
+.spc{border:1px solid; border-color:#A8BEEF!important; background:#fff}
+.apps .ap01{ border-bottom:1px solid #A8BEEF!important;}
+.apps .ap02 ul li.act{background:#8ca1cf;}
+.apps .ap02 ul li a.rig{color:#5D6881!important}
+.c0{ border-width:0 1px; border-width:1px; border-color:#A8BEEF!important;}
+.c1{background:#fff!important; border:1px solid #A8BEEF!important;}
+.c1 p{border-top:1px solid #A8BEEF!important}
+.c1 p span b.grey{ color:#9797979!important}
+#msgCenterQ a{color:#ff5400!important}
+#lastMiniContent a{color:#727272!important}
+.cbox1 .areaW textarea{background:#fff!important;}
+.cbox1 .areaW{border:4px solid #A8BEEF!important}
+.cbox1 .cb2{ border-left:1px solid #A8BEEF!important;border-right:1px solid #A8BEEF!important;border-bottom:1px solid #A8BEEF!important;}
+.cbox1 .cbarr{background:url(images/cboxar.gif) no-repeat 0 0!important}
+.cbox1 .noteRight input{background:url(images/noteRightbtn.png.png) no-repeat 0 0!important}
+
+ul.nav li{border-right:1px solid #A8BEEF!important; border-bottom:1px solid #A8BEEF!important}
+.cnav{ border-top:1px solid #A8BEEF!important;border-right:1px solid #A8BEEF!important; border-left:1px solid #A8BEEF!important; height:34px!important}
+.cnav .ref{border-bottom:1px solid #A8BEEF!important;}
+
+.feedItem{border-bottom:1px dashed #A8BEEF!important}
+.feedItem.hover{background:#f0f3f8!important}
+#soHome div, #soHome table, #soHome ul, #soHome p{color:#9f9f9f}
+#soHome a{color:#5D6881}
+.cnav ul.nav li a{color:#5D6881!important}
+.cnav ul.nav li.on a{background:#DFE1E1;font-weight:bold;}
+.cnav .ref a{color:#5D6881!important}
+.feedavt a img{overflow:hidden}
+
+.vside .v1, .vside .v2, .vside .v3, .vside .v4, .vside .vad1{border-bottom:1px solid #A8BEEF!important}
+.blog_activity ul li{border-bottom:1px dashed #A8BEEF!important}
+.forwardBox{padding-right:1px}
+.forwardBoxTop{ background:url(images/forwardBoxTop.gif) no-repeat 0 0!important}
+.forwardBoxTop span{ display:none!important}
+.forwardBoxBom{ background:url(images/forwardBoxBom.gif) no-repeat 0 0!important}
+.forwardBoxBom span{ display:none!important}
+.forwardBoxInt{border-left:1px solid #A8BEEF!important; border-right:1px solid #A8BEEF!important; background:#fff!important}
+
+.feedInt{margin-bottom:-1px}
+.ctwis .more{background:#A8BEEF!important; border-top:1px solid #A8BEEF!important; top:0!important}
+.ctwis .more .gotop{border-left:1px solid #FFF!important}
+.vside h3{ color:#606A68!important}
+
+/*Fix header*/
+#header #blogUrl .navPP1{ display:none}
+#header #blogUrl .navPP2{ background:url(images/icon-alb-30.gif) no-repeat right center; padding-right:26px; margin-right:5px}
+#header #blogUrl a{ border-color:#8798bb}

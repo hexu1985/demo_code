@@ -1,0 +1,1 @@
+﻿document.writeln("主编：漏网的鱼 联系邮箱:<img src=\"\/linuxfile\/email.png\" alt=\"\" width=\"138\" height=\"20\" \/> (如有合作请联系)")

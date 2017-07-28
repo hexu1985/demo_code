@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><script async="" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/a_003.htm"></script><script async="" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/tags.htm"></script><script type="text/javascript">
+var _blog_base_url = 'http://ifelseif.blog.sohu.com/';
+var _blog_base_path = 'http://ifelseif.blog.sohu.com/';
+var _blog_domain='ifelseif';
+var _ebi = '01be8e6792';
+var _ept = 'gongw03';
+var _xpt = 'Z29uZ3cwM0Bzb2h1LmNvbQ==';
+var _upt = 'Z29uZ3cwM0Bzb2h1LmNvbQ==';
+</script>
+
+		
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>用mingw gcc在windows下编译dll-ifelseif-搜狐博客!!!</title>
+<meta name="Keywords" content="">
+<meta name="description" content="">
+<meta name="robots" content="index,follow">
+<script type="text/javascript">
+var JSPATH = {},
+HCP='http://js2.pp.sohu.com.cn/ppp/js/common_v_20120320/',
+HMP='http://js4.pp.sohu.com.cn/ppp/js/module_v_20130922/',
+HTP='http://js5.pp.sohu.com.cn/ppp/js/tool_v_090418/';
+JSPATH.util={common:HCP+'common.js',module:HMP,tool:HTP};
+
+var BLOG_SP = 'http://js3.pp.sohu.com.cn/ppp/blog/js_ppp_v_20141009/';
+JSPATH.blog={_path:BLOG_SP};
+
+var TP = 'http://js2.pp.sohu.com.cn/ppp/group/toolbar_v_090827/';
+
+</script>
+<link rel="stylesheet" type="text/css" href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/revoArticle.css"> 
+<link href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/style.css" rel="stylesheet" type="text/css">
+<link type="image/x-icon" href="http://blog.sohu.com/favicon.ico" rel="icon">
+<link type="image/x-icon" href="http://blog.sohu.com/favicon.ico" rel="shortcut icon">
+
+
+<link id="themeCss" href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/style_002.css" themeid="np0001" rel="stylesheet" type="text/css">
+
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://ifelseif.blog.sohu.com/rss">		<link rel="stylesheet" type="text/css" charset="utf-8" href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/combo_002.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/matrix/ad/passion" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/passion.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/matrix/ad/special" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/special.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/matrix/ad/multfusion" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/multfusion.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/plugin/mediator" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/mediator.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/matrix/ad/form/common" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/common_003.js"></script><link href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/bdsstyle.css" rel="stylesheet" type="text/css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="sjs/plugin/fingerprint2" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/fingerprint2.js"></script><link rel="stylesheet" type="text/css" charset="utf-8" href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/combo.css"><script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/pv.js"></script><script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/logger.js"></script></head>
+		<body><iframe style="display: none;" frameborder="0"></iframe><div id="bdshare_s" style="display: block;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div id="bdshare_l" style="display: none;"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="#" class="bds_mshare mshare">一键分享</a></li><li><a href="#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="#" class="bds_renren rrw">人人网</a></li><li><a href="#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="#" class="bds_douban db">豆瓣网</a></li><li><a href="#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="#" class="bds_sqq sqq">QQ好友</a></li><li><a href="#" class="bds_thx thx">和讯微博</a></li><li><a href="#" class="bds_more">更多...</a></li></ul><p><a href="#" class="goWebsite">百度分享</a></p></div></div></div>
+				<a name="top"></a>
+
+<div id="isohu-topbar" data-appid="1019" data-type="blog"></div>
+ 
+       				
+<script type="text/javascript" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/jquery.js" charset="utf-8"></script>
+<script type="text/javascript">
+var SP = BLOG_SP;
+var ThP = 'http://js2.pp.sohu.com.cn/ppp/blog/themes_ppp_v_20140529/';
+var WP = '/ppp/blog/widgets_v_20141223/';
+var UWAP = 'http://js3.pp.sohu.com.cn/ppp/blog/widgets_v_080920/uwa_widget/';
+document.write('<scr'+'ipt type="text/javascript" src="'+ SP + 'sohublog.js"></scr'+'ipt>');
+</script><script type="text/javascript" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/sohublog.js"></script>
+<script type="text/javascript">
+var utf8jss = [SP+'common.v.20151103.js', 'http://r.suc.itc.cn/combo.action?v.120412&r=/itoolbar/core/base64.js|/itoolbar/core/jquery.cookie.js|/itoolbar/core/jquery.easing.js|/itoolbar/core/jquery.hotmap.js|/itoolbar/core/passport.js&t=js&c=utf-8'];
+lsl([HCP+'common.js'], 'utf-8');
+lsl([ HTP+'effect.js']);
+lsl(utf8jss, 'utf-8');
+</script><script type="text/javascript" charset="utf-8" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/common.js"></script><script type="text/javascript" charset="" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/effect.js"></script><script type="text/javascript" charset="utf-8" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/common_002.js"></script><script type="text/javascript" charset="utf-8" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/combo.action"></script>
+				<div id="ms_toolbar" data-appid="001" data-type="blog"><div class="toolbar clearfix">   <div class="toolbar-inner">       <div class="unit">           <div class="brand">               <a href="http://i.sohu.com/home.htm"><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/logo.png"></a>           </div>           <div class="user-top">                <div class="txt" id="sideBar_btn"><a href="javascript:" class="toolbar-login-btn">登录</a><a href="http://i.sohu.com/login/reg.do?bru=http://blog.sohu.com" class="toolbar-reg-btn">注册</a></div>       </div>       </div>       <ul class="nav top-ul">                      <li class="splitline"><b>|</b></li><li class="new-blog"><a class="new-blog-link" href="http://i.sohu.com/login/reg.do?bru=http://blog.sohu.com"></a></li><li class="splitline"><b>|</b></li><li class="blog-plaza"><a target="_blank" href="http://blog.sohu.com/"><i class="icon-small icon-blog-plaza"></i>博文广场</a></li>       </ul>       <div class="search">    <form id="tp_friend_search">    <input class="input-search" name="searchInput" maxlength="12" placeholder="找人/找内容" type="text">    <a class="btn-search" href="javascript:"><i class="icon-mini icon-search"></i></a>    </form></div>   </div></div><div class="sidebar-wrapper clearfix " style="display: none;">    <div class="sidebar">       <div class="sidebar-inner">           <div id="sidebar_login"> <div class="sidebar-login"> <form id="login_bar_form"> <div class="login-union"> <label for="name">登录名</label> <input name="account" type="text"> </div> <div class="login-union"> <label for="password">密码</label> <input name="password" type="password">  </div> <div class="alert alert-error hide"></div> <div class="login-status">  <span class="push-right"><a class="btn btn-primary" href="javascript:void(0)" id="login_toolbar">登录</a></span> <label><input id="saveStatus" name="saveStatus" checked="checked" type="checkbox"> 记住登录状态</label> </div> <div class="login-action"> <a href="http://i.sohu.com/login/reg.do?bru=http://blog.sohu.com">注册新用户</a><a href="http://passport.sohu.com/web/recover.jsp">忘记密码</a><a href="http://z.i.sohu.com/help/helpqa.html">帮助中心</a> </div> </form><div class="text-centered gray hide">正在登录,请稍候...</div> </div><!--/sidebar-login --><div class="sidebar-account"><h4 class="title">使用您常用的账号登录</h4><ul class="thumbnails" id="tb_third_party"><li><a href="http://plus.sohu.com/spassport/bind/40000001/qq?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-qq"></i></a></li><li><a href="http://plus.sohu.com/spassport/bind/40000001/weibo?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-sina"></i></a></li><li><a href="http://plus.sohu.com/spassport/bind/40000001/renren?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-renren"></i></a></li><li><a href="http://plus.sohu.com/spassport/bind/40000001/baidu?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-baidu"></i></a></li><li><a href="http://plus.sohu.com/spassport/bind/40000001/taobao?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-taobao"></i></a></li><li><a href="https://passport.sohu.com/openlogin/request.action?provider=tianya&amp;appid=1019&amp;ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-tianya"></i></a></li><li><a href="https://passport.sohu.com/openlogin/request.action?provider=kaixin&amp;appid=1019&amp;ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-kaixin"></i></a></li><li><a href="https://passport.sohu.com/openlogin/request.action?provider=alipay&amp;appid=1019&amp;ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-alipay"></i></a></li><li><a href="https://passport.sohu.com/openlogin/request.action?provider=feixin&amp;appid=1019&amp;ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-qzone"></i></a></li><li><a href="http://plus.sohu.com/spassport/bind/40000001/douban?ru=http://ifelseif.blog.sohu.com/152454187.html" class="thumbnail"><i class="img-douban"></i></a></li></ul><em class="clearfix"></em></div></div>           <div id="sideBar_main">               <div class="sidebar-userinfo"></div>               <div class="sidebar-centre"></div>               <div class="sidebar-visitor"></div>               <div class="sidebar-follow follows"></div>               <div class="sidebar-follow followed"></div>           </div>       </div>    </div></div><div class="modal sidebar-add-app hide"><div></div></div></div>
+				<script type="text/javascript" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/loader_002.action" charset="utf-8"></script>	
+			<div id="wrapper">
+			
+<script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/sohu-require.js"></script>
+<div id="beans_13523" style="width: 950px; position: relative; z-index: 0;"><iframe marginwidth="0" marginheight="0" scrolling="no" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/9500090.htm" width="950" height="90" frameborder="0"></iframe><div style="bottom: 0px; left: 0px; position: absolute; height: 15px; color: rgb(255, 255, 255); padding: 1px 0px 0px; background: rgba(0, 0, 0, 0) url(&quot;//images.sohu.com/bill/static/0/pcicon.png&quot;) repeat scroll 0% 0%; z-index: 4;">广告</div></div>
+<script>
+	//顶通
+	 require([ "sjs/matrix/ad/passion" ], function(passion) {
+		passion.ones({
+			itemspaceid : "13523",
+			width : 950,
+			height : 90
+		});
+	}); 
+</script>
+
+<script>
+
+	//对联
+	require([ "sjs/matrix/ad/special" ], function(special) {
+		special.ones({
+			itemspaceid : "13524",
+			width : 120,
+			height : 270,
+			form : "couplet",
+			extend : {
+				position : "fixed",
+				width : "100%"
+			}
+		});
+	});
+</script>
+				<div id="innerWrapper">
+<div id="header">
+  <div id="playerBox"><div id="innerPlayerBox"></div></div>
+  <div id="innerHeader">
+  
+	<div id="blogLogo"><a href="http://blog.sohu.com/"><img alt="搜狐博客" id="logo" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/spacer.gif"></a></div>
+	<h1 id="blogTitle"><a onmousedown="CA.q('blog_header_title');" id="blogAdmin" href="http://ifelseif.blog.sohu.com/">ifelseif</a></h1>
+	<div id="blogUrl">
+		<a title="查看ifelseif的首页" class="navUrl" href="http://ifelseif.blog.sohu.com/"><img alt="首页" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/house_002.gif" border="0" align="absmiddle"></a><a title="查看ifelseif的首页" class="navUrl" href="http://ifelseif.blog.sohu.com/">首页</a>
+        <a onmousedown="CA.q('blog_header_entry');" title="查看ifelseif的日志" class="navUrl" href="http://ifelseif.blog.sohu.com/entry/"><img alt="日志" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_entry.gif" border="0" align="absmiddle"></a><a onmousedown="CA.q('blog_header_entry');" title="查看ifelseif的日志" class="navUrl" target="_blank" href="http://ifelseif.blog.sohu.com/entry/">日志</a> 
+        <a onmousedown="CA.q('blog_header_photo');" style="display:none" target="_blank" title="查看ifelseif的相册" class="navUrl" href="http://pp.sohu.com/xpt/Z29uZ3cwM0Bzb2h1LmNvbQ=="><img alt="相册" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_picture.gif" border="0" align="absmiddle"></a><a onmousedown="CA.q('blog_header_photo');" style="display:none" title="查看ifelseif的相册" target="_blank" class="navUrl" href="http://pp.sohu.com/xpt/Z29uZ3cwM0Bzb2h1LmNvbQ==">相册</a> 
+        <a onmousedown="CA.q('blog_header_video');" style="display:none" title="查看ifelseif的视频" class="navUrl" target="_blank" href="http://my.tv.sohu.com/people/Z29uZ3cwM0Bzb2h1LmNvbQ=="><img alt="视频" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_video.gif" border="0" align="absmiddle"></a><a onmousedown="CA.q('blog_header_video');" style="display:none" title="查看ifelseif的视频" class="navUrl" target="_blank" href="http://my.tv.sohu.com/people/Z29uZ3cwM0Bzb2h1LmNvbQ==">视频</a> 
+        <a onmousedown="CA.q('blog_header_profile');" style="display:none" title="查看ifelseif的个人资料" class="navUrl" href="http://ifelseif.i.sohu.com/profile/index.htm"><img alt="资料" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_profile.gif" border="0" align="absmiddle"></a><a onmousedown="CA.q('blog_header_profile');" style="display:none" title="查看ifelseif的个人资料" class="navUrl" href="http://ifelseif.i.sohu.com/profile/index.htm">资料</a>
+		<a onmousedown="CA.q('blog_header_rss');" target="_blank" href="http://ifelseif.blog.sohu.com/rss"><img alt="RSS订阅" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_rss.gif" align="absmiddle"></a>
+	</div>
+	<div id="blogDesc">自强不息，厚德载物</div>
+  </div>
+</div>
+
+<div id="navBar">
+  <div id="innerNavBar">
+		<ul id="mainNav">
+			<li><a href="http://ifelseif.blog.sohu.com/#tp_01be8e6792"><script type="text/javascript">document.write(getNavIco('', '首页'));</script><img class="pageIcon" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/house.gif" title="首页"><span>首页</span></a></li>
+			<li><a href="http://ifelseif.blog.sohu.com/#tp_9815ab5cbc9"><script type="text/javascript">document.write(getNavIco('0', '订阅'));</script><span>订阅</span></a></li>
+			<li><a href="http://ifelseif.blog.sohu.com/#tp_pp"><script type="text/javascript">document.write(getNavIco('100', '相册'));</script><img class="pageIcon" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/picture.gif" title="相册"><span>相册</span></a></li>
+		</ul>
+	<ul id="optionNav">
+	</ul>
+	<div class="clear"></div>
+  </div>
+</div>					<div id="mainWrapper">
+
+		<div id="innerMainWrapper" class="revolution">
+		
+		
+			<div id="articleContent">
+			
+			
+                <div id="articleInnerContent">
+                
+<div class="content-top"></div>
+
+<div class="revoWarrper profileL">  
+
+<div class="revoArtLeft">
+	<div class="mod" id="m_1">
+	<div class="modFrame">
+	<table class="modTable" cellspacing="0" cellpadding="0">
+	<thead>
+	<tr>
+		<td class="mheader lt"></td>
+		<td class="mheader t">
+			<div class="modHeader clearfix">
+				<div class="modIco" style=""><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_widget_002.gif"></div>
+				<div class="modTitle">个人资料</div>
+			</div>
+		</td><td class="mheader rt"></td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr style="display: none;"><td class="mneck l"></td><td class="mneck ec"><div class="modEditCon"></div></td><td class="mneck r"></td></tr><tr><td class="mbody l"></td><td class="mbody c">
+	<div class="newBlog-profile-content">
+	<div class="newBlog-profile-content-top">
+      
+      <div class="img"><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/12627560ef7g215.jpg" alt=""></div>
+       <div class="user-name" id="p-username"></div>
+   		
+    <div class="revoBtns">
+		<div class="btns">
+               <a title="将 ifelseif 加为我的跟随" href="javascript:void(0);" class="i-addfriend"><i class="icon_profile_follow"></i></a>
+    &nbsp;&nbsp;&nbsp;<a target="_blank" href="http://ifelseif.i.sohu.com/guestbook/"><i class="icon_profile_message"></i></a>
+    	 </div>
+    </div>
+    </div>
+    <div class="newBlog-profile-content-middle">
+            <p>博客年龄：10年4个月<br>
+                访问：<span id="p-visitcount">107705</span>次<br>
+                文章：164篇</p>
+    </div>
+    	<div class="newBlog-profile-content-bom">
+            <h4>个人描述</h4>
+            <p>这是一个独处的空间，主要记录一些研究进展，还有心情之类。</p>
+        </div>
+	    <div class="revoBtns03" sytle="width:100%;overflow:hidden;"></div>
+   	</div>
+    
+    </td><td class="mbody r"></td></tr>
+    
+    </tbody>
+    <tfoot><tr><td class="mfooter lb"></td><td class="mfooter b"></td><td class="mfooter rb"></td></tr></tfoot>
+    </table>
+    </div>
+	</div>
+	
+
+<!--模块三-->
+<div class="mod" id="m_3">
+  <div class="modFrame">
+    <table class="modTable" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <td class="mheader lt"></td>
+          <td class="mheader t"><div class="modHeader clearfix">
+              <div class="modIco" style=""><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/1_29.gif"></div>
+              <div class="modTitle">博主最新文章</div>
+            </div></td>
+          <td class="mheader rt"></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mbody l"></td>
+          <td class="mbody c">
+          	<div class="modCon profile-content">
+              <ul class="revoArticleLists" onmousedown="CA.q('blog_entry_latest_list');">
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/168182549.html">已知概率密度函数，生成任意概率分布</a>
+                </li>
+					
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/165542013.html">ssh和vnc的超时问题</a>
+                </li>
+					
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/162945021.html">MATLAB 编译 FORTRAN 的MEX文件时只能使用固定格式吗?</a>
+                </li>
+					
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/161589497.html">在64位linux中使用matlab的c扩展</a>
+                </li>
+					
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/161183903.html">英文不懂这些，弄错会很丢脸的</a>
+                </li>
+					
+
+              	<li>
+                	<a href="http://ifelseif.blog.sohu.com/155843295.html">todolist</a>
+                </li>
+					
+              </ul>
+              <div class="revoArticlrMore"><a href="http://ifelseif.blog.sohu.com/entry/" onmousedown="CA.q('blog_entry_lastest_list_more');" target="_blank">更多文章&gt;&gt;</a></div>
+            </div>
+            </td>
+          <td class="mbody r"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="mfooter lb"></td>
+          <td class="mfooter b"></td>
+          <td class="mfooter rb"></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<div class="revoArtRight">
+    <div class="mod">
+    <div class="modFrame">
+    <table class="modTable" cellspacing="0" cellpadding="0">
+     <thead>
+                <tr>
+                  <td class="mheader lt"></td>
+                  <td class="mheader t"><div class="modHeader clearfix">
+                      <div style="" class="modIco"><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_widget.gif"></div>
+                      <div class="modTitle">日志正文</div>
+                    </div></td>
+                  <td class="mheader rt"></td>
+                </tr>
+              </thead>
+              
+              <tbody>
+                <tr style="display: none;">
+                  <td class="mneck l"></td>
+                  <td class="mneck ec"><div class="modEditCon"></div></td>
+                  <td class="mneck r"></td>
+                </tr>
+                <tr>
+                <td class="mbody l"></td>
+                  <td class="mbody c">
+                  <div class="modCon profile-content">
+<div class="item">
+  <div class="item-top"></div>
+  <div id="entry">
+              
+              
+    <div class="item-body">
+        <div class="newBlog-title" data-entryid="152454187">
+      <h2>
+		<span>用mingw gcc在windows下编译dll</span>
+      </h2>
+      
+      <div class="newBlog-title-sort">
+		   分类：<a href="http://ifelseif.blog.sohu.com/entry/3486677/">C/C++/java</a>
+		|
+		标签：
+			<a href="http://tag.blog.sohu.com/gcc/" target="_blank"> gcc </a>&nbsp;
+
+			<a href="http://tag.blog.sohu.com/mingw/" target="_blank"> mingw </a>&nbsp;
+
+			<a href="http://tag.blog.sohu.com/dll/" target="_blank"> dll </a>&nbsp;
+      </div>
+
+      <div class="newBlog-top-opration">
+            <span class="date">2010-05-25 01:11</span>
+            阅读(<span class="itemReadCount">2761</span>)<a href="#commentForm">评论(<span class="discusscount">0</span>)</a><span style="display:none" class="opr"><a href="http://blog.sohu.com/manage/entry.do?m=edit&amp;id=152454187&amp;t=shortcut" target="_blank">编辑</a><a data-act="deleteEntry" href="javascript:void%200">删除</a></span>
+      </div>
+    </div>
+      
+      <div class="item-content" id="main-content"> <div style="line-height:160%;font-size:14px;">我只是个转载的&nbsp;http://tingxx.ycool.com/post.2023760.html<div><span style="line-height: 18px;"><span style="font-family: Tahoma; font-size: 12px; color: rgb(151, 149, 149); ">在网上查了一下,并且自己试了一试,minGW下编写与调用dll的过程如下(基于eclipse环境)<br><br>1.
+在eclipse下新建一个C工程,在它的属性里面检查Tool chain editor里面current toolchain是不是no 
+toolchain,还有C/C++ Build下要将build command 改成mingw32-make 
+,我在这个地方卡了好久,编绎会提示exec failed,可能默认用的是make吧<br><br>2.然后编写代码,三个文件<br>hello.c&nbsp;&nbsp; //用于调用生成的dll<br>#include &lt;stdio.h&gt;<br>#include "dll.h"<br><br>int main(int argc,char *argv[])<br>{<br>&nbsp;&nbsp;&nbsp; int a=1;<br>&nbsp;&nbsp;&nbsp; int b=5;<br>&nbsp;&nbsp;&nbsp; printf("%d+%d=%d\n",a,b,hello(a,b));<br>&nbsp;&nbsp;&nbsp; return 0;<br>}<br><br>dll.h&nbsp; //dll的声明,当编绎时加入BUILD_DLL宏时,将EXPORT 设置为 __declspec,使GCC生成dll库,否则是调动dll<br><br>#ifdef BUILD_DLL<br>/* dll export */<br>#define EXPORT __declspec(dllexport)<br>#else<br>/*dll import */<br>#define EXPORT __declspec(dllimport)<br>#endif<br><br>EXPORT int hello(int a,int b);<br><br>dll.c&nbsp;&nbsp; //dll的实现<br><br>#include "dll.h"<br><br>EXPORT int hello(int a,int b)<br>{<br>&nbsp;&nbsp;&nbsp; return a+b;<br>}<br><br>3.编写makefile,如下,里面所用到的gcc参数包括 -shared 表明生成动态链接库,<br>&nbsp;-Wl,--out-implib,libmessage.a 这个参数主要是生成.a这个文件,具体信息可以看最后的那篇文章<br><br><br>all: hello.exe<br><br>clean:<br>&nbsp;&nbsp;&nbsp; del *.o<br>&nbsp;&nbsp;&nbsp; del message.dll<br>&nbsp;&nbsp;&nbsp; del hello.exe<br><br>hello.exe: hello.o message.dll<br>&nbsp;&nbsp;&nbsp; gcc -o hello.exe hello.o -L./ -lmessage<br><br>hello.o: hello.c<br>&nbsp;&nbsp;&nbsp; gcc -c hello.c<br><br>message.dll: dll.o<br>&nbsp;&nbsp;&nbsp; gcc -shared -o message.dll dll.o -Wl,--out-implib,libmessage.a<br>dll.o: dll.c dll.h<br>&nbsp;&nbsp;&nbsp; gcc -c -DBUILD_DLL dll.c<br><br>好了,可以运行build all,应该可以看到hello.exe及message.dll了吧<br>运行hello,可以看到结果<br><br>可以参看这篇更详细的例子<br><font style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; " face="Arial">http://www.mingw.org/MinGWiki/index.php/sample%20DLL?PHPSESSID=abce11154a632520eb</font></span></span></div></div>
+		
+
+	<div class="clear"></div>
+	 <div class="newBlog-bom" data-entryid="152454187">
+        <div class="newBlog-bom-opration">
+	<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+<span class="bds_more" style="padding-top:4px;float:left">分享到：</span>
+<a class="bds_isohu" style="margin-left:0px;" title="分享到我的搜狐" href="#"></a>
+<a class="bds_tsina" style="margin-left:0px;" title="分享到新浪微博" href="#"></a>
+<a class="bds_qzone" style="margin-left:0px;" title="分享到QQ空间" href="#"></a>
+</div>
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=0" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+&nbsp;&nbsp;最后修改于 2010-05-25 01:25
+&nbsp;&nbsp;  
+阅读(<span class="itemReadCount">2761</span>)<a href="#commentForm">评论(<span class="discusscount">0</span>)</a><span style="display:none" class="opr"><a href="http://blog.sohu.com/manage/entry.do?m=edit&amp;id=152454187&amp;t=shortcut" target="_blank">编辑</a><a data-act="deleteEntry" href="javascript:void%200">删除</a></span>
+</div>
+        <div class="newBlog-bom-pn">
+            <span class="bom-p">
+			上一篇：<a onmousedown="CA.q('blog_entryview_previous');" href="http://ifelseif.blog.sohu.com/152459243.html"> 该日志被锁定</a>
+</span>
+			<span class="bom-n">
+			下一篇：<a onmousedown="CA.q('blog_entryview_next');" href="http://ifelseif.blog.sohu.com/151897714.html">坚决不用高频出现的傻词 </a>
+ </span>
+        </div>
+   	</div>
+   	<div id="sz_qz" style="display:none"></div>
+       <div class="clear"></div>
+      </div>
+	  
+    </div>
+
+  </div>
+  <div class="blog-article-ad-wrapper"></div>
+  
+  
+  <div id="entrycommentlist">
+    <div id="messageWrapper"></div>
+    <div class="item-title">
+      <h3>评论&nbsp;&nbsp;&nbsp;<img class="icon" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/ico_question.gif" align="absmiddle">&nbsp;&nbsp;<a href="http://admin.blog.sohu.com/85634919.html" target="”_blank”" style="font-weight: normal;" onmousedown="CA.a('entry_commemt_first');">想第一时间抢沙发么？</a></h3>
+      <div class="clear"></div>
+    </div>
+    
+
+    <div id="commentlist"></div>
+    <div class="item-info">
+      <div id="pageText"></div>
+    </div>
+
+  </div>
+  <div id="tipBoxDiv"></div>
+  <script type="text/javascript">
+var entryId = '152454187';
+var blogId = '6515999';
+
+var pageTextContainer = $('pageText');
+var curPage = 1;
+var itemPerPage = 20;
+var startPage = 1;
+var totalCount = 0;
+var chagePageAction = 'chagePage';
+var noCache = location.href.indexOf('?') > 0;
+chagePage();
+</script>
+  <div id="errormsgWrapper"></div>
+  <div>
+<a name="commentbox" id="commentbox"></a>
+<div class="info-content" id="commentForm">由于最近广告泛滥，暂只允许登录用户对此文评论。<a href="javascript://">登录</a></div>
+
+<script type="text/javascript">
+var commentPermission = '0';
+setCPShow();
+</script>    
+  </div>
+  <div class="item-bottom"></div>
+</div>
+</div>
+</td>
+ <td class="mbody r"></td>
+</tr>
+</tbody>
+ <tfoot>
+        <tr>
+          <td class="mfooter lb"></td>
+          <td class="mfooter b"></td>
+          <td class="mfooter rb"></td>
+        </tr>
+</tfoot>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="content-bottom"></div>
+
+<script type="text/javascript">
+document.write('<scr'+'ipt type="text/javascript" src="'+SP+'counter.js"></scr'+'ipt>');
+</script><script type="text/javascript" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/counter.js"></script><img src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/a" style="display:none;">
+<script type="text/javascript" charset="utf-8" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/loader.action"></script>
+<script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/view.js" charset="utf-8"></script>
+
+ <!-- Le styles -->
+ <style>
+ *html .fixed-bottom {position:absolute;bottom:auto;top:expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-parseInt(this.currentStyle.bottom)));}
+ 
+ #popup{
+ position:fixed;
+ _position:absolute;
+ display:none;
+ }
+ h3{margin:0}
+ #popup .pop-wrapper .title h4{
+ background:url("http://i2.itc.cn/20140303/73a_d1d941dc_a3a3_535b_f165_d3844395343e_1.gif") no-repeat scroll 32px 0!important;
+ height: 22px;
+ width:100px!important;
+ padding-left: 32px;
+ margin: 0;
+ }}
+ </style>
+ <link rel="stylesheet" href="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/style_003.css"><div id="popup"> <div class="pop-wrapper"> <div class="title"> <div class="close"><a id="closepopup" onmousedown="CA.q('popup_close')" href="javascript:void(0)"><i class="icon-close"></i></a></div> <h4></h4></div> <div class="con"> <div class="photo"><span class="bg"></span><a class="xg" href="http://maxine-ve.blog.sohu.com/321666363.html" target="_blank"><strong>如何把网红爆款穿出高逼格</strong></a><a href="http://maxine-ve.blog.sohu.com/321666363.html" target="_blank"><img alt="" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/360d_0c8ff3f1_ddf1_7aa8_0976_d6af622da761_1.jpg"></a> </div> <div class="txt"> <div class="info"> <h3><a href="http://blog.sohu.com/" target="_blank"><font color="red">津巴布韦为何背弃老朋友？</font></a></h3> <p><a class="more" href="http://blog.sohu.com/" target="_blank">不仅中企受到波及，大规模进军津巴布韦的俄罗斯企业也在劫难逃……</a></p></div> <div class="list"> <ul> <li><a href="http://blog.sohu.com/shehui/" target="_blank">洪秀柱当选 最叫苦的是马英九</a></li> <li><a href="http://hanfengbi.blog.sohu.com/321560381.html" target="_blank">贪官为何都对情妇出手很大方？</a></li> <li><a href="http://liangff.blog.sohu.com/321543455.html" target="_blank">增值税仍需继续改革</a></li> <li><a href="http://lee532.blog.sohu.com/321559925.html" class="" target="_blank">探秘朱家峪全球最古老立交桥</a></li> <li><a href="http://chenlingshen.blog.sohu.com/321551539.html" class="" target="_blank">唯一娶日本女为妻的国军上将</a></li> </ul> </div></div></div></div></div><script>
+ function wmh_linkClick() {
+ var stat = new Image;
+ stat.src = "http://pv.mini.sohu.com/blog.gif?t=" + new Date().getTime();
+ }
+ </script>
+ 
+ <script type="text/javascript" src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/bms.js"></script>
+ <script>
+ //var popupAd = new bms.popup();
+ //popupAd.init('popup','closepopup',false,120,function(){CA.q('popup_show')});
+ //setTimeout(popupAd.popupAd,2000);
+ 
+ //window.onload=function(){setTimeout(popupAd.popupAd,500)};
+ </script>
+ <script type="text/javascript">
+ (function(){
+ $(function(){
+ $('#popup .action i.btn-draw').hover(function(){
+ $(this).addClass('btn-draw-hover');
+ },function(){
+ $(this).removeClass('btn-draw-hover');
+ });
+ 
+ $('#popup .action i.btn-exchange').hover(function(){
+ $(this).addClass('btn-exchange-hover');
+ },function(){
+ $(this).removeClass('btn-exchange-hover');
+ });
+ 
+ 
+ });
+ })(jQuery)
+ 
+ </script>
+ 
+ 
+ 
+
+
+</div>
+</div>
+
+</div>
+<script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/blog_pop.js"></script>
+					</div>
+<div id="footer">
+  <div id="innerFooter">
+	<div id="contact"> <a href="http://blog.sohu.com/help.html" target="_blank" rel="nofollow">帮助</a> - <a href="http://sohucallcenter.blog.sohu.com/" target="_blank" rel="nofollow">客服中心</a> - <a href="http://q.sohu.com/group/23063" target="_blank" rel="nofollow">意见建议</a> - <a href="mailto:jubao@contact.sohu.com">举报</a> - <a href="http://blog.sohu.com/" target="_blank">搜狐博客</a> - <a href="http://www.sohu.com/" target="_blank">搜狐首页</a> - <a href="http://blog.sohu.com/roll/" target="_blank">全部博文</a> - <a href="http://roll.sohu.com/" target="_blank">新闻</a>
+
+	</div>
+	<div id="copyright">Copyright &#169; 2014 Sohu.com Inc. All rights reserved. 搜狐公司 版权所有 </div>
+  </div>
+</div>
+<script src="%E7%94%A8mingw%20gcc%E5%9C%A8windows%E4%B8%8B%E7%BC%96%E8%AF%91dll-ifelseif-%E6%90%9C%E7%8B%90%E5%8D%9A%E5%AE%A2%21%21%21_files/pv_v206.js" type="text/javascript"></script>
+
+				</div>
+			</div>
+		
+<img id="caImg" style="display: none;"></body></html>

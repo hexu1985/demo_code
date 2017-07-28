@@ -1,0 +1,260 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh">
+<head>
+<title>MinGW 使用和创建 DLL 应注意的问题_Linux编程_Linux公社-Linux系统门户网站</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<link rel="icon" href="../../favicon.ico" type="image/x-icon"/>
+<link rel="shortcut icon" href="../../favicon.ico" type="image/x-icon"/>
+<meta name="description" content="MinGW 是 GCC 的 Windows 版本，稳定版已经到了 4.5.2，功能和性能上很好，感觉不比 Microsoft 自家的 VC 差啊。但是 MinGW 下使"/>
+<meta name="keywords" content="MinGW,MinGW 使用和创建 DLL 应注意的问题,编程,Linux编程,Linux Shell,Android,Android教程,JAVA,C语言,Python,HTML5"/>
+<link rel="canonical" href="http://www.linuxidc.com/Linux/2015-12/126123.htm"/>
+<meta name="generator" content="Linux公社"/>
+<meta name="generator" content="Linux"/>
+<link rel="stylesheet" href="../../style/systems/style.css" type="text/css"/>
+<meta name="generator" content="专业的Linux网站"/>
+<script type="text/javascript" src="../../inc/jquery.js"></script>
+<script type="text/javascript" src="../../inc/iwms.js"></script>
+<script type="text/javascript">iwms.urlPrefix="../../";</script>
+
+<script type="text/javascript" src="../../inc/show.js"></script>
+</head>
+<body>
+<div class="topBar">
+	<div class="twidth">
+	
+	<div style="float:right">
+		<script type="text/javascript" src="../../inc/language.js"></script>
+	</div>
+	
+	<div id="topUser">你好，游客 <a href="#" onclick="iwms.logPop()">登录</a>
+	<a href="../../memberreg.aspx" rel="nofollow">注册</a>
+	<a href="../../search.aspx" rel="nofollow">搜索</a>
+	</div>
+	</div>
+</div>
+<div class="twidth">
+<div id="sitehead">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<table width="100%">
+	<tr align="center"><td width="160">
+	<a href="http://www.linuxidc.com/"><img style="filter: chroma(color=#FFFFFF);" src="../../pic/logo.jpg" alt="Linux公社" width="155" height="53" border="0" /></a>
+	</td><td>
+	<div align="center"><script type="text/javascript" src="/linuxfile/linux.js"></script></div>
+	</td>
+	</tr></table>
+</div>
+</div>
+<div id="navbar">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm" class="first">首页</a><a href="../../it/">Linux新闻</a><a href="../../Linuxit/">Linux教程</a><a href="../../MySql/">数据库技术</a><a href="../../RedLinux/" class="thisclass">Linux编程</a><a href="../../Apache/">服务器应用</a><a href="../../Unix/">Linux安全</a><a href="../../download/">Linux下载</a><a href="../../Linuxrz/">Linux认证</a><a href="../../theme/">Linux主题</a><a href="../../Linuxwallpaper/">Linux壁纸</a><a href="../../linuxsoft/">Linux软件</a><a href="../../digi/">数码</a><a href="../../mobile/">手机</a><a href="../../diannao/">电脑</a>
+
+</div>
+</div>
+
+<div id="navsub">
+<div class="l"></div>
+<div class="r"></div>
+<div class="m">
+	<a href="../../index.htm">首页</a> → <a href="../../RedLinux/">Linux编程</a>
+</div>
+</div>
+<div class="linuxe1"><script type="text/javascript" src="/linuxfile/linuxe1.js"></script></div>
+<div class="linux1"><script type="text/javascript" src="/linuxfile/linux1.js"></script></div>
+<div class="linuxa"><script type="text/javascript" src="/linuxfile/linuxa.js"></script></div>
+<div class="linuxa1"><script type="text/javascript" src="/linuxfile/linuxa1.js"></script></div>
+<table id="middle" width="100%" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+<tr valign="top"><td>
+
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<div class="moreR">
+			背景：<script type="text/javascript">WriteBg()</script>
+		</div>
+		<span class="tt">阅读新闻</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm" id="bodyTd">
+		<div id="printBody" style="word-break:break-all;">
+			<div style="text-align:center"><h1 class="aTitle">MinGW 使用和创建 DLL 应注意的问题</h1></div>
+			
+			<table width="97%" align="center">
+				<tr>
+				<td width="140">[日期：2015-12-11]</td>
+				<td align="center">来源：Linux社区&nbsp;
+				作者：cyberniuniu</td>
+				<td width="160" align="right">[字体：<a href="javascript:ContentSize(16)">大</a> <a href="javascript:ContentSize(0)">中</a> <a href="javascript:ContentSize(12)">小</a>]
+				</td></tr>
+			</table>
+<div id="li_all">
+<div id="li_1"><script type="text/javascript" src="/linuxfile/linux201.js"></script></div>
+<div id="li_2"><script type="text/javascript" src="/linuxfile/linux2.js"></script></div>
+</div>
+			<div id="content"><p>MinGW 是 GCC 的 Windows 版本，稳定版已经到了 4.5.2，功能和性能上很好，感觉不比 Microsoft 自家的 VC 差啊。但是 MinGW 下使用和创建 DLL 倒是要特别注意，问题主要集中在 g++ 编译器（C++ 的 GNU 版本编译器）对于 DLL 的函数输入以及输出的名称修饰、调用协议上和 VC 编译器是有很大区别的。</p>
+<p>1、MinGW 如何使用一个标准的 DLL。这里标准 DLL 指的是采用 __stdcall 调用协议、并且导出函数名称干干净净，没有函数名尾部的 @nn、没有函数名头部的下划线的。MinGW 的 g++ 程序中，对于需要从 DLL 中导入的函数，声明时必须要用 extern "C"，但不要用 __declspec(dllimport)，虽然 g++ 支持，但是一旦你使用，则 g++ 在链接时会自动强制在需要导入的函数名前加 _imp__ 前缀，导致链接时找不到函数名错误。所以，我们其实完全不需要用 __declspec(dllimport)。另一方面，gcc/g++ 编译器遇到代码中 __stdcall 修饰的函数名，会自动将其函数名在链接时设置为函数名@nn，nn 是函数参数栈字节数。另外，gcc/g++ 编译器/链接器在链接时其实不需要 DLL 的导入库（import lib），因为它们可以直接从 DLL 链接，这样更加方便，省去了很多从 DLL 如何生成符合格式要求的 .a 导入库等问题。只需要在 gcc/g++ 参数中加入 -Wl,--enable-stdcall-fixup -L../../Bin/ -lDLL文件名（不含.dll）即可直接从 DLL 文件本身完成链接。这里要注意，-Wl参数指示 g++ 链接器需要采用后面的链接控制参数（以逗号分隔），--enable-stdcall-fixup 告诉 g++ 链接器需要导入的 DLL 函数的名字需要自动在尾部加上 @nn 格式的后缀，以便符合 gcc/g++ 对 __stdcall 函数名的扩展规范。-L 指定 DLL 文件所在目录，-l 指定 DLL 文件名称，不带 .dll。如果不加 --enable-stdcall-fixup，gcc/g++ 总是会报链接错误，因为 gcc/g++ 将代码中需要从 DLL 导入的函数名后面都强制加了 @nn，但是 DLL 中的函数名不带 @nn，没有 --enable-stdcall-fixup，很有可能就会出错。即时不出错，也会有很多警告，很有可能会导致程序 crash！注，在 NetBeans CDT 中，-Wl,--enable-stdcall-fixup -L -l 这样的参数在链接器参数设置中指定。</p>
+<p>2、MinGW 如何创建一个标准的 DLL。MinGW 中创建标准 DLL，应该使用 __declspec(dllexport)，包括 extern "C" 等都是和 VC 一样的。但要注意，这样编译链接生成的 DLL，导出的函数名尾部都带有 @nn，为了要去除它们，必须在链接器参数设置中使用 -Wl,--kill-at，它告诉链接器创建 DLL 时导出的函数名尾部不要带有 @nn。注，在 NetBeans CDT 中，上面这个参数同样是在链接器参数设置中指定。</p>
+<p>综上，如果创建一个 DLL，同时这个 DLL 又需要导入其他 DLL 的函数，参数就可以统一为 -Wl,--kill-at,--enable-stdcall-fixup -L -l 这样了，很方便。感觉 MinGW 确实相当强悍，跨平台，可调性很灵活，性能也很强劲，更难能可贵的是，它是一个免费而又强大的编译器！当然，搭配 NetBeans CDT 更是相当好的一款 C/C++ 开发利器。</p>
+<p><strong>MinGW 创建的程序或 DLL 脱离 libgcc-xx-xx.dll 和 libstdc++-x.dll 运行库的方法</strong></p>
+<p>MinGW 沿袭了 Linux 下 gcc/g++ 的习惯，编译出的程序或者动态链接库（共享库）总是默认采用动态链接方式，需要系统中附带运行时库文件 libgcc-xx-xx.dll 和 libstdc++-xx.dll。那么如果我们不想发布程序时还要附带这两个运行库，该如何操作呢？通过参考 gcc/g++ 用户手册，发现只需要在编译器或链接器参数设置中使用 -static-libgcc 和 -static-libstdc++ 即可实现对这两个运行库的静态库链接，不必附带运行库了。如果采用参数 -static，那么表示所有涉及到的外部共享库都采用静态链接方式了。不过 MinGW 始终还是要依赖 msvcrt.dll 这个在 Windows 平台上的基本运行库，但相信任何 Windows 平台都不会少了 msvcrt.dll 这个文件的，这是 Windows 必然自带的系统文件啦。</p>
+<p><span style="font-size: small;"><strong>本文永久更新链接地址</strong></span>：<a href="../../Linux/2015-12/126123.htm">http://www.linuxidc.com/Linux/2015-12/126123.htm</a></p><a href="http://www.linuxidc.com" target="_blank"><img src="/linuxfile/logo.gif" alt="linux" width="15" height="17" /></div>
+<div class="linux3"><script type="text/javascript" src="/linuxfile/linux3.js"></script></div>
+<div class="linux302"><script type="text/javascript" src="/linuxfile/linux302.js"></script></div>		
+			
+			
+		</div>
+<div class="linuxfx"><script type="text/javascript" src="/linuxfile/fx.js"></script></div>	
+<div class="linux8"><script type="text/javascript" src="/linuxfile/linux8.js"></script></div>
+<div class="linux801"><script type="text/javascript" src="/linuxfile/linux801.js"></script></div>
+		<div class="nearNews">
+			<div class="prevNews"><a href="../../Linux/2015-12/126122.htm">AppCode 中开发 Mac OS X 应用程序或共享库的经验小结</a></div>
+			<div class="nextNews"><a href="../../Linux/2015-12/126147.htm">使用 Go 进行 iOS 和 Android 编程</a></div>
+		</div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+<div class="linux809"><script type="text/javascript" src="/linuxfile/linux809.js"></script></div>
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">相关资讯</span> &nbsp; &nbsp; &nbsp;
+		<a href="../../search.aspx?where=nkey&amp;keyword=10752" target="_blank">MinGW</a>&nbsp; 
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width='100%'><tr><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2014-09/106629.htm"  target="_blank" >pkg-config for mingw 安装及配置</a>&nbsp; <span class="gray">(09/14/2014 08:22:59)</span></li>
+<li><a href="../../Linux/2013-06/85217.htm"  target="_blank"  title="Linux下开发Windows平台运行的程序 - MinGW">Linux下开发Windows平台运行的程序</a>&nbsp; <span class="gray">(06/01/2013 07:49:29)</span></li>
+<li><a href="../../Linux/2012-07/66204.htm"  target="_blank"  title="QT Creator和MinGW中配置OpenCV2.3.1">QT Creator和MinGW中配置OpenCV2.3</a>&nbsp; <span class="gray">(07/24/2012 09:37:59)</span></li>
+</ul></td><td width='50%' valign='top'><ul class='nl'><li><a href="../../Linux/2014-01/95848.htm"  target="_blank"  title="MinGW 编译FFmpeg 1.2.1 的H.264 decoder">MinGW 编译FFmpeg 1.2.1 的H.264 </a>&nbsp; <span class="gray">(01/26/2014 19:47:52)</span></li>
+<li><a href="../../Linux/2012-08/67544.htm"  target="_blank"  title="MinGW 链接 glut 库编译 OpenGL 项目">MinGW 链接 glut 库编译 OpenGL 项</a>&nbsp; <span class="gray">(08/07/2012 14:38:54)</span></li>
+<li><a href="../../Linux/2012-07/64574.htm"  target="_blank" >Eclipse+MinGW+SWIG包装Java接口</a>&nbsp; <span class="gray">(07/07/2012 07:00:44)</span></li>
+</ul></td></tr></table>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+<div class="linux808"><script type="text/javascript" src="/linuxfile/linux808.js"></script></div>
+	
+	<div class="mframe mR">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">本文评论</span>
+		 	　　<a href="../../remark.aspx?id=126123" target="_blank">查看全部评论</a> <span class="gray">(0)</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<table width="100%" style="margin:6px">		
+		<tr><td width="50%">
+			<form action="" name="fmRemarkSt" onsubmit="return remark.post(this);">
+			<input type="hidden" value="1" name="face"/>
+			表情： <img src="../../pic/b.gif" alt="表情" class="face1" style="cursor:pointer;vertical-align:middle" onclick="remark.dispFace(this)" onmouseout="remark.hideFace()"/>
+			姓名： <input type="text" name="username" value="" maxlength="15" style="width:60px" class="inputbg"/>
+			<input type="checkbox" id="rmAnonymitySt" onclick="remark.anony(this)"/><label for="rmAnonymitySt">匿名</label>
+			字数 <input type="text" id="bodyLen" size="3" readonly="readonly" style="border-width:0;background:transparent;vertical-align:middle" value="0"/>
+			<br/>
+			<textarea name="body" cols="40" rows="4" onkeydown="remark.dispLen(this)" onkeyup="remark.handle(event,this);remark.dispLen(this)" style="width:39em;height:100px;margin:3px 0;overflow-y:auto"></textarea>
+				<br/>
+		　　　<input type="checkbox" checked="checked" id="rmAgreeSt"/><label for="rmAgreeSt">同意评论声明</label>
+		　　　<button type="submit" style="width:50px">发表</button>
+			</form><br>
+			评论声明
+			<ul style="list-style-type:square;margin:5px 0 0 1em;padding:0">
+			<li>尊重网上道德，遵守中华人民共和国的各项有关法律法规</li>
+			<li>承担一切因您的行为而直接或间接导致的民事或刑事法律责任</li>
+			<li>本站管理人员有权保留或删除其管辖留言中的任意内容</li>
+			<li>本站有权在网站内转载或引用您的评论</li>
+			<li>参与本评论即表明您已经阅读并接受上述条款</li>
+			</ul>
+		</td>
+		<td width="50%"><div class="linux799"><script type="text/javascript" src="/linuxfile/linux799.js"></script></div></td></tr>
+		</table>
+		<script type="text/javascript" src="../../inc/remark.js"></script>
+		<script type="text/javascript">
+			remark.maxSize=500;
+			remark.minSize=2;
+			remark.sourceEle=$(document.fmRemarkSt).find("button").get(0);
+			iwms.vCode="D2BDA41E";
+			iwms.user.name.length==0 ? $i("rmAnonymitySt").click() : $i("rmAnonymitySt").form.username.value=iwms.user.name;
+		</script>
+		<div class="reCont" id="reContainer"></div>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	
+</td><td width="300" valign="top">
+<div class="linux901"><script type="text/javascript" src="/linuxfile/linux901.js"></script></div>
+<div class="linux902"><script type="text/javascript" src="/linuxfile/linux902.js"></script></div>
+<div class="linux903"><script type="text/javascript" src="/linuxfile/linux903.js"></script></div>
+<div class="linux905"><script type="text/javascript" src="/linuxfile/linux905.js"></script></div>
+	
+	<div class="lframe">
+	<div class="tl"></div>
+	<div class="tr"></div>
+	<div class="tm">
+		<span class="tt">最新资讯</span>
+	</div>
+	<div class="wrapper">
+	<div class="ml"></div>
+	<div class="mr"></div>
+	<div class="mm">
+		<ul class="nl">
+<li><a href="../../Linux/2016-08/134490.htm" target="_blank">CentOS 6.4下双网卡bond配置</a></li>
+<li><a href="../../Linux/2016-08/134489.htm" target="_blank" title="CentOS6.x双网卡采用主-备份策略绑定（bond）">CentOS6.x双网卡采用主-备份策略绑定（bond</a></li>
+<li><a href="../../Linux/2016-08/134488.htm" target="_blank">ORA-30036故障解决方法案例</a></li>
+<li><a href="../../Linux/2016-08/134487.htm" target="_blank">ORA-03114: 未连接到 ORALCE 解决方法案例</a></li>
+<li><a href="../../Linux/2016-08/134486.htm" target="_blank">Oracle RAC系统内存无法释放解决</a></li>
+<li><a href="../../Linux/2016-08/134485.htm" target="_blank" title="Oracle Goldengate在HP平台裸设备文件系统OGG-01028处理">Oracle Goldengate在HP平台裸设备文件系统</a></li>
+<li><a href="../../Linux/2016-08/134484.htm" target="_blank" title="OGG升级运行ggsic报Unable to find library 'libclntsh.so.11.1'">OGG升级运行ggsic报Unable to find library</a></li>
+<li><a href="../../Linux/2016-08/134483.htm" target="_blank">Linux vi命令大全</a></li>
+<li><a href="../../Linux/2016-08/134482.htm" target="_blank">VMware虚拟机主机模式下与主机互ping通</a></li>
+<li><a href="../../Linux/2016-08/134481.htm" target="_blank">Linux内核中container_of函数详解</a></li>
+</ul>
+	</div>
+	</div>
+	<div class="bl"></div>
+	<div class="br"></div>
+	<div class="bm"></div>
+	</div>
+	<div class="u70"><script type="text/javascript" src="/linuxfile/u70.js"></script></div>
+	<div class="u80"><script type="text/javascript" src="/linuxfile/u80.js"></script></div>
+	<div class="u90"><script type="text/javascript" src="/linuxfile/u90.js"></script></div>
+	<div class="space"></div>
+	<div id="pin">
+	<script type="text/javascript" src="/linuxfile/pin.js"></script>
+	</div>
+</td></tr>
+</table>
+<div class="linux906"><script type="text/javascript" src="/linuxfile/linux906.js"></script></div>
+<div id="footer">
+<a href="http://www.linuxidc.com/aboutus.htm">Linux公社简介</a> - <a href="http://www.linuxidc.com/adsense.htm">广告服务</a> - <a href="http://www.linuxidc.com/sitemap.aspx">网站地图</a> - <a href="http://www.linuxidc.com/help.htm">帮助信息</a> - <a href="http://www.linuxidc.com/contactus.htm">联系我们</a><br />本站（LinuxIDC）所刊载文章不代表同意其说法或描述，仅为提供更多信息，也不构成任何建议。<br /><script type="text/javascript" src="/linuxfile/qq.js"></script><br />
+<script type="text/javascript" src="/linuxfile/foot.js"></script><br />Copyright &copy; 2006-2016　<a href="http://www.linuxidc.com/">Linux公社</a>　All rights reserved 沪ICP备15008072号-1号
+	<script type="text/javascript">iwms.aId=126123;$(function(){iwms.imgCont=$i('content');iwms.imgResize();InitContStyle();iwms.getVars();})</script>
+	
+</div>
+</div>
+<script type="text/javascript" src="/linuxren/linuxren1.js"></script>
+<script type="text/javascript" src="/linuxren/linuxren2.js"></script>
+<script type="text/javascript" src="/linuxren/linuxren3.js"></script>
+</body>
+</html>

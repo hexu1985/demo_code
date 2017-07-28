@@ -1,0 +1,1 @@
+﻿document.writeln("本站带宽由[<font color=\"red\">808.Ai<\/font>]友情提供<br>关注Linux，关注LinuxIDC.com，<font color=\"red\">请向您的QQ好友宣传LinuxIDC.com<\/font>，多谢支持！")

@@ -1,0 +1,325 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>MSVC and MinGW DLLs | MinGW</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link type="text/css" rel="stylesheet" media="all" href="MSVC%20and%20MinGW%20DLLs%20_%20MinGW_files/css_9a797b4445bb286492939d95da32b0aa.css">
+    <script type="text/javascript"> </script>
+  </head>
+
+<body id="second">
+  <div id="page" class="one-sidebar two-sidebars">
+  
+    <div id="header">
+    
+      <div id="logo-title">
+       
+                
+                  <h1 id="site-name">
+            <a href="http://www.mingw.org/" title="Home">
+              MinGW            </a>
+          </h1>
+                
+         
+          <div id="site-slogan">
+            Minimalist GNU for Windows          </div>
+                
+      </div>
+      
+      <div class="menu withprimarywithsecondary">
+                      <div id="primary" class="clear-block">
+              <ul class="links primary-links"><li class="menu-43 first"><a href="http://www.mingw.org/Welcome_to_MinGW_org" title="About MinGW">About</a></li>
+<li class="menu-92"><a href="https://sourceforge.net/downloads/mingw" title="">Downloads</a></li>
+<li class="menu-66"><a href="http://www.mingw.org/wiki" title="MinGW's New Wiki">Documentation</a></li>
+<li class="menu-63"><a href="http://www.mingw.org/tracker">Recent posts</a></li>
+<li class="menu-48 last"><a href="http://www.mingw.org/aggregator">Feed aggregator</a></li>
+</ul>            </div>
+                    
+                      <div id="secondary" class="clear-block">
+                      </div>
+                </div>
+      
+            
+    </div>
+
+    <div id="container" class="withleft withright clear-block">
+      
+      <div id="main-wrapper">
+      <div id="main" class="clear-block">
+        <div class="breadcrumb"><a href="http://www.mingw.org/">Home</a></div>                        <h1 class="title">MSVC and MinGW DLLs</h1>        <div class="tabs"><ul class="tabs primary">
+<li class="active"><a href="http://www.mingw.org/wiki/MSVC_and_MinGW_DLLs" class="active">View</a></li>
+<li><a href="http://www.mingw.org/node/85/revisions">Revisions</a></li>
+</ul>
+</div>                        <div class="node" id="node-85">
+  
+    
+  
+    <div class="meta with-taxonomy">
+  
+          <div class="submitted">Posted February 26th, 2009 by earnie</div> 
+        
+     
+      <div class="taxonomy"><ul class="links inline"><li class="taxonomy_term_66 first"><a href="http://www.mingw.org/category/wiki/dll" rel="tag" title="">dll</a></li>
+<li class="taxonomy_term_1"><a href="http://www.mingw.org/category/wiki/faq" rel="tag" title="">faq</a></li>
+<li class="taxonomy_term_65 last"><a href="http://www.mingw.org/category/wiki/msvc" rel="tag" title="">msvc</a></li>
+</ul></div>
+        
+  </div>
+    
+  <div class="content">
+    <p>TODO: Reformat to new wiki syntax.</p>
+<p>!!! [Minimalist GNU for Windows | <a href="http://www.mingw.org/">http://www.mingw.org</a>]</p>
+<p>!! MSVC and MinGW DLLs</p>
+<p>Assume we have a testdll.h, testdll.c, and testmain.c. In the first 
+case, we will compile testdll.c with MinGW, and let the MSVC-compiled 
+testmain call it. You should use</p>
+<p></p><pre>gcc -shared -o testdll.dll testdll.c -Wl,--output-def,testdll.def,--out-implib,libtestdll.a</pre><p></p>
+<p>to produce the DLL and DEF files. MSVC cannot use the MinGW library, 
+but since you have already the DEF file you may easily produce one by 
+the Microsoft LIB tool:</p>
+<p></p><pre>lib /machine:i386 /def:testdll.def</pre><p></p>
+<p>Once you have testdll.lib, it is trivial to produce the executable with MSVC:</p>
+<p></p><pre>cl testmain.c testdll.lib</pre><p></p>
+<p>Now for MinGW programs calling an MSVC DLL. We have two methods. One 
+way is to specify the LIB files directly on the command line after the 
+main program. For example, after</p>
+<p></p><pre>cl /LD testdll.c</pre><p></p>
+<p>use</p>
+<p></p><pre>gcc -o testmain testmain.c testdll.lib</pre><p></p>
+<p>The other way is to produce the .a files for GCC. For __cdecl 
+functions (in most cases), it is simple: you only need to apply the 
+reimp tool from Anders Norlander (since his web site is no longer 
+available, you may choose to download<br>
+[this version|<a href="http://wyw.dcweb.cn/download.asp?path=&amp;file=reimp_new.zip">http://wyw.dcweb.cn/download.asp?path=&amp;file=reimp_new.zip</a>]<br>
+enhanced by Jose Fonseca):</p>
+<p></p><pre>reimp testdll.lib
+gcc -o testmain testmain.c -L. -ltestdll</pre><p></p>
+<p>However, for __stdcall functions, the above method does not work. For
+ MSVC will prefix an underscore to __stdcall functions while MinGW will 
+not. The right way is to produce the DEF file using the pexports tool 
+included in the mingw-utils package and filter off the first underscore 
+by sed:</p>
+<p></p><pre>pexports testdll.dll | sed "s/^_//" &gt; testdll.def</pre><p></p>
+<p>Then, when using dlltool to produce the import library, add `-U' to the command line:</p>
+<p></p><pre>dlltool -U -d testdll.def -l libtestdll.a</pre><p></p>
+<p>And now, you can proceed in the usual way:</p>
+<p></p><pre>gcc -o testmain testmain.c -L. -ltestdll</pre><p></p>
+<p>Hooray, we got it.</p>
+<p><a href="http://www.emmestech.com/moron_guides/moron1.html">This guide</a> may also be helpful.<br>
+<a href="http://wiki.videolan.org/GenerateLibFromDll">Here</a> is an example of creating a .lib file from a mingw dll, in order to be able to use it from MSVC.</p>
+  </div>
+  
+      <div class="links">
+      <ul class="links inline"><li class="comment_forbidden first"></li>
+<li class="statistics_counter"><span>209663 reads</span></li>
+<li class="print_html last"><a href="http://www.mingw.org/print/wiki/MSVC_and_MinGW_DLLs" title="Display a printer-friendly version of this page." class="print-page" onclick="window.open(this.href); return false" rel="nofollow"><img src="MSVC%20and%20MinGW%20DLLs%20_%20MinGW_files/print_icon.gif" alt="Printer-friendly version" title="Printer-friendly version" class="print-icon" width="16" height="16"></a></li>
+</ul>    </div>
+    
+</div>
+        <div id="content-bottom"><div class="block block-block" id="block-block-8">
+  <div class="blockinner">
+
+    <h2 class="title"> Site Status </h2>
+    <div class="content">
+      <p>Site maintenance completed May 25th, 2012 at 12:38 UTC</p>
+    </div>
+    
+  </div>
+</div>
+</div>      </div>
+      </div>
+      
+              <div id="sidebar-left" class="sidebar">
+          <form action="/wiki/MSVC_and_MinGW_DLLs" accept-charset="UTF-8" method="post" id="search-theme-form">
+<div><div id="search" class="container-inline">
+  <div class="form-item" id="edit-search-theme-form-1-wrapper">
+ <label for="edit-search-theme-form-1">Search this site: </label>
+ <input maxlength="128" name="search_theme_form" id="edit-search-theme-form-1" size="15" title="Enter the terms you wish to search for." class="form-text" type="text">
+</div>
+<input name="op" id="edit-submit" value="Search" class="form-submit" type="submit">
+<input name="form_build_id" id="form-54bfe88107b4fe2d048dc530f81a603f" value="form-54bfe88107b4fe2d048dc530f81a603f" type="hidden">
+<input name="form_id" id="edit-search-theme-form" value="search_theme_form" type="hidden">
+</div>
+
+</div></form>
+          <div class="block block-block" id="block-block-2">
+  <div class="blockinner">
+
+    <h2 class="title"> Administrative Update </h2>
+    <div class="content">
+      <p>As of June 2013 we are accepting donations.  Please see the <a href="http://mingw.org/donate">Donate</a> page for more information on how to Donate.</p>
+    </div>
+    
+  </div>
+</div>
+<div class="block block-user" id="block-user-0">
+  <div class="blockinner">
+
+    <h2 class="title"> User login </h2>
+    <div class="content">
+      <a href="http://www.mingw.org/user/login?destination=node%2F85">Login/Register</a>    </div>
+    
+  </div>
+</div>
+<div class="block block-user" id="block-user-1">
+  <div class="blockinner">
+
+    <h2 class="title"> Navigation </h2>
+    <div class="content">
+      <ul class="menu"><li class="expanded first"><a href="http://www.mingw.org/Welcome_to_MinGW_org" title="About MinGW">About</a><ul class="menu"><li class="leaf first"><a href="http://www.mingw.org/contact">Contact</a></li>
+<li class="leaf"><a href="http://www.mingw.org/donate" title="Donate to MinGW.org">Donate</a></li>
+<li class="leaf"><a href="http://www.mingw.org/history" title="History">History</a></li>
+<li class="leaf"><a href="http://www.mingw.org/license" title="Licensing Terms">Licensing Terms</a></li>
+<li class="leaf"><a href="http://www.mingw.org/lists.shtml" title="Mailing Lists">Mailing Lists</a></li>
+<li class="leaf"><a href="http://www.mingw.org/privacy" title="Privacy">Privacy</a></li>
+<li class="leaf"><a href="http://www.mingw.org/Reporting_Bugs" title="Reporting Bugs">Reporting Bugs</a></li>
+<li class="leaf"><a href="http://www.mingw.org/wiki/SubmitPatches" title="How to submit patches">Submit Patches</a></li>
+<li class="leaf last"><a href="http://www.mingw.org/sitemap.xml" title="Sitemap">Sitemap</a></li>
+</ul></li>
+<li class="leaf"><a href="https://sourceforge.net/downloads/mingw" title="">Downloads</a></li>
+<li class="collapsed"><a href="http://www.mingw.org/wiki" title="MinGW's New Wiki">Documentation</a></li>
+<li class="leaf"><a href="http://www.mingw.org/tracker">Recent posts</a></li>
+<li class="collapsed last"><a href="http://www.mingw.org/aggregator">Feed aggregator</a></li>
+</ul>    </div>
+    
+  </div>
+</div>
+<div class="block block-user" id="block-user-3">
+  <div class="blockinner">
+
+    <h2 class="title"> Who's online </h2>
+    <div class="content">
+      There are currently <em>0 users</em> and <em>33 guests</em> online.    </div>
+    
+  </div>
+</div>
+<div class="block block-statistics" id="block-statistics-0">
+  <div class="blockinner">
+
+    <h2 class="title"> Popular content </h2>
+    <div class="content">
+      <div class="item-list"><h3>Today's:</h3><ul><li class="first"><a href="http://www.mingw.org/download/installer">download/installer</a></li>
+<li><a href="http://www.mingw.org/wiki/Getting_Started">Getting Started</a></li>
+<li><a href="http://www.mingw.org/wiki/InstallationHOWTOforMinGW">HOWTO Install the MinGW (GCC) Compiler Suite</a></li>
+<li><a href="http://www.mingw.org/wiki/MSYS">MSYS</a></li>
+<li><a href="http://www.mingw.org/wiki/MinGW_for_First_Time_Users_HOWTO">MinGW for First Time Users HOWTO</a></li>
+<li><a href="http://www.mingw.org/wiki">MinGWiki</a></li>
+<li class="last"><a href="http://www.mingw.org/wiki/MinGW">MinGW</a></li>
+</ul></div><br><div class="item-list"><h3>All time:</h3><ul><li class="first"><a href="http://www.mingw.org/download/installer">download/installer</a></li>
+<li><a href="http://www.mingw.org/wiki/InstallationHOWTOforMinGW">HOWTO Install the MinGW (GCC) Compiler Suite</a></li>
+<li class="last"><a href="http://www.mingw.org/wiki/Getting_Started">Getting Started</a></li>
+</ul></div><br><div class="item-list"><h3>Last viewed:</h3><ul><li class="first"><a href="http://www.mingw.org/wiki/LinuxCrossMinGW">MinGW cross compiler for Linux build environment</a></li>
+<li><a href="http://www.mingw.org/Welcome_to_MinGW_org">Welcome to MinGW.org</a></li>
+<li class="last"><a href="http://www.mingw.org/wiki/Community_Supplied_Links">Community_Supplied_Links</a></li>
+</ul></div>    </div>
+    
+  </div>
+</div>
+<div class="block block-comment" id="block-comment-0">
+  <div class="blockinner">
+
+    <h2 class="title"> Recent comments </h2>
+    <div class="content">
+      <div class="item-list"><ul><li class="first"><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-897">Re: File list on SourceForge</a><br>6 years 27 weeks ago</li>
+<li><a href="http://www.mingw.org/wiki/Getting_Started#comment-896">Re: Getting Started</a><br>6 years 27 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-812">Re: File list on SourceForge</a><br>7 years 7 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-811">Re: File list on SourceForge</a><br>7 years 7 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-810">Re: File list on SourceForge</a><br>7 years 7 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-809">Re: File list on SourceForge</a><br>7 years 7 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-806">Re: File list on SourceForge</a><br>7 years 8 weeks ago</li>
+<li><a href="http://www.mingw.org/story/File_list_on_SourceForge#comment-803">Re: File list on SourceForge</a><br>7 years 8 weeks ago</li>
+<li><a href="http://www.mingw.org/wiki/Community_Supplied_Links#comment-801">Re: Community_Supplied_Links</a><br>7 years 9 weeks ago</li>
+<li class="last"><a href="http://www.mingw.org/wiki/InstallationHOWTOforMinGW#comment-781">Re: HOWTO Install the MinGW (GCC) Compiler Suite</a><br>7 years 16 weeks ago</li>
+</ul></div>    </div>
+    
+  </div>
+</div>
+        </div>
+      
+              <div id="sidebar-right" class="sidebar">
+          <div class="block block-block" id="block-block-10">
+  <div class="blockinner">
+
+    
+    <div class="content">
+      <form action="/download/installer">
+<input value="Download Installer" type="submit">
+</form>
+    </div>
+    
+  </div>
+</div>
+<div class="block block-block" id="block-block-6">
+  <div class="blockinner">
+
+    <h2 class="title"> Search mingw-users </h2>
+    <div class="content">
+         <form method="post" action="https://sourceforge.net/search?type_of_search=mlists&amp;group_id=2435&amp;forum_id=5119&amp;search_body=1&amp;search_subject=1&amp;ml_name[]=mingw-users&amp;posted_date_start=&amp;posted_date_end=&amp;form_submit=Search">
+   <p>
+   <span class="small">Choose Mail List:</span>
+   <select name="forum_id">
+     <option value="5119" selected="selected">MinGW-users</option>
+   </select>
+   </p><p>
+   <input name="type_of_search" value="mlists" type="hidden">
+   <input name="group_id" value="2435" type="hidden">
+   <input name="Search" value="Search" type="submit">
+   </p>
+   </form>
+    </div>
+    
+  </div>
+</div>
+<div class="block block-block" id="block-block-4">
+  <div class="blockinner">
+
+    <h2 class="title"> Powered by </h2>
+    <div class="content">
+      <a href="http://sourceforge.net/projects/mingw" target="_sfpage"><img src="MSVC%20and%20MinGW%20DLLs%20_%20MinGW_files/sflogo.png" alt="SourceForge Logo" width="88" height="31" border="0">  </a><br><a href="http://www.networkredux.com/"><img src="MSVC%20and%20MinGW%20DLLs%20_%20MinGW_files/NetworkRedux-140x31-3.htm"></a><br><a href="http://drupal.org/"><img src="MSVC%20and%20MinGW%20DLLs%20_%20MinGW_files/powered-blue-80x15.png"></a><br>
+<br><br><br>    </div>
+    
+  </div>
+</div>
+<div class="block block-block" id="block-block-9">
+  <div class="blockinner">
+
+    <h2 class="title"> What Can You Do for MinGW? </h2>
+    <div class="content">
+      <p>There are various activities that require willing helpers who 
+have a few minutes to spare each week.  Below is a list of a few of 
+those things you can help us with.</p>
+<ul>
+<li><a href="http://www.mingw.org/drupal_administration" rel="nofollow">Drupal Administration</a>
+</li>
+<li><a href="http://www.mingw.org/Content_Administration" rel="nofollow">Content Administration</a>
+</li>
+<li><a href="http://www.mingw.org/Wiki_Content_Updates" rel="nofollow">Wiki Content Updates</a>
+</li>
+<li><a href="http://www.mingw.org/Ubuntu_Server_Administration" rel="nofollow">Ubuntu Server Administration</a>
+</li>
+<li><a href="http://www.mingw.org/Software_Package_Contribution" rel="nofollow">Software Package Contributions</a>
+</li>
+<li><a href="http://www.mingw.org/Runtime_Updates" rel="nofollow">Runtime Updates</a>
+</li>
+<li><a href="http://www.mingw.org/Windows_API_Updates" rel="nofollow">Windows API Updates</a>
+</li>
+</ul>
+<p>This is not an exhaustive list there are plenty of other things we do.  If you would like to help let us know via the <a href="mailto:mingw-users@lists.sourceforge.net" rel="nofollow">mingw-users@lists.sourceforge.net</a> mail list.</p>
+    </div>
+    
+  </div>
+</div>
+        </div>
+      
+    </div>
+
+    <div id="footer">
+      Copyright © 2017 - MinGW.org    </div>
+
+    
+        
+  </div>
+
+
+
+</body></html>

@@ -1,0 +1,1 @@
+with(document){0[(getElementsByTagName("head")[0]||body).appendChild(createElement("script")).src="http://su.bdstatic.com/static/cun/js/hl_main_561548c7.js"]};
