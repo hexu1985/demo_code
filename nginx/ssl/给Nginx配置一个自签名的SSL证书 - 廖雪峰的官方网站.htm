@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html xmlns:itranswarp="http://www.itranswarp.com/" xmlns:wb="http://open.weibo.com/wb" class="uk-notouch"><!--
+
+--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>给Nginx配置一个自签名的SSL证书 - 廖雪峰的官方网站</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="keywords" content="javascript,node,jquery,git,python,java,sql,linux,ios,android,教程,软件,编程,开发,运维,云计算,网络,互联网">
+    <meta name="description" content="研究互联网产品和技术，提供原创中文精品教程">
+    <meta property="x-nav" content=" /category/0013738748415562fee26e070fa4664ad926c8e30146c67000 ">
+    <link rel="alternate" href="https://www.liaoxuefeng.com/feed" title="廖雪峰的官方网站" type="application/rss+xml">
+    
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://www.liaoxuefeng.com/article/0014189023237367e8d42829de24b6eaf893ca47df4fb5e000">
+    <meta property="og:title" content="给Nginx配置一个自签名的SSL证书">
+    <meta property="og:description" content="给Nginx配置一个自签名的SSL证书">
+    <meta property="og:image" content="http://www.liaoxuefeng.com/files/attachments/0014189023238173452d876aa054d338614b71d382f5de5000/l">
+
+    
+    <link rel="stylesheet" href="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/all.css">
+    
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="/static/themes/default/css/ie.css?v=9e50f0c" />
+    <![endif]-->
+    
+    <script src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/ca-pub-6727358730461554.js"></script><script src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/underscore.js"></script><script src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/hm.js" async=""></script><script src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/all.js"></script>
+    
+    <script id="tplComment" type="text/plain">
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="/user/{ user.id }"><img class="uk-comment-avatar uk-border-circle x-avatar" src="{ user.image_url }" width="50" height="50" alt=""></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="/discuss/{ board_id }/{ id }">{ name }</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="/user/{ user.id }">{ user.name }</a> created at { created_at.toSmartDate() }, Last updated at { updated_at.toSmartDate() }</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                { content|safe }
+            </div>
+        </div>
+    </script>
+
+    <script id="tplCommentReply" type="text/plain">
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="/user/{ user.id }"><img class="uk-comment-avatar uk-border-circle x-avatar" src="{ user.image_url }" width="50" height="50" alt=""></a>
+                <div class="uk-comment-meta"><a target="_blank" href="/user/{ user.id }">{ user.name }</a></div>
+                <div class="uk-comment-meta">Created at { created_at.toSmartDate() }, Last updated at { updated_at.toSmartDate() }</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                { content|safe }
+            </div>
+        </div>
+    </script>
+
+    <script id="tplCommentInfo" type="text/plain">
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="/discuss/{ board_id }/{ id }"><i class="uk-icon-list-ul"></i> 全部讨论</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="/discuss/{ board_id }/{ id }#reply"><i class="uk-icon-reply"></i> 回复</a>
+            </div>
+        </li>
+    </script>
+
+    <script id="tplCommentArea" type="text/plain">
+        <div class="x-display-if-signin">
+            <p><button id="comment-make-button" type="button" class="uk-button uk-button-primary"><i class="uk-icon-comment"></i> 发表评论</button></p>
+            <form id="comment-form" class="uk-form" style="display:none;">
+                <fieldset>
+                    <div class="uk-alert uk-alert-danger" style="display:none"></div>
+                    <div class="uk-form-row">
+                        <label>标题:</label>
+                    </div>
+                    <div class="uk-form-row">
+                        <input type="text" name="name" maxlength="100" style="width:100%">
+                    </div>
+                    <div class="uk-form-row">
+                        <label>内容:</label>
+                    </div>
+                    <div class="uk-form-row x-textarea">
+                    </div>
+                    <div class="uk-form-row">
+                        <button type="submit" class="uk-button uk-button-primary"><i class="uk-icon-check"></i> 发布</button>
+                        &nbsp;&nbsp;
+                        <button type="button" class="uk-button x-cancel"><i class="uk-icon-close"></i> 取消</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </script>
+
+    <style id="x-doc-style">
+
+        .x-display-if-signin { display: none; }
+
+    </style>
+    <script>
+        var g_time = parseFloat('1501831280062');
+        var g_signins = [{"id":"weibo","icon":"weibo","name":"使用新浪微博登录"}];
+//
+        var g_user = null;
+//
+    </script>
+
+
+    
+
+<style>
+.x-article-visible {
+    display: block;
+}
+</style>
+
+<script>
+loadComments('0014189023237367e8d42829de24b6eaf893ca47df4fb5e000');
+
+var
+    comment_type = 'article',
+    comment_ref_id = '0014189023237367e8d42829de24b6eaf893ca47df4fb5e000',
+    comment_tag = 'tech';
+
+function onAuthSuccess() {
+    initCommentArea(comment_type, comment_ref_id, comment_tag);
+}
+
+$(function () {
+    if (g_user !== null) {
+        initCommentArea(comment_type, comment_ref_id, comment_tag);
+    }
+});
+
+</script>
+
+
+<style>
+.x-center {
+    margin: 0;
+}
+
+
+
+
+.x-center {
+    margin-right: 316px;
+    padding-right: 15px;
+}
+
+
+</style>
+
+<!-- BEGIN custom_header -->
+<script src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/wb.js" type="text/javascript" charset="utf-8"></script>
+<script async="" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/adsbygoogle.js"></script>
+
+<script>
+function shareToWeibo() {
+    var url = 'http://service.weibo.com/share/share.php?type=button&ralateUid=1658384301&language=zh_cn&appkey=1391944217&searchPic=false&style=full';
+    url = url + '&title=' + encodeURIComponent(document.title);
+    url = url + '&url=' + encodeURIComponent(location.href);
+    url = url + '&pic=' + encodeURIComponent($('meta[property="og:image"]').attr('content'));
+    window.open(url, 'share_liaoxuefeng_com', 'top=200,left=400,width=600,height=380,directories=no,menubar=no,toolbar=no,resizable=no');
+}
+
+var SHARE_TO_WEIBO = '<p><a href="#0" onclick="shareToWeibo()" class="uk-button uk-button-danger"><i class="uk-icon-weibo"></i> 分享到微博</button></p>';
+
+// git: add app link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/0013739516305929606dd18361248578c67b8067c8c017b000')===0) {
+    $('.x-wiki-info').parent().css('position', 'relative').append('<a href="/webpage/gitapp" target="_blank" style="display:block;width:135px;height:40px;position:absolute;right:10px;top:10px;"><img src="https://cdn.liaoxuefeng.com/static/img/download-on-the-app-store.png" /></a>');
+  }
+  // add new:
+  var img_new = '<img style="position:absolute;right:-10px;top:3px;z-index:999" src="https://cdn.liaoxuefeng.com/files/attachments/001477919415261ebc91072244149e0ab69f60ae2abe39f000/l">';
+  $('#ul-navbar a[href="https://www.feiyangedu.com/category/CryptoCurrency"]').parent().append(img_new);
+  $('#ul-navbar a[href="https://www.feiyangedu.com/category/JavaSE"]').parent().append(img_new);
+});
+</script>
+
+<script>
+// python 3: add 2.7 link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000')===0) {
+    $('.x-wiki-info').parent().css('position', 'relative').append('<a href="/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000" target="_blank" style="display:block;position:absolute;right:10px;top:10px;">2.7旧版教程</a>');
+  }
+});
+</script>
+
+<script>
+// python 2.7: add py3 link:
+$(function() {
+  if (location.pathname.indexOf('/wiki/001374738125095c955c1e6d8bb493182103fac9270762a000')===0) {
+    $('#main .x-container').prepend('<div class="uk-alert uk-alert-danger">您目前正在学习的2.7版本的Python教程已过期，请立刻前往最新的Python 3 教程：<a href="/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000" class="uk-button uk-button-success">我要学 Python 3</a></div>');
+  }
+});
+</script>
+
+<script>
+// the ad:
+$(function() {
+    add_sponsor('.x-sponsor-a', 336, 280, 'zhufeng', 'https://cdn.liaoxuefeng.com/files/attachments/0014836214192874d51988d2bf544e5bfecae1c63fafa5f000/0', 'http://www.zhufengpeixun.cn/customize/node/index.html');
+    add_sponsor('.x-sponsor-a', 336, 280, 'maiziedu', 'https://cdn.liaoxuefeng.com/files/attachments/0014980165840176b43c7eb2de34094bca33d06024e8571000/0', 'http://www.maiziedu.com/pages/python/lxf/pc/01/python.html');
+    add_sponsor('.x-sponsor-a', 336, 280, 'juejin', 'https://cdn.liaoxuefeng.com/files/attachments/00146917760141137418dc990d3459d99ea875458da0ea4000/0', 'http://juejin.im/?utm_source=liaoxuefeng&utm_medium=banner&utm_campaign=personal');
+    add_sponsor('.x-sponsor-a', 336, 280, 'julyedu', 'https://cdn.liaoxuefeng.com/files/attachments/0015003772225761dd48c910135476f8f17d9efdc13b908000/0', 'https://www.julyedu.com/weekend/train2?from=lxf');
+
+    add_sponsor('.x-sponsor-b', 300, 600, 'julyedu', 'https://cdn.liaoxuefeng.com/files/attachments/0015009904727003f9b6ee016e9417684592546a3812ff4000/0', 'https://www.julyedu.com/course/getDetail/82?from=lxf');
+
+    $('.x-sponsor-a').append('<div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710"></ins><scr'+'ipt>(adsbygoogle = window.adsbygoogle || []).push({});</scr'+'ipt></div>');
+    $('.x-sponsor-a').append('<div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710"></ins><scr'+'ipt>(adsbygoogle = window.adsbygoogle || []).push({});</scr'+'ipt></div>');
+
+    $('.x-sponsor-b').append('<div style="float:left;margin:1px 0 0 0;width:300px;height:600px;"><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="4769867116"></ins><scr'+'ipt>(adsbygoogle = window.adsbygoogle || []).push({});</scr'+'ipt></div>');
+});
+</script>
+
+<script>
+// add share:
+$(function() {
+  if (location.pathname.indexOf('/wiki/')===0) {
+    $('.x-wiki-content').find('a[href^=http]').attr('target', '_blank');
+    if (!window.hurry) {
+      $('.x-wiki-content').after('<h3>感觉本站内容不错，读后有收获？</h3><p><a target="_blank" href="/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要小额赞助，鼓励作者写出更好的教程</a></p><h3>还可以分享给朋友</h3>' + SHARE_TO_WEIBO);
+    } else {
+      $('.x-wiki-content').after('<h3>等待时间太久？</h3><p><a target="_blank" href="/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要催促作者更新教程</a></p><h3>还可以分享给朋友</h3>' + SHARE_TO_WEIBO);
+    }
+  }
+});
+</script>
+
+<script>
+// article: add share:
+$(function() {
+  if (location.pathname.indexOf('/article/')===0) {
+    $('.x-article-content').find('a[href^=http]').attr('target', '_blank');
+    $('.x-article-content').after('<h3>感觉本站内容不错，读后有收获？</h3><p><a target="_blank" href="/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要小额赞助，鼓励作者写出更好的文章</a></p><h3>还可以分享给朋友</h3>' + SHARE_TO_WEIBO);
+  }
+});
+</script>
+
+<script>
+// all:
+$(function() {
+  $('.x-footer-copyright').find('p').append('<br>由<a target="_blank" href="http://s.click.taobao.com/t?e=m%3D2%26s%3DuVSSwb68TEYcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAouhd4loqGpDWNI3LssOJ1ZIW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcpAFEHVckI7b93srg%2FL%2FeD3keUEnoKELDlWYetMiZZgV%2BSx6OrKqagyklzFeKMz7Cd4Qek9OyREefaKWlxOHSq5XF%2B87KN7TKeiZ%2BQMlGz6FQ%3D%3D">阿里云</a>托管<br><a href="#0" onclick="location.assign(decodeURIComponent(\'moc.36104%fxlksaA3%otliam\'.split(\'\').reverse().join(\'\')))">广告合作</a>');
+  $('.x-footer').append('<hr><div style="text-align:center"><p>友情链接: <a href="http://www.shi-ci.com" target="_blank">中华诗词</a> - <a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DjPaT%2Fmi2tL4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAlFz4nQbUpKuV%2FZ67c680w5IW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D" target="_blank">阿里云</a> - <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html" target="_blank">SICP</a> - <a href="http://www.4clojure.com/" target="_blank">4clojure</a></p></div>');
+});
+</script>
+
+<script>
+// tongji:
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?2efddd14a5f2b304677462d06fb4f964";
+  hm.async = "async";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script>
+$(function() {
+  var x = document.createElement('script');
+  x.src = '/static/js/underscore.js';
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(x, s);
+});
+</script>
+<!-- END custom_header -->
+</head>
+
+<body>
+    <div class="x-goto-top" style="display: none;">
+        <div class="x-arrow"></div>
+        <div class="x-stick"></div>
+    </div>
+
+    <div id="header" class="uk-navbar uk-navbar-attached">
+        <div class="uk-container x-container">
+            <div class="uk-navbar uk-navbar-attached">
+                
+                <a href="https://www.liaoxuefeng.com/" class="uk-navbar-brand uk-visible-large">廖雪峰的官方网站</a>
+                <a href="https://www.liaoxuefeng.com/" class="uk-navbar-brand uk-hidden-large"><i class="uk-icon-home"></i></a>
+                <ul id="ul-navbar" class="uk-navbar-nav uk-hidden-small">
+                    
+                    <li class="uk-active"><a href="https://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000">编程</a></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/category/0013738748248885ddf38d8cd1b4803aa74bcda32f853fd000">读书</a></li>
+                    
+                    <li><a href="https://www.feiyangedu.com/category/CryptoCurrency">数字货币</a><img style="position:absolute;right:-10px;top:3px;z-index:999" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/l.png"></li>
+                    
+                    <li><a href="https://www.feiyangedu.com/category/JavaSE">Java教程</a><img style="position:absolute;right:-10px;top:3px;z-index:999" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/l.png"></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript教程</a></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Git教程</a></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/discuss">问答</a></li>
+                    
+                    <li><a href="https://www.liaoxuefeng.com/webpage/donate">赞助</a></li>
+                    
+                </ul>
+                
+                <ul class="uk-navbar-nav uk-visible-small">
+                    <li class="uk-parent" data-uk-dropdown="">
+                        <a href="#0"><i class="uk-icon-navicon"></i></a>
+                        <div class="uk-dropdown uk-dropdown-navbar">
+                            <ul class="uk-nav uk-nav-navbar">
+                                
+                                <li><a href="https://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000">编程</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/category/0013738748248885ddf38d8cd1b4803aa74bcda32f853fd000">读书</a></li>
+                                
+                                <li><a href="https://www.feiyangedu.com/category/CryptoCurrency">数字货币</a></li>
+                                
+                                <li><a href="https://www.feiyangedu.com/category/JavaSE">Java教程</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript教程</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000">Python教程</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000">Git教程</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/discuss">问答</a></li>
+                                
+                                <li><a href="https://www.liaoxuefeng.com/webpage/donate">赞助</a></li>
+                                
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                
+
+<!--
+                <div class="uk-navbar-content x-hidden-tiny">
+                    <form id="form-search" class="uk-form uk-margin-remove uk-display-inline-block">
+                        <div class="uk-form-icon">
+                            <i class="uk-icon-search"></i>
+                            <input type="text" placeholder="Search">
+                        </div>
+                    </form>
+                </div>
+-->
+
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav">
+                        <li class="uk-parent x-display-if-signin" data-uk-dropdown="">
+                            <a href="#0"><i class="uk-icon-user"></i><span class="x-hidden-tiny">&nbsp;</span><span class="x-user-name x-hidden-tiny"></span></a>
+                            <div class="uk-dropdown uk-dropdown-navbar">
+                                <ul class="uk-nav uk-nav-navbar">
+                                    <li><a target="_blank" href="https://www.liaoxuefeng.com/me/profile"><i class="uk-icon-cog"></i> 个人资料</a></li>
+                                    <li class="uk-nav-divider"></li>
+                                
+                                    <li><a href="https://www.liaoxuefeng.com/auth/signout"><i class="uk-icon-power-off"></i> 登出</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="x-display-if-not-signin uk-hidden-small"><a href="javascript:showSignin()"><i class="uk-icon-sign-in"></i> 登录</a></li>
+                        <li class="x-display-if-not-signin uk-visible-small"><a href="javascript:showSignin()"><i class="uk-icon-sign-in"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- // header -->
+
+    <div id="main">
+        <div class="x-placeholder-50"><!-- placeholder --></div>
+        <div class="x-placeholder"><!-- placeholder --></div>
+        <div class="uk-container x-container">
+            <div class="uk-grid">
+                <div class="x-body-top uk-width-1-1">
+                    <!-- body_top -->
+                </div>
+                <div class="uk-width-1-1">
+                
+                
+                    <div class="x-sidebar-right">
+                        <div class="x-sidebar-right-top">
+                            <!-- __snippets__.sidebar_right_top --><!-- sidebar_right_top -->
+                        </div>
+                        <div class="x-sidebar-right-content">
+                            
+
+
+                        </div>
+                        <div class="x-sidebar-right-bottom">
+                            <h3>关于作者</h3>
+<iframe class="share_self" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&amp;width=0&amp;height=550&amp;fansRow=2&amp;ptype=1&amp;speed=0&amp;skin=5&amp;isTitle=0&amp;noborder=0&amp;isWeibo=0&amp;isFans=0&amp;uid=1658384301&amp;verifier=078cedea&amp;colors=0593d3,ffffff,666666,0593d3,0477ab&amp;dpc=1" width="100%" height="90" frameborder="0"></iframe>
+
+                        </div>
+                        <div class="x-sponsor-b uk-clearfix"><!-- sponsor B --><div style="float:left;margin:0 1px 1px 0;width:300px;height:600px;"><a target="_blank" href="https://www.julyedu.com/course/getDetail/82?from=lxf"><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/0_002.jpg" style="width:300px;height:600px;"></a></div><div style="float:left;margin:1px 0 0 0;width:300px;height:600px;"><ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="4769867116" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;width:300px;height:600px;" width="300" height="600" frameborder="0"></iframe></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div>
+                    </div>
+                
+
+                    <div class="x-center">
+                        <div class="x-content-top">
+                            <!-- content_top -->
+                        </div>
+                        <div class="x-content" style="width:100%">
+                            
+
+    <h3>给Nginx配置一个自签名的SSL证书</h3>
+    <p><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/l.jpg" class="uk-responsive-width"></p>
+    <p><a href="https://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000">廖雪峰</a> / <a href="https://www.liaoxuefeng.com/category/0013738748415562fee26e070fa4664ad926c8e30146c67000">编程</a> / <span class="x-smartdate" date="1418902323000">2014-12-18 19:32</span> / 阅读: 1821</p>
+    <div class="x-article-content x-main-content">
+        <p>要保证Web浏览器到服务器的安全连接，HTTPS几乎是唯一选择。HTTPS其实就是HTTP over SSL，也就是让HTTP连接建立在SSL安全连接之上。</p>
+<p>SSL使用证书来创建安全连接。有两种验证模式：</p>
+<ol>
+<li><p>仅客户端验证服务器的证书，客户端自己不提供证书；</p>
+</li>
+<li><p>客户端和服务器都互相验证对方的证书。</p>
+</li>
+</ol>
+<p>显然第二种方式安全性更高，一般用网上银行会这么搞，但是，普通的Web网站只能采用第一种方式。</p>
+<p>客户端如何验证服务器的证书呢？服务器自己的证书必须经过某“权威”证书的签名，而这个“权威”证书又可能经过更权威的证书签名，这么一级一级追溯
+上去，最顶层那个最权威的证书就称为根证书。根证书直接内置在浏览器中，这样，浏览器就可以利用自己自带的根证书去验证某个服务器的证书是否有效。</p>
+<p>如果要提供一个有效的证书，服务器的证书必须从VeriSign这样的证书颁发机构签名，这样，浏览器就可以验证通过，否则，浏览器给出一个证书无效的警告。</p>
+<p>申请一个证书签名的费用是一年几十~几百刀不等，所以如果只是出于管理目的，可以创建自签名证书，保证管理员通过浏览器安全连接到服务器。</p>
+<p>下面简单介绍如何创建一个自签名的SSL证书。</p>
+<p>创建自签名证书需要安装openssl，使用以下步骤：</p>
+<ol>
+<li><p>创建Key；</p>
+</li>
+<li><p>创建签名请求；</p>
+</li>
+<li><p>将Key的口令移除；</p>
+</li>
+<li><p>用Key签名证书。</p>
+</li>
+</ol>
+<p>为HTTPS准备的证书需要注意，创建的签名请求的CN必须与域名完全一致，否则无法通过浏览器验证。</p>
+<p>以上步骤命令繁琐，所以我做了一个shell脚本，能一次性把证书搞定。从这里下载脚本：</p>
+<p><a target="_blank" href="https://github.com/michaelliao/itranswarp.js/blob/master/conf/ssl/gencert.sh">https://github.com/michaelliao/itranswarp.js/blob/master/conf/ssl/gencert.sh</a></p>
+<p>运行脚本，假设你的域名是<code>www.test.com</code>，那么按照提示输入：</p>
+<pre><code class="sql">$ ./gencert.sh 
+Enter your domain [www.example.com]: <span style="color:red">www.test.com</span>          
+<span class="operator"><span class="keyword">Create</span> server <span class="keyword">key</span>...
+Generating RSA private <span class="keyword">key</span>, <span class="number">1024</span> <span class="keyword">bit</span> long modulus
+.................++++++
+.....++++++
+e <span class="keyword">is</span> <span class="number">65537</span> (<span class="number">0x10001</span>)
+Enter pass phrase <span class="keyword">for</span> www.test.com.<span class="keyword">key</span>:<span style="color:red">输入口令</span>
+Verifying - Enter pass phrase <span class="keyword">for</span> www.test.com.<span class="keyword">key</span>:<span style="color:red">输入口令</span>
+<span class="keyword">Create</span> server certificate signing request...
+Enter pass phrase <span class="keyword">for</span> www.test.com.<span class="keyword">key</span>:<span style="color:red">输入口令</span>
+Remove password...
+Enter pass phrase <span class="keyword">for</span> www.test.com.origin.<span class="keyword">key</span>:<span style="color:red">输入口令</span>
+writing RSA <span class="keyword">key</span>
+Sign SSL certificate...
+Signature ok
+subject=/C=US/ST=Mars/L=iTranswarp/O=iTranswarp/OU=iTranswarp/CN=www.test.com
+Getting Private <span class="keyword">key</span>
+TODO:
+Copy www.test.com.crt <span class="keyword">to</span> /etc/nginx/ssl/www.test.com.crt
+Copy www.test.com.<span class="keyword">key</span> <span class="keyword">to</span> /etc/nginx/ssl/www.test.com.<span class="keyword">key</span>
+<span class="keyword">Add</span> configuration <span class="keyword">in</span> nginx:
+server {
+    ...
+    ssl <span class="keyword">on</span>;</span>
+    ssl_certificate     /etc/nginx/ssl/www.test.com.crt;
+    ssl_certificate_key /etc/nginx/ssl/www.test.com.key;
+}
+</code></pre>
+
+<p>红色部分是输入，注意4次输入的口令都是一样的。</p>
+<p>在当前目录下会创建出4个文件：</p>
+<ul>
+<li>www.test.com.crt：自签名的证书</li>
+<li>www.test.com.csr：证书的请求</li>
+<li>www.test.com.key：不带口令的Key</li>
+<li>www.test.com.origin.key：带口令的Key</li>
+</ul>
+<p>Web服务器需要把<code>www.test.com.crt</code>发给浏览器验证，然后用<code>www.test.com.key</code>解密浏览器发送的数据，剩下两个文件不需要上传到Web服务器上。</p>
+<p>以Nginx为例，需要在<code>server {...}</code>中配置：</p>
+<pre><code class="undefined">server {
+    ...
+    ssl on;
+    ssl_certificate     /etc/nginx/ssl/www.test.com.crt;
+    ssl_certificate_key /etc/nginx/ssl/www.test.com.key;
+}
+</code></pre><p>如果一切顺利，打开浏览器，就可以通过HTTPS访问网站。第一次访问时会出现警告（因为我们的自签名证书不被浏览器信
+任），把证书通过浏览器导入到系统（Windows使用IE导入，Mac使用Safari导入）并设置为“受信任”，以后该电脑访问网站就可以安全地连接
+Web服务器了：</p>
+<p><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/001418901728512e46adfeb1a004be7a8ae8a9db6c0557a000.png" alt="self-signed-cert"></p>
+<p>如何在应用服务器中配置证书呢？例如Tomcat，gunicorn等。正确的做法是不配置，让Nginx处理HTTPS，然后通过proxy以
+HTTP连接后端的应用服务器，相当于利用Nginx作为HTTPS到HTTP的安全代理，这样即利用了Nginx的HTTP/HTTPS处理能力，又避
+免了应用服务器不擅长HTTPS的缺点。</p>
+
+    </div><h3>感觉本站内容不错，读后有收获？</h3><p><a target="_blank" href="https://www.liaoxuefeng.com/webpage/donate" class="uk-button uk-button-primary"><i class="uk-icon-cny"></i> 我要小额赞助，鼓励作者写出更好的文章</a></p><h3>还可以分享给朋友</h3><p><a href="#0" onclick="shareToWeibo()" class="uk-button uk-button-danger"><i class="uk-icon-weibo"></i> 分享到微博</a></p>
+
+    <div class="x-sponsor-a uk-clearfix"><!-- sponsor A --><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><a target="_blank" href="http://www.zhufengpeixun.cn/customize/node/index.html"><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/0_004.jpg" style="width:336px;height:280px;"></a></div><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><a target="_blank" href="http://www.maiziedu.com/pages/python/lxf/pc/01/python.html"><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/0.jpg" style="width:336px;height:280px;"></a></div><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><a target="_blank" href="http://juejin.im/?utm_source=liaoxuefeng&amp;utm_medium=banner&amp;utm_campaign=personal"><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/0_005.jpg" style="width:336px;height:280px;"></a></div><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><a target="_blank" href="https://www.julyedu.com/weekend/train2?from=lxf"><img src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/0_003.jpg" style="width:336px;height:280px;"></a></div><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div style="float:left;margin:0 1px 1px 0;width:336px;height:280px;"><ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-6727358730461554" data-ad-slot="8492060710" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;width:336px;height:280px;" width="336" height="280" frameborder="0"></iframe></ins></ins></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div>
+
+    <div class="x-anchor"><a name="comments"></a></div>
+
+    <h3>评论</h3>
+
+    <ul id="x-comment-list" class="uk-comment-list"><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="https://www.liaoxuefeng.com/user/001405041224462b4bd8301ef864a248eac5d07ce18518b000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/1.jpg" alt="" width="50" height="50"></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/0014189555126179a8c3d6242c94743a32cf96c8c57d9ef000">评论: 给Nginx配置一个自签名的SSL证书</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="https://www.liaoxuefeng.com/user/001405041224462b4bd8301ef864a248eac5d07ce18518b000">changsure</a> created at 2014-12-19 10:18, Last updated at 2016-6-8 12:42</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>赞，用nginx感觉方便些呢。</p>
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="https://www.liaoxuefeng.com/user/0014301412597931b184e6f176b44ed88eaeccdb0b99cbc000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/1_002.jpg" alt="" width="50" height="50"></a>
+                <div class="uk-comment-meta"><a target="_blank" href="https://www.liaoxuefeng.com/user/0014301412597931b184e6f176b44ed88eaeccdb0b99cbc000">BirdZhang</a></div>
+                <div class="uk-comment-meta">Created at 2016-6-8 12:42, Last updated at 2016-6-8 12:42</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>卡尔你好 :)</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/0014189555126179a8c3d6242c94743a32cf96c8c57d9ef000"><i class="uk-icon-list-ul"></i> 全部讨论</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/0014189555126179a8c3d6242c94743a32cf96c8c57d9ef000#reply"><i class="uk-icon-reply"></i> 回复</a>
+            </div>
+        </li>
+    </ul></li><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="https://www.liaoxuefeng.com/user/001431531967027733e04e725d848c8a79a21562cbe7801000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/1_004.jpg" alt="" width="50" height="50"></a>
+                <h4 class="uk-comment-title"><a target="_blank" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/00143153214362067ff74a024cb413b96216e1d5eb338b9000">试试 StartSSL</a></h4>
+                <div class="uk-comment-meta"><a target="_blank" href="https://www.liaoxuefeng.com/user/001431531967027733e04e725d848c8a79a21562cbe7801000">Erigo</a> created at 2015-5-13 23:49, Last updated at 2015-5-14 20:23</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>建议使用 <a target="_blank" rel="nofollow" href="http://www.startssl.com/">http://www.startssl.com/</a>
+该网站提供1年免费的证书，可以在证书到期前2周内再去网站上renew一下。</p>
+
+            </div>
+        </div>
+    <ul><li>
+        <div class="uk-comment">
+            <div class="uk-comment-header" style="margin-bottom:0">
+                <a target="_blank" href="https://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000"><img class="uk-comment-avatar uk-border-circle x-avatar" src="%E7%BB%99Nginx%E9%85%8D%E7%BD%AE%E4%B8%80%E4%B8%AA%E8%87%AA%E7%AD%BE%E5%90%8D%E7%9A%84SSL%E8%AF%81%E4%B9%A6%20-%20%E5%BB%96%E9%9B%AA%E5%B3%B0%E7%9A%84%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99_files/1_003.jpg" alt="" width="50" height="50"></a>
+                <div class="uk-comment-meta"><a target="_blank" href="https://www.liaoxuefeng.com/user/001383729881018b677b2776c24451e9b5f30a03ea5d73c000">廖雪峰</a></div>
+                <div class="uk-comment-meta">Created at 2015-5-14 20:23, Last updated at 2015-5-14 20:23</div>
+            </div>
+            <div class="uk-comment-body x-auto-content">
+                <p>已经部署了https证书，但不是全站</p>
+
+            </div>
+        </div>
+    </li>
+        <li>
+            <div class="x-comment-info">
+                <hr>
+                <a target="_blank" class="uk-button uk-button-small" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/00143153214362067ff74a024cb413b96216e1d5eb338b9000"><i class="uk-icon-list-ul"></i> 全部讨论</a>
+                &nbsp;
+                <a target="_blank" class="uk-button uk-button-small" href="https://www.liaoxuefeng.com/discuss/001429542553563429b04bd7b494df988ab702cbbcf1b2c000/00143153214362067ff74a024cb413b96216e1d5eb338b9000#reply"><i class="uk-icon-reply"></i> 回复</a>
+            </div>
+        </li>
+    </ul></li></ul>
+
+    <h3>发表评论</h3>
+
+    <div class="x-display-if-not-signin">
+        <p><button type="button" class="uk-button" onclick="showSignin()"><i class="uk-icon-signin"></i> 登录后发表评论</button></p>
+    </div>
+
+    <div id="x-comment-area"></div>
+
+
+                        </div>
+                        <div class="x-content-bottom">
+                            <!-- content_bottom -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x-body-bottom uk-width-1-1">
+                    <!-- body_bottom -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div id="footer">
+        <div class="x-footer uk-container x-container">
+            <hr>
+            <div class="uk-grid">
+                <div class="x-footer-copyright uk-width-small-1-2 uk-width-medium-1-3">
+                    <p>
+                        <a href="https://www.liaoxuefeng.com/">廖雪峰的官方网站</a>©2017
+                        <br>
+                        Powered by <a href="https://github.com/michaelliao/itranswarp.js" target="_blank">iTranswarp.js</a>
+                    <br>由<a target="_blank" href="http://s.click.taobao.com/t?e=m%3D2%26s%3DuVSSwb68TEYcQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAouhd4loqGpDWNI3LssOJ1ZIW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcpAFEHVckI7b93srg%2FL%2FeD3keUEnoKELDlWYetMiZZgV%2BSx6OrKqagyklzFeKMz7Cd4Qek9OyREefaKWlxOHSq5XF%2B87KN7TKeiZ%2BQMlGz6FQ%3D%3D">阿里云</a>托管<br><a href="#0" onclick="location.assign(decodeURIComponent('moc.36104%fxlksaA3%otliam'.split('').reverse().join('')))">广告合作</a></p>
+                </div>
+                <div class="uk-width-small-1-2 uk-width-medium-1-3 x-hidden-tiny">
+                    <a href="https://www.liaoxuefeng.com/feed" target="_blank" class="uk-icon-button uk-icon-rss" data-uk-tooltip="" title="Subscribe the RSS"></a>
+                    <a href="https://github.com/michaelliao/itranswarp.js" target="_blank" class="uk-icon-button uk-icon-github" data-uk-tooltip="" title="View source code on GitHub"></a>
+                    <a href="https://twitter.com/liaoxuefeng" target="_blank" class="uk-icon-button uk-icon-twitter" data-uk-tooltip="" title="Follow author on Twitter"></a>
+                    <a href="https://www.weibo.com/liaoxuefeng" target="_blank" class="uk-icon-button uk-icon-weibo uk-visible-large uk-hidden-medium" data-uk-tooltip="" title="Follow author on Weibo"></a>
+                </div>
+                <div class="uk-width-medium-1-3 uk-hidden-small">
+                    <p>
+                        <a href="https://github.com/michaelliao/itranswarp.js/issues" target="_blank">意见反馈</a>
+                        <br>
+                        <a href="https://github.com/michaelliao/itranswarp.js/blob/master/LICENSE" target="_blank">使用许可</a>
+                    </p>
+                </div>
+            </div>
+        <hr><div style="text-align:center"><p>友情链接: <a href="http://www.shi-ci.com/" target="_blank">中华诗词</a> - <a href="http://s.click.taobao.com/t?e=m%3D2%26s%3DjPaT%2Fmi2tL4cQipKwQzePCperVdZeJviEViQ0P1Vf2kguMN8XjClAlFz4nQbUpKuV%2FZ67c680w5IW%2FH7aX8LI9nQCCjrrrN3wYAeXhmRFOHMh3DDj7e5Hudn1BbglxZYxUhy8exlzcq9AmARIwX9K%2BnbtOD3UdznPV1H2z0iQv9NkKVMHClW0QbMqOpFMIvnvjQXzzpXdTHGJe8N%2FwNpGw%3D%3D" target="_blank">阿里云</a> - <a href="http://mitpress.mit.edu/sicp/full-text/book/book.html" target="_blank">SICP</a> - <a href="http://www.4clojure.com/" target="_blank">4clojure</a></p></div></div>
+    </div>
+
+    <div id="modal-signin" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <a class="uk-modal-close uk-close"></a>
+            <div class="uk-modal-header">
+                <h2>Please Sign In</h2>
+            </div>
+            <p>You can sign in directly without register:</p>
+            
+            <h3><a href="https://www.liaoxuefeng.com/auth/from/weibo"><i class="uk-icon-weibo"></i> 使用新浪微博登录</a></h3>
+            
+            <p>You need authorize to allow connect to your social passport for the first time.</p>
+        </div>
+    </div>
+
+    <div id="oldBrowser">
+        <div class="uk-alert uk-alert-danger" data-uk-alert="">
+            <a href="#0" class="uk-alert-close uk-close"></a>
+            <p>
+                WARNING: You are using an old browser that does not support HTML5.
+                Please choose a modern browser (<a href="https://www.google.com/chrome" target="_blank">Chrome</a> / <a href="https://www.microsoft.com/windows/microsoft-edge" target="_blank">Microsoft Edge</a> / <a href="https://www.mozilla.org/firefox/" target="_blank">Firefox</a> / <a href="https://www.apple.com/safari/" target="_blank">Sarafi</a>) to get a good experience.
+            </p>
+        </div>
+    </div>
+
+
+</body></html>
