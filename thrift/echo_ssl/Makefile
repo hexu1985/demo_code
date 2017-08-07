@@ -12,7 +12,7 @@ LDPATH = -L/usr/local/lib
 
 OBJS = echo_constants.o echo_types.o EchoTest.o
 
-PROGS = echo_client echo_server
+PROGS = client server
 
 .PHONY: all
 all: $(PROGS)
@@ -37,9 +37,9 @@ thrift-clean:
 %.o:%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
-echo_client: echo_client.o $(OBJS)
+client: client.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-echo_server: echo_server.o $(OBJS)
+server: server.o $(OBJS)
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
