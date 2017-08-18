@@ -1,0 +1,9 @@
+1) 生成证书
+# gencert.sh
+# Enter your domain [www.example.com]: <server IP或域名>
+# 修改证书文件名为server.crt和server.key 
+2) make thrift
+3) make
+4) ./server
+5) ./client
+
