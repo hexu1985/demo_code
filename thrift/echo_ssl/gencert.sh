@@ -33,3 +33,21 @@ echo "    listen 443 ssl;"
 echo "    ssl_certificate     /etc/nginx/ssl/$DOMAIN.crt;"
 echo "    ssl_certificate_key /etc/nginx/ssl/$DOMAIN.key;"
 echo "}"
+
+exit 0
+
+# add for convert to jks
+echo "openssl pkcs12 -export -clcerts -in $DOMAIN.crt -inkey $DOMAIN.key -out $DOMAIN.p12"
+
+openssl pkcs12 -export -clcerts -in $DOMAIN.crt -inkey $DOMAIN.key -out $DOMAIN.p12
+
+
+echo "keytool -import -v -trustcacerts -alias client -file $DOMAIN.crt -keystore $DOMAIN.trust.jks"
+
+keytool -import -v -trustcacerts -alias client -file $DOMAIN.crt -keystore $DOMAIN.trust.jks
+
+
+echo "keytool -importkeystore -srckeystore $DOMAIN.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore $DOMAIN.jks"
+
+keytool -importkeystore -srckeystore $DOMAIN.p12 -srcstoretype PKCS12 -deststoretype JKS -destkeystore $DOMAIN.jks
+

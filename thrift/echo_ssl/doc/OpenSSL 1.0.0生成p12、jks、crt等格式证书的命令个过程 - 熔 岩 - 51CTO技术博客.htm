@@ -1,0 +1,1740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/hm.js"></script><script id="allmobilize" charset="utf-8" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/allmobilize.js"></script><style type="text/css"></style><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="#">
+
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<title>OpenSSL 1.0.0生成p12、jks、crt等格式证书的命令个过程 - 熔  岩 - 51CTO技术博客</title>
+<meta name="description" content="OpenSSL1.0.0生成p12、jks、crt等格式证书的命令个过程&nbsp;此生成的证书可用于浏览器、java、tomcat、c++等。在此备忘！&nbsp;&nbsp;1.创建根证私钥命令：opensslgenrsa-outroot-key.key1024&nbsp;2.创建根证书..">
+<meta name="keywords" content="OpenSSL">
+<meta http-equiv="Cache-Control" content="private">
+<!-- base href="http://lavasoft.blog.51cto.com/" -->
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/def.js"></script>
+<script language="javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/message.js" type="text/javascript"></script>
+<script language="javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/user_comment.js" type="text/javascript"></script>
+<script language="javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base2.js" type="text/javascript"></script>
+<script language="javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/dialog_utf8.js" type="text/javascript"></script>
+<link href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/34.css" rel="stylesheet" type="text/css">
+<link rel="alternate" href="http://lavasoft.blog.51cto.com/rss.php?uid=62575" type="application/rss+xml" title="RSS 2.0">
+<link rel="edituri" type="application/rsd+xml" title="rsd" href="http://lavasoft.blog.51cto.com/xmlrpc.php?rsd=1">
+<link href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/header_master_top.css" rel="stylesheet" type="text/css">
+<link href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/base.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+	.mainNav li a{display:inline-block}
+</style>
+<script>
+var myid = "";
+function add_flink(){
+	if(myid==""){
+
+        var refurlk = "http://lavasoft.blog.51cto.com/62575/1104993";
+
+				//commentSubmit("",refurlk);
+				location.href="http://home.51cto.com/index.php?reback="+encodeURIComponent(encodeURIComponent(refurlk));
+				
+				return false;
+	}else{
+		var mtk = "b6940b6b0a60b6e63da4d2bac14bcba7";
+      		var url='/mod/edit_flink.php?type=addflink&uid=62575&flink=http://lavasoft.blog.51cto.com&mtk='+mtk;
+		var ajax = InitAjax1();
+		ajax.open("GET", url, true);
+		ajax.onreadystatechange = function() {
+			if (ajax.readyState == 4 && ajax.status == 200) {
+				/*if(myid == 5290427){
+					alert(ajax.responseText);
+				}*/
+				if(ajax.responseText==""){
+					alert("添加成功。");
+				}
+				if(ajax.responseText=="1"){
+				alert("链接指向自己。");
+				}
+				if(ajax.responseText=="2"){
+				alert("友情链接已存在。")
+				}
+				if(ajax.responseText=="4"){
+					alert("验证已过期。")
+					}
+			}
+		}
+		ajax.send(null);
+	}
+
+
+
+}
+function sendmessage(){
+
+	var refurlk = "http://lavasoft.blog.51cto.com/62575/1104993";
+
+	if(myid){
+		return true;
+	}else{
+		commentSubmit("",refurlk);
+		return false;
+	}
+}
+function copylink(ourl){
+	if(!ourl){
+		var clipBoardContent = "http://lavasoft.blog.51cto.com";
+	}else{
+		var clipBoardContent = ourl;
+	}
+	window.clipboardData.setData("Text",clipBoardContent);
+	alert("复制成功!");
+	return false;
+}
+function correctPNG() {
+if (document.getElementById('blog_touxian'))
+{
+var img = document.getElementById('blog_touxian');
+      var imgName = img.src.toUpperCase()
+      var imgID = (img.id) ? "id='" + img.id + "' " : ""
+      var imgClass = (img.className) ? "class='" + img.className + "' " : ""
+      var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
+      var imgStyle = "display:inline-block;" + img.style.cssText
+      if (img.align == "left") imgStyle = "float:left;" + imgStyle
+      if (img.align == "right") imgStyle = "float:right;" + imgStyle
+      if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
+      var strNewHTML = "<span " + imgID + imgClass + imgTitle
+         + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+         + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+         + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" ;
+      img.outerHTML = strNewHTML;
+}
+}
+//window.attachEvent("onload", correctPNG);
+window.onload=correctPNG;
+
+function copy(){
+var text=document.getElementById("txtUser").value;
+if(copy2Clipboard(text)!=false){ 
+alert("复制成功了！ "); 
+} 
+}
+function copy2Clipboard(txt){ 
+if(window.clipboardData){ 
+window.clipboardData.clearData(); 
+window.clipboardData.setData("Text",txt); 
+}else if(navigator.userAgent.indexOf("Opera")!=-1){ 
+window.location=txt; 
+}else if(window.netscape){ 
+try{ 
+netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect"); 
+} 
+catch(e){ 
+alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。"); 
+return false; 
+} 
+var clip=Components.classes['@mozilla.org/widget/clipboard;1'].createInstance(Components.interfaces.nsIClipboard); 
+if(!clip)return; 
+var trans=Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable); 
+if(!trans)return; 
+trans.addDataFlavor('text/unicode'); 
+var str=new Object(); 
+var len=new Object(); 
+var str=Components.classes["@mozilla.org/supports-string;1"].createInstance(Components.interfaces.nsISupportsString); 
+var copytext=txt;str.data=copytext; 
+trans.setTransferData("text/unicode",str,copytext.length*2); 
+var clipid=Components.interfaces.nsIClipboard; 
+if(!clip)return false; 
+clip.setData(trans,null,clipid.kGlobalClipboard); 
+return true;
+} 
+}
+
+function mod_close(){
+  document.getElementById('mod_tg').style.display="none";
+}
+
+function match_invite(uid) {
+    var url='/mod/match_invite.php';
+	var ajax = InitAjax();
+    var re = 'uid=' + uid;
+	ajax.open("POST", url, true);
+    ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+	ajax.send(re);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            if(ajax.responseText == 1){
+                alert("邀请信息已经发送成功。");
+            } else if(ajax.responseText=="-1"){
+                alert("邀请失败，请稍候再试。");
+            } else if(ajax.responseText=="2"){
+                alert("该用户已经报名了。")
+            }
+        }
+    }
+}
+
+</script>
+<style type="text/css">
+/*
+.artContent img {max-width:450px !important;}
+.showContent img{max-width:650px!important;}
+*/
+
+.artContent img{max-width: 450px; width:expression(this.width > 450 ? "450px" : this.width)}
+/*
+.showContent img{max-width: 450px; width:expression(this.width > 650 ? "650px" : this.width)}
+*/
+
+
+</style>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/share.js"></script><link rel="stylesheet" href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/share_style1_32.css"></head>
+
+<body>
+
+<div id="home_top">
+<div class="top_nav" style="width:990px;">
+<div class="left" style="margin-top:10px; width:600px;"><a href="http://blog.51cto.com/" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/head_blog_sibebar_logo.gif" style="margin-top:-4px;" align="absmiddle"></a><!--<a target="_blank" href="http://www.51cto.com">51CTO首页</a>--><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a href="http://blog.51cto.com/" target="_blank">首页</a><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a href="http://home.51cto.com/?reback=http%253A%252F%252Flavasoft.blog.51cto.com%252F62575%252F1104993%252F">我的博客</a><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle">
+
+
+   <a href="http://blog.51cto.com/artcommend">推荐博文</a>
+    <img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a href="http://blog.51cto.com/original/">最新原创</a>
+    <img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a href="http://blog.51cto.com/expert">专家博客</a>
+    <img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a href="http://blog.51cto.com/blogcommend">推荐博客</a>
+    <img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_bg_xian.gif" style="margin-top:-4px;" width="16" height="25" align="absmiddle"><a target="_blank" href="http://so.51cto.com/">搜索</a>
+    <!--<a href="javascript:void(0);" style="color:#FF0000; text-decoration:underline; display:none" id="showMessagerDim">每日博报</a>-->
+</div>
+
+<div class="right" style="width:380px;">
+<div class="more"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/top_shequ.gif" width="27" height="16" align="absmiddle"><a href="javascript:viod(0);" onmouseout="popupClose()" onmouseover="show(3,this)">网站导航<img style="padding-left: 4px;" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/nav_ico1.gif" align="absmiddle"></a>            </div>            <span id="login_status"><div class="login" style="padding-top:8px; text-align:right;"><a href="http://home.51cto.com/index?reback=http://lavasoft.blog.51cto.com/62575/1104993/" target="_self">登录</a><a href="http://home.51cto.com/user/register?reback=http://lavasoft.blog.51cto.com/62575/1104993/" target="_self">注册</a><a href="http://home.51cto.com/members/in-fo?down" target="_blank"><span class="jsVipDrop" style="position: relative;"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/vip_grey2.png" style="float:right; margin-top:5px"><div id="vip_mes_top" style="display:none;position: absolute;right:-75px;top: 17px;width: 137px;z-index: 99;"><div style="background: #faf7e6 none repeat scroll 0 0;border: 1px solid #ecb7a5;color: #666;font-size: 12px;padding: 3px 5px;position: relative;"><span style="background: rgba(0, 0, 0, 0) url(https://static3.51cto.com/home/web/images/hidearro.png) no-repeat scroll center center;display: inline-block;height: 7px;position: absolute;right: 57px;top: -6px;width: 12px;"></span><div style="color:#f60; text-align:center;">一个会员，全站特权</div></div></div></span></a></div></span>                </div>    </div></div>
+
+
+
+<div class="subMenu3" id="s3" onmouseover="popupNoClose()" onmouseout="popupClose()">
+<ul>
+
+<li><a href="http://edu.51cto.com/" target="_blank">学院</a></li>
+<li><a href="http://blog.51cto.com/" target="_blank">博客</a></li>
+<li><a href="http://bbs.51cto.com/" target="_blank">论坛</a></li>
+<li><a href="http://down.51cto.com/" target="_blank">下载</a></li>
+    <li><a href="http://home.51cto.com/" target="_blank">家园</a></li>
+<li><a href="http://wot.51cto.com/?blog" target="_blank">WOT峰会</a></li>
+    <li><a href="http://www.51cto.com/" target="_blank">51CTO主站</a></li>
+</ul>
+</div>
+<!--简导航end-->
+
+
+
+<div class="headerBox">
+<div class="header">
+<div class="header_l">
+<div class="logo_blogname">
+
+
+<div class="blogLogo">
+<a href="http://blog.51cto.com/blogcommend/13" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blogLogo02.png" width="161px;" height="70px;"></a>
+</div>
+
+
+<div class="blogName">
+<a href="http://lavasoft.blog.51cto.com/"><h1>熔  岩</h1></a>
+</div>
+</div><!--logo_blogname end-->
+<div class="blogLink">
+
+<a href="http://lavasoft.blog.51cto.com/">http://lavasoft.blog.51cto.com</a> <input id="txtUser" size="32" value="http://lavasoft.blog.51cto.com" type="hidden">   <a href="javascript:void(0);" onclick="copy();">【复制】</a> <a href="http://lavasoft.blog.51cto.com/rss.php?uid=62575" target="_blank"></a><a href="http://lavasoft.blog.51cto.com/rss.php?uid=62575" target="_blank">【订阅】</a>
+
+</div>
+
+
+
+</div><!--header_l end-->
+<div class="header_r">
+<div class="blogInfo"><span><a href="http://lavasoft.blog.51cto.com/62575/o" title="察看leizhimin所有原创文章">原创</a>:657</span><span><a href="http://lavasoft.blog.51cto.com/62575/t" title="察看leizhimin所有翻译文章">翻译</a>:4</span><span><a href="http://lavasoft.blog.51cto.com/62575/c" title="察看leizhimin所有转载文章">转载</a>:0</span></div>
+
+</div>
+</div>
+<!--header end-->
+</div><!--headerBox end-->
+<div class="mainNav">
+<span class="mainNavT"></span>
+<ul>
+<li><a href="http://lavasoft.blog.51cto.com/">主页</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-1">J2SE</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-2">J2EE</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-3">Servlet/JSP</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-4">Spring</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-5">ORM/持久化</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-6">MVC框架</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-7">Java开源</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-8">W3C</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-9">IDE</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-10">GUI</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-11">设计模式</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-12">MySQL</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-13">DB2、SQL</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-14">Oracle</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-15">SOA</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-16">Tomcat/Jetty</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-17">AppServer</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-18">热爱生活</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-19">系统分析设计</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-20">配置管理</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-21">UML</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-22">软件工程</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-23">实用技术</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-24">J2ME</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-25">Sun认证</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-26">Linux</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-27">C</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-28">C++</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-29">趣味编程</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-30">PHP</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-31">JavaScript</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-32">ASP.NET</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-33">C#</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-34">嵌入式</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-35">ASM</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-36">Windows编程</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-37">集群/负载均衡/缓存</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-38">性能测试</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-39">配置管理</a></li>|<li><a href="http://lavasoft.blog.51cto.com/62575/d-40">其他</a></li>
+</ul>
+<span class="mainNavB"></span>
+</div>
+<!--mainNav end-->
+
+
+<style>
+.wrap_box{width:750px;float:left;}
+.box1{width:368px;background: #fff; border: 0px solid #626262;float:left;height: 162px;}
+.mr10{margin-right:10px;}
+.newcrumbox{ width:193px; margin:0 auto;}
+.a_lsits a{display: inline-block;  height:22px; line-height:22px; padding-left: 28px; color:#555; border:1px solid #d6d6d6; border-radius: 3px; background: #efefef; font-size:12px; margin-bottom: 8px; text-decoration: none; background:url(https://s4.51cto.com/wyfs02/M01/98/95/wKiom1k-Wz6DbAw-AAAQL3nX74k572.png) no-repeat;}
+.a_lsits .newicon_d{ width:55px;}
+.a_lsits .newicon_l{ width:70px;}
+.a_lsits .newicon_1{ background-position: 8px 4px;}
+.a_lsits .newicon_2{ background-position: 8px -22px;}
+.a_lsits .newicon_3{ background-position: 8px -49px;}
+.a_lsits .newicon_4{ background-position: 8px -102px;}
+.a_lsits .newicon_5{ background-position: 8px -74px;}
+.a_listbot{ text-align: center; margin-top: 5px;}
+.a_listbot a{ display: inline-block;font-size:12px;padding-left: 35px;background:url(https://s4.51cto.com/wyfs02/M01/98/95/wKiom1k-Wz6DbAw-AAAQL3nX74k572.png) no-repeat;height:22px; line-height:22px; color:#E93504;text-decoration: none;}
+.a_listbot a.style_1{background-position: 8px -74px; }
+.a_listbot a.style_2{background-position: 8px -131px;}
+</style>
+<script type="text/javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1.js"></script>
+<!--[if IE 6]>
+  <script type="text/javascript" src="http://images.watchstor.com/newhomes/png.js"></script>
+  <script>
+    DD_belatedPNG.fix('img,input,ul,li, .get-box, div, .add, .sub, .ui-slider-handle, .footer-chopper');
+  </script>
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/fck_editorarea.css">
+<script type="text/javascript" charset="gbk" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/shCores.js"></script>
+<link rel="stylesheet" type="text/css" href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/shCoreDefault.css">
+<script type="text/javascript" charset="gbk" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/uparse.js"></script>
+<script type="text/javascript">
+	uParse('.showContent');
+	$(function(){
+		//SyntaxHighlighter.config.clipboardSwf = 'http://bbs.51cto.com/plugins/syntaxhighlighter/scripts/clipboard.swf';
+		//为了在编辑器之外能展示高亮代码
+		SyntaxHighlighter.highlight();
+	});
+</script>
+
+
+<script type="text/javascript">
+/**
+ * 回复评论需要用的js
+ * 2012-5-14
+ * by:chengtao
+ */
+ jQuery(function(){
+	blogpost.init();//初始化博客回复功能
+ })
+ /**
+  * 处理博文评论功能优化
+  */
+ blogpost={
+	abstruct_list:null,
+	init:function(){
+		blogpost.bind();//绑定一些时间
+		this.abstruct_list=new Array();//初始化保存评论信息的数组
+	},
+	/**
+	 * 博客回复需要绑定的一些事件
+	 */
+	bind:function(){
+		/**
+		 * 点击回复的事件
+		 */
+		jQuery('.repost').live('click',function(){
+			blogpost.repost(jQuery(this).attr('user_name'),jQuery(this).attr('parentid'));
+			return false;
+		});
+		/**
+		 * 点击楼层进行翻页且找到锚点
+		 */
+		jQuery('.anchor_page').live('click',function(){
+			var parentid = $(this).attr('parentid');
+			var tid=$(this).attr('tid');
+			$.get('/comments.php?tid='+tid+'&parentid='+parentid,function(data){
+				$('#artcomment').html(data);
+				window.location.hash=''+parentid;
+			})
+			return false;
+		}),
+		jQuery('.anchor_page').live('mouseover',function(){
+			var parentid = $(this).attr('parentid');
+			if(!blogpost.abstruct_list[parentid]){
+				var this_t = $(this);
+				$.get('/comments.php?cid='+parentid,function(data,textStatus){
+					blogpost.abstruct_list[parentid]=data;
+					this_t.attr('title',this_t.text()+':'+ blogpost.abstruct_list[parentid]);
+				});
+			}else{
+				$(this).attr('title',$(this).text()+':'+blogpost.abstruct_list[parentid]);
+			}
+		})
+	},
+	/**
+	 * @param user_name 用户名
+	 * @param parentid  父评论id
+	 */
+	repost:function(user_name,parentid){
+		window.location.hash='comment';
+		jQuery('#parentid').val(parentid);
+		jQuery('#commentcontent').val('回复 '+user_name+":\n").focus();
+		if(!$.browser.mozilla){
+			var elem = jQuery('#commentcontent')[0];
+			var caretPos = elem.value.length;
+			if (elem.createTextRange) {
+				var range = elem.createTextRange();
+				range.move('character', caretPos);
+				range.select();
+			}else{
+				elem.setSelectionRange(caretPos, caretPos);
+			}
+		}
+	},
+	/**
+	 * 发送完毕之后清理表单数据 不是ajax可能用不到
+	 */
+	clean:function(){
+
+	}
+ }
+</script>
+<script type="text/javascript">
+jQuery(function(){
+	var anchor = document.location.hash;
+	var comment_id=anchor.split('#')[1];
+	if(!isNaN(parseInt(comment_id))){//是整形
+		jQuery.get('/comments.php?tid=1104993&parentid='+comment_id,function(data){
+			jQuery('#artcomment').html(data);
+			window.location.hash=''+comment_id;
+		})
+	}
+});
+</script>
+
+
+
+<script type="text/javascript">
+jQuery(function() {
+	jQuery('#favourdiv').mouseover(function(){
+		if(jQuery(this).attr('className') == 'support01')
+		{
+			jQuery(this).attr('className', "support02");
+			jQuery(this).html('+1人');
+			jQuery(this).attr('title', "赞一个，我支持TA");
+		}
+		else if(jQuery(this).attr('className') == 'support03')
+		{
+			jQuery(this).attr('title', "你已经赞了这篇博文！");
+		}
+
+	});
+	jQuery('#favourdiv').mouseout(function(){
+		if(jQuery(this).attr('className') == 'support02')
+		{
+			jQuery(this).attr('className', "support01");
+			jQuery(this).html("2人");
+		}
+	});
+	jQuery('.blog_match_yq').click(function(){
+		var wind_uid = '';
+		if(!wind_uid){
+			alert("请先登录！");
+			return false;
+		}
+		jQuery.ajax({
+			   type: "POST",
+			   url:"/contest2012/index.php?mod=sendmsg",
+			   dataType: "html",
+			   data: "vuid=" + 62575,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("查无此人！");
+						return false;
+					}else if(data == 1){
+						alert("请先登录！");
+						return false;
+					}else if(data == 2){
+						alert("不能邀请自己！");
+						return false;
+					}else if(data == 22){
+						alert("邀请信息已发出！");
+						return false;
+					}
+			   }
+		  });
+	});
+	jQuery('#favourdiv').click(function(){
+			jQuery.ajax({
+			   type: "POST",
+			   url:"/mod/favour.php",
+			   dataType: "html",
+			   data: "tid=" + 1104993,
+			   success: function(data) {
+					if(data == 0)
+					{
+						alert("您还未登录或者已过期，请重新登录");
+						location.href = "http://home.51cto.com/index.php?reback=http%253A%252F%252Flavasoft.blog.51cto.com%252F62575%252F1104993%252F";
+						return false;
+					}
+					else if(data == '-1')
+					{
+						alert("参数传递错误！");
+						return false;
+					}
+					else if(data == '-2')
+					{
+						alert("该博文已被删除或者不存在！");
+						return false;
+					}
+					else if(data == '-3')
+					{
+						alert("您已经赞过了！");
+						return false;
+					}
+					else if(data == '-4')
+					{
+						alert("赞操作失败！");
+						return false;
+					}
+					else
+					{
+						//alert("操作成功，你已经赞了这篇博文！");
+						jQuery('#favourdiv').attr('className', "support03");
+
+						var num = 2 + 1 + "人";
+						jQuery('#favourdiv').html(num);
+						jQuery('#favourer').html(data);
+						return false;
+					}
+			   }
+		  });
+	});
+	//Jaydar http://blog.51cto.com/js/header.php?uid=blogdb[uid]&tid=tid
+	jQuery.post('/js/header.php',{uid:62575,tid:1104993},function(data){
+		jQuery('#readNum').html(data[0]);
+		jQuery('#cmtNum').html(data[1]);
+	},'json');
+
+
+})
+
+jQuery(function(){
+	jQuery('#darid').bind('click',function(){
+		if(confirm("你确定删除此篇文章？")){
+			jQuery.ajax({
+				'type':'post',
+				'url':'user_index.php?action=delarticle',
+				'data':{'job':'del', 'selid':'1104993', 'mhash':''},
+				'dataType':'html',
+				'success':function(res){
+					if('ok' == res){
+						location.href="http://.blog.51cto.com";
+					}
+
+				}
+			});
+		}
+	});
+});
+</script>
+
+
+
+
+<style type="text/css">
+.m_sharelinks{
+	line-height:30px;
+	text-align:left;
+	padding-left:20px;
+	//background:url(http://img1.51cto.com/images/share/ico_lb.gif) no-repeat left center;
+	float:left;
+	width:600px;
+	height:30px;
+}
+.m_sharelinks a{ margin-left:10px;}
+.m_sharebtn{ height:50px; width:726px; margin:0 auto;}
+.m_sharebtn01{width:520px; float:left;}
+.weibo_51cto{ background:url(http://img1.51cto.com/images/share/ico_mweibo.gif) no-repeat center center; display:block; width:33px; height:33px; float:left; margin:3px 3px 0 0;cursor:pointer;}
+.shareMored {
+    line-height: 30px;
+	float:right;
+	text-align:right;
+	width:100px;
+	height:30px;
+}
+
+.showContent {
+	margin:20px 15px 8px;
+}
+.userImage img {
+    text-align: center;
+	border:0;
+	padding:0;
+}
+.photo_links{ line-height:30px; padding-top:5px; font-size:13px;width:170px; margin:0 auto;}
+.photo_links_blue{ text-align:center;}
+.photo_links_blue a:link,.photo_links_blue a:visited,.photo_links_blue a:hover,.photo_links_blue a:active{ color:#015F91; text-decoration: underline;}
+.photo_links_red{ text-align:left;}
+.photo_links_red a:link,.photo_links_red a:visited,.photo_links_red a:hover,.photo_links_red a:active{ color:#fc4343; text-decoration:underline;}
+.photo_links_red02{ text-align:center;}
+
+.vlist{ margin:10px 10px; height:65px;}
+.vlist img{ float:left; margin-right:10px;}
+.vlist dl{ text-align:left;}
+.vlist dl dt{ height:40px;line-height: 20px; overflow:hidden; padding-top:5px;}
+.vlist dl dt,.vlist dl dt a{ color:#262626;}
+.vlist dl dd,.vlist dl dd a{ color:#777;}
+
+.video-icon{
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left:31px;
+    position: absolute;
+    top:22px;
+    width: 25px;
+    z-index: 10;
+}
+
+.ipadFload{ position:fixed; width:136px; height:194px; background:url("http://bbs.51cto.com/images/IPad-bg.png") left top no-repeat #fff; font-family:"微软雅黑"; padding-left:18px;}
+.ipadClose{ text-align:right; font-size:14px; line-height:20px;}
+.ipadImg{ padding-top:38px;}
+.ipadImg img{ width:105px; height:105px;}
+.iPadair2{ font-size:12px;}
+.iPadair2 a{ color:#659b01; text-decoration:none; background:url("http://bbs.51cto.com/images/51CTO-IPAD-BOTTOM.png") right center no-repeat; display:block; line-height:30px;}
+
+</style>
+<div id="add_sys_type_div" style="width:600px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+<div id="add_sys_type_dvs" style="width:550px;border:1px #58B0DD solid; background-color:#FFF; position:absolute;left:30%;top:300px;display:none;z-index:255"></div>
+
+
+
+
+<div class="blogMain">
+<div class="blogLeft">
+
+
+<div class="box moduleUser">
+<div class="title">
+<h2><a href="http://lavasoft.blog.51cto.com/"><strong>leizhimin</strong> 的BLOG  </a></h2>
+</div>
+<div class="modCon">
+
+<div class="userImage" style="margin: 10px auto 5px;text-align: center;width: 130px;border: 1px solid #D4D4D4;">
+	<table width="100%" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+			<td class="position_r" valign="middle" height="130" align="center"><a href="http://lavasoft.blog.51cto.com/"><script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/userface.htm"></script><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_012.gif" id="userface"></a></td>
+		</tr>
+	</tbody></table>
+</div>
+<div class="photo_links">
+</div>
+
+
+
+
+
+
+
+
+
+    <div class="newcrumbox">
+        <div class="a_lsits">
+            <a href="http://home.51cto.com/index.php?s=/Notify/write/uid/62575" class="newicon_3 newicon_d">发私信</a>
+            <a href="http://lavasoft.blog.51cto.com/" onclick="add_flink(62575);return false" class="newicon_5 newicon_l">加友情链接</a>
+        </div>
+    </div>
+
+<div style="width:239px;height:64px;display:none;">
+
+
+<div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">2012年度IT博客大赛<br><a target="_blank" href="http://blog.51cto.com/contest2012/#top10000" style="color:#F00; text-decoration:underline;">十大杰出IT博客诞生</a></p></div>
+<div style="float:right;"><a target="_blank" href="http://blog.51cto.com/contest2012/"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_match_endlook.jpg" style="margin:23px 20px 0 0;" width="57" height="27"></a></div>
+<!-- <div style="float:left;"><p style="padding:15px 0 0 28px; line-height:20px;">星光评委正在评选<br><a target="_blank" href="http://blog.51cto.com/contest2012/index.php?mod=userlist_sec" style="color:#F00; text-decoration:underline;">2012年度IT博客大赛50强</a></p></div>
+<div style="float:right;"><img class="blog_match_yq" width="57" height="27" src="http://img1.51cto.com/images/blog_match_invite.jpg" style="margin:23px 20px 0 0;"></div> -->
+
+
+
+<div class="clear"></div>
+</div>
+
+
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+<div class="title">
+<h2>博客统计信息</h2>
+</div>
+<div class="modCon">
+<p>
+<span class="infoListHead"><a href="http://blog.51cto.com/blogcommend" target="_blank" class="operlink"><b>51CTO博客之星</b></a> <br></span>
+用户名：leizhimin<br>
+文章数：733<br>
+评论数：2729<br>
+访问量：21445022<br>
+<a href="http://home.51cto.com/index.php?s=/Account/credit" target="_blank">无忧币</a>：16260<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客积分</a>：17012<br>
+<a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank">博客等级</a>：10<br>
+注册日期：2006-11-01<br>
+</p>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="infoList box">
+	<div class="title">
+		<h2 class="fl">热门专题</h2>
+		<a target="_blank" class="fr" href="http://blog.51cto.com/zt">更多&gt;&gt;</a>
+	</div>
+	<div class="modCon" style="height: 348px;">
+
+
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/705" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/wKioL1kxBvqDXivDAAA4F7mg1So675.jpg" width="63" height="63"></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/705" target="_blank" title="Oracle零基础成长之路">Oracle零基础成长之路</a></dt>
+		<dd>阅读量：1297</dd>
+		</dl>
+		</div>
+
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/706" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/wKioL1k_SpejGPpUAAA3gnotfPU742.png" width="63" height="63"></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/706" target="_blank" title="原来你也在这里（征文）">原来你也在这里（征文）</a></dt>
+		<dd>阅读量：3317</dd>
+		</dl>
+		</div>
+
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/14" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/1304672337_index.jpg" width="63" height="63"></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/14" target="_blank" title="从菜鸟到老鸟-教你玩转Mac操作系统">从菜鸟到老鸟-教你玩转Mac操作系统</a></dt>
+		<dd>阅读量：448393</dd>
+		</dl>
+		</div>
+
+		<div class="vlist">
+		  <a href="http://blog.51cto.com/zt/20" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/1306310178_index.jpg" width="63" height="63"></a>
+		<dl>
+		<dt>
+		  <a href="http://blog.51cto.com/zt/20" target="_blank" title="QT学习之路：从入门到精通">QT学习之路：从入门到精通</a></dt>
+		<dd>阅读量：1133316</dd>
+		</dl>
+		</div>
+
+
+	</div>
+	<span class="modBot"></span>
+</div>
+
+
+<div class="hotArt box">
+<div class="title">
+<h2>热门文章</h2>
+</div>
+<div class="modCon">
+<ul>
+<li><a href="http://lavasoft.blog.51cto.com/62575/27069">Java多线程编程总结</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/97730">IntelliJ Idea 常用快捷..</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/18771">Java关键字final、static..</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/275589">深入理解HTTP Session</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/53263">Java中的main()方法详解</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/99151">Java线程：创建与启动</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/99155">Java线程：线程的同步与锁</a></li>
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+<div class="search box">
+<div class="title"><h2>搜索BLOG文章</h2></div>
+<div class="modCon">
+<form method="post" action="search.php?" tabindex="99">
+<input name="step" value="2" type="hidden">
+<input name="authorid" value="62575" type="hidden">
+<input name="sch_area" value="S" type="hidden">
+<input name="keyword" class="searchInput" type="text">
+<input value="搜 索" class="searchBtn" type="submit">
+</form>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="box recentGuests">
+<div class="title">
+<h2>最近访客</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://5520806.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_003.gif"></a>
+
+
+<p><a href="http://5520806.blog.51cto.com/">jngng</a></p>
+
+</li><li><a href="http://13220644.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_009.gif"></a>
+
+
+<p><a href="http://13220644.blog.51cto.com/">dsds125</a></p>
+
+</li><li><a href="http://7914310.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar.gif"></a>
+
+
+<p><a href="http://7914310.blog.51cto.com/">seant..</a></p>
+
+</li><li><a href="http://4616667.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_005.gif"></a>
+
+
+<p><a href="http://4616667.blog.51cto.com/">cbmtsy</a></p>
+
+</li><li><a href="http://9544232.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_002.gif"></a>
+
+
+<p><a href="http://9544232.blog.51cto.com/">wang_..</a></p>
+
+</li><li><a href="http://3377699.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar.jpg"></a>
+
+
+<p><a href="http://3377699.blog.51cto.com/">xzf37..</a></p>
+
+</li><li><a href="http://2023019.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_007.gif"></a>
+
+
+<p><a href="http://2023019.blog.51cto.com/">请叫..</a></p>
+
+</li><li><a href="http://8086820.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_004.gif"></a>
+
+
+<p><a href="http://8086820.blog.51cto.com/">德东男</a></p>
+
+</li><li><a href="http://12187094.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_006.gif"></a>
+
+
+<p><a href="http://12187094.blog.51cto.com/">qq580..</a></p>
+
+</li><li><a href="http://3996571.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_011.gif"></a>
+
+
+<p><a href="http://3996571.blog.51cto.com/">fcxx182</a></p>
+
+</li><li><a href="http://13224404.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_008.gif"></a>
+
+
+<p><a href="http://13224404.blog.51cto.com/">wx599..</a></p>
+
+</li><li><a href="http://6779887.blog.51cto.com/" class="position_r"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/avatar_010.gif"></a>
+
+
+<p><a href="http://6779887.blog.51cto.com/">56841..</a></p>
+
+</li></ul>
+<span class="clear"></span>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="newComments box">
+<div class="title">
+<h2>最新评论
+
+</h2>
+
+
+
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://2954451.blog.51cto.com/" class="operlink" target="_blank"><b>Senior1</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/26134" target="_blank">转载了博主</a></li>
+
+<li><a href="http://11980049.blog.51cto.com/" class="operlink" target="_blank"><b>廖锦豪</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/275589" target="_blank">讲得挺不错的，可是有些错别字，对..</a></li>
+
+<li><a href="http://12412262.blog.51cto.com/" class="operlink" target="_blank"><b>qq58509cc51d643</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/99155" target="_blank">第一个 例子 给的同步的方法是对的 ..</a></li>
+
+<li><a href="http://13112398.blog.51cto.com/" class="operlink" target="_blank"><b>ccv5873</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/275589" target="_blank">回复 rrg123:博文中的3个浏览器窗口..</a></li>
+
+<li><a href="http://13158681.blog.51cto.com/" class="operlink" target="_blank"><b>qq59758777be6a5</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/52685" target="_blank">continue和break结果写反了好吗</a></li>
+
+<li><a href="http://9846200.blog.51cto.com/" class="operlink" target="_blank"><b>startears</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/15456" target="_blank">大体分析的挺好</a></li>
+
+<li><a href="http://13137119.blog.51cto.com/" class="operlink" target="_blank"><b>jfyh5388</b></a>：<a href="http://lavasoft.blog.51cto.com/62575/18771" target="_blank">博主，您好，您的博客写的很好，可..</a></li>
+
+
+</ul>
+</div>
+<span class="modBot"></span>
+</div>
+
+
+<div class="hotBlogArt box">
+<div class="title">
+  <h2 class="fl">51CTO推荐博文</h2>
+  <a href="http://blog.51cto.com/artcommend" class="fr">更多&gt;&gt;</a></div>
+<div class="modCon">
+<ul>
+<li><a href="http://ityouknow.blog.51cto.com/8715198/1955325" title="  一次dns缓存引发的惨案" target="_blank">  一次dns缓存引发的惨案</a></li>
+<li><a href="http://chenxinjie.blog.51cto.com/7749507/1949465" title="网络安全求职指南" target="_blank">网络安全求职指南</a></li>
+<li><a href="http://juispan.blog.51cto.com/943137/1945059" title="grep/sed/awk实战" target="_blank">grep/sed/awk实战</a></li>
+<li><a href="http://z00w00.blog.51cto.com/515114/1942690" title="关于抵御Petya勒索病毒的最新办法" target="_blank">关于抵御Petya勒索病毒的最新办法</a></li>
+<li><a href="http://wangchunhai.blog.51cto.com/225186/1942197" title="使用USB直接方式解决ESXi识别加密狗的问题" target="_blank">使用USB直接方式解决ESXi识别加密..</a></li>
+<li><a href="http://wangxy.blog.51cto.com/12562290/1941850" title="直击传统运维痛点，京东金融智能运维实践" target="_blank">直击传统运维痛点，京东金融智能..</a></li>
+<li><a href="http://zhoufoxcn.blog.51cto.com/792419/1940799" title="开发人员学Linux之终结篇：大型系统开发经验谈" target="_blank">开发人员学Linux之终结篇：大型系..</a></li>
+<li><a href="http://icenycmh.blog.51cto.com/4077647/1940443" title="cacti实现微信告警功能" target="_blank">cacti实现微信告警功能</a></li>
+<li><a href="http://strikene.blog.51cto.com/5877668/1940303" title="构建DSC 资源的”另类写法”" target="_blank">构建DSC 资源的”另类写法”</a></li>
+<li><a href="http://9399369.blog.51cto.com/9389369/1940260" title="keepalived 实现web应用的高可用" target="_blank">keepalived 实现web应用的高可用</a></li>
+<li><a href="http://wgkgood.blog.51cto.com/1192594/1937458" title="基于CentOS7.3构建企业级Vsftpd文件服务器" target="_blank">基于CentOS7.3构建企业级Vsftpd文..</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+<div class="friendLink box">
+<div class="title">
+  <h2>友情链接</h2>
+</div>
+<div class="modCon">
+<ul>
+
+<li><a href="http://www.lthack.com/" title="下载学习资料好去处" target="_blank">龙天论坛</a></li>
+
+<li><a href="http://www.zhongguocaidao.com/" title="中国菜刀,中国菜刀管理工具" target="_blank">中国菜刀</a></li>
+
+<li><a href="http://songxj.blog.51cto.com/" title="顺妻自然" target="_blank">顺妻自然</a></li>
+
+<li><a href="http://www.88953.com/" title="" target="_blank">中国坤易学网</a></li>
+
+<li><a href="http://guoxue6.com/" title="" target="_blank">连云港国学网</a></li>
+
+<li><a href="http://www.dy2018.net/" title="" target="_blank">电影天堂</a></li>
+
+<li><a href="http://www.sb5th.com/" title="S60V5" target="_blank">S60V5</a></li>
+
+<li><a href="http://zhengfj.blog.51cto.com/" title="我的数据库之路" target="_blank">我的数据库之路</a></li>
+
+<li><a href="http://tonyxiaohome.blog.51cto.com/" title="肖舸的blog" target="_blank">肖舸的blog</a></li>
+
+<li><a href="http://itmov.blog.51cto.com/" title="ITMOV旗舰 Simon Xiao" target="_blank">ITMOV旗舰 Simon Xiao</a></li>
+
+<li><a href="http://blog.sina.com.cn/xql888" title="xql888" target="_blank">xql888</a></li>
+
+<li><a href="http://zhangjunhd.blog.51cto.com/" title="子 孑" target="_blank">子 孑</a></li>
+
+<li><a href="http://devbean.blog.51cto.com/" title="豆子空间" target="_blank">豆子空间</a></li>
+
+<li><a href="http://cping1982.blog.51cto.com/" title="Java究竟怎么玩" target="_blank">Java究竟怎么玩</a></li>
+
+<li><a href="http://litianping.blog.51cto.com/" title="李天平" target="_blank">李天平</a></li>
+
+<li><a href="http://useway.blog.51cto.com/" title="《Java程序员，上班那点事儿》的那点事儿" target="_blank">《Java程序员，上..</a></li>
+
+<li><a href="http://haoel.blog.51cto.com/" title="陈皓的个人专栏" target="_blank">陈皓的个人专栏</a></li>
+
+<li><a href="http://liuyu.blog.51cto.com/" title="seven" target="_blank">seven</a></li>
+
+<li><a href="http://www.btchina.net/" title="btchina" target="_blank">btchina</a></li>
+
+<li><a href="http://www.3gp2.com/" title="3GP手机视频下载" target="_blank">3GP手机视频下载</a></li>
+
+<li><a href="http://tech.sina.com.cn/hardware/" title="新浪硬件" target="_blank">新浪硬件</a></li>
+
+</ul>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div>
+
+
+
+</div>
+<!--left end-->
+
+<script type="text/javascript">
+    var favor_url = "http://lavasoft.blog.51cto.com/62575/1104993/";
+    var favor_title = "OpenSSL 1.0.0生成p12、jks、crt等格式证书的命令个过程";
+    var favor_fuid = "62575";
+</script>
+<script type="text/javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorbox.js"></script>
+
+
+<div class="blogRight" rel="62575######OpenSSL" id="article_edu_void">
+<input value="12" id="edu_jia" type="hidden">
+
+	<!--<p style="clear:both;"  class="edu_insert"></p>-->
+	<style type="text/css">
+.vlist {
+    float: left;
+    padding: 2px 0 0 10px;
+    width: 218px;
+
+}
+.vlist img {
+    float: left;
+    margin-right: 10px;
+}
+.vlist dl {
+    float: left;
+    text-align: left;
+    width: 122px;
+}
+.vlist dl dt {
+    height: 44px;
+    overflow: hidden;
+    padding-top: 5px;
+}
+.vlist dl dt, .vlist dl dt a {
+    color: #262626;
+}
+.vlist dl dd, .vlist dl dd a {
+    color: #777777;
+}
+.vbox_tit {
+    border-bottom: 1px solid #B3D0E6;
+    color: #666666;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+}
+.video-icon {
+    position: relative;
+}
+.video-icon a.i_video {
+    background: url("http://www.51cto.com/images/homepage/Images/eduplay.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    height: 25px;
+    left: 41px;
+    position: absolute;
+    top: 22px;
+    width: 25px;
+    z-index: 10;
+}
+.vbox2 .vlist1{margin:0;}
+.edu-col-a{ float:left;margin-right:6px;}
+.edu-col-b{ float:left;}
+	</style><!--modCon end-->
+	<div class="artShow box" style="margin-top:5px;">
+   	  <div class="share" id="share">
+
+    <div class="shareItem">
+		<div class="m_sharelinks"><a target="_blank" href="" style="color:red;"></a><a target="_blank" href="" style="color:blue;"></a><a target="_blank" href="" style="color:blue;"></a></div>
+		<p class="shareMored"><a href="http://lavasoft.blog.51cto.com/all/62575">博主的更多文章&gt;&gt;</a></p>
+	</div>
+      </div>
+       <div class="modCon">
+   	  <div class="showBox" style="margin:0 0 10px;">
+      <div class="line_hd_r"></div>
+      <div class="art_tj">
+
+      </div>
+
+
+    		<div class="showHead">
+    		  <div class="showTitleBOx" style="text-align:center">
+              <div class="showTitle">
+
+             <img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/artType01.jpg">
+
+
+    		    OpenSSL 1.0.0生成p12、jks、crt等格式证书的命令个过程
+                </div>
+  		    </div>
+   		    <span class="artTime">2012-12-31 12:35:07</span></div><!--showHead end-->
+    <div class="showTags">标签：<a href="http://blog.51cto.com/tag-OpenSSL.html" target="_blank" class="operlink">OpenSSL</a>
+
+	</div>
+
+			<div class="CopyrightStatement lh22">
+            原创作品，允许转载，转载时请务必以超链接形式标明文章 <a href="http://lavasoft.blog.51cto.com/62575/1104993" target="_blank" style="text-decoration:underline">原始出处</a> 、作者信息和本声明。否则将追究法律责任。<a href="http://lavasoft.blog.51cto.com/62575/1104993">http://lavasoft.blog.51cto.com/62575/1104993</a>
+            </div>
+
+
+            <!--正文 begin-->
+
+
+		  <div class="showContent">
+    		  <div>OpenSSL 1.0.0生成p12、jks、crt等格式证书的命令个过程</div>
+<div>&nbsp;</div>
+<div>此生成的证书可用于浏览器、java、tomcat、c++等。在此备忘！</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<div>1.创建根证私钥<br>命令：<br>openssl genrsa -out root-key.key 1024</div>
+<div>&nbsp;</div>
+<div>2.创建根证书请求文件<br>&nbsp;命令：<br>openssl req -new -out root-req.csr -key root-key.key -keyform PEM</div>
+<div><br>3.自签根证书<br>命令：<br>&nbsp;openssl x509 -req -in root-req.csr -out root-cert.cer -signkey root-key.key -CAcreateserial -days 3650</div>
+<div>&nbsp;</div>
+<div>4.导出p12格式根证书<br>命令：<br>openssl pkcs12 -export -clcerts -in root-cert.cer -inkey root-key.key -out root.p12</div>
+<div><br>5.生成root.jks文件<br>keytool -import -v -trustcacerts -storepass 123456 -alias root -file root-cert.cer -keystore </div>
+<div>root.jks </div>
+<div><br>生成客户端文件：<br>1.生成客户端key<br>openssl genrsa -out client-key.key 1024<br>2.生成客户端请求文件<br>openssl req -new -out client-req.csr -key client-key.key<br>3.生成客户端证书（root证书，rootkey，客户端key，客户端请求文件这4个生成客户端证书）<br>openssl x509 -req -in client-req.csr -out client-cert.cer -signkey client-key.key -CA root-cert.cer </div>
+<div>-CAkey root-key.key -CAcreateserial -days 3650<br>4.生成客户端p12格式根证书<br>openssl pkcs12 -export -clcerts -in client-cert.cer -inkey client-key.key -out client.p12</div>
+<div>&nbsp;</div>
+<div>客户端jks：<br>&nbsp;keytool -import -v -trustcacerts -storepass 123456 -alias client -file client-cert.cer -keystore </div>
+<div>client.jks</div>
+<div>&nbsp;</div>
+<div>生成服务端文件：<br>1.生成服务端key<br>openssl genrsa -out server-key.key 1024<br>2.生成服务端请求文件<br>openssl req -new -out server-req.csr -key server-key.key<br>3.生成服务端证书（root证书，rootkey，客户端key，客户端请求文件这4个生成客户端证书）<br>openssl x509 -req -in server-req.csr -out server-cert.cer -signkey server-key.key -CA root-cert.cer </div>
+<div>-CAkey root-key.key -CAcreateserial -days 3650<br>4.生成服务端p12格式根证书<br>openssl pkcs12 -export -clcerts -in server-cert.cer -inkey server-key.key -out server.p12</div>
+<div>服务端JKS<br>&nbsp;keytool -import -v -trustcacerts -storepass 123456 -alias server -file server-cert.cer -keystore </div>
+<div>server.jks</div>
+<div><br>无密码key命令：<br>openssl rsa -in client-key.key -out client-key.key.unsecure</div>
+<div>&nbsp;</div><p>本文出自 “<a href="http://lavasoft.blog.51cto.com/">熔  岩</a>” 博客，请务必保留此出处<a href="http://lavasoft.blog.51cto.com/62575/1104993">http://lavasoft.blog.51cto.com/62575/1104993</a></p>
+		  </div>
+
+			<!--正文 end-->
+<script type="text/javascript" language="javascript">
+	function iFrameHeight() {
+		var ifm= document.getElementById("iframepage");
+		var subWeb = document.frames ? document.frames["iframepage"].document : ifm.contentDocument;
+		if(ifm != null && subWeb != null) {
+			ifm.height = subWeb.body.scrollHeight;
+		}
+	}
+</script>
+<script type="text/javascript">
+	var kevent = 
+'onabort|onblur|onchange|onclick|ondblclick|onerror|onfocus|onkeydown|onkeypress|onkeyup|onload|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|onreset|onresize|onselect|onsubmit|onunload';
+
+	var aevent = kevent.split('|');
+
+	jQuery('.showContent img').each(function(){
+		var nimg = this;
+		jQuery.each(aevent, function(i, n){
+			if (n!='onload') {
+				jQuery(nimg).attr(n, '');
+			} else {
+				if (jQuery(nimg).attr(n) != 'if(this.width>650) this.width=650;') {
+					jQuery(nimg).attr(n, '');
+				}
+			}
+		});
+	});
+</script>
+<script type="text/javascript" charset="utf-8">
+var encodetitle = encodeURI('一篇很棒的博文分享给大家：《OpenSSL 
+1.0.0生成p12、jks、crt等格式证书的命令个过程》');
+
+function show51share(){
+
+	
+window.open('http://t.51cto.com/index.php?m=share&url=http://lavasoft.blog.51cto.com/62575/1104993/&type=l&count=&relateUid=&appkey=3843950324&title='
+ + encodetitle);
+}
+</script>
+<div class="m_sharebtn clear">
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
+	  <tbody><tr>
+		<td width="11%" valign="middle" height="43" align="center"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/ssk.png" alt="分享至"></td>
+		<td width="77%" valign="top" align="left">
+<!--
+<div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>
+var bds_config = {'wbUid':1706976420};
+window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false, 'bdPic':'http://blog.51cto.com/attachment/201305/173413310.jpg',"bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+ -->
+
+<div class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1503310028791"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_mshare" data-cmd="mshare" title="分享到一键分享"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_bdhome" data-cmd="bdhome" title="分享到百度新首页"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a><a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a><a href="#" class="bds_bdysc" data-cmd="bdysc" title="分享到百度云收藏"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a></div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{"tsina":"2065779340"},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"http://blog.51cto.com/img/blog_down0731.jpg","bdStyle":"1","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new
+ Date()/36e5)];</script>
+
+	<!-- Baidu Button END --></td>
+		<td width="12%" valign="middle" align="right"><a class="bdms_point" data-behavior="favorite" data-method="add" href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/favorite_add_small.gif" alt="一键收藏，随时查看，分享好友！" border="0"></a></td>
+	  </tr>
+	</tbody></table>
+
+</div>
+    		<div class="showBottom">
+            <!--<div class="reviews"><span class="fl" style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">yunhao7966、q418358795</a>
+
+            </span><div id="favourdiv" class="support01">2人</div>
+              <span class="fl">了这篇文章</span></div>-->
+              <table width="720" cellspacing="0" cellpadding="0" border="0">
+  <tbody><tr>
+    <td align="right"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/icon01.png" width="15" height="16"> <span style="cursor:pointer;"><a onclick="openFavoulist();" id="favourer">yunhao7966、q418358795</a></span></td>
+    <td width="70" align="left"><div style="line-height:28px;" id="favourdiv" class="support01">2人</div></td>
+    <td width="60" align="left">了这篇文章</td>
+  </tr>
+</tbody></table>
+
+
+
+
+            <div class="showType">类别：<a href="http://lavasoft.blog.51cto.com/62575/d-40" class="operlink">其他</a>┆阅读(<span id="readNum">25875</span>)┆评论(<span id="cmtNum">1</span>)
+
+┆
+<a href="http://lavasoft.blog.51cto.com/">返回博主首页</a>┆<a href="http://blog.51cto.com/">返回博客首页</a></div>
+            <div class="prevNext">
+
+			上一篇 <a href="http://lavasoft.blog.51cto.com/62575/1099664" class="operlink" title="JS弹出层">JS弹出层</a>
+
+
+			下一篇 <a href="http://lavasoft.blog.51cto.com/62575/1105002" class="operlink" title="跨域Servlet调用Servlet的实现">跨域Servlet调用Servlet的实现</a>
+
+
+            </div>
+
+            </div>
+
+	  </div><!--showBottom end-->
+      </div><!--modCon-->
+    <span class="modBot"></span>
+    </div><!--artShow end-->
+    <span class="blank"></span>
+
+
+
+    <div class="relatedArt box">
+    <div class="title" name="zhuanti" id="zhuanti"><h2>相关文章</h2></div>
+    <div class="modCon">
+<ul>
+
+<li><a href="http://virtualbox.blog.51cto.com/531002/1104431" title="OpenSSL工具常用配置命令" target="_blank">OpenSSL工具常用配置命令</a></li>
+
+
+<li><a href="http://walkerqt.blog.51cto.com/1310630/946075" title="Win32下VC编译OpenSSl" target="_blank">Win32下VC编译OpenSSl</a></li>
+
+
+<li><a href="http://linuxg.blog.51cto.com/4410110/801314" title="使用openssl模拟生成CA" target="_blank">使用openssl模拟生成CA</a></li>
+
+
+<li><a href="http://yinghao.blog.51cto.com/3072047/562542" title="OpenSSL之计算SHA1散列值" target="_blank">OpenSSL之计算SHA1散列值</a></li>
+
+
+<li><a href="http://laokaddk.blog.51cto.com/368606/73593" title="Openssl简明教程" target="_blank">Openssl简明教程</a></li>
+
+
+<li><a href="http://myllinux2010.blog.51cto.com/1851024/364556" title="xinetd，selinux和openssl" target="_blank">xinetd，selinux和openssl</a></li>
+
+
+<li><a href="http://potaski.blog.51cto.com/3099084/851822" title="Centos6.2下puppet客户端安装" target="_blank">Centos6.2下puppet客户端安装</a></li>
+
+
+<li><a href="http://manual.blog.51cto.com/3300438/788670" title="使用openssl加密文件" target="_blank">使用openssl加密文件</a></li>
+
+
+<li><a href="http://chenwenming.blog.51cto.com/327092/620219" title="用openssl对文件加密及解密" target="_blank">用openssl对文件加密及解密</a></li>
+
+
+<li><a href="http://nameyjj.blog.51cto.com/788669/511946" title="openssl 编译安装报错Makefile is older than Makefile.org, Configure or config." target="_blank">openssl 编译安装报错Makefile is older tha..</a></li>
+
+
+
+</ul>
+
+
+
+<span class="blank6"></span>
+</div><!--modCon end-->
+<span class="modBot"></span>
+</div><!--相关文章 end-->
+
+
+
+
+	<div class="relatedArt box">
+		<a href="javascript:;"><img src=""></a>
+	</div>
+
+
+<div class="artComm box">
+    <div class="title"><a name="replay"></a><h2>文章评论</h2></div>
+    <div class="modCon" id="artcomment">
+		<div>  &nbsp;</div><a name="588736"></a><div class="itcomment" style="table-layout: fixed;word-wrap: break-word" id="itcommentid0"><div><div style="width:100%;border-bottom:1px solid #A0A0A0;height:20px"><label style="float:left">[1楼]&nbsp;&nbsp;&nbsp;&nbsp;<img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/reply.gif">&nbsp;&nbsp;<a target="_blank" href="http://qmsll.blog.51cto.com/" class="operlink" ref="nofollow"><b>q418358795</b></a></label><label style="float:right">&nbsp;<a href="#" class="repost operlink" user_name="q418358795" parentid="588736">回复</a></label></div></div><div align="right">2013-10-01 01:19:08</div><div class="commentcontent">很喜欢博主的文章，刚刚用豆约翰博客备份专家备份了您的全部博文。</div></div><br><div>  &nbsp;</div>
+    </div><!--modCon-->
+        <span class="modBot"></span>
+</div><!--commBox end-->
+<a href="" id="com_top_top"></a>
+<!--<div class="artComm box" style="750px;height:90px;">
+<script type="text/javascript">
+    var cpro_id = "u2386995";
+</script>
+<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
+</div>--><form action="/comment.php?" method="post" name="form1" id="form1" onsubmit='return commentSubmit(this,"");'>
+<span class="blank1"></span>
+<div class="box writeComm" style="min-height:30px;">
+<a name="comment"></a>
+<input name="action" value="comment" type="hidden">
+<input id="commenttid" name="tid" value="1104993" type="hidden">
+<input name="com_count_ajax" id="com_count_ajax" value="1" type="hidden">
+
+ <div class="title">
+	<h2 class="fl">发表评论&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+	<span class="fl" id="messageTj">
+<script type="text/javascript"><!--//<![CDATA[
+   var m3_u = 
+(location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg2.51cto.com/www/delivery/ajs.php');
+
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=460");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + 
+document.MAX_used);
+   document.write (document.charset ? '&amp;charset='+document.charset :
+ (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + 
+escape(document.referrer));
+   if (document.context) document.write ("&context=" + 
+escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><script type="text/javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/ajs.php"></script><div id="beacon_ade4f7a4c4" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/lg.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+
+</span>
+	<style type="text/css">
+		a.mred:link{ color:#ff0000; text-decoration:underline;}
+		a.mred:visited{color:#ff0000;}
+		a.mred:hover{color:#ff0000;}
+		a.mred:active{color:#ff0000;}
+	</style>
+</div>
+<div style="display:none" rel="" id="ggBox">
+<script type="text/javascript"><!--//<![CDATA[
+   var m3_u = 
+(location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg2.51cto.com/www/delivery/ajs.php');
+
+   var m3_r = Math.floor(Math.random()*99999999999);
+   if (!document.MAX_used) document.MAX_used = ',';
+   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+   document.write ("?zoneid=460");
+   document.write ('&amp;cb=' + m3_r);
+   if (document.MAX_used != ',') document.write ("&amp;exclude=" + 
+document.MAX_used);
+   document.write (document.charset ? '&amp;charset='+document.charset :
+ (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+   document.write ("&amp;loc=" + escape(window.location));
+   if (document.referrer) document.write ("&amp;referer=" + 
+escape(document.referrer));
+   if (document.context) document.write ("&context=" + 
+escape(document.context));
+   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+   document.write ("'><\/scr"+"ipt>");
+//]]>--></script><script type="text/javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/ajs.php"></script><div id="beacon_ade4f7a4c4" style="position: absolute; left: 0px; top: 0px; visibility: hidden;"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/lg.gif" alt="" style="width: 0px; height: 0px;" width="0" height="0"></div>
+
+</div>
+<script>
+document.getElementById("messageTj").innerHTML = document.getElementById("ggBox").innerHTML;
+</script>
+ <div class="modCon">
+
+ <div class="commForm">
+<dl>
+<dt>昵&nbsp;&nbsp;称：</dt>
+<dd>
+
+<input id="commentusername" name="username" class="commInput fl" type="text"><span><a href="http://home.51cto.com/index.php?reback=http%253A%252F%252Flavasoft.blog.51cto.com%252F62575%252F1104993%252F" style="text-decoration:underline">登录</a>&nbsp;&nbsp;<a href="http://home.51cto.com/user/register?reback=http%253A%252F%252Flavasoft.blog.51cto.com%252F62575%252F1104993%252F" target="_blank" style="text-decoration: underline;">快速注册</a></span>
+
+
+
+</dd>
+</dl>
+
+
+
+<dl id="commentyanzheng">
+
+
+<dt>验证码：</dt>
+<dd><input class="code" id="commentauthnum" name="authnum" onclick="displaysecunum();" type="text">
+
+  <img class="fl" id="secunum" onclick="refimg()" style="display:none;" width="78" height="29"><p class="fl"><span style="display:none;" id="spanfont">点击图片可刷新验证码</span><span style="display:inline;" id="clickfont">请点击后输入验证码</span><span class="pl5"><a href="http://51ctoblog.blog.51cto.com/26414/5591" target="_blank" style="text-decoration: underline;">博客过2级，无需填写验证码</a></span></p></dd>
+</dl>
+<dl>
+<dt>内&nbsp;&nbsp;容：</dt>
+<dd>
+<textarea class="writeCommCon f12" id="commentcontent" name="content"></textarea>
+</dd>
+</dl>
+</div>
+<div class="writeCommBot">
+  <input name="parentid" value="" id="parentid" type="hidden">
+  <input class="commBtn fl" name="submit" id="commentsubmit" value="" onclick="commentSubmitend2()" type="button">
+
+ <p class="fl" style="display:none;"><input class="fl" name="favour" id="favour" checked="checked" value="1" type="checkbox"><span class="fl">同时赞一个</span></p>
+
+</div>
+<span class="blank"></span>
+
+</div><!--modCon-->
+<span class="modBot"></span>
+</div>
+</form>
+<iframe id="iframe1" name="iframe1" width="0" height="0"></iframe>
+<!--发表评论 end-->
+</div>
+</div>
+<!-- <div style="width:100px; height:300px; position:fixed; top:25%;left:50%;margin-left:-613px;z-index:100; _position:absolute; _margin-top: 0; _top:expression(documentElement.scrollTop+(documentElement.clientHeight-this.offsetHeight)/2+50);" id="f_close_box">
+<img border="0" usemap="#Map1" src="https://s1.51cto.com/wyfs02/M00/93/21/wKiom1kISujgrYSbAADPIiyteUc221.jpg">
+<map id="Map1" name="Map1">
+<area onclick="document.getElementById('f_close_box').style.display='none';" href="javascript:void(0);" coords="86,14,10"  shape="circle">
+</map>
+
+</div> -->
+<iframe src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/get-station-ads.htm" style="position: fixed;left:0; top:240px;width:100px; height:300px;" scrolling="no" frameborder="0"></iframe>
+<script language="javascript">
+	function refimg(){
+		var randval = Math.random();
+		document.getElementById("secunum").src="/seccode.php?rnum="+randval;
+	}
+	function displaysecunum()
+	{
+		var displaystr = document.getElementById("secunum").style.display;
+		if(displaystr == 'none')
+		{
+			refimg();
+			document.getElementById("clickfont").style.display = 'none';
+			document.getElementById("secunum").style.display = 'inline';
+			document.getElementById("spanfont").style.display = 'inline';
+		}
+	}
+
+	function showMsn(){
+		document.getElementById("c02").style.display = "none";
+		document.getElementById("c01").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+	function showBBS(){
+		document.getElementById("c01").style.display = "none";
+		document.getElementById("c02").style.display = "block";
+		document.getElementById("share").style.height = "83px";
+		document.getElementById("share").style.background = "none";
+	}
+
+	//资源页面，分享按钮
+	function copyShareUrl(title){
+
+		if (window.clipboardData){
+
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				copy = "推荐：" + title + 
+"http://lavasoft.blog.51cto.com/62575/1104993/";
+				var alertText = "复制成功，你可以粘贴到MSN或QQ中发给好友。";
+			}
+			else
+			{
+				copy = "[url=" + "http://lavasoft.blog.51cto.com/62575/1104993/" + 
+"][u]" + title + "[/u][/url]";
+				var alertText = "复制成功，你可以粘贴到论坛分享给坛友。";
+			}
+			window.clipboardData.clearData();
+			window.clipboardData.setData("Text", copy);
+			alert(alertText);
+		}
+		else if (window.netscape){
+			alert("您使用的浏览器不支持此复制功能，请使用Ctrl+C或鼠标右键。");
+			if(document.getElementById("c01").style.display == 'block')
+			{
+				document.getElementById("shareTextQM").value = "推荐：" + title + 
+"http://lavasoft.blog.51cto.com/62575/1104993/";
+				document.getElementById("shareTextQM").select();
+			}
+			else
+			{
+				document.getElementById("shareTextBBS").value = "[url=" + 
+"http://lavasoft.blog.51cto.com/62575/1104993/" + "][u]" + title + 
+"[/u][/url]";
+                document.getElementById("shareTextBBS").select();
+			}
+		}
+		return false;
+	}
+	function select_login(){
+		document.getElementById('fixed').style.display='';
+	}
+	function commentcheck()
+	{
+		if(document.form1.content.value == "")
+		{
+			alert("评论内容为空!");
+			document.form1.content.focus();
+			return false;
+		}
+	}
+	function changename(){
+
+	var memberid=0;
+	memberid="";
+
+	if(document.getElementById('commentniming').checked){
+		document.getElementById('commentusername').disabled=false;
+		document.getElementById('commentusername').value='';
+		document.getElementById("indexhidden").style.display="none";
+		document.getElementById("commentindex").value='';
+		document.getElementById("commentyanzheng").style.display="";
+	}else{
+		document.getElementById('commentusername').disabled=true;
+		document.getElementById('commentusername').value="";
+		document.getElementById("indexhidden").style.display="";
+		
+document.getElementById("commentindex").value="http://.blog.51cto.com";
+		if(memberid>8)
+		{
+			document.getElementById("commentyanzheng").style.display="none";
+		}
+	}
+	}
+	function openFavoulist()
+	{
+		window.open 
+('http://blog.51cto.com/mod/favourlist.php?tid=1104993','newwindow','height=300,width=500,top=400,left=400,toolbar=no,menubar=no,scrollbars=no,
+ resizable=no,location=no, status=no,z-look=yes');
+	}
+
+	var e_zti = document.getElementById('zti');//有专题锚点
+	var maodian = window.location.href;//锚点
+	if (e_zti) {
+		//e_zti.href= (/[#]+/.test(maodian)) ? maodian : maodian + "#zhuanti";
+	}
+</script>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery-1.js"></script>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery.js"></script>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/jquery_002.js"></script>
+<link href="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/blog_top.css" rel="stylesheet" type="text/css">
+<!-- <script src="http://blog.51cto.com/js/blog_top_list.php" type="text/javascript" language="javascript"></script> -->
+<script type="text/javascript" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/edu_search.js"></script>
+<!--<div id="message" class="blogpop" style="background-color:#FFFFFF;z-index:100;width:389px;height:196px;position:absolute; display:none; bottom:0; top:'document.documentElement.scrollTop + document.documentElement.clientHeight-196+'px;right:0; overflow:hidden;"><iframe style="width:800px;height:536px;top:0px;left:0px;position:absolute;visibility:inherit;z-index:-1;" frameborder=0 ></iframe>-->
+<!--<div style="height:36px;background:url(http://blog.51cto.com/image/blog_top/popbgx.jpg) repeat-x; position:relative;width:387px;border-right-color:#2668B7;border-right-width:2px;border-right-style:solid 2px #2668B7;"><span style="right:10px;padding:12px 0 0;position:absolute;top:0"><span style="margin-right:80px;color:#828282;width:190px;padding:10px 0 0 10px;font-size:14px">每日博报 精彩不止一点</span><img title="关闭" id="message_close" src="http://blog.51cto.com/image/blog_top/close.jpg" alt="关闭" /></span><div style="width:387px;height:36px;left:0;overflow:hidden; text-indent:-999em;background:url(http://blog.51cto.com/image/blog_top/hdtit.jpg) no-repeat;border-right:solid 2px #2668B7;"><a style="display: block; height: 36px;width:138px;" target="_blank" href="http://blog.51cto.com"></a>-->
+<!--</div>-->
+<!--<div style="clear:both;"></div>-->
+<!--</div>-->
+	<!--<div id="message_content" style="border-top:none;font-family:Microsoft YaHei;font-size:12px;width:389px;height:160pxpx;text-align:left;overflow:hidden;">-->
+	<!--<script type='text/javascript'>&lt;!&ndash;//<![CDATA[-->
+	   <!--var m3_u = (location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg3.51cto.com/www/delivery/ajs.php');-->
+	   <!--var m3_r = Math.floor(Math.random()*99999999999);-->
+	   <!--if (!document.MAX_used) document.MAX_used = ',';-->
+	   <!--document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);-->
+	   <!--document.write ("?zoneid=454");-->
+	   <!--document.write ('&amp;cb=' + m3_r);-->
+	   <!--if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);-->
+	   <!--document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));-->
+	   <!--document.write ("&amp;loc=" + escape(window.location));-->
+	   <!--if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));-->
+	   <!--if (document.context) document.write ("&context=" + escape(document.context));-->
+	   <!--if (document.mmm_fo) document.write ("&amp;mmm_fo=1");-->
+	   <!--document.write ("'><\/scr"+"ipt>");-->
+	<!--//]]>&ndash;&gt;</script>-->
+	<!--</div>-->
+<!--</div>-->
+<style>
+.backToTop {
+    display: none;
+	WIDTH: 45px;
+	height:45px;
+	BOTTOM: 20px;
+     position: fixed;
+    _position: absolute;
+    right: 140px;
+    bottom: 10px;
+    _bottom: "auto";
+    cursor: pointer;
+    opacity: .6;
+    filter: Alpha(opacity=60);
+	text-indent:-9999px;
+}
+.tops { background:url(/images/tops.jpg) no-repeat center center; }
+</style>
+<script>
+(function() {
+	  $('#showMessagerDim').show();
+	   var _html = $("#addTop").html();
+	  if(get_cookie('blog_top')==''){
+//		 show_pop();
+	     jQuery.messager.showblogtop('', _html);
+	     $("#message").find("#adTop").show();
+	     var date=new Date();
+	     var test = date.getTime();
+	     document.cookie="blog_top=yes;domain=.blog.51cto.com;expires="+date.toGMTString()+";path=/;";
+	     }
+	    $("#showMessagerDim").click(function(){
+	    	jQuery.messager.showblogtop('', _html);
+			$("#message").find("#adTop").show();
+			//removeIframe();
+		});
+
+		function get_cookie(Name) {
+		    var search = Name + "=";
+		    var returnvalue = "";
+		    if (document.cookie.length > 0) {
+		        offset = document.cookie.indexOf(search);
+		        if (offset != -1) {
+		            offset += search.length;
+
+		            end1 = document.cookie.indexOf(";", offset);
+
+		            if (end1 == -1)
+		            end1 = document.cookie.length;
+		            returnvalue=unescape(document.cookie.substring(offset, end1));
+		        }
+		    }
+		    return returnvalue;
+		}
+	})();
+
+</script>
+<script type="text/javascript">
+(function() {
+    var backToTopTxt = "返回顶部", backToTopEle = $('<div class="backToTop tops"></div>').appendTo($("body"))
+        .text(backToTopTxt).attr("title", backToTopTxt).click(function() {
+            $("html, body").animate({ scrollTop: 0 }, 520);
+    }), backToTopFun = function() {
+        var st = $(document).scrollTop(), winh = $(window).height();
+        (st > 0)? backToTopEle.show(): backToTopEle.hide();
+        //IE6下的定位
+        if (!window.XMLHttpRequest) {
+            backToTopEle.css("top", st + winh - 60);
+        }
+    };
+    $(window).bind("scroll", backToTopFun);
+    $(function() { backToTopFun(); });
+})();
+</script><div class="backToTop tops" title="返回顶部" style="display: block;">返回顶部</div>
+
+
+
+
+
+
+
+
+<div class="clear"></div>
+<!-- <script>
+jQuery(function(){
+	var html= "<div id=\"sogou_se_tgbar\" style=\"text-align:center;margin:0px auto 2px auto;clear:both;background:url(http://home.51cto.com/public/images/notice/sogou_se_tgbar_bg_final1.gif) repeat-x;width:950px;color:#000;font-size:13px;height:36px;z-index:21474836471\"><div style=\"float:left;cursor:pointer;width:910px;text-align:center;border-left:solid #efbf00 1px;height:32px; line-height:32px;txt-align:center;\"><span style=\"\">	<a href=\"http://51ctoblog.blog.51cto.com/26414/1093282\">【新年祝福征集】51CTO社区年底嘉年华活动正在征集博主祝福语，祝福以红包的形式随机的赠送给访问51CTO的网友 点此送祝福>></a></span></div><div onclick=\"document.getElementById('sogou_se_tgbar').style.display = 'none';\" style=\"float:right;width:20px;cursor:pointer;height:28px;padding:4px 8px 0px 8px;border-right:solid #efbf00 1px\"><img style=\"border:none;margin:4px 0px 0px 0px;\" src=\"http://home.51cto.com/public/images/notice/sogou_se_tgbar_close_final1.gif\"></div></div>"
+	jQuery('body').prepend(html);
+})
+</script> -->
+
+<style>
+    .fixexit_small {
+        bottom: 185px;
+        position: fixed;
+        right: 10px;
+        z-index: 99;
+    }
+    .fixexit_small .exit_list {
+        margin-top: 4px;
+    }
+    .fixexit_small .exit_list .ina {
+        border-radius: 5px;
+        display: block;
+        height: 40px;
+        text-align: center;
+        width: 40px;
+    }
+    .fixexit_small .exit_list .ina b {
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 15px;
+        padding-top: 5px;
+        text-align: center;
+    }
+    .fixexit_small .exit_list_fkui .ina {
+        background: #40afff none repeat scroll 0 0;
+    }
+    .fixexit_small .exit_list_fkui .ina:hover {
+        background: #2ea7ff none repeat scroll 0 0;
+    }
+    .fixexit_small .exit_list_zxun .ina {
+        background: #c1c1c1 url("./images/anchor_qq.png") no-repeat scroll 9px 9px;
+    }
+    .fixexit_small .exit_list_zxun .ina:hover {
+        background: #40afff url("./images/anchor_qq.png") no-repeat scroll 9px 9px;
+    }
+    .fixexit_small .exit_list_zxun .ina img {
+        height: 18px;
+        width: 18px;
+    }
+    .fixexit_small .exit_list_gaozhao .ina {
+        background: #c1c1c1 url("./images/gaozhao.jpg")  no-repeat center center;
+    }
+    .fixexit_small .exit_list_gaozhao .ina:hover {
+        background: #40afff url("./images/gaozhao.jpg")  no-repeat center center;
+    }
+    .fixexit_small .exit_list_gaozhao .ina img {
+        height: 18px;
+        width: 18px;
+    }
+    .fixexit_small .exit_list_back {
+        bottom: 0;
+        display: none;
+        left: 0;
+        position: absolute;
+    }
+    .fixexit_small .exit_list_back .ina {
+        background: #c1c1c1 url("./images/anchor_top.png") no-repeat scroll 10px 12px;
+    }
+    .fixexit_small .exit_list_back .ina:hover {
+        background: #40afff none repeat scroll 0 0;
+    }
+    .fixexit_small .exit_list_back .ina b {
+        display: none;
+    }
+    .fixexit_small .exit_list_back .ina:hover b {
+        display: block;
+    }
+
+</style>
+<div class="fixexit_small">
+    <div class="infixexit" style="font-family: &quot;微软雅黑&quot;">
+        <div class="exit_list exit_list_zxun"><a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1173854158&amp;site=qq&amp;menu=yes" class="ina" target="_blank"></a></div>
+        <div class="exit_list exit_list_fkui "><span class="ina"><a href="http://51ctoblog.blog.51cto.com/26414/1933645"><b>意见<br>反馈</b></a></span></div>
+        <div class="exit_list  exit_list_gaozhao"><a href="http://51ctoblog.blog.51cto.com/" target="_black" class="ina"></a></div>
+
+    </div>
+</div>
+<div id="footer">
+  <div id="innerFooter">
+	<center>
+		<small>
+			Copyright By 51CTO.COM 版权所有<br><br>
+			<a href="http://blog.51cto.com/" target="_blank"><img src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/copyright.jpg"></a>
+	  </small>
+	</center>
+  </div>
+</div>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/index.htm" charset="utf-8"></script><script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/vip_top.js"></script>
+<div style="display:none">
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.js"></script><script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/count.htm"></script>
+<div style="display:none">
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?2283d46608159c3b39fc9f1178809c21";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <script type="text/javascript">
+        var uid = "";
+        var _educto = _educto || [];
+        _educto.push(['_setUserId',uid]);
+    </script>
+
+    <script type="text/javascript">
+        document.write(decodeURI("%3Cscript 
+src='https://tongji.51cto.com/cto.js/d2cb9d6ccefce8d1e89582c2a2a24cc0' 
+type='text/javascript'%3E%3C/script%3E"));
+        function bdmsPoint(behavior,method){
+            _educto.push(['_trackEvent', behavior, method])
+        }
+        $(function(){
+            $(".bdms_point").click(function(){
+                
+bdmsPoint($(this).attr("data-behavior"),$(this).attr("data-method"));
+            })
+        })
+    </script><script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/d2cb9d6ccefce8d1e89582c2a2a24cc0.htm" type="text/javascript"></script>
+
+
+</div>
+<iframe scrolling="no" src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/pageview.htm" width="0" height="0" frameborder="0"></iframe>
+</div>
+
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/poptop.js"></script>
+<script src="OpenSSL%201.0.0%E7%94%9F%E6%88%90p12%E3%80%81jks%E3%80%81crt%E7%AD%89%E6%A0%BC%E5%BC%8F%E8%AF%81%E4%B9%A6%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B8%AA%E8%BF%87%E7%A8%8B%20-%20%E7%86%94%20%E5%B2%A9%20-%2051CTO%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2_files/iframe-member-adv.htm"></script>
+
+
+</body></html>
