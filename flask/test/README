@@ -1,0 +1,5 @@
+用send_post.py测试方法:
+窗口1:
+# ../start.sh 9000
+窗口2:
+# ./send_post.py
