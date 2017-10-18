@@ -1,0 +1,33 @@
+ Python中MySQLdb的事务处理
+
+ 今天写了个tool，目的是把csv中的数据插入到数据库中去。其中有一部分，是需要分别向两张表中插入两条数据，如果第二张表中的数据已经存在，那么第一张表中的数据也不需要插入。
+
+ 然后通过百度查找发现，其实MySQLdb库，自带了事务处理的功能，pymysql库也是一样。
+
+ conn = MySQLdb.connect()返回一个连接对象
+
+ cursor = conn.cursor()返回一个游标对象
+
+ 当我们使用cursor.execute(SQL)执行一条Insert/Update/Delete语句后，我们需要使用conn.commit()提交事务，否则，语句不会生效。
+
+ 其实我们常用的commit()，就是包含了一种事务处理的概念，如果你在commit()之前，执行了多条语句，只有当commit()之后，才会全部生效。
+
+ 那么如果像文章开始提到的那样，执行两条插入语句，我们可以把conn.commit()语句放在两条插入语句执行之后，并放在try语句块内，如果差生异常，我们可以使用：
+
+ conn.rollback()
+
+    这个语句可以使事务回滚，直到上一条conn.commit()执行之后的位置。
+
+    所以，我的代码是这样写的，这里我就简单的写了，并没有用类来封装了：
+
+    try:
+    cursor = conn.cursor()
+    cursor.execute(insertSQL1)
+    cursor.execute(insertSQL2)
+    cursor.close()
+    conn.commit()
+    except Exception, e:
+    cursor.close()
+    conn.rollback()
+
+    这就可以达到我们的目的了。其实更优雅的方法是，对事务处理进行一个封装，将处理过程写在自己的类的方法中，并接受1个SQL语句序列（可能包含1条或多条SQL语句）作为参数，返回事务执行状态即可。
