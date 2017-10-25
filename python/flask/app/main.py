@@ -3,30 +3,12 @@ from flask_script import Manager
 from flask import request
 from flask import jsonify
 import json
+import getopt
+import sys
 
 app = Flask(__name__)
 
 manager = Manager(app)
-
-@app.route('/api/nrc/new_noc')
-def nrc_new_noc():
-    return '<p>not implement</p>'
-
-@app.route('/api/nrc/register_noc')
-def nrc_register_noc():
-    return '<p>not implement</p>'
-
-@app.route('/api/nrc/report_noc_status')
-def nrc_report_noc_status():
-    return '<p>not implement</p>'
-
-@app.route('/api/nrc/distribute_noc_for_ue')
-def nrc_distribute_noc_for_ue():
-    return '<p>not implement</p>'
-
-@app.route('/api/nrc/query_noc_status_of_ue')
-def nrc_query_noc_status_of_ue():
-    return '<p>not implement</p>'
 
 @app.route('/demo', methods=['POST', 'GET'])
 def demo():
@@ -44,5 +26,38 @@ def demo():
 def config(file):
     print('file %s' % file)
 
+def pre_parse_option():
+    output_filename = 'default.out'
+    version = '1.0'
+    
+    print 'ARGV      :', sys.argv[1:]
+    
+    try:
+        options, remainder = getopt.getopt(
+            sys.argv[1:],
+            'o:v',
+            ['output=', 
+            'version=',
+            ])
+        sys.argv[1:] = remainder
+    except getopt.GetoptError as err:
+        print 'ERROR:', err
+        sys.exit(1)
+        
+    print 'OPTIONS   :', options
+    
+    for opt, arg in options:
+        if opt in ('-o', '--output'):
+            output_filename = arg
+        elif opt == '--version':
+            version = arg
+    
+    print 'VERSION   :', version
+    print 'OUTPUT    :', output_filename
+    print 'REMAINING :', remainder
+    print 'ARGV      :', sys.argv[1:]
+    
+
 if __name__ == '__main__':
+    pre_parse_option()
     manager.run()
