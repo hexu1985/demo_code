@@ -40,5 +40,9 @@ def demo():
     data['age'] = request.json['age']
     return json.dumps(data)
 
+@manager.option('-f', '--file', dest='file', default='default.config')
+def config(file):
+    print('file %s' % file)
+
 if __name__ == '__main__':
     manager.run()

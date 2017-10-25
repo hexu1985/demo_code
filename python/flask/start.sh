@@ -26,4 +26,4 @@ then
     listen_port=$2
 fi
 
-python src/main.py runserver --host $listen_host --port $listen_port 
+python app/main.py runserver --host $listen_host --port $listen_port 
