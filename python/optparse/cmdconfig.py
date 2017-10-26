@@ -2,12 +2,12 @@ import optparse
 import sys
 
 class CmdConfig:
-    _optparser = optparse.OptionParser()
+    _parser = optparse.OptionParser()
     _options = None 
 
     @classmethod
     def parse_args(cls):
-        cls._options, remainder = cls._optparser.parse_args()
+        cls._options, remainder = cls._parser.parse_args()
         sys.argv[1:] = remainder
 
     @classmethod
@@ -29,8 +29,8 @@ class CmdConfig:
         return cls._options.__dict__[name]
 
 class MyCmdConfig(CmdConfig):
-    CmdConfig._optparser.add_option('--ini_file', dest='ini_file', default='default.ini')
-    CmdConfig._optparser.add_option('--log_file', dest='log_file', default='default.log')
+    CmdConfig._parser.add_option('--ini_file', dest='ini_file', default='default.ini')
+    CmdConfig._parser.add_option('--log_file', dest='log_file', default='default.log')
 
 if __name__ == '__main__':
     MyCmdConfig.parse_args()
