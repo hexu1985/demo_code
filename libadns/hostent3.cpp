@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <assert.h>
 #include <string.h>
+#include <poll.h>
 #include "adns.h"
 
 void print_answer(adns_answer *answer)
@@ -60,23 +61,20 @@ int main(int argc, char **argv)
 
     adns_answer *answer;  
     int n = argc-1;
-    int r, maxfd;
-    fd_set readfds, writefds, exceptfds;
-    struct timeval *tv, tvbuf;
+    int r;
+    const int OPEN_MAX = 1024;
+    struct pollfd fds[OPEN_MAX];
+    int nfds = OPEN_MAX;
+    int timeout_ms = 0;
     while (true) {
-        maxfd = 0;
-        FD_ZERO(&readfds);
-        FD_ZERO(&writefds);
-        FD_ZERO(&exceptfds);
-        tv = 0;
-        adns_beforeselect(ads, &maxfd, &readfds, &writefds, &exceptfds, &tv, &tvbuf,0);
-        r = select(maxfd, &readfds, &writefds, &exceptfds, tv);
+        adns_beforepoll(ads, fds, &nfds, &timeout_ms, 0);
+        r = poll(fds, nfds, timeout_ms);
         if (r == -1) {
             if (errno == EINTR) continue;
-            printf("select error: %s\n", strerror(errno));
+            printf("poll error: %s\n", strerror(errno));
             exit(1);
         }
-        adns_afterselect(ads, maxfd, &readfds, &writefds, &exceptfds, 0);
+        adns_afterpoll(ads, fds, nfds, 0);
 
         while (true) {
             qu = NULL;  // must do this

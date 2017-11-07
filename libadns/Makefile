@@ -7,7 +7,7 @@ INCLUDE =
 LDFLAGS = -ladns
 LDPATH = 
 
-PROGS =	hostent hostent2
+PROGS =	hostent hostent2 hostent3
 
 .PHONY: all
 all: $(PROGS)
@@ -24,5 +24,8 @@ hostent: hostent.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 hostent2: hostent2.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+hostent3: hostent3.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
