@@ -1,0 +1,964 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+            <link rel="canonical" href="http://blog.csdn.net/csfreebird/article/details/50319035"/> 
+
+    <script type="text/javascript">
+        var username = "sheismylife";var _blogger = username;var blog_address = "http://blog.csdn.net/csfreebird";var static_host = "http://static.blog.csdn.net";
+        var currentUserName = ""; var fileName = '50319035';var commentscount = 0; var islock = false
+        window.quickReplyflag = true;
+        var totalFloor=0;
+                
+                 var isBole = false;
+                
+                
+                 var isDigg = false;
+                
+            
+             var isExpert=true;
+            
+          
+        var isAdm=false;
+        
+
+    </script>
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <script src="http://c.csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/libs/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://c.csdnimg.cn/public/static/css/avatar.css">
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+    <link rel="stylesheet" href="http://static.blog.csdn.net/Skin/skin3-template/css/style.css?v=2017.042">
+    <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/content_toolbar_css/content_toolbar.css?v5.00.37">
+              <!-- adhoc sdk -->
+		<script src=https://sdk.appadhoc.com/ab.plus.js></script>
+		<script>
+		adhoc('init', {
+		  appKey: 'ADHOC_0e0bce4f-8793-4f68-89cf-34c14f2532bb',
+		  defaultFlags: {isLogin: true}
+		})
+		</script>
+              <!-- adhoc sdk end -->
+    
+	<script src="//static.blog.csdn.net/public/switchHome/switchHome.js?v=2017.43"></script>	
+	
+    <script type="text/javascript" src="http://static.blog.csdn.net/Skin/skin3-template/fonts/iconfont.js"></script>
+    <script src="//csdnimg.cn/rabbit/exposure-click/main.js?v1.15.23"></script>
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking_for_recommend.js?v=0911" charset="utf-8"></script>
+    <script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/cnick.js" charset="utf-8"></script>
+ 
+    <link rel="stylesheet" href="http://static.blog.csdn.net/code/prettify.css" />
+    <script type="text/javascript" src="http://static.blog.csdn.net/code/prettify.js"></script>
+<script src="http://dup.baidustatic.com/js/ds.js"></script>
+    <script type="text/javascript">
+
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+
+
+
+    </script>
+    <meta name="description" content="Table of Contents1. 创建thrift文件2. 生成C++代码3. 编写C++客户端代码4. 例子项目4.1. 项目目录4.2. 编译服务端4.3. 编译客户端4.4. 运行1&#160;创建thrift文件thrift文件非常简单,一个WorkerManager提供了一个ping方法,让客户端通过RPC方式远程调用,模拟icmp协议的ping,看看服务端是否正常.# worker.thr" />
+    <meta name="keywords" content="thrift" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+
+
+    <title>用C++编写thrift第一个例子 - CSDN博客</title>
+</head>
+<body>
+<script id="toolbar-tpl-scriptId" prod="download" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/content_toolbar.js?v5.00.37" type="text/javascript" domain="http://blog.csdn.net"></script>
+
+<div class="container clearfix">
+    <main>
+        <article>
+            <h1 class="csdn_top">用C++编写thrift第一个例子</h1>
+            <div class="article_bar clearfix">
+                <div class="artical_tag">
+                    <span class="original">原创</span>
+                    <span class="time">2015年12月15日 18:19:15</span>
+                </div>
+				<ul class="article_tags clearfix csdn-tracking-statistics" data-mod="popu_377">
+					<li class="tit">标签：</li>
+					
+					<li><a href="http://so.csdn.net/so/search/s.do?q=thrift&t=blog" target="_blank">thrift</a> <span>/</span></li>
+					
+				</ul>
+                <ul class="right_bar">
+                    <li><button class="btn-noborder"><i class="icon iconfont icon-read"></i><span class="txt">4726</span></button></li>
+                    <!--<li><button class="btn-noborder"><i class="icon iconfont icon-dashang-"></i><span class="txt">0</span></button></li>-->
+
+                    <li class="edit">
+                        <a class="btn-noborder" href="" >
+                            <i class="icon iconfont icon-bianji"></i><span class="txt">编辑</span>
+                        </a>
+                    </li>
+                    <li class="del">
+                        <a class="btn-noborder" onclick="javascript:deleteArticle(fileName);return false;">
+                            <i class="icon iconfont icon-shanchu"></i><span class="txt">删除</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div id="article_content" class="article_content csdn-tracking-statistics" data-mod="popu_519" data-dsm="post">
+                <div id="postamble" class="status" style="font-family: 'Times New Roman';font-size:14px;"><p class="validation" style="font-size: 14.4px; margin: 0.2em;"><br /><div id="content" style="font-family: 'Times New Roman';font-size:14px;"><div id="table-of-contents"><h2>Table of Contents</h2><div id="text-table-of-contents"><ul><li><a target=_blank href="#orgheadline1">1. 创建thrift文件</a></li><li><a target=_blank href="#orgheadline2">2. 生成C++代码</a></li><li><a target=_blank href="#orgheadline3">3. 编写C++客户端代码</a></li><li><a target=_blank href="#orgheadline8">4. 例子项目</a><ul><li><a target=_blank href="#orgheadline4">4.1. 项目目录</a></li><li><a target=_blank href="#orgheadline5">4.2. 编译服务端</a></li><li><a target=_blank href="#orgheadline6">4.3. 编译客户端</a></li><li><a target=_blank href="#orgheadline7">4.4. 运行</a></li></ul></li></ul></div></div><div id="outline-container-orgheadline1" class="outline-2"><h2 id="orgheadline1"><span class="section-number-2">1</span>&nbsp;创建thrift文件</h2><div class="outline-text-2" id="text-1"><p>thrift文件非常简单,一个WorkerManager提供了一个ping方法,让客户端通过RPC方式远程调用,模拟icmp协议的ping,看看服务端是否正常.</p><div class="org-src-container"><pre class="src src-thrift" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 1.2em 8pt 8pt; overflow: visible; margin: 1.2em; position: relative;"># worker.thrift
+# Dean Chen (csfreebird@gmail.com)
+#
+
+/**
+ * Thrift files can namespace, package, or prefix their output in various
+ * target languages.
+ */
+namespace cpp freebird
+
+/**
+ * Defining a removed class named WorkerManager
+ */
+service WorkerManager {
+
+  /**
+   * client calls ping method to make sure service process is active or dead
+   */
+   void ping()
+
+}
+</pre></div></div></div><div id="outline-container-orgheadline2" class="outline-2"><h2 id="orgheadline2"><span class="section-number-2">2</span>&nbsp;生成C++代码</h2><div class="outline-text-2" id="text-2"><p>用thrift命令行就可以生成C++代码,包括服务器端代码:</p><pre class="example" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 8pt; overflow: auto; margin: 1.2em;">thrift -r --gen cpp -o ../ worker.thrift
+</pre><p>上面的命令会在../目录创建gen-cpp目录,里面包含了所有生成的C++代码.</p><pre class="example" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 8pt; overflow: auto; margin: 1.2em;">worker_constants.cpp  worker_constants.h  WorkerManager.cpp  WorkerManager.h  
+WorkerManager_server.skeleton.cpp  worker_types.cpp  worker_types.h
+</pre><p>WorkerManager_server.skeleton.cpp就是C++服务端的main函数入口文件,里面使用了TSimpleServer作为TCP服务,性能较低,但是实现简单,比较合适做进程管理类的接口. 这目前就是我需要的.因为我的一个程序中就是需要能够远程对worker进程进行状态查询和任务控制,而不是传递大量的数据. 下面是自动产生的代码:</p><div class="org-src-container"><pre class="src src-c++" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 1.2em 8pt 8pt; overflow: visible; margin: 1.2em; position: relative;">// This autogenerated skeleton file illustrates how to build a server.
+// You should copy it to another filename to avoid overwriting it.
+
+#include &quot;WorkerManager.h&quot;
+#include &lt;thrift/protocol/TBinaryProtocol.h&gt;
+#include &lt;thrift/server/TSimpleServer.h&gt;
+#include &lt;thrift/transport/TServerSocket.h&gt;
+#include &lt;thrift/transport/TBufferTransports.h&gt;
+
+using namespace ::apache::thrift;
+using namespace ::apache::thrift::protocol;
+using namespace ::apache::thrift::transport;
+using namespace ::apache::thrift::server;
+
+using boost::shared_ptr;
+
+using namespace  ::freebird;
+
+class WorkerManagerHandler : virtual public WorkerManagerIf {
+ public:
+  WorkerManagerHandler() {
+    // Your initialization goes here
+  }
+
+  /**
+   * client calls ping method to make sure service process is active or dead
+   */
+  void ping() {
+    // Your implementation goes here
+    printf(&quot;ping\n&quot;);
+  }
+
+};
+
+int main(int argc, char **argv) {
+  int port = 9090;
+  shared_ptr&lt;WorkerManagerHandler&gt; handler(new WorkerManagerHandler());
+  shared_ptr&lt;TProcessor&gt; processor(new WorkerManagerProcessor(handler));
+  shared_ptr&lt;TServerTransport&gt; serverTransport(new TServerSocket(port));
+  shared_ptr&lt;TTransportFactory&gt; transportFactory(new TBufferedTransportFactory());
+  shared_ptr&lt;TProtocolFactory&gt; protocolFactory(new TBinaryProtocolFactory());
+
+  TSimpleServer server(processor, serverTransport, transportFactory, protocolFactory);
+  server.serve();
+  return 0;
+}
+</pre></div></div></div><div id="outline-container-orgheadline3" class="outline-2"><h2 id="orgheadline3"><span class="section-number-2">3</span>&nbsp;编写C++客户端代码</h2><div class="outline-text-2" id="text-3"><p>客户端程序需要自己编写:</p><div class="org-src-container"><pre class="src src-c++" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 1.2em 8pt 8pt; overflow: visible; margin: 1.2em; position: relative;">#include &lt;iostream&gt;
+
+#include &lt;thrift/protocol/TBinaryProtocol.h&gt;
+#include &lt;thrift/transport/TSocket.h&gt;
+#include &lt;thrift/transport/TTransportUtils.h&gt;
+
+#include &quot;../../server/gen-cpp/WorkerManager.h&quot;
+
+using namespace std;
+using namespace apache::thrift;
+using namespace apache::thrift::protocol;
+using namespace apache::thrift::transport;
+
+using namespace freebird;
+
+int main() {
+  boost::shared_ptr&lt;TTransport&gt; socket(new TSocket(&quot;localhost&quot;, 9090));
+  boost::shared_ptr&lt;TTransport&gt; transport(new TBufferedTransport(socket));
+  boost::shared_ptr&lt;TProtocol&gt; protocol(new TBinaryProtocol(transport));
+  WorkerManagerClient client(protocol);
+
+  try {
+    transport-&gt;open();
+
+    client.ping();
+    cout &lt;&lt; &quot;ping()&quot; &lt;&lt; endl;
+    transport-&gt;close();
+  } catch (TException&amp; tx) {
+    cout &lt;&lt; &quot;ERROR: &quot; &lt;&lt; tx.what() &lt;&lt; endl;
+  }
+}
+</pre></div></div></div><div id="outline-container-orgheadline8" class="outline-2"><h2 id="orgheadline8"><span class="section-number-2">4</span>&nbsp;例子项目</h2><div class="outline-text-2" id="text-4"><p><a target=_blank href="https://gitlab.com/newlisp/cppwizard.git">项目路径</a></p></div><div id="outline-container-orgheadline4" class="outline-3"><h3 id="orgheadline4"><span class="section-number-3">4.1</span>&nbsp;项目目录</h3><div class="outline-text-3" id="text-4-1"><pre class="example" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 8pt; overflow: auto; margin: 1.2em;">thrift_base$ tree -L 2
+.
+├── client
+│&nbsp;&nbsp; ├── builder
+│&nbsp;&nbsp; ├── include
+│&nbsp;&nbsp; └── src
+└── server
+    ├── builder
+    ├── gen-cpp
+    └── thrift
+</pre></div></div><div id="outline-container-orgheadline5" class="outline-3"><h3 id="orgheadline5"><span class="section-number-3">4.2</span>&nbsp;编译服务端</h3><div class="outline-text-3" id="text-4-2"><p>sever目录下除了thrift目录里的thrift文件外,没有任何额外的C++代码gen-cpp是命令行产生的. 用下面的命令进行编译</p><pre class="example" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 8pt; overflow: auto; margin: 1.2em;">cd builder
+./rebuild.lsp debug_config.lsp
+</pre><p>builder/bin目录下的thrift_server是可执行程序</p></div></div><div id="outline-container-orgheadline6" class="outline-3"><h3 id="orgheadline6"><span class="section-number-3">4.3</span>&nbsp;编译客户端</h3><div class="outline-text-3" id="text-4-3"><p>client目录下src目录里的main.cc文件是唯一手写的代码,编译后在builder/bin目录下出现thrift_client可执行程序. 用下面的命令进行编译</p><pre class="example" style="border: 1px solid rgb(204, 204, 204); box-shadow: rgb(238, 238, 238) 3px 3px 3px; padding: 8pt; overflow: auto; margin: 1.2em;">cd builder
+./rebuild.lsp debug_config.lsp
+</pre></div></div><div id="outline-container-orgheadline7" class="outline-3"><h3 id="orgheadline7"><span class="section-number-3">4.4</span>&nbsp;运行</h3><div class="outline-text-3" id="text-4-4"><p>先启动服务端程序,监听9099端口,然后启动客户端程序,调用服务端的ping方法,服务端控制台打印出文字. 一切工作正常.</p></div></div></div></div><div id="postamble" class="status" style="font-family: 'Times New Roman';font-size:14px;"><p class="author" style="font-size: 14.4px; margin: 0.2em;">Author: dean</p><p class="date" style="font-size: 14.4px; margin: 0.2em;">Created: 2015-12-15 二 20:38</p><p class="validation" style="font-size: 14.4px; margin: 0.2em;"><a target=_blank href="http://validator.w3.org/check?uri=referer">Validate</a></p></div><br /></p></div><link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=2.0" />
+            </div>
+        </article>
+        <div class="readall_box csdn-tracking-statistics" data-mod="popu_376">
+			<div class="read_more_mask"></div>
+            <a class="btn btn-large btn-gray-fred read_more_btn" target="_self">阅读全文</a>
+        </div>
+        <div class="article_copyright">
+            版权声明：本文为博主原创文章，未经博主允许不得转载。
+        </div>
+        <!--  <div class="reward_box">
+            <div class="tit">
+              <button class="btn_reward"><i class="icon iconfont icon-dashang-"></i></button>
+            </div>
+            <dl class="clearfix">
+              <dt><a href="#" target="_blank">近期打赏</a></dt>
+              <dd><a href="#" target="_blank"><img src="http://avatar.csdn.net/9/3/2/2_nzf_001.jpg" alt="聂兆芳" title="聂兆芳"></a></dd>
+              <dd><a href="#" target="_blank"><img src="http://avatar.csdn.net/9/3/2/2_nzf_001.jpg" alt="聂兆芳" title="聂兆芳"></a></dd>
+              <dd><a href="#" target="_blank"><img src="http://avatar.csdn.net/9/3/2/2_nzf_001.jpg" alt="聂兆芳" title="聂兆芳"></a></dd>
+              <dd><a href="#" target="_blank"><img src="http://avatar.csdn.net/9/3/2/2_nzf_001.jpg" alt="聂兆芳" title="聂兆芳"></a></dd>
+              <dd><a href="#" target="_blank"><img src="http://avatar.csdn.net/9/3/2/2_nzf_001.jpg" alt="聂兆芳" title="聂兆芳"></a></dd>
+            </dl>
+          </div>-->
+
+        <ul class="article_collect clearfix csdn-tracking-statistics"  data-mod="popu_378">
+            <li class="tit">本文已收录于以下专栏：</li>
+            
+        </ul>
+        <div class="comment_box clearfix">
+            <div id="comment_form">
+                <div id="commentsbmitarear">
+                    <!-- <h6><span>0</span>条评论</h6> -->
+           <!--          <dl class="clearfix" id="commentbox">
+                        <dt>
+                            <a href="http://my.csdn.net/"><img src="" ></a>
+                        </dt>
+                        <dd>
+                            <a href="http://my.csdn.net/" target="_blank"></a>
+                        </dd>
+                        <dd class="txt_tip"><span id="tip_comment" class="tip"></span></dd>
+                    </dl> -->
+                    <div class="comment_area clearfix">
+						<div class="userimg"><a href="http://my.csdn.net/"><img src=""></a></div>
+                        <form action="/sheismylife/comment/submit?id=50319035" method="post" onsubmit="return subform(this);" id="commentform">
+                            <textarea class="comment_content" name="comment_content" id="comment_content" placeholder="发表你的评论"></textarea>
+                            <div class="bot_bar clearfix">
+                                <div id="ubbtools" class="add_code">
+                                    <a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+                                </div>
+
+                                <input type="hidden" id="comment_replyId" name="comment_replyId">
+                                <input type="hidden" id="comment_userId" name="comment_userId" value="">
+                                <input type="hidden" id="commentId" name="commentId" value="">
+                                <input type="submit" class="btn btn-redborder" value="发表评论">
+								<span id="tip_comment" class="tip">
+                                <div style="display: none;" class="csdn-tracking-statistics" data-mod="popu_384"><a href="#" target="_blank" class="comment_area_btn">发表评论</a></div>
+
+                                <div id="lang_list" code="code">
+                                    <a href="#html" style="width:95px;" class="long_name" target="_self">HTML/XML</a>
+                                    <a href="#objc" style="width:95px;" class="long_name" target="_self">objective-c</a>
+                                    <a href="#delphi" style="width:58px;" class="zhong_name" target="_self">Delphi</a>
+                                    <a href="#ruby" class="zhong_name" target="_self">Ruby</a>
+                                    <a href="#php" target="_self">PHP</a>
+                                    <a href="#csharp" class="duan_name" target="_self">C#</a>
+                                    <a style=" border-right: none;" href="#cpp" class="duan_name" target="_self">C++</a>
+                                    <a style=" border-bottom:none;width:95px;" href="#javascript" class="long_name" target="_self">JavaScript</a>
+                                    <a style=" border-bottom:none;width:95px;" href="#vb" class="long_name" target="_self">Visual Basic</a>
+                                    <a style=" border-bottom:none;" href="#python" class="zhong_name" target="_self">Python</a>
+                                    <a style=" border-bottom:none;" href="#java" class="zhong_name" target="_self">Java</a>
+                                    <a style="border-bottom:none;" href="#css" class="duan_name" target="_self">CSS</a>
+                                    <a style="border-bottom:none;" href="#sql" class="duan_name" target="_self">SQL</a>
+                                    <a style="border:none; " href="#plain" class="duan_name" target="_self">其它</a>
+                                    <span class="arrb"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="comment_li_outbox">
+            <div id="comment_list"></div>
+        </div>
+
+        <div class="more_comment">
+            <div id="comment_bar" class="trackgin-ad" data-mod="popu_385"></div>
+        </div>
+
+        <h3 class="recommend_tit">相关文章推荐</h3>
+        <div class="recommend_list clearfix">
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/a549875231/article/details/51915918"  target="_blank" strategy="BlogCommendFromBaidu_0">模拟生产环境使用thrift c++版</a></h2>
+                    <div class="summary">
+                        模拟生产环境使用thrift c++版1. 简介本文简单的模拟了实际生成环境场景中使用的C/S模型，使用thrift作为框架来进行开发，服务端实现了两个接口，使用ThreadPoolServer模型提...
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/a549875231" target="_blank" strategy="BlogCommendFromBaidu_0"><img src="http://avatar.csdn.net/0/C/0/2_a549875231.jpg" alt="a549875231" title="a549875231"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/a549875231">a549875231</a></li>
+                        <li class="time">2016-07-15 11:06</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>1623</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/feng973/article/details/70160571"  target="_blank" strategy="BlogCommendFromBaidu_1">Thrift C++ 服务器和客户端开发实例--学习笔记</a></h2>
+                    <div class="summary">
+                        thrift,C++
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/feng973" target="_blank" strategy="BlogCommendFromBaidu_1"><img src="http://avatar.csdn.net/7/B/2/2_feng973.jpg" alt="feng973" title="feng973"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/feng973">feng973</a></li>
+                        <li class="time">2017-04-13 18:39</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>987</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+            <!--dl class="clearfix csdn-tracking-statistics" data-mod="popu_393">
+                <dt><a href="http://edu.csdn.net/huiyiCourse/series_detail/64?utm_source=blog10" target="_blank"><img class="maxwidth" src="http://img.blog.csdn.net/20170928113144608" alt="" title=""></a></dt>
+                <dd>
+                    <div class="summary">
+                        <h2><a href='http://edu.csdn.net/topic/python1?utm_source=blog10' target='_blank'>伤心啊！年度热门编程语言排行榜出来了...</a></h2>  <div class="summary">近期，IEEE Spectrum 发布了第四届顶级编程语言交互排行榜。结合 10 个线上数据源的 12 个标准，对 48 种语言进行了排行！此外，七牛云许式伟曾说过Go语言会取代Java...气氛... </div> 
+                    </div>
+                </dd>
+            </dl-->
+	<script>
+		(function() {
+		    var s = "_" + Math.random().toString(36).slice(2);
+		    document.write('<div id="' + s + '"></div>');
+		    (window.slotbydup=window.slotbydup || []).push({
+			id: '4765209',
+			container: s,
+			size: '808,120',
+			display: 'inlay-fix'
+		    });
+		})();
+	</script>
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/deusomax/article/details/52704000"  target="_blank" strategy="BlogCommendFromBaidu_2">thrift C++代码分析</a></h2>
+                    <div class="summary">
+                        C++生成的代码，越上面的越新
+Calculator.cpp
+Calculator.h
+Calculator_server.skeleton.cpp
+shared_constants.cpp...
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/deusomax" target="_blank" strategy="BlogCommendFromBaidu_2"><img src="http://avatar.csdn.net/F/C/D/2_deusomax.jpg" alt="deusomax" title="deusomax"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/deusomax">deusomax</a></li>
+                        <li class="time">2016-09-29 17:52</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>579</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/byxdaz/article/details/74479671"  target="_blank" strategy="BlogCommendFromBaidu_3">Thrift之c++实例</a></h2>
+                    <div class="summary">
+                        Thrift之c++实例
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/byxdaz" target="_blank" strategy="BlogCommendFromBaidu_3"><img src="http://avatar.csdn.net/5/7/D/2_byxdaz.jpg" alt="byxdaz" title="byxdaz"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/byxdaz">byxdaz</a></li>
+                        <li class="time">2017-07-05 18:55</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>985</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="clearfix"><dd><!-- 广告位：PC端-博客详情通栏7（feed流）-808*120 --><script> (function() {    var s = "_" + Math.random().toString(36).slice(2);   document.write('<div id="' + s + '"></div>');    (window.slotbydup=window.slotbydup || []).push({        id: '4983339',       container: s,        size: '808,120',        display: 'inlay-fix'    }); })();  </script><dd></dl>
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/poechant/article/details/6618264"  target="_blank" strategy="BlogCommendFromBaidu_4">Thrift使用入门（1） - Thrift概述及其安装</a></h2>
+                    <div class="summary">
+                        1. 概述
+Thrift是Facebook为了跨编程语言工作而开发的软件库和代码生成工具的一个项目。其高效性十分吸引软件开发工作者。
+
+
+2. 下载Thrift
+首先从thrift的官方网站...
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/Poechant" target="_blank" strategy="BlogCommendFromBaidu_4"><img src="http://avatar.csdn.net/5/B/D/2_poechant.jpg" alt="Poechant" title="Poechant"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/Poechant">Poechant</a></li>
+                        <li class="time">2011-07-19 21:28</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>5059</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/andy_yf/article/details/7487384"  target="_blank" strategy="BlogCommendFromBaidu_5">利用thrift在c++、java和python之间相互调用</a></h2>
+                    <div class="summary">
+                        thrift做为跨语言调用的方案有高效，支持语言较多，成熟等优点；代码侵入较强是其弱点。&#160;
+&#160; &#160; &#160; &#160; 下面记录以C++做服务器，C++,java和python做客户端的示例，这个和本人现在工作...
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/Andy_YF" target="_blank" strategy="BlogCommendFromBaidu_5"><img src="http://avatar.csdn.net/5/E/1/2_andy_yf.jpg" alt="Andy_YF" title="Andy_YF"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/Andy_YF">Andy_YF</a></li>
+                        <li class="time">2012-04-22 20:19</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>4398</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+            <dl class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-poputype="feed"  data-feed-show="false"  data-dsm="post">
+                <dd>
+                    <h2><a href="/bemavery/article/details/77448589"  target="_blank" strategy="BlogCommendFromBaidu_8">秒杀系统的一点思考</a></h2>
+                    <div class="summary">
+                        秒杀系统难点往往是短时间内对数据进行读写，然后造成读写上的一些冲突,甚至锁非常严重.当然知道难点在哪里,我们自然就有办法解决,人类智慧无限,办法总比困难多.&#160;简单说来也就两点,限流和提升关键点的性能....
+                    </div>
+                    <ul>
+                        <li class="avatar_img"><a href="http://blog.csdn.net/bemavery" target="_blank" strategy="BlogCommendFromBaidu_8"><img src="http://avatar.csdn.net/F/8/2/2_bemavery.jpg" alt="bemavery" title="bemavery"></a></li>
+                        <li class="user_name"><a href="http://blog.csdn.net/bemavery">bemavery</a></li>
+                        <li class="time">2017-08-21 13:19</li>
+                        <li class="visited_num"><i class="icon iconfont icon-read"></i><span>17981</span></li>
+                    </ul>
+                </dd>
+            </dl>
+            
+
+	   
+
+            
+
+            
+        </div>
+    </main>
+    <aside>
+        <div class="right_box user_info">
+            <dl class="inf_bar clearfix">
+                <dt class="csdn-tracking-statistics" data-mod="popu_381">
+                    <a href="http://blog.csdn.net/sheismylife" target="_blank">
+                        <img src="http://avatar.csdn.net/1/F/9/1_sheismylife.jpg" class="avatar_pic">
+                    </a>
+                    <span class="medals" title="">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-bokezhuanjia"></use>
+                </svg>
+              </span>
+                </dt>
+                <dd>
+                    <h3 class="csdn-tracking-statistics"  data-mod="popu_380"><a href="http://blog.csdn.net/sheismylife" target="_blank" id="uid">sheismylife</a></h3>
+                    <span  class="csdn-tracking-statistics" data-mod="popu_379"><a class="btn btn-redborder-small "  id="span_add_follow" target="_self">＋关注</a></span>
+                </dd>
+            </dl>
+            <div class="inf_number_box clearfix">
+                <dl>
+                    <dt>原创</dt>
+                    <dd>1203</dd>
+                </dl>
+                <dl>
+                    <dt>粉丝</dt>
+                    <dd id='fan'>4843</dd>
+                </dl>
+                <dl>
+                    <dt>喜欢</dt>
+                    <dd>0</dd>
+                </dl>
+								 <dl>
+              <dt>码云</dt>
+              <dd>&nbsp;</dd>
+            </dl>
+
+            </div>
+	    <div class="writings">
+              <div class="public_signal clearfix">
+                <h3>他的最新文章</h3>
+                <a href="http://blog.csdn.net/sheismylife" target="_blank" class="more_z"><span>更多文章</span></a>
+              </div>
+                <ul class="inf_list clearfix csdn-tracking-statistics" data-mod="popu_382">
+                    
+                    <li class="clearfix">
+                      
+                        <a href="/csfreebird/article/details/76761417" target="_blank">Linux socket连接数(file descriptor)</a>
+                    </li>
+                    
+                    <li class="clearfix">
+                      
+                        <a href="/csfreebird/article/details/76528970" target="_blank">C++内存检查工具valgrind</a>
+                    </li>
+                    
+                    <li class="clearfix">
+                      
+                        <a href="/csfreebird/article/details/76037649" target="_blank">Emacs性能分析</a>
+                    </li>
+                    
+                    <li class="clearfix">
+                      
+                        <a href="/csfreebird/article/details/76037602" target="_blank">Spacemace 禁用ensime启动通知buffer</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="extension_other csdn-tracking-statistics" data-mod="popu_389">
+						<!--u3032528-->
+			<div class="flashrecommend">
+
+<!-- 请置于所有广告位代码之前 -->
+<script src="http://dup.baidustatic.com/js/dm.js"></script>
+           
+<!-- 广告位：PC端-博客详情页右侧视窗1（feed流）-300*250 -->
+<script>
+(function() {
+    var s = "_" + Math.random().toString(36).slice(2);
+    document.write('<div id="' + s + '"></div>');
+    (window.slotbydup=window.slotbydup || []).push({
+        id: '4770930',
+        container: s,
+        size: '300,250',
+        display: 'inlay-fix'
+    });
+})();
+</script>
+
+		    </div>
+        </div>
+
+        
+        <div class="fixRight">
+            <div class="right_box padb0 csdn-tracking-statistics" data-mod="popu_391">
+                <h3 class="tit"><span><em>在线课程</em></span></h3>
+                <ul class="edu_li clearfix">
+                  
+                  <li>
+                    <div>
+                      <a href="http://edu.csdn.net/huiyiCourse/detail/596?utm_source=blog7" target="_blank">
+                        <img src="http://img.bss.csdn.net/201711061712351663.png" alt="免费直播 神经网络的原理及结构设计" title="免费直播 神经网络的原理及结构设计">
+                      </a>
+                    </div>
+                    <div>
+                      <p><a href="http://edu.csdn.net/huiyiCourse/detail/596?utm_source=blog7" target="_blank">免费直播 神经网络的原理及结构设计</a></p>
+                      <p>讲师：何宇健</p>
+                    </div>
+                  </li>
+                  
+                  <li>
+                    <div>
+                      <a href="http://edu.csdn.net/huiyiCourse/detail/602?utm_source=blog7" target="_blank">
+                        <img src="http://img.bss.csdn.net/201711061707038235.png" alt="Apache Weex：移动研发的进阶之路" title="Apache Weex：移动研发的进阶之路">
+                      </a>
+                    </div>
+                    <div>
+                      <p><a href="http://edu.csdn.net/huiyiCourse/detail/602?utm_source=blog7" target="_blank">Apache Weex：移动研发的进阶之路</a></p>
+                      <p>讲师：董岩</p>
+                    </div>
+                  </li>
+                  
+                </ul>
+            </div>
+			<!--u3032529-->
+            <!-- <div class="extension_other csdn-tracking-statistics baidu_box" data-mod="popu_395">
+								
+                <script type="text/javascript" src="http://mpb1.iteye.com/cxpdpmumfaedgm.js"></script>
+            </div> -->
+			<div class="extension_other csdn-tracking-statistics bottomRcom" data-mod="popu_389" style="position:absolute;z-index:-5;opacity:0;pointer-events:none">
+						<!--u3032528-->
+				<div class="flashrecommend">
+				<script type="text/javascript" src="http://mpb1.iteye.com/bwocoltlyzdec.js"></script>
+				</div>
+			</div>
+        </div>
+		<div class="user-hotArticle">
+          <h3>热门文章</h3>
+          <ul class="hotArticle-list csdn-tracking-statistics" data-mod="popu_521">
+ 
+            <li>
+              <a href="/csfreebird/article/details/7992164">git checkout之二 切换到分支和文件覆盖</a>
+              <div class="read list-left"><i class="icon iconfont icon-read"></i><span>52268</span></div>
+            </li>
+ 
+            <li>
+              <a href="/csfreebird/article/details/7583363">git checkout之一 HEAD基本和detached 状态</a>
+              <div class="read list-left"><i class="icon iconfont icon-read"></i><span>51714</span></div>
+            </li>
+ 
+            <li>
+              <a href="/csfreebird/article/details/7660746">Nginx的日志</a>
+              <div class="read list-left"><i class="icon iconfont icon-read"></i><span>46561</span></div>
+            </li>
+ 
+            <li>
+              <a href="/csfreebird/article/details/1791282">JSP总结之六：创建第一个简单的JSP页面</a>
+              <div class="read list-left"><i class="icon iconfont icon-read"></i><span>38275</span></div>
+            </li>
+ 
+            <li>
+              <a href="/csfreebird/article/details/463031">IDispatch接口原理与应用</a>
+              <div class="read list-left"><i class="icon iconfont icon-read"></i><span>36054</span></div>
+            </li>
+ 
+          </ul>
+        </div>
+
+
+    </aside>
+</div>
+
+<div class="left_fixed">
+      <div class="left_show_button">
+        <span>
+          <i class="icon iconfont icon-youjiantou"></i>
+        </span>
+      </div>
+    <ul class="left_menu">
+
+        <li>
+            <button class="left-fixed-btn btn-like csdn-tracking-statistics" data-mod="popu_373" target="_self">
+                <span class="iconbox border_red"><i class="icon iconfont icon-dianzan"></i></span>
+				<span class="txt">0</span>
+            </button>
+        </li>
+		<li id="blog_artical_directory">
+            <button class="left-fixed-btn left_menu_btn csdn-tracking-statistics" data-mod="popu_372" target="_self">
+                <span class="iconbox border_black"><i class="icon iconfont icon-mulu"></i></span>
+            </button>
+        </li>
+        <li class="menu_con">
+            <div class="list_father">
+                <div class="arr_box">
+                    <button class="btn-noborder arr-btn scroll-down  left_scroll_down"><i class="icon iconfont icon-xiajiantou"></i></button>
+                    <button class="btn-noborder arr-btn scroll-up left_scroll_top"><i class="icon iconfont icon-shangjiantou"></i></button>
+                </div>
+                <div class="arr"></div>
+                <div id="csdnBlogDir"></div>
+            </div>
+        </li>
+        <li>
+            <button class="left-fixed-btn csdn-tracking-statistics" data-mod="popu_374"  id="com-quick-collect" target="_self">
+                <span class="iconbox border_purple"><i class="icon iconfont icon-shoucang"></i></span>
+    
+            </button>
+        </li>
+		<li>
+          <button class="left-fixed-btn btn-pinglun" >
+            <span class="iconbox border_purple"><i class="icon iconfont icon-pinglun"></i></span>
+          </button>
+        </li>
+        <li id="share_box">
+            <button class="left-fixed-btn  csdn-tracking-statistics"  data-mod="popu_375" target="_self">
+                <span class="iconbox border_orange"><i class="icon iconfont icon-fenxiang"></i></span>
+            </button>
+            <div class="bdsharebuttonbox csdn-tracking-statistics" data-mod="popu_172">
+                <div class="outside">
+                    <span class="iconbox border_red2"><i class="icon iconfont icon-xinlang"></i></span>
+                    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"> </a>
+                </div>
+                <div class="outside">
+                    <span class="iconbox border_green"><i class="icon iconfont icon-weixin"></i></span>
+                    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"> </a>
+                </div>
+                <div class="outside">
+                    <span class="iconbox border_blue"><i class="icon iconfont icon-QQ"></i></span>
+                    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"> </a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="right_fixed">
+  <div class="r_ico">
+	<i class="icon iconfont icon-jubao"></i>
+	<span class="txt" id="reportBtn">内容举报</span>
+  </div>
+  <div class="returnTop">
+   <i class="icon iconfont icon-fanhuidingbu"></i>
+   <span>返回顶部</span>
+ </div>
+</div>
+<div id="pop_win"></div>
+<div id="popup_mask"></div>
+<div class="pop_CA_cover" ></div>
+<div class="pop pop_CA" >
+    <div class="CA_header">
+        收藏助手
+        <span class="cancel_icon"  id="fapancle" ></span>
+    </div>
+    <iframe src="" id="collectIframe" frameborder="0" width="100%" height="360"  scrolling="no" ></iframe>
+</div>
+<!--举报-->
+<div id="report_dialog" style="top: 250px; left: 343.5px;"><div id="panel_report">
+    <div class="panel_head">不良信息举报</div>
+    <form method="post" id="frmReport" class="panel_body">
+        <table border="0" cellpadding="0" cellspacing="4" class="pop_table">
+            <tbody><tr><td colspan="2">您举报文章：<a href="http://blog.csdn.net/raintungli/article/details/76583070" target="_blank">深度学习：神经网络中的前向传播和反向传播算法推导</a></td></tr>
+            <tr>
+                <th style="width:60px;">举报原因：</th>
+                <td id="panel_reporttype">
+                    <label><input type="radio" class="report_type" id="report_sex" name="report_type" value="1">色情</label>
+                    <label><input type="radio" class="report_type" id="report_Politics" name="report_type" value="2">政治</label>
+                    <label><input type="radio" class="report_type" id="report_copy" name="report_type" value="3">抄袭</label>
+                    <label><input type="radio" class="report_type" id="report_ad" name="report_type" value="4">广告</label>
+                    <label><input type="radio" class="report_type" id="report_want" name="report_type" value="5">招聘</label>
+                    <label><input type="radio" class="report_type" id="report_call" name="report_type" value="6">骂人</label>
+                    <br>
+                    <label><input type="radio" class="report_type" id="report_other" name="report_type" value="7">其他</label>
+                    <input type="text" name="report_other_content" id="report_other_content" maxlength="30" style="display: none;">
+                </td>
+            </tr>
+            <tr id="panel_originalurl" style="display: none;">
+                <th>原文地址：</th>
+                <td>
+                    <input id="originalurl" value="http://" name="originalurl" type="text" style="width: 90%;">
+                </td>
+            </tr>
+            <tr>
+                <th id="sp_reason">原因补充：</th>
+                <td>
+                    <textarea id="report_description" style="width: 300px;" rows="3" name="report_description"></textarea>
+                    <p id="sp_n" style="color:#999;margin:0px;padding:0px;">(最多只允许输入30个字)</p>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input id="btnSubmitReport" name="submit" type="image" align="middle" class="btn_1" src="http://static.blog.csdn.net/images/btn_submit.jpg">
+                    <span style="padding-left:20px;"></span>
+                    <img id="btnCloseReportDialog" src="http://static.blog.csdn.net/images/btn_cancel.jpg" align="middle">
+                    <div id="error" style="color: Red">
+                    </div>
+                </td>
+            </tr>
+            </tbody></table>
+    </form>
+</div>
+    <script language="javascript" type="text/javascript">
+        var isComment=0;
+        //显示隐藏地址
+        $(function () {
+            if(isComment){
+                $("#report_description").attr("disabled",true);
+                $("#sp_n").hide();
+                $("#sp_reason").html("评论内容：");
+            }
+            $(".report_type").click(function () {
+                $("#panel_originalurl,#report_other_content").hide();
+                switch ($(this).val()) {
+                    case '3':
+                        $("#panel_originalurl").show();
+                        $("#originalurl").focus();
+                        break;
+                    case '7':
+                        if(isComment){
+                            $("#report_other_content").show().focus();
+                        }
+                        break;
+                }
+
+            });
+
+            $("#frmReport").submit(function () {
+                if (!currentUserName) {
+
+                    if (confirm("您的操作必须登录，是否登录？")) {
+                        location.href = "http://passport.csdn.net/account/login?from=" + encodeURIComponent(location.href);
+                        return false;
+                    }
+                    return false;
+                }
+
+                var reportType = $("input[name=report_type]:checked").val();
+                if(!reportType){
+                    alert("请选择举报原因！");
+                    return false;
+                }
+                var otherInfo = "";
+                switch (reportType) {
+                    case '3':
+                        otherInfo = $("#originalurl").val();
+                        if (otherInfo == ""||otherInfo=="http://") {
+                            alert("举报抄袭必须提供原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        } else if(!checkeURL(otherInfo)) {
+                            alert("请输入正确的原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        }
+                        break;
+                    case '7':
+                        otherInfo = $("#report_other_content").val();
+                        if (isComment && !otherInfo) {
+                            alert("请填写举报的具体原因！");
+                            $("#report_other_content").focus();
+                            return false;
+                        }
+                        if(!isComment){
+                            if(!$("#report_description").val()){
+                                alert("请填写举报的具体原因！");
+                                $("#report_description").focus();
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                if(!isComment){
+                    if($("#report_description").val().length>30){
+                        alert("举报原因最多只允许输入30个字！");
+                        return false;
+                    }
+                }
+                nowTime = {
+                  year: new Date().getFullYear(),
+                  month: parseInt(new Date().getMonth())+1,
+                  day: new Date().getDate(),
+                  hours: parseInt(new Date().getHours()),
+                  minutes: parseInt(new Date().getMinutes()),
+                  seconds: parseInt(new Date().getSeconds())
+                }
+                var data = {
+                    articleId: fileName,
+                    commentId: 0,
+                    reportType: reportType,
+                    originalurl: $("#originalurl").val(),
+                    report_other_content: $("#report_other_content").val(),
+                    report_description: $("#report_description").val(),
+                    currentUserName: currentUserName,
+                    updatetime: nowTime.year+'/'+nowTime.month+'/'+nowTime.day+' '+ nowTime.hours+':'+nowTime.minutes+':'+seconds,
+                    blogUser: username
+                };
+                if(!isComment){//如果是举报文章
+                    data.report_other_content = data.report_description;
+                    // data.report_description = "1. 神经网络这是一个常见的神经网络的图：这是一个常见的三层神经网络的基本构成，Layer L1是输入层，Layer L2是隐含层";
+                }
+
+                $.post(blog_address + "/common/report?id="+fileName+"&t=2", data, function (data) {
+                    if (data.result == 1){
+                        SetError("感谢您的举报，我们会尽快审核！");
+                    }else{
+                        if (data.content) alert(data.content);
+                    }
+
+                });
+                return false;
+            });
+
+            $("#btnCloseReportDialog").click(function () {
+                CloseDiv();
+            });
+
+        });
+
+        //提示后关闭方法
+        function SetError(error) {
+            $("#btnCloseReportDialog").trigger("click");
+            alert(error);
+            CloseDiv();
+        }
+
+        //关闭方法
+        function CloseDiv() {
+
+            $.removeMask();
+            $("#report_dialog").hide();
+            return false;
+        }
+
+        //验证url
+        function checkeURL(url){
+            return /^http(s)?:\/\/([\w-]+\.)+[\w-]+/i.test(url);
+        }
+
+    </script>
+</div>
+
+<script src="http://c.csdnimg.cn/public/common/libs/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+
+<script type="text/javascript" src="http://static.blog.csdn.net/Skin/skin3-template/js/blog_ver.js?v=2017.042"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/Skin/skin3-template/js/skin2017.js?v=2017.042"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/cnick.js"></script>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<script type="text/javascript" >
+    if($(".article_collect li").length==1){$(".article_collect").hide();}
+    if($(".article_tags li").length==1){$(".article_tags").hide();}
+    $(".edit a").attr("href","http://write.blog.csdn.net/postedit/"+fileName);
+    $.each($(".edu_li a"),function(){$(this).attr("href",$(this).attr("href").replace("blog7","blog9"))});
+    new CNick('#uid').showNickname();
+if($("#fan").html()=="")
+{
+$("#fan").html(0);	
+}
+
+	var blogCustomType ='{customtype}';
+                
+        $("#custom"+blogCustomType).show();
+</script>
+</body>
+
+<script  type="text/javascript">
+    var fromjs=$("#fromjs");
+    if(fromjs.length>0)
+    {                  
+        $("#fromjs .markdown_views pre").addClass("prettyprint");       
+        prettyPrint();
+
+        $('pre.prettyprint code').each(function () {
+            var lines = $(this).text().split('\n').length;
+            var $numbering = $('<ul/>').addClass('pre-numbering').hide();
+            $(this).addClass('has-numbering').parent().append($numbering);
+            for (i = 1; i <= lines; i++) {
+                $numbering.append($('<li/>').text(i));
+            };
+            $numbering.fadeIn(1700);
+        });
+
+        $('.pre-numbering li').css("color","#999");             
+    }
+
+    $(function(){
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },500);         
+       
+
+    });
+
+    setTimeout(function () {
+        $(".toc a[target='_blank']").attr("target", "");
+    }, 500);
+
+</script>
+</html>
+

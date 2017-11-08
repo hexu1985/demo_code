@@ -26,13 +26,14 @@ clean:
 .PHONY: thrift
 thrift: echo.thrift
 	thrift --gen cpp $<
+	thrift --gen py $<
 
 .PHONY: distclean
 distclean: thrift-clean clean 
 
 .PHONY: thrift-clean
 thrift-clean:
-	$(RMR) ./gen-cpp
+	$(RMR) ./gen-cpp ./gen-py
 
 %.o:%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
