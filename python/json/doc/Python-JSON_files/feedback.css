@@ -1,0 +1,186 @@
+.feedback-btn {
+	width: auto; right: 60px; bottom: -3px; font-size: 14px; display: none; position: fixed;
+}
+#feedback-module p {
+	line-height: 30px; font-size: 14px;
+}
+#feedback-note-tmp {
+	padding: 4px; width: 444px; height: auto; font-family: Arial,sans-serif; min-height: 90px;
+}
+#feedback-note-tmp:focus {
+	border: 1px solid rgb(100, 183, 204); border-image: none;
+}
+#feedback-overview-note:focus {
+	border: 1px solid rgb(100, 183, 204); border-image: none;
+}
+#feedback-canvas {
+	left: 0px; top: 0px; position: absolute;
+}
+#feedback-welcome {
+	left: 50%; top: 30%; margin-left: -270px; display: block; position: fixed;
+}
+.feedback-logo {
+	width: 120px; height: 32px; line-height: 32px; padding-left: 0px; font-size: 16px; font-weight: bold; margin-bottom: 16px;
+}
+.feedback-logo i {
+	color: rgb(150, 185, 125); padding-right: 8px; font-size: 34px;
+}
+.feedback-next-btn {
+	padding: 0px 8px; width: 72px; height: 29px; line-height: 27px; font-size: 13px; float: right;
+}
+.feedback-back-btn {
+	padding: 0px 8px; width: 72px; height: 29px; line-height: 27px; font-size: 13px; margin-right: 20px; float: right;
+}
+.feedback-submit-btn {
+	padding: 0px 8px; width: 72px; height: 29px; line-height: 27px; font-size: 13px; float: right;
+}
+.feedback-close-btn {
+	padding: 0px 8px; width: 72px; height: 29px; line-height: 27px; font-size: 13px; float: right;
+}
+.feedback-helper {
+	background: rgba(0, 0, 0, 0); cursor: default;
+}
+[data-type='highlight'].feedback-helper > .feedback-helper-inner {
+	background: rgba(0, 68, 255, 0.1);
+}
+#feedback-close {
+	background: url("icons.png") 0px -64px; width: 30px; height: 30px; position: absolute; cursor: pointer;
+}
+.feedback-wizard-close {
+	background: url("icons.png") 0px -34px; top: 2px; width: 30px; height: 30px; right: 2px; position: absolute; cursor: pointer; opacity: 0.65;
+}
+.feedback-wizard-close:hover {
+	opacity: 1;
+}
+#feedback-welcome-error {
+	color: rgb(241, 62, 62); line-height: 29px; font-size: 13px; margin-right: 30px; float: right; display: none;
+}
+#feedback-overview-error {
+	color: rgb(241, 62, 62); line-height: 29px; font-size: 13px; margin-right: 30px; float: right; display: none;
+}
+#feedback-overview-error {
+	margin-top: 20px;
+}
+#feedback-highlighter {
+	width: 540px; height: 275px; right: 100px; bottom: 100px; display: none; position: fixed;
+}
+#feedback-overview {
+	left: 50%; top: 10%; width: 840px !important; height: auto; margin-left: -420px; display: none; position: fixed;
+}
+#feedback-submit-error {
+	left: 50%; top: 30%; width: 600px; height: auto; margin-left: -300px; display: block; position: fixed;
+}
+#feedback-submit-success {
+	left: 50%; top: 30%; width: 600px; height: auto; margin-left: -300px; display: block; position: fixed;
+}
+.feedback-btn {
+	padding: 10px; outline: 0px; z-index: 40000; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); background-clip: padding-box; -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2);
+}
+.feedback-btn-gray {
+	border-radius: 2px; border: 1px solid rgba(0, 0, 0, 0.1); border-image: none; text-align: center; color: rgb(68, 68, 68); font-family: "Open sans"; cursor: pointer; background-image: -ms-linear-gradient(rgb(245, 245, 245), rgb(241, 241, 241)); background-color: rgb(245, 245, 245);
+}
+.feedback-btn-gray:hover {
+	border: 1px solid rgb(198, 198, 198); border-image: none; color: rgb(51, 51, 51); background-image: -ms-linear-gradient(rgb(248, 248, 248), rgb(241, 241, 241)); background-color: rgb(248, 248, 248);
+}
+.feedback-btn-blue {
+	border-radius: 2px; border: 1px solid rgb(150, 184, 128); border-image: none; text-align: center; color: rgb(255, 255, 255); font-family: "Open sans"; cursor: pointer; background-image: -ms-linear-gradient(rgb(138, 192, 7), rgb(150, 185, 125)); background-color: rgb(150, 185, 125);
+}
+#feedback-note-tmp {
+	resize: none;
+}
+#feedback-overview-note {
+	resize: none;
+}
+#feedback-welcome {
+	background: padding-box rgb(255, 255, 255); padding: 30px 42px; outline: 0px; border: 1px solid rgba(0, 0, 0, 0.333); border-image: none; width: 540px; font-family: Arial,sans-serif; z-index: 40000; box-sizing: border-box; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-transform: translateZ(); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#feedback-highlighter {
+	background: padding-box rgb(255, 255, 255); padding: 30px 42px; outline: 0px; border: 1px solid rgba(0, 0, 0, 0.333); border-image: none; width: 540px; font-family: Arial,sans-serif; z-index: 40000; box-sizing: border-box; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-transform: translateZ(); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#feedback-overview {
+	background: padding-box rgb(255, 255, 255); padding: 30px 42px; outline: 0px; border: 1px solid rgba(0, 0, 0, 0.333); border-image: none; width: 540px; font-family: Arial,sans-serif; z-index: 40000; box-sizing: border-box; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-transform: translateZ(); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#feedback-submit-success {
+	background: padding-box rgb(255, 255, 255); padding: 30px 42px; outline: 0px; border: 1px solid rgba(0, 0, 0, 0.333); border-image: none; width: 540px; font-family: Arial,sans-serif; z-index: 40000; box-sizing: border-box; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-transform: translateZ(); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+#feedback-submit-error {
+	background: padding-box rgb(255, 255, 255); padding: 30px 42px; outline: 0px; border: 1px solid rgba(0, 0, 0, 0.333); border-image: none; width: 540px; font-family: Arial,sans-serif; z-index: 40000; box-sizing: border-box; box-shadow: 0px 4px 16px rgba(0,0,0,0.2); -moz-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-box-shadow: 0 4px 16px rgba(0, 0, 0, .2); -webkit-transform: translateZ(); -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+}
+.feedback-sethighlight {
+	padding: 0px 8px; outline: 0px; border-radius: 2px; border: 1px solid rgba(0, 0, 0, 0.1); border-image: none; height: 30px; text-align: center; color: rgb(68, 68, 68); line-height: 28px; font-size: 11px; font-weight: bold; margin-right: 16px; float: left; display: inline-block; white-space: nowrap; cursor: default; min-width: 90px; box-shadow: none; background-image: -ms-linear-gradient(rgb(245, 245, 245), rgb(241, 241, 241)); background-color: rgb(245, 245, 245); -moz-border-radius: 2px; -webkit-border-radius: 2px; -moz-box-shadow: none; -webkit-box-shadow: none;
+}
+.feedback-setblackout {
+	padding: 0px 8px; outline: 0px; border-radius: 2px; border: 1px solid rgba(0, 0, 0, 0.1); border-image: none; height: 30px; text-align: center; color: rgb(68, 68, 68); line-height: 28px; font-size: 11px; font-weight: bold; margin-right: 16px; float: left; display: inline-block; white-space: nowrap; cursor: default; min-width: 90px; box-shadow: none; background-image: -ms-linear-gradient(rgb(245, 245, 245), rgb(241, 241, 241)); background-color: rgb(245, 245, 245); -moz-border-radius: 2px; -webkit-border-radius: 2px; -moz-box-shadow: none; -webkit-box-shadow: none;
+}
+.feedback-setblackout {
+	clear: both; margin-top: 10px;
+}
+.feedback-sethighlight div {
+	background: url("icons.png") 0px -94px; width: 16px; height: 16px; margin-top: 7px; float: left;
+}
+.feedback-setblackout div {
+	background: url("icons.png") -16px -94px; width: 16px; height: 16px; margin-top: 7px; float: left;
+}
+.feedback-sethighlight:hover {
+	border: 1px solid rgb(198, 198, 198); border-image: none; color: rgb(51, 51, 51); box-shadow: none; background-image: -ms-linear-gradient(rgb(248, 248, 248), rgb(241, 241, 241)); background-color: rgb(248, 248, 248); -moz-box-shadow: none; -webkit-box-shadow: none;
+}
+.feedback-setblackout:hover {
+	border: 1px solid rgb(198, 198, 198); border-image: none; color: rgb(51, 51, 51); box-shadow: none; background-image: -ms-linear-gradient(rgb(248, 248, 248), rgb(241, 241, 241)); background-color: rgb(248, 248, 248); -moz-box-shadow: none; -webkit-box-shadow: none;
+}
+.feedback-active {
+	border: 1px solid rgb(204, 204, 204); border-image: none; color: rgb(51, 51, 51); box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1); background-image: -ms-linear-gradient(rgb(238, 238, 238), rgb(224, 224, 224)); background-color: rgb(238, 238, 238); -moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1); -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+}
+#feedback-highlighter label {
+	margin: 0px 0px 0px 10px; line-height: 30px; font-size: 13px; font-weight: normal; float: left;
+}
+#feedback-highlighter label.lower {
+	margin-top: 10px;
+}
+.feedback-buttons {
+	clear: both; margin-top: 20px; float: right;
+}
+#feedback-module h3 {
+	margin: 8px 0px; font-size: 15px; font-weight: bold;
+}
+.feedback-additional {
+	margin-bottom: 20px !important;
+}
+#feedback-overview-description {
+	float: left;
+}
+#feedback-overview-note {
+	padding: 4px; width: 314px; height: 120px; font-family: Arial,sans-serif;
+}
+#feedback-overview-screenshot {
+	float: right;
+}
+.feedback-screenshot {
+	padding: 1px; border: 1px solid rgb(173, 173, 173); border-image: none; max-width: 396px;
+}
+#feedback-overview-description-text span {
+	background: url("icons.png") no-repeat -30px -34px; margin: 8px 0px 8px 26px; color: rgb(102, 102, 102); padding-left: 10px; font-size: 14px;
+}
+#feedback-browser-info {
+	margin-top: 16px; display: none;
+}
+#feedback-page-info {
+	margin-top: 16px; display: none;
+}
+#feedback-page-structure {
+	margin-top: 16px; display: none;
+}
+#feedback-additional-none {
+	margin-top: 16px; display: none;
+}
+#feedback-email {
+	margin-top: 16px; display: block;
+}
+div#feedback-email .fb-email {
+	padding: 0px 3%; border-radius: 3px; border: 1px solid rgb(200, 200, 200); border-image: none; left: 9px; top: 0px; width: 314px; height: 35px; right: 9px; color: rgb(0, 0, 0); line-height: 34px; font-weight: 400; white-space: nowrap; background-color: rgb(255, 255, 255);
+}
+@media screen and (max-width:1024px)
+{
+.feedback-btn {
+	display: none;
+}
+}
