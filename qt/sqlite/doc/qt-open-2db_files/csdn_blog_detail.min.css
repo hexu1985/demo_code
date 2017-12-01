@@ -1,0 +1,1041 @@
+.commentform li {
+	list-style-type: none;
+}
+li.L0 {
+	list-style-type: none;
+}
+li.L1 {
+	list-style-type: none;
+}
+li.L2 {
+	list-style-type: none;
+}
+li.L3 {
+	list-style-type: none;
+}
+li.L5 {
+	list-style-type: none;
+}
+li.L6 {
+	list-style-type: none;
+}
+li.L7 {
+	list-style-type: none;
+}
+li.L8 {
+	list-style-type: none;
+}
+.commentform ul {
+	font: 400 12px/24px Arial, Helvetica, sans-serif; clear: both; font-size-adjust: none; font-stretch: normal;
+}
+.commentform .left {
+	width: 80px; float: left; display: block;
+}
+.commentform .right {
+	margin-left: 90px; display: block;
+}
+.commentform textarea {
+	font: 400 14px/24px Arial, Helvetica, sans-serif; padding: 5px; border: 1px solid rgb(221, 221, 221); border-image: none; color: rgb(85, 85, 85); font-size-adjust: none; font-stretch: normal;
+}
+#lang_list {
+	border: 1px solid rgb(204, 204, 204); border-image: none; width: 388px; font-size: 12px; background-color: rgb(255, 255, 255);
+}
+#lang_list a {
+	padding: 0px 5px; text-align: center; border-right-color: rgb(204, 204, 204); border-bottom-color: rgb(204, 204, 204); border-right-width: 1px; border-bottom-width: 1px; border-right-style: solid; border-bottom-style: solid; float: left; display: inline-block; cursor: pointer;
+}
+#lang_list a:hover {
+	color: rgb(255, 255, 255); background-color: rgb(102, 102, 102);
+}
+.long_name {
+	width: 70px;
+}
+.duan_name {
+	width: 25px;
+}
+.zhong_name {
+	width: 48px;
+}
+.commentform li {
+	margin: 0px;
+}
+.commentform ul {
+	margin: 0px;
+}
+.hljs {
+	background: rgb(255, 255, 255); padding: 0.5em; color: rgb(0, 0, 0); display: block;
+}
+.hljs-comment {
+	color: rgb(136, 0, 0);
+}
+.hljs-comment * {
+	color: rgb(136, 0, 0);
+}
+.hljs-javadoc {
+	color: rgb(136, 0, 0);
+}
+.hljs-template_comment {
+	color: rgb(136, 0, 0);
+}
+.clojure .hljs-built_in {
+	color: rgb(0, 0, 136);
+}
+.hljs-keyword {
+	color: rgb(0, 0, 136);
+}
+.hljs-list .hljs-title {
+	color: rgb(0, 0, 136);
+}
+.hljs-request {
+	color: rgb(0, 0, 136);
+}
+.hljs-status {
+	color: rgb(0, 0, 136);
+}
+.hljs-tag .hljs-title {
+	color: rgb(0, 0, 136);
+}
+.hljs-winutils {
+	color: rgb(0, 0, 136);
+}
+.http .hljs-title {
+	color: rgb(0, 0, 136);
+}
+.method {
+	color: rgb(0, 0, 136);
+}
+.nginx .hljs-title {
+	color: rgb(0, 0, 136);
+}
+.setting .hljs-value {
+	color: rgb(0, 0, 136);
+}
+.tex .hljs-command {
+	color: rgb(0, 0, 136);
+}
+.hljs-envvar {
+	color: rgb(102, 102, 0);
+}
+.tex .hljs-special {
+	color: rgb(102, 102, 0);
+}
+.apache .hljs-cbracket {
+	color: rgb(0, 136, 0);
+}
+.coffeescript .hljs-attribute {
+	color: rgb(0, 136, 0);
+}
+.hljs-attr_selector {
+	color: rgb(0, 136, 0);
+}
+.hljs-cdata {
+	color: rgb(0, 136, 0);
+}
+.hljs-date {
+	color: rgb(0, 136, 0);
+}
+.hljs-filter .hljs-argument {
+	color: rgb(0, 136, 0);
+}
+.hljs-regexp {
+	color: rgb(0, 136, 0);
+}
+.hljs-string {
+	color: rgb(0, 136, 0);
+}
+.hljs-tag .hljs-value {
+	color: rgb(0, 136, 0);
+}
+.clojure .hljs-attribute {
+	color: rgb(0, 102, 102);
+}
+.css .hljs-function {
+	color: rgb(0, 102, 102);
+}
+.css .hljs-value .hljs-number {
+	color: rgb(0, 102, 102);
+}
+.hljs-decorator {
+	color: rgb(0, 102, 102);
+}
+.hljs-hexcolor {
+	color: rgb(0, 102, 102);
+}
+.hljs-literal {
+	color: rgb(0, 102, 102);
+}
+.hljs-number {
+	color: rgb(0, 102, 102);
+}
+.hljs-pi {
+	color: rgb(0, 102, 102);
+}
+.hljs-prompt {
+	color: rgb(0, 102, 102);
+}
+.hljs-rules .hljs-value {
+	color: rgb(0, 102, 102);
+}
+.hljs-shebang {
+	color: rgb(0, 102, 102);
+}
+.hljs-sub .hljs-identifier {
+	color: rgb(0, 102, 102);
+}
+.hljs-symbol {
+	color: rgb(0, 102, 102);
+}
+.hljs-tag {
+	color: rgb(0, 102, 102);
+}
+.hljs-tag .hljs-keyword {
+	color: rgb(0, 102, 102);
+}
+.ini .hljs-title {
+	color: rgb(0, 102, 102);
+}
+.ruby .hljs-symbol .hljs-string {
+	color: rgb(0, 102, 102);
+}
+.clojure .hljs-title {
+	color: rgb(102, 0, 102);
+}
+.haskell .hljs-type {
+	color: rgb(102, 0, 102);
+}
+.hljs-built_in {
+	color: rgb(102, 0, 102);
+}
+.hljs-class .hljs-id {
+	color: rgb(102, 0, 102);
+}
+.hljs-class .hljs-title {
+	color: rgb(102, 0, 102);
+}
+.hljs-doctype {
+	color: rgb(102, 0, 102);
+}
+.hljs-javadoctag {
+	color: rgb(102, 0, 102);
+}
+.hljs-params {
+	color: rgb(102, 0, 102);
+}
+.hljs-phpdoc {
+	color: rgb(102, 0, 102);
+}
+.hljs-tag .hljs-attribute {
+	color: rgb(102, 0, 102);
+}
+.hljs-typename {
+	color: rgb(102, 0, 102);
+}
+.hljs-variable {
+	color: rgb(102, 0, 102);
+}
+.hljs-yardoctag {
+	color: rgb(102, 0, 102);
+}
+.setting {
+	color: rgb(102, 0, 102);
+}
+.smalltalk .hljs-class {
+	color: rgb(102, 0, 102);
+}
+.css .hljs-tag {
+	color: rgb(0, 0, 0);
+}
+.hljs-pseudo {
+	color: rgb(0, 0, 0);
+}
+.hljs-rules .hljs-property {
+	color: rgb(0, 0, 0);
+}
+.hljs-subst {
+	color: rgb(0, 0, 0);
+}
+.css .hljs-class {
+	color: rgb(155, 112, 63);
+}
+.css .hljs-id {
+	color: rgb(155, 112, 63);
+}
+.hljs-value .hljs-important {
+	color: rgb(255, 119, 0); font-weight: 700;
+}
+.hljs-rules .hljs-keyword {
+	color: rgb(197, 175, 117);
+}
+.apache .hljs-sqbracket {
+	color: rgb(155, 133, 157);
+}
+.hljs-annotation {
+	color: rgb(155, 133, 157);
+}
+.nginx .hljs-built_in {
+	color: rgb(155, 133, 157);
+}
+.hljs-pragma {
+	color: rgb(68, 68, 68);
+}
+.hljs-preprocessor {
+	color: rgb(68, 68, 68);
+}
+.hljs-preprocessor * {
+	color: rgb(68, 68, 68);
+}
+.tex .hljs-formula {
+	font-style: italic; background-color: rgb(238, 238, 238);
+}
+.diff .hljs-header {
+	color: grey; font-weight: 700;
+}
+.hljs-chunk {
+	color: grey; font-weight: 700;
+}
+.diff .hljs-change {
+	background-color: rgb(188, 207, 249);
+}
+.hljs-addition {
+	background-color: rgb(186, 238, 186);
+}
+.hljs-deletion {
+	background-color: rgb(255, 200, 189);
+}
+.hljs-comment .hljs-yardoctag {
+	font-weight: 700;
+}
+.markdown_views {
+	color: rgb(63, 63, 63); font-family: "microsoft yahei"; font-size: 16px;
+}
+.markdown_views * {
+	box-sizing: border-box;
+}
+.markdown_views h1 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h2 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h3 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h4 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h5 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h6 {
+	margin: 0.8em 0px; color: inherit; line-height: 1.1; font-family: inherit; font-weight: 300;
+}
+.markdown_views h1 {
+	font-size: 2.6em;
+}
+.markdown_views h2 {
+	font-size: 2.15em;
+}
+.markdown_views h3 {
+	font-size: 1.7em;
+}
+.markdown_views h4 {
+	font-size: 1.25em;
+}
+.markdown_views h5 {
+	font-size: 1em;
+}
+.markdown_views h6 {
+	font-size: 0.8em;
+}
+.markdown_views a {
+	color: rgb(79, 161, 219);
+}
+.markdown_views blockquote {
+	margin: 0px 0px 1.7em; line-height: 170%;
+}
+.markdown_views p {
+	margin: 0px 0px 1.7em; line-height: 170%;
+}
+.markdown_views pre {
+	margin: 0px 0px 1.7em; line-height: 170%;
+}
+.markdown_views pre.prettyprint {
+	margin: 0px 0px 1.7em; line-height: 170%;
+}
+.markdown_views dl {
+	line-height: 170%; margin-bottom: 1.7em;
+}
+.markdown_views ol {
+	line-height: 170%; margin-bottom: 1.7em;
+}
+.markdown_views p {
+	line-height: 170%; margin-bottom: 1.7em;
+}
+.markdown_views ul {
+	line-height: 170%; margin-bottom: 1.7em;
+}
+.markdown_views img {
+	margin-top: 15px; margin-bottom: 15px;
+}
+.markdown_views hr {
+	border-width: 1px 0px 0px; border-style: solid none none; border-color: rgba(128, 128, 128, 0.1) currentColor currentColor; margin: 2em 0px; border-image: none;
+}
+.markdown_views dt {
+	font-weight: 700;
+}
+.markdown_views abbr[data-original-title] {
+	border-bottom-color: rgb(153, 153, 153); border-bottom-width: 1px; border-bottom-style: dotted; cursor: help;
+}
+.markdown_views abbr[title] {
+	border-bottom-color: rgb(153, 153, 153); border-bottom-width: 1px; border-bottom-style: dotted; cursor: help;
+}
+.markdown_views .initialism {
+	text-transform: uppercase; font-size: 90%;
+}
+.markdown_views blockquote {
+	padding: 15px 20px; border-radius: 0px 5px 5px 0px; border-left-color: rgba(128, 128, 128, 0.075); border-left-width: 10px; border-left-style: solid; background-color: rgba(128, 128, 128, 0.05);
+}
+.markdown_views blockquote p {
+	color: rgb(111, 111, 111); line-height: 1.5; font-size: 1em;
+}
+.markdown_views blockquote p:last-child {
+	margin-bottom: 0px;
+}
+.markdown_views blockquote .small {
+	color: rgb(153, 153, 153); line-height: 1.45; display: block;
+}
+.markdown_views blockquote small {
+	color: rgb(153, 153, 153); line-height: 1.45; display: block;
+}
+.markdown_views blockquote .small::before {
+	content: "！?";
+}
+.markdown_views blockquote small::before {
+	content: "！?";
+}
+.markdown_views blockquote.pull-right {
+	padding-right: 15px; padding-left: 0px; border-right-color: rgba(128, 128, 128, 0.075); border-left-color: currentColor; border-right-width: 5px; border-left-width: 0px; border-right-style: solid; border-left-style: none;
+}
+.markdown_views blockquote.pull-right .small {
+	text-align: right;
+}
+.markdown_views blockquote.pull-right p {
+	text-align: right;
+}
+.markdown_views blockquote.pull-right small {
+	text-align: right;
+}
+.markdown_views blockquote.pull-right .small::before {
+	content: "";
+}
+.markdown_views blockquote.pull-right small::before {
+	content: "";
+}
+.markdown_views blockquote.pull-right .small::after {
+	content: "?！";
+}
+.markdown_views blockquote.pull-right small::after {
+	content: "?！";
+}
+.markdown_views blockquote::after {
+	content: "";
+}
+.markdown_views blockquote::before {
+	content: "";
+}
+.markdown_views address {
+	line-height: 1.45; font-style: normal; margin-bottom: 21px;
+}
+.markdown_views code {
+	font-family: "Source Code Pro",monospace;
+}
+.markdown_views kbd {
+	font-family: "Source Code Pro",monospace;
+}
+.markdown_views pre {
+	font-family: "Source Code Pro",monospace;
+}
+.markdown_views samp {
+	font-family: "Source Code Pro",monospace;
+}
+.markdown_views code {
+	padding: 2px 4px; border-radius: 0px; color: rgb(63, 63, 63); font-size: 90%; white-space: nowrap; background-color: rgba(128, 128, 128, 0.075);
+}
+.markdown_views pre {
+	margin: 0px 0px 10.5px; padding: 10px; border-radius: 0px; border: 1px solid rgba(128, 128, 128, 0.075); border-image: none; color: rgb(51, 51, 51); line-height: 1.45; font-size: 14px; display: block; -ms-word-break: break-all; -ms-word-wrap: break-word; background-color: rgba(128, 128, 128, 0.05);
+}
+.markdown_views pre code {
+	padding: 0px; border-radius: 0px; color: inherit; font-size: 90%; white-space: pre; -ms-overflow-x: auto; -ms-word-wrap: normal; background-color: transparent;
+}
+.markdown_views .pre-scrollable {
+	-ms-overflow-y: scroll; max-height: 340px;
+}
+.markdown_views .flow-chart {
+	text-align: center; margin-bottom: 1.1em;
+}
+.markdown_views .sequence-diagram {
+	text-align: center; margin-bottom: 1.1em;
+}
+.markdown_views table {
+	border: 1px solid rgb(238, 238, 238); border-image: none; width: 100%; border-collapse: collapse; border-spacing: 0; background-color: transparent;
+}
+.markdown_views table td {
+	padding: 8px; border: 1px solid rgb(238, 238, 238); border-image: none; line-height: 20px; vertical-align: top;
+}
+.markdown_views table th {
+	padding: 8px; border: 1px solid rgb(238, 238, 238); border-image: none; line-height: 20px; vertical-align: top;
+}
+.category_l img {
+	vertical-align: middle;
+}
+.category_l span {
+	vertical-align: middle;
+}
+.similar_list li a {
+	vertical-align: middle;
+}
+.similar_list li em {
+	vertical-align: middle;
+}
+.subItem_l li a {
+	vertical-align: middle;
+}
+.subItem_l li em {
+	vertical-align: middle;
+}
+.article_manage {
+	border-bottom-color: rgb(237, 237, 237); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.category {
+	border-bottom-color: rgb(237, 237, 237); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.markdown_views .prettyprint {
+	padding: 5px 5px 5px 60px; white-space: nowrap; position: relative; -ms-overflow-x: auto; -ms-overflow-y: hidden;
+}
+.markdown_views .prettyprint .pre-numbering {
+	list-style: none; margin: 0px; padding: 6px 0px 40px; left: 0px; top: 0px; width: 50px; text-align: right; border-right-color: rgb(221, 221, 221); border-right-width: 1px; border-right-style: solid; position: absolute; background-color: rgb(238, 238, 238);
+}
+.markdown_views .prettyprint .pre-numbering li {
+	list-style: none; padding: 0px 5px; margin-left: 0px;
+}
+.markdown_views em {
+	font-style: italic;
+}
+.article_manage {
+	font: 400 12px/22px Arial; margin: 0px -20px; padding: 0px 20px 5px; text-align: right; color: rgb(153, 153, 153); overflow: hidden; font-size-adjust: none; font-stretch: normal;
+}
+.article_manage span {
+	margin: 0px 5px;
+}
+.article_manage .link_postdate {
+	margin: 0px 5px 0px 0px;
+}
+.article_manage .link_view {
+	background: url("../../../images/ico_view.png") no-repeat left; padding: 0px 0px 0px 14px;
+}
+.article_manage .link_comments {
+	background: url("../../../images/ico_comm.png") no-repeat left; padding: 0px 0px 0px 14px;
+}
+.article_manage .link_categories {
+	float: left;
+}
+.list_view {
+	margin: 0px 20px; padding: 5px 0px;
+}
+.list_view .article_title {
+	font: 400 14px/30px Arial !important; margin: 0px !important; height: 30px; overflow: hidden; float: left; display: inline; white-space: nowrap; -ms-text-overflow: ellipsis; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.list_view .article_title::after {
+	content: "...";
+}
+.list_view .article_title h1 {
+	font: 400 12px/30px Arial !important; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.list_view .article_title h3 {
+	font: 400 12px/30px Arial !important; font-size-adjust: none !important; font-stretch: normal !important;
+}
+.category_l {
+	font-size: 14px; float: left;
+}
+.category_r {
+	font-size: 14px; float: left;
+}
+.category_r .subItem_t .J_close {
+	font-style: normal;
+}
+.category_r em {
+	font-style: normal;
+}
+.similar_c_t label em {
+	font-style: normal;
+}
+.similar_list li em {
+	font-style: normal;
+}
+.list_view .article_manage {
+	padding: 0px !important; text-align: right !important; line-height: 30px !important; float: right; display: inline; white-space: nowrap;
+}
+.list_view .article_description {
+	display: none !important;
+}
+.article_l span a {
+	display: inline-block;
+}
+.category_l {
+	display: inline-block;
+}
+.category_l span {
+	display: inline-block;
+}
+.category_r {
+	display: inline-block;
+}
+.category_r label {
+	display: inline-block;
+}
+.list_view .article_manage span {
+	margin: 0px !important;
+}
+.article_l {
+	width: 100%; float: left;
+}
+.article_l span a {
+	margin-right: 10px;
+}
+.article_r .fa {
+	font-weight: 400;
+}
+.category {
+	margin: 0px -20px; padding: 5px 20px;
+}
+.category_l {
+	width: 70px; color: rgb(51, 51, 51); line-height: 28px;
+}
+.category_r {
+	width: 90%; color: rgb(223, 52, 52);
+}
+.category_r .subItem_t .J_close {
+	color: rgb(204, 204, 204); line-height: 42px; font-size: 16px; font-weight: 400; float: right;
+}
+.category_r label {
+	line-height: 28px; margin-left: 15px; position: relative; cursor: pointer;
+}
+.category_r label .fa {
+	color: rgb(153, 153, 153);
+}
+.subItem {
+	color: rgb(51, 51, 51);
+}
+.subItem .subItem_l li a {
+	color: rgb(51, 51, 51);
+}
+.category_r label .fa-caret-up {
+	display: none;
+}
+.subItem {
+	background: rgb(255, 255, 255); border: 1px solid rgb(220, 220, 220); border-image: none; left: -10px; top: 46px; width: 400px; display: none; position: absolute; z-index: 9999; max-height: 400px; box-shadow: 5px 0px 10px #dcdcdc;
+}
+.subItem::after {
+	background: url("../images/triangle.png") no-repeat; left: 20px; top: -10px; width: 10px; height: 10px; display: block; position: absolute; content: "";
+}
+.subItem_t {
+	padding: 0px 20px 0px 15px; height: 42px; color: rgb(153, 153, 153); line-height: 42px; border-bottom-color: rgb(220, 220, 220); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.category_r .subItem_t .fa-close {
+	color: rgb(204, 204, 204); line-height: 42px; font-size: 16px; font-weight: 400; float: right;
+}
+.subItem_l {
+	list-style: none; margin: 0px; padding: 0px; -ms-overflow-y: auto; max-height: 358px;
+}
+.similar_article {
+	overflow: hidden;
+}
+.subItem_l li a {
+	overflow: hidden;
+}
+.subItem .subItem_l li {
+	padding: 0px 20px; height: 52px; line-height: 52px; border-bottom-color: rgb(238, 238, 238); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.subItem_l li em {
+	margin-right: 10px; display: inline-block;
+}
+.subItem_l li a {
+	width: 95%; color: rgb(51, 51, 51); font-size: 14px; display: inline-block; white-space: nowrap; -ms-text-overflow: ellipsis;
+}
+.similar_article h4 {
+	color: rgb(51, 51, 51); font-size: 16px;
+}
+.similar_c {
+	border: 1px solid rgb(187, 187, 187); border-image: none;
+}
+.similar_c_t {
+	line-height: 45px; border-bottom-color: rgb(220, 220, 220); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.similar_c_t label {
+	color: rgb(102, 102, 102); font-size: 16px; margin-left: 25px; display: inline-block;
+}
+.similar_c_t .similar_cur {
+	font-weight: 700;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.similar_wrap {
+	background: rgb(252, 252, 252); padding: 10px 20px; -ms-overflow-y: auto; max-height: 180px;
+}
+.similar_list {
+	list-style: none; margin: 0px; padding: 0px; width: 48%;
+}
+.similar_list li {
+	list-style: none; height: 30px; line-height: 30px; overflow: hidden; -ms-text-overflow: ellipsis;
+}
+.similar_list li em {
+	margin-right: 10px; display: inline-block;
+}
+.similar_list li a {
+	color: rgb(51, 51, 51); overflow: hidden; display: inline-block; white-space: nowrap; -ms-text-overflow: ellipsis; max-width: 276px;
+}
+.similar_list li a:hover {
+	color: rgb(254, 0, 0);
+}
+.similar_list li label {
+	color: rgb(187, 187, 187); font-size: 12px; margin-left: 9px; display: inline-block;
+}
+.similar_list li span {
+	color: rgb(187, 187, 187); font-size: 12px; margin-left: 9px; display: inline-block;
+}
+.similar_list li label b {
+	font-style: normal; font-weight: 400;
+}
+.similar_list li label i {
+	font-style: normal; font-weight: 400;
+}
+.similar_list li label b {
+	margin-left: 5px;
+}
+.MoreArticle {
+	background: rgb(252, 252, 252); height: 35px; text-align: center; color: rgb(102, 102, 102); line-height: 35px; clear: both; font-size: 12px; display: block;
+}
+.MoreArticle:hover {
+	background: rgb(242, 242, 242);
+}
+.bog_copyright {
+	padding: 20px 0px;
+}
+.copyright_p {
+	height: 14px; color: rgb(102, 102, 102); line-height: 14px; padding-left: 10px; font-size: 14px; border-left-color: rgb(228, 28, 30); border-left-width: 3px; border-left-style: solid;
+}
+.mod_zhuanjia_dianping {
+	color: rgb(101, 101, 101); font-size: 12px; margin-top: 80px; border-top-color: rgb(251, 245, 221); border-bottom-color: rgb(251, 245, 221); border-top-width: 1px; border-bottom-width: 1px; border-top-style: solid; border-bottom-style: solid; background-color: rgb(255, 253, 245);
+}
+.mod_zhuanjia_dianping li {
+	list-style: none; margin: 0px; padding: 0px;
+}
+.mod_zhuanjia_dianping ul {
+	list-style: none; margin: 0px; padding: 0px;
+}
+.mod_zhuanjia_dianping img {
+	border: currentColor; border-image: none;
+}
+.mod_zhuanjia_dianping .dianping_title {
+	height: 40px; line-height: 40px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 2px; border-bottom-style: solid;
+}
+.mod_zhuanjia_dianping .dianping_title .dianping_title_left {
+	font-size: 16px; border-bottom-color: rgb(203, 0, 0); border-bottom-width: 2px; border-bottom-style: solid; float: left;
+}
+.mod_zhuanjia_dianping .dianping_title .dianping_title_right {
+	color: rgb(101, 101, 101); font-size: 14px; font-weight: 400; float: right;
+}
+.mod_zhuanjia_dianping .dianping_title .dianping_title_right .red {
+	padding: 0px 5px; color: rgb(203, 0, 0);
+}
+.mod_zhuanjia_dianping .dianping_title .dianping_title_right img {
+	padding-right: 5px; vertical-align: -2px;
+}
+.mod_zhuanjia_dianping .dianping_content {
+	height: 240px; overflow: hidden; max-height: 800px;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list {
+	padding: 20px 0px; width: 100%; border-top-color: rgb(222, 220, 221); border-top-width: 1px; border-top-style: dashed; float: left;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list_left {
+	width: 40px; margin-top: 20px; margin-left: -100%; float: left;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list_left .name {
+	width: 40px; text-align: center; color: rgb(0, 0, 0); margin-top: 10px; display: inline-block;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list .dianping_content_list_right {
+	padding-left: 20px; margin-left: 40px;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list .dianping_content_list_right .time {
+	color: rgb(119, 149, 165);
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list .dianping_content_list_right .time .time_desc {
+	padding: 0px 5px;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list .dianping_content_list_right .dianping_content_list_right_content {
+	line-height: 18px; margin-top: 10px;
+}
+.mod_zhuanjia_dianping .dianping_content .dianping_content_list .dianping_content_list_right .time img {
+	vertical-align: -2px;
+}
+.mod_zhuanjia_dianping .more {
+	width: 100%; text-align: center; position: relative;
+}
+.mod_zhuanjia_dianping .more img {
+	bottom: -20px; position: relative; cursor: pointer;
+}
+.mod_more_detail {
+	border: 1px solid rgb(232, 232, 232); border-image: none; color: rgb(51, 51, 51); font-size: 12px; margin-top: 50px;
+}
+.mod_more_detail li {
+	list-style: none; margin: 0px; padding: 0px; height: 24px; line-height: 24px; overflow: hidden; white-space: nowrap; -ms-text-overflow: ellipsis;
+}
+.mod_more_detail ul {
+	list-style: none; margin: 0px; padding: 0px; height: 24px; line-height: 24px; overflow: hidden; white-space: nowrap; -ms-text-overflow: ellipsis;
+}
+.mod_more_detail li a {
+	color: rgb(51, 51, 51);
+}
+.mod_more_detail .mod_more_detail_title {
+	height: 40px; line-height: 40px; text-indent: 10px; background-color: rgb(241, 241, 241);
+}
+.mod_more_detail .mod_more_detail_title .mod_more_detail_left {
+	color: rgb(0, 0, 0); font-size: 16px; float: left;
+}
+.mod_more_detail .mod_more_detail_content {
+	padding: 20px 0px; overflow: hidden;
+}
+.mod_more_detail .mod_more_detail_content .mod_more_detail_content_left {
+	padding: 0px 20px; width: 50%; border-right-color: rgb(232, 232, 232); border-right-width: 1px; border-right-style: solid; float: left; box-sizing: border-box;
+}
+.mod_more_detail .mod_more_detail_content .mod_more_detail_content_right {
+	padding: 0px 20px; width: 50%; float: left; box-sizing: border-box;
+}
+.pln {
+	color: rgb(0, 0, 0);
+}
+@media screen
+{
+.str {
+	color: rgb(0, 136, 0);
+}
+.kwd {
+	color: rgb(0, 0, 136);
+}
+.com {
+	color: rgb(136, 0, 0);
+}
+.typ {
+	color: rgb(102, 0, 102);
+}
+.lit {
+	color: rgb(0, 102, 102);
+}
+.clo {
+	color: rgb(102, 102, 0);
+}
+.opn {
+	color: rgb(102, 102, 0);
+}
+.pun {
+	color: rgb(102, 102, 0);
+}
+.tag {
+	color: rgb(0, 0, 136);
+}
+.atn {
+	color: rgb(102, 0, 102);
+}
+.atv {
+	color: rgb(0, 136, 0);
+}
+.dec {
+	color: rgb(102, 0, 102);
+}
+.var {
+	color: rgb(102, 0, 102);
+}
+.fun {
+	color: red;
+}
+}
+@media print, projection
+{
+.kwd {
+	font-weight: 700;
+}
+.tag {
+	font-weight: 700;
+}
+.typ {
+	font-weight: 700;
+}
+.str {
+	color: rgb(0, 102, 0);
+}
+.kwd {
+	color: rgb(0, 0, 102);
+}
+.com {
+	color: rgb(102, 0, 0); font-style: italic;
+}
+.typ {
+	color: rgb(68, 0, 68);
+}
+.lit {
+	color: rgb(0, 68, 68);
+}
+.clo {
+	color: rgb(68, 68, 0);
+}
+.opn {
+	color: rgb(68, 68, 0);
+}
+.pun {
+	color: rgb(68, 68, 0);
+}
+.tag {
+	color: rgb(0, 0, 102);
+}
+.atn {
+	color: rgb(68, 0, 68);
+}
+.atv {
+	color: rgb(0, 102, 0);
+}
+}
+pre.prettyprint {
+	padding: 2px; border: 0px solid rgb(136, 136, 136); border-image: none;
+}
+ol.linenums {
+	margin-top: 0px; margin-bottom: 0px;
+}
+.dp-highlighter {
+	position: relative; -ms-overflow-x: auto; -ms-overflow-y: hidden;
+}
+.prettyprint {
+	position: relative; -ms-overflow-x: auto; -ms-overflow-y: hidden;
+}
+.pad_bot {
+	padding-bottom: 45px !important;
+}
+.save_code {
+	top: 5px; height: 60px; right: 30px; color: rgb(255, 255, 255); font-size: 14px; display: none; position: absolute; z-index: 2; cursor: pointer;
+}
+#mask_code {
+	background: rgba(0, 0, 0, 0.3); left: 0px; top: 0px; width: 100%; height: 100%; display: none; position: fixed; z-index: 990;
+}
+.gist_edit {
+	margin: -165px 0px 0px -252px; left: 50%; top: 50%; width: 505px; height: 330px; display: none; position: absolute; z-index: 9999;
+}
+.save_snippets .tit {
+	height: 45px; line-height: 45px; box-sizing: border-box;
+}
+.save_snippets .tit h3 {
+	height: 45px; line-height: 45px; box-sizing: border-box;
+}
+.save_snippets .tit span {
+	height: 45px; line-height: 45px; box-sizing: border-box;
+}
+.save_snippets {
+	background: rgb(255, 255, 255); border: 1px solid rgb(221, 220, 221); border-image: none; overflow: hidden; clear: both; font-family: "Microsoft YaHei"; font-size: 14px; box-sizing: border-box;
+}
+.save_snippets .tit {
+	padding: 0px 20px; overflow: hidden; clear: both; border-bottom-color: rgb(221, 220, 221); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.save_snippets .tit h3 {
+	margin: 0px; padding: 0px; font-size: 16px; font-weight: 400; float: left;
+}
+.gist_edit_list {
+	padding: 0px; width: 100%; box-sizing: border-box;
+}
+.save_snippets .tit span {
+	color: rgb(153, 153, 153); float: right; display: block;
+}
+.save_snippets .tit span a {
+	color: rgb(0, 0, 255); text-decoration: underline;
+}
+.save_snippets .tit span a:active {
+	color: rgb(0, 0, 255); text-decoration: underline;
+}
+.save_snippets .tit span a:hover {
+	color: rgb(0, 0, 255); text-decoration: underline;
+}
+.save_snippets .tit span a:link {
+	color: rgb(0, 0, 255); text-decoration: underline;
+}
+.save_snippets .tit span a:visited {
+	color: rgb(0, 0, 255); text-decoration: underline;
+}
+.save_snippets .con_form {
+	overflow: hidden; padding-top: 20px; clear: both; box-sizing: border-box;
+}
+.save_snippets .con_form .gist_edit_list li {
+	list-style: none; overflow: hidden; clear: both; margin-bottom: 20px; min-height: 32px; box-sizing: border-box;
+}
+.save_snippets .con_form .gist_edit_list li span.red {
+	height: 32px; color: red; line-height: 36px; padding-right: 10px; margin-left: 20px; float: left; display: block; box-sizing: border-box;
+}
+.save_snippets .con_form .gist_edit_list li span.txt {
+	height: 32px; line-height: 32px; padding-right: 20px; float: left; display: block;
+}
+.insertTag {
+	height: 30px;
+}
+.save_snippets .con_form .gist_edit_list li .form-input {
+	height: 30px;
+}
+#divSearchTags {
+	background: rgb(250, 250, 250); padding: 0px 10px; border: 1px solid rgb(221, 220, 221); border-image: none; width: 398px; color: rgb(102, 102, 102); font-family: "Microsoft YaHei"; float: left; box-sizing: border-box;
+}
+.save_snippets .con_form .gist_edit_list li .form-input {
+	background: rgb(250, 250, 250); padding: 0px 10px; border: 1px solid rgb(221, 220, 221); border-image: none; width: 398px; color: rgb(102, 102, 102); font-family: "Microsoft YaHei"; float: left; box-sizing: border-box;
+}
+#divSearchTags {
+	text-align: left; margin-left: 2px;
+}
+#divSearchTags .label span {
+	color: rgb(102, 102, 102);
+}
+.insertTag {
+	background: 0px 0px; border: currentColor; border-image: none; width: 208px; color: rgb(102, 102, 102); box-sizing: border-box;
+}
+#divSearchTags .blog_tag {
+	background: rgb(243, 243, 243); margin: 7px 10px 7px 0px; padding: 0px 5px; border-radius: 10px; color: rgb(102, 102, 102); float: left; display: block; box-sizing: border-box;
+}
+#divSearchTags .blog_tag span {
+	float: left; display: block;
+}
+#divSearchTags .label a {
+	color: rgb(102, 102, 102); margin-left: 8px; box-sizing: border-box;
+}
+.save_snippets .con_form .gist_edit_list li .form-textarea {
+	background: rgb(250, 250, 250); padding: 3px 10px; border: 1px solid rgb(221, 220, 221); border-image: none; width: 398px; height: 60px; color: rgb(102, 102, 102); font-family: "Microsoft YaHei"; font-size: 12px; float: left; box-sizing: border-box;
+}
+.save_snippets .bottom-bar {
+	padding: 17px 20px; overflow: hidden; clear: both; border-top-color: rgb(221, 220, 221); border-top-width: 1px; border-top-style: solid;
+}
+.save_snippets .bottom-bar .btn-submit {
+	background: rgb(240, 240, 240); border-width: 0px 1px 1px 0px; border-style: none solid solid none; border-color: currentColor rgb(136, 136, 136) rgb(136, 136, 136) currentColor; border-radius: 2px; border-image: none; width: 45px; height: 20px; text-align: center; color: rgb(51, 51, 51); line-height: 20px; font-family: "Microsoft YaHei"; font-size: 12px; margin-left: 7px; float: right;
+}
+.file_holder .code.file_content table.lines pre.line_numbers {
+	width: 40px !important;
+}
+.pop_CA_cover {
+	left: 0px; top: 0px; width: 100%; height: 100%; position: fixed; z-index: 10000000;
+}
+.pop_CA.pop {
+	background: rgb(255, 255, 255); border: 1px solid rgb(206, 206, 206); border-image: none; left: 50%; top: 50%; width: 650px; margin-top: -179px; margin-left: -325px; position: fixed; z-index: 10000001; box-shadow: 0px 0px 10px 0px #cecece;
+}
+.pop .CA_header {
+	padding: 0px 20px; height: 50px; text-align: left; color: rgb(51, 51, 51); line-height: 50px; font-size: 16px; border-bottom-color: rgb(206, 206, 206); border-bottom-width: 1px; border-bottom-style: solid; position: relative;
+}
+.pop .CA_header .cancel_icon {
+	background: url("../images/cancel_icon.png") no-repeat center; top: 18px; width: 15px; height: 15px; right: 16px; display: block; position: absolute; cursor: pointer;
+}
+.pop .CA_header .cancel_icon:hover {
+	opacity: 0.8;
+}

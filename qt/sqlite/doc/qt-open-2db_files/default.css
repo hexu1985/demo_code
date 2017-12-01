@@ -1,0 +1,219 @@
+.dp-highlighter {
+	margin: 18px 0px !important; width: 99%; text-align: left; overflow: auto; padding-top: 1px; font-family: "Consolas" , "Courier New" , Courier, mono, serif; font-size: 12px; background-color: rgb(231, 229, 220);
+}
+.dp-highlighter ol {
+	margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.dp-highlighter ol li {
+	margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.dp-highlighter ol li span {
+	margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.dp-highlighter a {
+	background: none; margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.dp-highlighter a:hover {
+	background: none; margin: 0px; padding: 0px; border: currentColor; border-image: none;
+}
+.dp-highlighter .bar {
+	padding-left: 45px;
+}
+.collapsed.dp-highlighter .bar {
+	padding-left: 0px;
+}
+.nogutter.dp-highlighter .bar {
+	padding-left: 0px;
+}
+.dp-highlighter ol {
+	list-style: decimal; margin: 0px 0px 1px 45px !important; padding: 0px; color: rgb(92, 92, 92); border-right-color: rgb(231, 229, 220); border-right-width: 1px; border-right-style: solid; background-color: rgb(255, 255, 255);
+}
+.nogutter.dp-highlighter ol {
+	list-style: none !important; margin-left: 0px !important;
+}
+.nogutter.dp-highlighter ol li {
+	list-style: none !important; margin-left: 0px !important;
+}
+.dp-highlighter ol li {
+	margin: 0px !important; padding: 0px 3px 0px 10px !important; color: rgb(92, 92, 92); line-height: 150%; border-left-color: rgb(108, 226, 108); border-left-width: 3px; border-left-style: solid; list-style-type: decimal-leading-zero; list-style-position: outside !important; list-style-image: none; background-color: rgb(248, 248, 248);
+}
+.dp-highlighter .columns div {
+	margin: 0px !important; padding: 0px 3px 0px 10px !important; color: rgb(92, 92, 92); line-height: 150%; border-left-color: rgb(108, 226, 108); border-left-width: 3px; border-left-style: solid; list-style-type: decimal-leading-zero; list-style-position: outside !important; list-style-image: none; background-color: rgb(248, 248, 248);
+}
+.nogutter.dp-highlighter ol li {
+	border: 0px currentColor; border-image: none;
+}
+.nogutter.dp-highlighter .columns div {
+	border: 0px currentColor; border-image: none;
+}
+.dp-highlighter .columns {
+	width: 100%; color: gray; overflow: hidden; background-color: rgb(248, 248, 248);
+}
+.dp-highlighter .columns div {
+	padding-bottom: 5px;
+}
+.dp-highlighter ol li.alt {
+	color: inherit; background-color: rgb(255, 255, 255);
+}
+.dp-highlighter ol li span {
+	color: black; background-color: inherit;
+}
+.collapsed.dp-highlighter ol {
+	margin: 0px;
+}
+.collapsed.dp-highlighter ol li {
+	display: none;
+}
+.printing.dp-highlighter {
+	border: currentColor; border-image: none;
+}
+.printing.dp-highlighter .tools {
+	display: none !important;
+}
+.printing.dp-highlighter li {
+	display: list-item !important;
+}
+.dp-highlighter .tools {
+	font: 9px/normal Verdana, Geneva, Arial, Helvetica, sans-serif; padding: 3px 8px 10px 10px; color: silver; border-right-color: rgb(231, 229, 220); border-left-color: rgb(108, 226, 108); border-right-width: 1px; border-left-width: 3px; border-right-style: solid; border-left-style: solid; font-size-adjust: none; font-stretch: normal; background-color: rgb(248, 248, 248);
+}
+.nogutter.dp-highlighter .tools {
+	border-left-color: currentColor; border-left-width: 0px; border-left-style: none;
+}
+.collapsed.dp-highlighter .tools {
+	border-bottom-color: currentColor; border-bottom-width: 0px; border-bottom-style: none;
+}
+.dp-highlighter .tools a {
+	color: rgb(160, 160, 160); font-size: 9px; text-decoration: none; margin-right: 10px; background-color: inherit;
+}
+.dp-highlighter .tools a:hover {
+	color: red; text-decoration: underline; background-color: inherit;
+}
+.dp-about {
+	margin: 0px; padding: 0px; color: rgb(51, 51, 51); background-color: rgb(255, 255, 255);
+}
+.dp-about table {
+	width: 100%; height: 100%; font-family: Tahoma, Verdana, Arial, sans-serif !important; font-size: 11px;
+}
+.dp-about td {
+	padding: 10px; vertical-align: top;
+}
+.dp-about .copy {
+	height: 95%; border-bottom-color: rgb(172, 168, 153); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.dp-about .title {
+	color: red; font-weight: bold; background-color: inherit;
+}
+.dp-about .para {
+	margin: 0px 0px 4px;
+}
+.dp-about .footer {
+	text-align: right; color: rgb(51, 51, 51); border-top-color: rgb(255, 255, 255); border-top-width: 1px; border-top-style: solid; background-color: rgb(236, 234, 219);
+}
+.dp-about .close {
+	width: 60px; height: 22px; color: rgb(51, 51, 51); font-family: Tahoma, Verdana, Arial, sans-serif !important; font-size: 11px; background-color: rgb(236, 234, 219);
+}
+.dp-highlighter .comment {
+	color: rgb(0, 130, 0); background-color: inherit;
+}
+.dp-highlighter .comments {
+	color: rgb(0, 130, 0); background-color: inherit;
+}
+.dp-highlighter .string {
+	color: blue; background-color: inherit;
+}
+.dp-highlighter .keyword {
+	color: rgb(0, 102, 153); font-weight: bold; background-color: inherit;
+}
+.dp-highlighter .preprocessor {
+	color: gray; background-color: inherit;
+}
+.dp-xml .cdata {
+	color: rgb(255, 20, 147);
+}
+.dp-xml .tag {
+	color: rgb(153, 51, 0); font-weight: bold;
+}
+.dp-xml .tag-name {
+	color: rgb(153, 51, 0); font-weight: bold;
+}
+.dp-xml .attribute {
+	color: red;
+}
+.dp-xml .attribute-value {
+	color: blue;
+}
+.dp-sql .func {
+	color: rgb(255, 20, 147);
+}
+.dp-sql .op {
+	color: rgb(128, 128, 128);
+}
+.dp-rb .symbol {
+	color: rgb(170, 119, 0);
+}
+.dp-rb .variable {
+	color: rgb(170, 119, 0); font-weight: bold;
+}
+.dp-py .builtins {
+	color: rgb(255, 20, 147);
+}
+.dp-py .magicmethods {
+	color: rgb(128, 128, 128);
+}
+.dp-py .exceptions {
+	color: brown;
+}
+.dp-py .types {
+	color: brown; font-style: italic;
+}
+.dp-py .commonlibs {
+	color: rgb(138, 43, 226); font-style: italic;
+}
+.dp-j .annotation {
+	color: rgb(100, 100, 100);
+}
+.dp-j .number {
+	color: rgb(192, 0, 0);
+}
+.dp-delphi .number {
+	color: blue;
+}
+.dp-delphi .directive {
+	color: rgb(0, 130, 132);
+}
+.dp-delphi .vars {
+	color: rgb(0, 0, 0);
+}
+.dp-css .value {
+	color: black;
+}
+.dp-css .important {
+	color: red;
+}
+.dp-c .vars {
+	color: rgb(221, 0, 0);
+}
+.dp-cpp .datatypes {
+	color: rgb(46, 139, 87); font-weight: bold;
+}
+.dp-highlighter .bar a {
+	background-position: left top; padding: 1px; width: 16px; height: 16px; text-indent: -2000px; display: inline-block; background-repeat: no-repeat; _width: 0px; _overflow: hidden; _padding-left: 16px; _text-indent: 0px;
+}
+.dp-highlighter .bar a:hover {
+	padding: 0px; border: 1px solid rgb(204, 204, 204); border-image: none; text-decoration: none; background-repeat: no-repeat; _padding-left: 16px;
+}
+.dp-highlighter .bar a.ExpandSource {
+	
+}
+.dp-highlighter .bar a.ViewSource {
+	background-image: url("images/default/ico_plain.gif");
+}
+.dp-highlighter .bar a.CopyToClipboard {
+	background-image: url("images/default/ico_copy.gif");
+}
+.dp-highlighter .bar a.PrintSource {
+	display: none;
+}
+.dp-highlighter .bar a.About {
+	display: none;
+}

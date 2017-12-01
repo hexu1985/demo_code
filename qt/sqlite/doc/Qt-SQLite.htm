@@ -1,0 +1,333 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0066)https://www.cnblogs.com/xia-weiwen/archive/2017/05/04/6806709.html -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-cn"><HEAD><META content="IE=10.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="utf-8"> 
+<META name="viewport" content="width=device-width, initial-scale=1"> 
+<TITLE>在Qt中使用SQLite数据库 - 星夜之夏 - 博客园</TITLE> <LINK href="Qt-SQLite_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="Qt-SQLite_files/bundle-BlackLowKey.css" 
+rel="stylesheet" type="text/css"> <LINK id="mobile-style" href="Qt-SQLite_files/bundle-BlackLowKey-mobile.css" 
+rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)"> 
+<LINK title="RSS" href="http://www.cnblogs.com/xia-weiwen/rss" rel="alternate" 
+type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/xia-weiwen/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/xia-weiwen/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="Qt-SQLite_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'xia-weiwen', cb_enable_mathjax=false;var isLogined=false;</SCRIPT>
+ 
+<SCRIPT src="Qt-SQLite_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18739"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" href="http://www.cnblogs.com/xia-weiwen/"><IMG 
+id="blogLogo" alt="返回主页" src="Qt-SQLite_files/logo.gif"></A>					<!--done--> 
+<H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/xia-weiwen/">星夜之夏</A></H1> 
+<H2>这里都是我在学习工作中的点滴积累。欢迎和大家交流。</H2>			 </DIV><!--end: blogTitle 博客的标题和副标题 -->	 
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A class="menu" id="blog_nav_sitehome" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A class="menu" id="blog_nav_myhome" href="http://www.cnblogs.com/xia-weiwen/">首页</A></LI>
+  <LI><A class="menu" id="blog_nav_newpost" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A class="menu" id="blog_nav_contact" href="https://msg.cnblogs.com/send/%E6%98%9F%E5%A4%9C%E4%B9%8B%E5%A4%8F" 
+  rel="nofollow">联系</A></LI>
+  <LI><A class="menu" id="blog_nav_rss" href="http://www.cnblogs.com/xia-weiwen/rss">订阅</A> <!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/xia-weiwen/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></LI>
+  <LI><A class="menu" id="blog_nav_admin" href="https://i.cnblogs.com/" rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats">
+<DIV id="blog_stats"><SPAN id="stats_post_count">随笔 - 12&nbsp; </SPAN> <SPAN id="stats_article_count">文章 
+- 0&nbsp; </SPAN> <SPAN id="stats-comment_count">评论 - 7</SPAN> </DIV></DIV><!--end: blogStats -->
+	 </DIV><!--end: navigator 博客导航栏 --> </DIV><!--end: header 头部 --> 
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow">
+<DIV id="post_detail"><!--done--> 
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/xia-weiwen/p/6806709.html">在Qt中使用SQLite数据库</A>
+		 </H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV class="cnblogs-markdown" id="cnblogs_post_body">
+<H1 id="前言">前言</H1>
+<P>SQLite（sql）是一款开源轻量级的数据库软件，不需要server，可以集成在其他软件中，非常适合嵌入式系统。<BR>Qt5以上版本可以直接使用SQLite（Qt自带驱动）。</P>
+<H1 id="用法">用法</H1>
+<H2 id="准备">1 准备</H2>
+<OL>
+  <LI>
+  <P>引入SQL模块<BR>在Qt项目文件(.pro文件)中，加入SQL模块：</P>
+<PRE><CODE>QT += sql</CODE></PRE></LI>
+  <LI>
+  <P>引用头文件<BR>在需要使用SQL的类定义中，引用相关头文件。例如：</P>
+<PRE><CODE>#include &lt;QSqlDatabase&gt;
+#include &lt;QSqlError&gt;
+#include &lt;QSqlQuery&gt;</CODE></PRE></LI></OL>
+<H2 id="使用">2 使用</H2>
+<H3 id="建立数据库">1. 建立数据库</H3>
+<P>检查连接、添加数据库驱动、设置数据库名称、数据库登录用户名、密码。</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QSqlDatabase</SPAN> database;
+<SPAN class="kw">if</SPAN> (<SPAN class="ot">QSqlDatabase::</SPAN>contains(<SPAN class="st">"qt_sql_default_connection"</SPAN>))
+{
+    database = <SPAN class="ot">QSqlDatabase::</SPAN>database(<SPAN class="st">"qt_sql_default_connection"</SPAN>);
+}
+<SPAN class="kw">else</SPAN>
+{
+    database = <SPAN class="ot">QSqlDatabase::</SPAN>addDatabase(<SPAN class="st">"QSQLITE"</SPAN>);
+    database.setDatabaseName(<SPAN class="st">"MyDataBase.db"</SPAN>);
+    database.setUserName(<SPAN class="st">"XingYeZhiXia"</SPAN>);
+    database.setPassword(<SPAN class="st">"123456"</SPAN>);
+}</CODE></PRE></DIV>
+<P>上述代码解释：<BR>（1）第一行中，建立了一个<CODE>QSqlDatabase</CODE>对象，后续的操作要使用这个对象。<BR>
+（2）<CODE>if</CODE>语句用来检查指定的连接(connection)是否存在。这里指定的连接名称（connection 
+name）是<CODE>qt_sql_default_connection</CODE>，这是Qt默认连接名称。实际使用时，这个名称可以任意取。如果判断此连接已经存在，那么<CODE>QSqlDatabase::contains()</CODE>函数返回true。此时，进入第一个分支，<CODE>QSqlDatabase::database()</CODE>返回这个连接。<BR>
+（3）如果这个连接不存在，则进入<CODE>else</CODE>分支，需要创建连接，并添加数据库。在<CODE>else</CODE>分支第一行，<CODE>addDatabase()</CODE>的参数<CODE>QSQLITE</CODE>是SQLite对应的驱动名，不能改。而且需要注意的是，<CODE>addDatabase()</CODE>的第二个参数被省略了，第二个参数的默认参数就是上面提到的Qt默认连接名称<CODE>qt_sql_default_connection</CODE>。如果需要使用自定义的连接名称（如果程序需要处理多个数据库文件的话就会这样），则应该加入第二个参数，例如</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp">database = <SPAN class="ot">QSqlDatabase::</SPAN>addDatabase(<SPAN class="st">"QSQLITE"</SPAN>, <SPAN class="st">"my_sql_connection);</SPAN></CODE></PRE></DIV>
+<P>这个时候，如果在另一个地方需要判断<CODE>my_sql_connection</CODE>连接是否存在，就应该使用<CODE>if 
+(QSqlDatabase::contains("my_sql_connection"))</CODE>。<BR>
+（4）<CODE>else</CODE>分支第二行中，<CODE>setDatabaseName()</CODE>的参数是数据库文件名。如果这个数据库不存在，则会在后续操作时自动创建；如果已经存在，则后续的操作会在已有的数据库上进行。<BR>
+（5）<CODE>else</CODE>分支后面两行，设置用户名和密码。用户名，密码都可以随便取，也可以省略。</P>
+<H3 id="打开数据库">2. 打开数据库</H3>
+<P>使用<CODE>open()</CODE>打开数据库，并判断是否成功。注意，在第一步检查连接是否存在时，如果连接存在，则在返回这个连接的时候，会默认将数据库打开。</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="kw">if</SPAN> (!database.open())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"Error: Failed to connect database."</SPAN> &lt;&lt; database.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="co">// do something</SPAN>
+}</CODE></PRE></DIV>
+<P>如果打开成功，则进入else分支。对数据库的操作都需要在else分支中进行。</P>
+<H3 id="关闭数据库">3. 关闭数据库</H3>
+<P>数据库操作完成后，最好关闭。</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp">    database.close();</CODE></PRE></DIV>
+<H3 id="操作数据库">4. 操作数据库</H3>
+<P>对数据库进行操作需要用到QSqlQuery类，操作前必须定义一个对象。下面举例说明操作方法。操作需要使用SQLite语句，本文中的几个例子会使用几个常用的语句，关于SQLite语句的具体信息请参考SQLite相关资料。<BR><STRONG>例1：创建表格</STRONG><BR>
+创建一个名为student的表格，表格包含三列，第一列是id，第二列是名字，第三列是年龄。</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QSqlQuery</SPAN> sql_query;
+<SPAN class="ot">QString</SPAN> create_sql = <SPAN class="st">"create table student (id int primary key, name varchar(30), age int)"</SPAN>;
+sql_query.prepare(create_sql);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"Error: Fail to create table."</SPAN> &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"Table created!"</SPAN>;
+}</CODE></PRE></DIV>
+<P>代码解释：<BR>（1）第一行定义一个<CODE>QSqlQuery</CODE>对象。<BR>
+（2）第二行是一个<CODE>QString</CODE>，其中的内容是SQLite语句。对数据库的操作，都是用SQLite的语句完成的，把这些指令以QString类型，通过<CODE>prepare</CODE>函数，保存在QSqlQuery对象中。也可将指令，以QString形式直接写在<CODE>exec()</CODE>函数的参数中，例如：</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp">    sql_query.exec(<SPAN class="st">"create table student (id int primary key, name varchar(30), age int)"</SPAN>);</CODE></PRE></DIV>
+<P>创建表格语句：<CODE>create  table  &lt;table_name&gt;  (f1  type1, f2  
+type2,…);</CODE><BR><CODE>create table</CODE>是创建表格的语句，也可用大写<CODE>CREATE 
+TABLE</CODE>；student是表格的名称，可以任意取；括号中是表格的格式，上述指令表明，表格中有三列，第一列的名称（表头）是id，这一列储存的数据类型是int，第二列名称是name，数据类型是字符数组，最多有30个字符（和char(30)的区别在于，varchar的实际长度是变化的，而char的长度始终是给定的值），第三列的名称是age，数据类型是int。<BR>
+如果<CODE>sql_query.exec()</CODE>执行成功，则创建表格成功。</P>
+<P><STRONG>例2：插入数据</STRONG><BR>在刚才创建的表格中，插入一行数据。</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> insert_sql = <SPAN class="st">"insert into student values (?, ?, ?)"</SPAN>;
+sql_query.prepare(insert_sql);
+sql_query.addBindValue(max_id<SPAN class="dv">+1</SPAN>);
+sql_query.addBindValue(<SPAN class="st">"Wang"</SPAN>);
+sql_query.addBindValue(<SPAN class="dv">25</SPAN>);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"inserted Wang!"</SPAN>;
+}
+<SPAN class="kw">if</SPAN>(!sql_query.exec(<SPAN class="st">"INSERT INTO student VALUES(3, </SPAN><SPAN class="ch">\"</SPAN><SPAN class="st">Li</SPAN><SPAN class="ch">\"</SPAN><SPAN class="st">, 23)"</SPAN>))
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"inserted Li!"</SPAN>;
+}</CODE></PRE></DIV>
+<P>插入语句：<CODE>insert  into  &lt;table_name&gt;  values (value1, 
+value2,…);</CODE><BR><CODE>insert 
+into</CODE>是插入语句，student是表格名称，values()是要插入的数据。这里，我们插入了2组数据。插入第一组数据的时候，用<CODE>addBindValue</CODE>来替代语句中的<CODE>?</CODE>，替代的顺序与<CODE>addBindValue</CODE>调用的顺序相同。插入第二组数据的时候，则是直接写出完整语句。</P>
+<P><STRONG>例3：更新数据（修改数据）</STRONG></P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> update_sql = <SPAN class="st">"update student set name = :name where id = :id"</SPAN>;
+sql_query.prepare(update_sql);
+sql_query.bindValue(<SPAN class="st">":name"</SPAN>, <SPAN class="st">"Qt"</SPAN>);
+sql_query.bindValue(<SPAN class="st">":id"</SPAN>, <SPAN class="dv">1</SPAN>);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"updated!"</SPAN>;
+}</CODE></PRE></DIV>
+<P>语句：<CODE>update  &lt;table_name&gt;  set  &lt;f1=value1&gt;, 
+&lt;f2=value2&gt;…   where  
+&lt;expression&gt;;</CODE><BR>更新（修改）的语句是<CODE>update...set...</CODE>，其中student是表格名称，name是表头名称（即第二列），:name是待定的变量，where用于确定是哪一组数据，:id也是待定变量。<BR><CODE>bindValue(" 
+", " ")</CODE>函数用来把语句中的待定变量换成确定值。</P>
+<P><STRONG>例4：查询数据</STRONG><BR>（1）查询部分数据</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> select_sql = <SPAN class="st">"select id, name from student"</SPAN>;
+<SPAN class="kw">if</SPAN>(!sql_query.exec(select_sql))
+{
+    <SPAN class="fu">qDebug</SPAN>()&lt;&lt;sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="kw">while</SPAN>(sql_query.next())
+    {
+        <SPAN class="dt">int</SPAN> id = sql_query.value(<SPAN class="dv">0</SPAN>).toInt();
+        <SPAN class="ot">QString</SPAN> name = sql_query.value(<SPAN class="dv">1</SPAN>).toString();
+        <SPAN class="fu">qDebug</SPAN>()&lt;&lt;<SPAN class="ot">QString</SPAN>(<SPAN class="st">"id:%1    name:%2"</SPAN>).arg(id).arg(name);
+    }
+}</CODE></PRE></DIV>
+<P>语句<CODE>select  &lt;f1&gt;, &lt;f2&gt;, ...  from  
+&lt;table_name&gt;;</CODE><BR>select是查询指令；<CODE>&lt;f1&gt;</CODE> 
+等等是要查询的变量（即表头），中间用逗号隔开；from ...指定表格。<BR>上述语句是说查询student表中的 id 和 name 
+。执行查询之后，用<CODE>sql_query.value(int)</CODE>来获得数据。同样地，<CODE>value(0)</CODE>表示第一个数据，即 
+id，<CODE>value(1)</CODE>表示name。<STRONG>注意</STRONG>：<CODE>value()</CODE>函数的返回值类型是<CODE>QVariant</CODE>，因此要用<CODE>toInt()</CODE>等函数转换成特定的类型。<BR>
+（2）查询全部数据</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> select_all_sql = <SPAN class="st">"select * from student"</SPAN>;
+sql_query.prepare(select_all_sql);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>()&lt;&lt;sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="kw">while</SPAN>(sql_query.next())
+    {
+        <SPAN class="dt">int</SPAN> id = sql_query.value(<SPAN class="dv">0</SPAN>).toInt();
+        <SPAN class="ot">QString</SPAN> name = sql_query.value(<SPAN class="dv">1</SPAN>).toString();
+        <SPAN class="dt">int</SPAN> age = sql_query.value(<SPAN class="dv">2</SPAN>).toInt();
+        <SPAN class="fu">qDebug</SPAN>()&lt;&lt;<SPAN class="ot">QString</SPAN>(<SPAN class="st">"id:%1    name:%2    age:%3"</SPAN>).arg(id).arg(name).arg(age);
+    }
+}</CODE></PRE></DIV>
+<P>语句<CODE>select  *  from  &lt;table_name&gt;;</CODE><BR>查询所有数据用 * 
+表示。用<CODE>while(sql_query.next())</CODE>用来遍历所有行。同样用<CODE>value()</CODE>获得数据。<BR>
+（3）查询最大id</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> select_max_sql = <SPAN class="st">"select max(id) from student"</SPAN>;
+<SPAN class="dt">int</SPAN> max_id = <SPAN class="dv">0</SPAN>;
+sql_query.prepare(select_max_sql);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="kw">while</SPAN>(sql_query.next())
+    {
+        max_id = sql_query.value(<SPAN class="dv">0</SPAN>).toInt();
+        <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="ot">QString</SPAN>(<SPAN class="st">"max id:%1"</SPAN>).arg(max_id);
+    }
+}</CODE></PRE></DIV>
+<P>这个就是在语句中用<CODE>max</CODE>来获取最大值。</P>
+<P><STRONG>例5：删除与清空</STRONG><BR>（1）删除一条数据</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> delete_sql = <SPAN class="st">"delete from student where id = ?"</SPAN>;
+sql_query.prepare(delete_sql);
+sql_query.addBindValue(<SPAN class="dv">0</SPAN>);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>()&lt;&lt;sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>()&lt;&lt;<SPAN class="st">"deleted!"</SPAN>;
+}</CODE></PRE></DIV>
+<P>语句<CODE>delete from &lt;table_name&gt; where &lt;f1&gt; = 
+&lt;value&gt;</CODE><BR>delete用于删除条目，用where给出限定条件。例如此处是删除 id = 0的条目。<BR>
+（2）清空表格（删除所有）</P>
+<DIV class="sourceCode">
+<PRE class="sourceCode cpp"><CODE class="sourceCode cpp"><SPAN class="ot">QString</SPAN> clear_sql = <SPAN class="st">"delete from student"</SPAN>;
+sql_query.prepare(clear_sql);
+<SPAN class="kw">if</SPAN>(!sql_query.exec())
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; sql_query.lastError();
+}
+<SPAN class="kw">else</SPAN>
+{
+    <SPAN class="fu">qDebug</SPAN>() &lt;&lt; <SPAN class="st">"table cleared"</SPAN>;
+}</CODE></PRE></DIV>
+<P>这里没有用where给出限制，就会删除所有内容。</P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV></DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2017-05-04 13:49</SPAN> <A 
+href="http://www.cnblogs.com/xia-weiwen/">星夜之夏</A> 阅读(<SPAN 
+id="post_view_count">...</SPAN>) 评论(<SPAN id="post_comment_count">...</SPAN>)  
+<A href="https://i.cnblogs.com/EditPosts.aspx?postid=6806709" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(6806709);return false;" href="https://www.cnblogs.com/xia-weiwen/archive/2017/05/04/6806709.html#">收藏</A></DIV></DIV>
+<SCRIPT src="Qt-SQLite_files/highlight.min.js"></SCRIPT>
+
+<SCRIPT>markdown_highlight();</SCRIPT>
+
+<SCRIPT type="text/javascript">var allowComments=true,cb_blogId=275034,cb_entryId=6806709,cb_blogApp=currentBlogApp,cb_blogUserGuid='025b40e3-e2ef-e511-9fc1-ac853d9f53cc',cb_entryCreatedDate='2017/5/4 13:49:00';loadViewCount(cb_entryId);var cb_postType=1;</SCRIPT>
+	 </DIV><!--end: topics 文章、评论容器--> </DIV><A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);" clientidmode="Static" 
+runat="server">刷新评论</A><A onclick="return RefreshPage();" href="https://www.cnblogs.com/xia-weiwen/archive/2017/05/04/6806709.html#">刷新页面</A><A 
+href="https://www.cnblogs.com/xia-weiwen/archive/2017/05/04/6806709.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="ad_t2"></DIV>
+<DIV id="opt_under_post"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c1"></DIV>
+<DIV id="under_post_news"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c2"></DIV>
+<DIV id="under_post_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</SCRIPT>
+ </DIV></DIV><!--end: forFlow -->	 </DIV><!--end: mainContent 主体内容容器-->	 
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done--> 
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+						 
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+			 </DIV></DIV><!--end: sideBarMain -->	 </DIV><!--end: sideBar 侧边栏容器 -->	 
+<DIV class="clear"></DIV></DIV><!--end: main -->	 
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2017 星夜之夏	 </DIV><!--end: footer --> 
+</DIV><!--end: home 自定义的最大容器 --> </BODY></HTML>

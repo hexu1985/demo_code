@@ -1,0 +1,735 @@
+#EntryTag {
+	color: gray; font-size: 9pt; margin-top: 20px;
+}
+.topicListFooter {
+	text-align: right; margin-top: 10px; margin-right: 10px;
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+html {
+	height: 100%;
+}
+body {
+	background: url("images/body_bg.jpg") no-repeat top rgb(0, 0, 0); color: rgb(0, 0, 0); font-family: Verdana,Arial,Helvetica,sans-serif; font-size: 12px; min-height: 101%;
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+fieldset {
+	border: 0px currentColor;
+}
+img {
+	border: 0px currentColor;
+}
+ul {
+	-ms-word-break: break-all;
+}
+li {
+	list-style: none;
+}
+h1 {
+	font-size: 100%; font-weight: normal;
+}
+h2 {
+	font-size: 100%; font-weight: normal;
+}
+h3 {
+	font-size: 100%; font-weight: normal;
+}
+h4 {
+	font-size: 100%; font-weight: normal;
+}
+h5 {
+	font-size: 100%; font-weight: normal;
+}
+h6 {
+	font-size: 100%; font-weight: normal;
+}
+a:link {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+a:visited {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+a:hover {
+	color: rgb(255, 102, 0); text-decoration: underline;
+}
+a:active {
+	color: rgb(0, 0, 0); text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+#home {
+	margin: 0px auto; width: 980px;
+}
+#header {
+	margin-top: 2em;
+}
+#blogTitle {
+	height: 60px; clear: both;
+}
+#blogTitle h1 {
+	width: 50%; line-height: 1.5em; letter-spacing: 1px; font-size: 150%; font-weight: bold; margin-top: 10px; margin-left: 1em; float: left; display: inline;
+}
+#blogTitle h2 {
+	width: 50%; line-height: 1.5em; font-size: 14px; margin-top: 2em; margin-left: 8em; float: left; display: inline;
+}
+#blogTitle h1 a {
+	color: rgb(255, 255, 255); font-family: "Î¢ÈíÑÅºÚ"; text-shadow: 3px 3px 3px #003d44;
+}
+#blogTitle h2 {
+	color: rgb(255, 255, 255); font-family: "Î¢ÈíÑÅºÚ"; text-shadow: 3px 3px 3px #003d44;
+}
+#blogLogo {
+	float: right;
+}
+#navigator {
+	height: 60px; clear: both; margin-top: 60px; position: relative; background-color: rgb(51, 51, 51);
+}
+#navList {
+	margin-left: 30px; float: left; min-height: 30px;
+}
+#navList li {
+	float: left;
+}
+#navList a {
+	font: 14px/1.5em "Î¢ÈíÑÅºÚ"; margin: 18px 10px 0px 0px; padding: 0px 10px; display: block; font-size-adjust: none; font-stretch: normal;
+}
+#navList a:link {
+	color: rgb(255, 255, 255); text-shadow: 3px 3px 3px #000;
+}
+#navList a:visited {
+	color: rgb(255, 255, 255); text-shadow: 3px 3px 3px #000;
+}
+#navList a:active {
+	color: rgb(255, 255, 255); text-shadow: 3px 3px 3px #000;
+}
+#navList a:hover {
+	text-decoration: underline;
+}
+#navList .aHeaderXML {
+	display: none;
+}
+.blogStats {
+	text-align: right; color: rgb(204, 204, 204); margin-top: 20px; margin-right: 2px; float: right; visibility: hidden;
+}
+.themeSelect {
+	top: 20px; right: 20px; position: absolute;
+}
+.themeSelect .box-color {
+	width: 15px; height: 15px; margin-left: 10px; float: left; display: inline; background-color: rgb(204, 204, 204);
+}
+#main {
+	background: rgb(255, 255, 255); text-align: left; clear: both; min-width: 980px;
+}
+#mainContent .forFlow {
+	width: auto; float: none;
+}
+#mainContent {
+	background: rgb(255, 255, 255); width: 700px; overflow: hidden; float: left; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 200px; -o-text-overflow: ellipsis;
+}
+.day {
+	margin: 1em 2em 20px 20px; padding-bottom: 5px; min-height: 10px; _height: 10px;
+}
+.dayTitle {
+	top: 40px; color: rgb(102, 102, 102); line-height: 1.5em; font-size: 110%; font-weight: bold; margin-top: 3px; margin-bottom: 10px; float: right; position: relative;
+}
+.postTitle {
+	padding: 0px 100px 10px 20px; line-height: 1.5em; clear: both; font-size: 14px; font-weight: bold; border-bottom-color: rgb(224, 224, 224); border-left-color: rgb(31, 166, 230); border-bottom-width: 1px; border-left-width: 5px; border-bottom-style: solid; border-left-style: solid;
+}
+.postTitle a:link {
+	color: rgb(28, 119, 145);
+}
+.postTitle a:visited {
+	color: rgb(28, 119, 145);
+}
+.postTitle a:active {
+	color: rgb(28, 119, 145);
+}
+.postTitle a:hover {
+	color: rgb(255, 102, 0); text-decoration: none;
+}
+.postCon {
+	padding: 10px 0px; width: 95%; line-height: 1.5em; clear: both; float: right;
+}
+.postDesc {
+	text-align: right; color: rgb(163, 163, 163); padding-right: 5px; clear: both; float: none;
+}
+.postDesc a:link {
+	color: rgb(163, 163, 163);
+}
+.postDesc a:visited {
+	color: rgb(163, 163, 163);
+}
+.postDesc a:active {
+	color: rgb(163, 163, 163);
+}
+.postDesc a:hover {
+	color: rgb(255, 102, 0); text-decoration: none;
+}
+.postSeparator {
+	margin: 0px auto 5em; height: 1px; clear: both; float: right;
+}
+.topicListFooter {
+	margin-top: 5em;
+}
+#sideBar {
+	padding: 0px 5px 20px; overflow: hidden; margin-left: 700px; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 200px; _margin-left: 0; -o-text-overflow: ellipsis; _width: 240px;
+}
+.newsItem .catListTitle {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.newsItem {
+	padding: 0px 0px 5px; margin-bottom: 2em;
+}
+#calendar {
+	width: 229px; margin-bottom: 2em;
+}
+#calendar .Cal {
+	width: 96%; line-height: 1.5em;
+}
+.Cal {
+	border: currentColor; color: rgb(102, 102, 102);
+}
+.Cal td {
+	padding: 3px 0px;
+}
+#calendar table a:link {
+	font-weight: bold;
+}
+#calendar table a:visited {
+	font-weight: bold;
+}
+#calendar table a:active {
+	font-weight: bold;
+}
+#calendar table a:hover {
+	color: rgb(255, 255, 255); text-decoration: none; background-color: rgb(255, 102, 0);
+}
+.CalTodayDay {
+	color: rgb(255, 102, 0);
+}
+#calendar .CalNextPrev a:link {
+	font-weight: bold; background-color: rgb(255, 255, 255);
+}
+#calendar .CalNextPrev a:visited {
+	font-weight: bold; background-color: rgb(255, 255, 255);
+}
+#calendar .CalNextPrev a:active {
+	font-weight: bold; background-color: rgb(255, 255, 255);
+}
+.CalDayHeader {
+	border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.CalTitle {
+	background: rgb(255, 255, 255); width: 100%; color: rgb(0, 0, 0); border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.catListTitle {
+	text-align: center; line-height: 1.5em; font-size: 110%; font-weight: bold; margin-top: 15px; margin-bottom: 10px; border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.catListComment {
+	line-height: 1.5em;
+}
+.divRecentComment {
+	color: rgb(102, 102, 102); text-indent: 2em;
+}
+#sideBarMain {
+	margin-top: 45px;
+}
+#sideBarMain ul {
+	line-height: 1.5em;
+}
+.catListEssay {
+	margin-bottom: 2em;
+}
+.catListLink {
+	margin-bottom: 2em;
+}
+.catListNoteBook {
+	margin-bottom: 2em;
+}
+.catListTag {
+	margin-bottom: 2em;
+}
+.catListPostCategory {
+	margin-bottom: 2em;
+}
+.catListPostArchive {
+	margin-bottom: 2em;
+}
+.catListArticleArchive {
+	margin-bottom: 2em;
+}
+.catListImageCategory {
+	margin-bottom: 2em;
+}
+.mySearch {
+	margin-bottom: 2em;
+}
+.catListComment {
+	margin-bottom: 2em;
+}
+.catListView {
+	margin-bottom: 2em;
+}
+.catListFeedback {
+	margin-bottom: 2em;
+}
+.catListEssay h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListLink h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListNoteBook h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListTag h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListPostCategory h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListPostArchive h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListArticleArchive h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListImageCategory h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.mySearch h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListComment h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListView h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListFeedback h3 {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+#blog-sidecolumn .catListTitle {
+	background: rgb(240, 240, 240); padding: 5px 10px; border: 1px solid rgb(204, 204, 204); text-align: left;
+}
+.catListEssay ul {
+	padding-left: 1em;
+}
+.catListLink ul {
+	padding-left: 1em;
+}
+.catListNoteBook ul {
+	padding-left: 1em;
+}
+.catListTag ul {
+	padding-left: 1em;
+}
+.catListPostCategory ul {
+	padding-left: 1em;
+}
+.catListPostArchive ul {
+	padding-left: 1em;
+}
+.catListArticleArchive ul {
+	padding-left: 1em;
+}
+.catListImageCategory ul {
+	padding-left: 1em;
+}
+.mySearch ul {
+	padding-left: 1em;
+}
+.catListComment ul {
+	padding-left: 1em;
+}
+.catListView ul {
+	padding-left: 1em;
+}
+.catListFeedback ul {
+	padding-left: 1em;
+}
+.catListEssay ul li {
+	margin: 0.5em;
+}
+.catListLink ul li {
+	margin: 0.5em;
+}
+.catListNoteBook ul li {
+	margin: 0.5em;
+}
+.catListTag ul li {
+	margin: 0.5em;
+}
+.catListPostCategory ul li {
+	margin: 0.5em;
+}
+.catListPostArchive ul li {
+	margin: 0.5em;
+}
+.catListArticleArchive ul li {
+	margin: 0.5em;
+}
+.catListImageCategory ul li {
+	margin: 0.5em;
+}
+.mySearch ul li {
+	margin: 0.5em;
+}
+.catListComment ul li {
+	margin: 0.5em;
+}
+.catListView ul li {
+	margin: 0.5em;
+}
+.catListFeedback ul li {
+	margin: 0.5em;
+}
+#blog-sidecolumn .catList ul {
+	margin-left: 15px;
+}
+#blog-sidecolumn .catListBlogRank ul {
+	margin-left: 15px;
+}
+#blog-sidecolumn .catListArticleCategory ul {
+	margin-left: 15px;
+}
+.divRecentCommentAticle {
+	margin-top: 1.5em;
+}
+.divRecentComment {
+	margin-top: 0.5em;
+}
+#topics {
+	padding: 1em; min-height: 200px;
+}
+#topics .postTitle {
+	line-height: 1.5em; padding-left: 5px; font-size: 130%; font-weight: bold; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.postBody {
+	padding: 5px 2px 5px 5px; color: rgb(0, 0, 0); line-height: 1.8; border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px; border-bottom-style: solid;
+}
+#EntryTag {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a {
+	margin-left: 5px;
+}
+#EntryTag a:link {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:visited {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:active {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:hover {
+	color: rgb(255, 102, 0);
+}
+#topics .postDesc {
+	text-align: right; color: rgb(102, 102, 102); padding-right: 5px; margin-top: 5px; float: none;
+}
+.feedback_area_title {
+	margin: 20px 10px 0px; padding: 0px 0px 5px 8px; font-size: 1.2em; font-weight: bold; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.louzhu {
+	background: url("images/icoLouZhu.gif") no-repeat right top; padding-right: 16px;
+}
+.feedbackListSubtitle {
+	color: rgb(102, 102, 102);
+}
+.feedbackListSubtitle a:link {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:visited {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:active {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:hover {
+	color: rgb(255, 102, 0); text-decoration: none;
+}
+.feedbackManage {
+	width: 200px; text-align: right; margin-right: 10px; float: right;
+}
+.feedbackCon {
+	background: url("images/comment.gif") no-repeat 5px 0px; padding: 15px 0px 10px 40px; line-height: 1.5em; margin-right: 10px; margin-bottom: 1em; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; min-height: 35px; _height: 35px;
+}
+#divRefreshComments {
+	text-align: right; margin-bottom: 10px;
+}
+.commenttb {
+	width: 320px;
+}
+.entrylistTitle {
+	padding: 1em; text-align: right; color: rgb(28, 119, 145); font-size: 1.3em; font-weight: bold; border-bottom-color: rgb(224, 224, 224); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.PostListTitle {
+	padding: 1em; text-align: right; color: rgb(28, 119, 145); font-size: 1.3em; font-weight: bold; border-bottom-color: rgb(224, 224, 224); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.thumbTitle {
+	padding: 1em; text-align: right; color: rgb(28, 119, 145); font-size: 1.3em; font-weight: bold; border-bottom-color: rgb(224, 224, 224); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.entrylistDescription {
+	text-align: right; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+.entrylistItem {
+	padding-bottom: 5px; margin-bottom: 30px; min-height: 20px; _height: 20px;
+}
+.entrylistPosttitle {
+	padding: 0px 0px 10px 5px; line-height: 1.5em; font-size: 110%; font-weight: bold; border-bottom-color: rgb(224, 224, 224); border-left-color: rgb(31, 166, 230); border-bottom-width: 1px; border-left-width: 5px; border-bottom-style: solid; border-left-style: solid;
+}
+.entrylistPosttitle a {
+	margin-left: 10px;
+}
+.entrylistPosttitle a:hover {
+	text-decoration: none;
+}
+.entrylistPostSummary {
+	padding-left: 5px; margin-top: 5px; margin-bottom: 5px; margin-left: 20px;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:link {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:visited {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:active {
+	color: rgb(102, 102, 102);
+}
+.entrylistItemPostDesc a:hover {
+	color: rgb(255, 102, 0);
+}
+.entrylist .postSeparator {
+	margin: 0px; padding: 0px; border: currentColor; height: 0px; line-height: 0; clear: both; font-size: 0px;
+}
+.pager {
+	text-align: right; margin-right: 10px;
+}
+.PostList {
+	padding-top: 10px; padding-right: 5px; padding-left: 5px; clear: both; margin-top: 1em; margin-bottom: 5px; border-bottom-color: rgb(224, 224, 224); border-bottom-width: 1px; border-bottom-style: solid; min-height: 1.5em; _height: 1.5em;
+}
+.postTitl2 {
+	float: left;
+}
+.postDesc2 {
+	color: rgb(102, 102, 102); float: right;
+}
+.postText2 {
+	color: rgb(102, 102, 102); clear: both;
+}
+.pfl_feedback_area_title {
+	text-align: right; line-height: 1.5em; font-weight: bold; margin-bottom: 10px; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbackItem {
+	margin-bottom: 20px; border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbacksubtitle {
+	height: 1.5em; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.pfl_feedbackname {
+	float: left;
+}
+.pfl_feedbackManage {
+	float: right;
+}
+.pfl_feedbackCon {
+	color: rgb(0, 0, 0); padding-top: 5px; padding-bottom: 5px;
+}
+.pfl_feedbackAnswer {
+	color: rgb(255, 68, 0); text-indent: 2em;
+}
+.tdSentMessage {
+	text-align: right;
+}
+.errorMessage {
+	width: 300px; float: left;
+}
+.mySearch .input_my_zzk {
+	width: 175px; height: 1.4em;
+}
+.feedbackItem {
+	margin: 1em 0px 1em 1em;
+}
+.commentform {
+	padding: 0px 5px 0px 2em;
+}
+#commentform_title {
+	font-size: 16px;
+}
+#commentform_user {
+	font-size: 1.2em; margin-top: 1em;
+}
+#commentform_user input {
+	padding: 0.1em; margin-left: 1em;
+}
+.commentbox_main {
+	margin-top: 0.5em;
+}
+.commentbox_title_left {
+	font-size: 1.2em; margin-bottom: 0.4em;
+}
+.commentbox_opt {
+	
+}
+#btn_comment_submit {
+	padding: 0.2em; margin-top: 0.5em;
+}
+.Pager {
+	font-weight: bold; margin-right: 20px; margin-left: 5px;
+}
+.Pager a:link {
+	
+}
+.Pager a:active {
+	
+}
+.Pager a:visited {
+	
+}
+#myposts {
+	margin-right: 20px; margin-left: 1em;
+}
+.entrylist {
+	margin-right: 20px; margin-left: 1em;
+}
+.divPhoto {
+	padding: 2px; border: 1px solid rgb(204, 204, 204); margin-right: 10px;
+}
+.thumbDescription {
+	text-align: right; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+.gallery {
+	margin-left: 1em;
+}
+.divPhoto:hover {
+	border-color: rgb(0, 136, 204); box-shadow: 3px 3px 3px rgba(0,0,0,0.3);
+}
+#footer {
+	text-align: center; color: rgb(255, 255, 255); padding-top: 10px; padding-bottom: 10px; margin-top: 10px; margin-bottom: 10px; min-height: 15px; _height: 15px;
+}
+.personInfo {
+	margin-top: 1em; margin-bottom: 20px;
+}
+.pages {
+	text-align: right;
+}
+#profile {
+	margin-left: 1em;
+}
+.pfl_feedback_area_title {
+	margin-bottom: 1em;
+}
+.pfl_answer {
+	margin: 0.5em;
+}
+.pfl_feedbackCon {
+	margin: 0.5em;
+}
+#Profile1_panelAdd div {
+	margin-top: 0.5em;
+}
+#Profile1_panelAdd div b {
+	width: 8em; float: left;
+}
+#Profile1_panelAdd div input.submitComment {
+	padding: 0.2em; margin-top: 1em; margin-left: 7.5em; display: block;
+}
+.postBody p {
+	margin: 0px auto 1em; text-indent: 2em;
+}
+.postCon p {
+	margin: 0px auto 1em; text-indent: 2em;
+}
+.postBody h2 {
+	margin: 15px auto 2px; font-size: 150%; font-weight: bold;
+}
+.postBody h3 {
+	margin: 15px auto 2px; font-size: 120%; font-weight: bold;
+}
+.postBody h4 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 110%; font-weight: bold;
+}
+.postBody h5 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 100%; font-weight: bold;
+}
+.postBody a:link {
+	text-decoration: underline;
+}
+.postBody a:visited {
+	text-decoration: underline;
+}
+.postBody a:active {
+	text-decoration: underline;
+}
+.postCon a:link {
+	text-decoration: underline;
+}
+.postCon a:visited {
+	text-decoration: underline;
+}
+.postCon a:active {
+	text-decoration: underline;
+}
+.postBody ul {
+	margin-left: 2em;
+}
+.postCon ul {
+	margin-left: 2em;
+}
+.postBody li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postCon li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postBody blockquote {
+	padding: 5px 15px; color: rgb(51, 51, 51); line-height: 1.6; min-height: 35px; _height: 35px;
+}
+.myposts_title {
+	margin: 20px 0px; text-align: center; font-weight: bold;
+}
+.c_b_p_desc {
+	text-indent: 0px;
+}
+#blog-news {
+	margin-left: 15px;
+}
+.blog_comment_body a:link {
+	text-decoration: underline;
+}
+#nav_next_page {
+	margin: 0px 20px 20px 0px;
+}
+#cnblogs_post_body img {
+	max-width: 660px;
+}
+@media only screen and (max-width:767px)
+{
+#home {
+	width: auto;
+}
+#mainContent {
+	width: auto; float: none;
+}
+#main {
+	
+}
+#sideBar {
+	margin-left: 0px;
+}
+.postTitle {
+	padding-right: 0px;
+}
+}
