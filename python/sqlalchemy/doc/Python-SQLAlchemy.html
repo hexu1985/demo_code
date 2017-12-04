@@ -1,0 +1,530 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0049)https://www.cnblogs.com/franknihao/p/7268752.html -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-cn"><HEAD><META content="IE=10.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="utf-8"> 
+<META name="viewport" content="width=device-width, initial-scale=1"> 
+<TITLE>【Python】 SQLAlchemy的初步使用 - K.Takanashi - 博客园</TITLE> <LINK href="Python-SQLAlchemy_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="Python-SQLAlchemy_files/bundle-darkgreentrip.css" 
+rel="stylesheet" type="text/css"> <LINK href="Python-SQLAlchemy_files/337951.css" 
+rel="stylesheet" type="text/css"> <LINK id="mobile-style" href="Python-SQLAlchemy_files/bundle-darkgreentrip-mobile.css" 
+rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)"> 
+<LINK title="RSS" href="http://www.cnblogs.com/franknihao/rss" rel="alternate" 
+type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/franknihao/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/franknihao/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="Python-SQLAlchemy_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'franknihao', cb_enable_mathjax=false;var isLogined=false;</SCRIPT>
+ 
+<SCRIPT src="Python-SQLAlchemy_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18739"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" href="http://www.cnblogs.com/franknihao/"><IMG 
+id="blogLogo" alt="返回主页" src="Python-SQLAlchemy_files/logo.gif"></A>					<!--done--> 
+<H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/franknihao/">K.Takanashi</A></H1>
+<H2>一个半路出家的素人的自言自语</H2></DIV><!--end: blogTitle 博客的标题和副标题 -->	 
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A class="menu" id="blog_nav_sitehome" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A class="menu" id="blog_nav_myhome" href="http://www.cnblogs.com/franknihao/">首页</A></LI>
+  <LI><A class="menu" id="blog_nav_newpost" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A class="menu" id="blog_nav_contact" href="https://msg.cnblogs.com/send/K.Takanashi" 
+  rel="nofollow">联系</A></LI>
+  <LI><!----></LI>
+  <LI><A class="menu" id="blog_nav_admin" href="https://i.cnblogs.com/" rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats">
+<DIV id="blog_stats"><SPAN id="stats_post_count">随笔 - 125&nbsp; </SPAN> <SPAN 
+id="stats_article_count">文章 - 19&nbsp; </SPAN> <SPAN id="stats-comment_count">评论 
+- 5</SPAN> </DIV></DIV><!--end: blogStats -->	 </DIV><!--end: navigator 博客导航栏 --> 
+</DIV><!--end: header 头部 --> 
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow">
+<DIV id="post_detail"><!--done--> 
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/franknihao/p/7268752.html">【Python】 
+SQLAlchemy的初步使用</A>		 </H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<P class="mytitle">SQLAlchemy</P>
+<P>　　在很多Python的web框架中都整合进了SQLAlchemy这个主要发挥ORM作用的模块。所谓ORM，就是把复杂的SQL语句给包装成更加面向对象，易于理解的样子。在操作数据库的时候，我们可以用比较底层的MySQLdb之类的模块来直接连接执行SQL语句，但是在实际开发过程中，开发人员一次次写SQL也是很烦的，ORM就是一个解决之道。</P>
+<P>　　SQLAlchemy是一个独立的模块，不过被很多框架都囊括其中。比如有flask-SQLAlchemy这样的flask扩展。但是与其学习一些有限融合到web框架中的“变异版”SQLAlchemy倒不如学习原生的。好吧其实我言重了。。flask-SQLAlchemy和原生的也没多大差别，总之体会一下通过ORM操作数据库的快感是目的。</P>
+<P>&nbsp;</P>
+<P class="subtitle">■　　基本配置和使用</P>
+<P>　　在pip install 
+sqlalchemy安装模块完成之后，首先要确认数据库的情况。这里默认用MySQL数据库，并且在DB系统中已经建立了名为"flask_DB"的数据库，库中目前没有表。</P>
+<P>　　另外，为了顺利连接数据库，还需要一个支持python的数据库驱动程序。这里用MySQL的话之前已经装过MySQLdb了，似乎这就可以了。实际上我是今天凌晨2点多搞的这个东西，当时已经快要成仙了。。脑子一团糊，总之不知怎么七搞八搞就可以了。。</P>
+<P class="subtitlesec">　　●&nbsp; 连接数据库</P> 
+<P>　　外部连接数据库时，表明数据库身份的一般都是一个URL。在SQLAlchemy中可以把这个URL包装到一个所谓的引擎里面，利用这个引擎可以扩展出很多ORM中有用的对象。比如下面这样：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> sessionmaker
+
+engine </SPAN>= create_engine(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+mysqldb://weiyz:123456@192.168.1.101:3306/flask_DB</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+Session </SPAN>= sessionmaker(bind=engine)</PRE></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>　　可以看到，这个URL要具体到哪个数据库，因为在SQLAlchemy操作时最高单位是以数据库为准的，不能跨库操作数据。Session是一个会话或者说事务类，通过把engine传入sessionmaker方法获得，但是它不是一个真的会话对象了，要通过调用它来得到会话对象，下面会提到具体用法。</P>
+<P>　　这样子就算我们配置好了和数据库的连接了，但是还没有正式启用所以库，数据库服务乃至于这台机器本身存不存在这些都还没有经过校验</P>
+<P class="subtitlesec">　　●&nbsp; 表的表示</P> 
+<P>　　因为SQLAlchemy一次只让操作一个库，所以基本上操作的主要对象就是表了。表这个东西也是有意思，如果你想把这个表抽象成一个ORM对象，你觉得应该怎么做？其实表本身就像是一个class，它具有一些特征的属性（各个字段），把这个class不断地实例化后得到的就会各种实例（每一行的数据）。事实上SQLAlchemy就是这么把表抽象成一个类的。比如下面这样：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);">  String,Column,Integer
+
+engine </SPAN>= <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">引用上面的engine</SPAN>
+Session = sessionmaker(bind=<SPAN style="color: rgb(0, 0, 0);">engine)
+
+Base </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> declarative_base()
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN> Student(Base):    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">必须继承declaraive_base得到的那个基类</SPAN>
+    <SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Students</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">必须要有__tablename__来指出这个类对应什么表，这个表可以暂时在库中不存在，SQLAlchemy会帮我们创建这个表</SPAN>
+    Sno = Column(String(10),primary_key=True)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">Column类创建一个字段</SPAN>
+    Sname = Column(String(20),nullable=False,unique=True,index=True)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">nullable就是决定是否not null，unique就是决定是否unique。。这里假定没人重名，设置index可以让系统自动根据这个字段为基础建立索引</SPAN>
+    Ssex = Column(String(2),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    Sage </SPAN>= Column(Integer,nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    Sdept </SPAN>= Column(String(20<SPAN style="color: rgb(0, 0, 0);">))
+
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">def</SPAN> <SPAN style="color: rgb(128, 0, 128);">__repr__</SPAN><SPAN style="color: rgb(0, 0, 0);">(self):
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN> <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">&lt;Student&gt;{}:{}</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>.format(self.Sname,self.Sno)</PRE></DIV>
+<P>　　Student类中的__repr__方法不是必须的，但是可以写在这里来使得调试时更加容易分辨清楚谁是谁。。一些注意事项我都写在注释里了。</P>
+<P>　　有了这么一个类就相当于有了一张表，可以编写多个类来得到多张表，需要注意它们必须都继承上面的Base类，否则它们将会是一个孤立于SQLAlchemy的一个类，不会和数据库发生实质联系。</P>
+<P>　　创建表类的时候可以添加一个id字段，这个字段必须是id = Column(Integer, 
+primary_key=True)，然后每次初始化的时候就不用管它，SQLAlchemy会为我们自动维护这个id字段，给每个初始化出来的数据对象都赋予一个独特的id。据观察id是从1开始逐渐网上+1的，而且这个id是不会回头的，也就是说即使把前面10条记录都删掉了，只要表还在，新增记录的id是从11开始的。</P>
+<P class="subtitlesec">　　●&nbsp; 启动实际连接</P> 
+<P>　　我们配置好了数据库的连接和会话类，同时也抽象好了表的情况，接下来就只剩下正式地开始连接操作了。连接操作一般可以这么做：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">##之前上面两段代码中出现过的东西就不再声明了###</SPAN>
+Base.metadata.create_all(engine)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这就是为什么表类一定要继承Base，因为Base会通过一些方法来通过引擎初始化数据库结构。不继承Base自然就没有办法和数据库发生联系了。</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">
+session </SPAN>= Session()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">实例化了一个会话（或叫事务），之后的所有操作都是基于这个对象的</SPAN>
+
+<SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">既然是事务对象，session必然有以下这些方法</SPAN>
+session.commit()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">提交会话（事务）</SPAN>
+session.rollback()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">回滚会话</SPAN>
+session.close()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">关闭会话</SPAN></PRE></DIV>
+<P class="subtitlesec">&nbsp;　　●&nbsp; 关于数据库中数据的对象在session中的四种状态</P> 
+<P>　　ORM模型很方便地将数据库中的一条条记录转变成了python中的一个个对象，有时候我们会想当然地把两者完全等同起来，但是不要忘了，两者之间还必须有session这个中间的桥梁。因为有session在中间做控制，所以必须注目对象和记录之间一个状态上的差别。一般而言，一个数据的对象可以有四种不同的和session关联的状态。从代码的流程上看：</P>
+<DIV class="cnblogs_code">
+<PRE>session = Session()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">创建session对象</SPAN>
+frank = Person(name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">Frank</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">数据对象得到创建，此时为Transient状态</SPAN>
+session.add(frank)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">数据对象被关联到session上，此时为Pending状态</SPAN>
+session.commit()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">数据对象被推到数据库中，此时为Persistent状态</SPAN>
+session.close()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">关闭session对象</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN> frank.name    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">此时会报错DetachedInstanceError，因为此时是Detached状态。</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">
+new_session </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> Session()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN> new_session.query(Person).get(1).name    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">可以查询到数据</SPAN>
+new_session.close()</PRE></DIV>
+<P>&nbsp;</P>
+<P>　　四个对象的状态分别是上面四种，Transient/Pending/Persistent/Detached。其中需要比较注意的是Detached状态，这就是在说，并不是我在python中创建了一个数据记录的对象我就可以没有限制地访问它，可以看到访问继承自Base类的这么一个对象时必须要使其身处一个session的上下文中，否则是报错的！</P>
+<P>&nbsp;</P>
+<P class="subtitle">■　　通过SQLAlchemy操作数据库</P>
+<P>　　首先要说的是下面的内容<SPAN 
+style="color: rgb(255, 0, 0);"><STRONG>默认都是通过ORM来进行操作，如果直接执行SQL的话，那么可以调用session.execute("SQL").fetchone/all()</STRONG></SPAN>，这个和MySQLdb是一个意思，返回的也都是元组（的列表）这样子的数据。</P>
+<P>　　操作数据库无非是增删查改，而正如上面所说的，通过SQLAlchemy的ORM方式来操作数据库的话都是基于session这个会话对象的。下面就来简单说说如何进行增删查改</P>
+<P>　　这里想额外提一下的是，<SPAN 
+style="color: rgb(255, 0, 0);"><STRONG>基于SQLAlchemy和ORM的操作不能独立于表类定义的</STRONG></SPAN>。从下面的实例中可以看到，比如session做一个查询操作，后面要跟query(类名)。一般来说，最好能保证类中属性和数据库中表结构的完全对应，这是坠吼的。如果实在不能保证，比如有个现成的表在数据库中然而我只能知道部分表的信息，所以我只能构造出一个“阉割版”的类，这样的话是什么情况呢?经试验，编码层面的校验是以类为准，比如某个类中没写某个属性，那么即便这个属性确实存在于表中也无法访问到它，会报错“AttributeError”，而访问那些类和表中都存在的属性是可行的。这是针对类比表少了东西的情况，如果类比表多了一些属性，那么直接报错，不会给ORM机会访问库里的数据。从要构造类来模拟表结构这个角度看，ORM似乎还不如MySQLdb。。不过不要忘了，ORM的优势就是在于把数据转化为语言中的对象。所以构造一个类来模拟表结构的工作也无可厚非。。</P>
+<P class="subtitlesec">　　●&nbsp; 新增</P> 
+<P>　　向一个表插入数据的话相当于是需要插入若干个这个表类的实例。所以可以初始化一些表类的实例后把它们作为数据源，通过session.add或者add_all方法来插入新数据。</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">##之前代码中出现的变量这里不再声明了###</SPAN>
+student = Student(Sno=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">10001</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,Sname=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">Frnak</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,Ssex=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">M</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,Sage=22,Sdept=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">SFS</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+session.add(student)
+session.commit()    </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">不要忘了commit</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">session.close()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">可以通过一些手段实例化一批student出来放到一个列表students中，然后调用add_all</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">session.add_all(students)
+session.commit()
+session.close()</SPAN></PRE></DIV>
+<P class="subtitlesec">　　●&nbsp; 查询</P> 
+<DIV class="cnblogs_code">
+<PRE>session.query(<SPAN style="color: rgb(0, 0, 0);">Student</SPAN>).filter(Student.Sname == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">Frank</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()</PRE></DIV>
+<P>　　这是一条比较经典的ORM查询语句，需要注意的地方很多。首先用了query方法来查询，方法参数指明了查询哪张表，这个参数应该是某个类，而跟类中的__tablename__的值是没多大关系的。然后调用了filter方法，filter方法的参数有些特别，是一个判断表达式（注意是两个等号！），它表示查询的条件。注意<SPAN 
+style="color: rgb(255, 0, 0);"><STRONG>左边的字段名一定要加上类名.字段名，如果只写字段名SQLAlchemy将无法识别这个字段</STRONG></SPAN>。最后是first()方法来表明返回第一个查询到的结果，也可以调用all()来返回所有结果的列表。如果没有这个first或者all的话那么返回的东西如果打印出来是一个SQL语句，对应着这个ORM查询。当查询结果不符合预期时可以打印出这个SQL来看一看问题在哪里。语句最终返回的一行数据的对象（或者它们组成的列表，first和all的区别），每个这种对象都可以通过object.attribute的方式来访问每个字段的值。</P>
+<P>　　在filter这个位置，还可以添加多种多样的过滤器来实现灵活的查询，比如</P>
+<P>　　filter(Student.Sname != 'Frank')</P>
+<P>　　filter(Student.id &gt;= 10)</P>
+<P>　　除了filter方法外还可以用filter_by方法，filter_by和filter的区别在于filter_by里面写得是kwargs形式的参数，且参数不用带表名。比如上面的filter(Student.Sname=='Frank')可以改写成filter_by(Sname="Frank")。个人感觉filter_by更加符合常规思维一点。不过它只能用于等值查询，要不等值，大于，小于查询的时候还是得用filter。</P>
+<P>　　另外还有like方法进行模糊查询。用法是filter(Student.Sname.like("F%"))，这个是查找所有F开头名字的学生的记录。</P>
+<P>　　还有in_方法来进行“包括”过滤，用法filter(Student.Sname.in_(['Frank','Takanashi']))。如果在filter方法所有参数最前面加上一个~，就是“非包括”过滤，比如刚才那个加上的话就是查询所有不叫Frank和Takanashi的学生了。</P>
+<P>　　有is_方法，主要用来进行判空操作。filter(Student.Sdept.is_(None))就选择出了所有未填写院系信息的学生的记录，如果是filter(Student.Sdept.isnot(None))就是选择非空记录。其实is_和isnot可以通过filter中的==和!=来实现，两种方法效果是一样的。</P>
+<P>　　~在filter参数中表示非逻辑，上面讲过了</P>
+<P>　　还有and_和or_两个方法来表示并或逻辑，两者不是filter返回对象自带的方法，需要额外从sqlalchemy导入：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> and_,or_
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN> session.query(Student).filter(and_(Student.Sdept == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">SFS</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> , Student.Sage &lt; 22<SPAN style="color: rgb(0, 0, 0);">)).all()
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">上句选出了所有外院但是年龄小于22的学生记录，经测试也可以写3个及以上的条件参数</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);">or_方法也是类似的，不再多说</SPAN></PRE></DIV>
+<P>　　上面说的所有代替filter的方法顶多是代替了filter，后面还是要加上first或者all来获取具体结果。还有一个不需要额外加first和all的方法，就是在query的返回后面直接加get("主键的值")来获取特定主键的那一行数据的对象。</P>
+<P>　　以上所有查询中query中只有一个参数（而且基本上都是表名），这其实相当于是SELECT 表名.* FROM 表名 [WHERE xxx]。<SPAN 
+style="color: rgb(255, 0, 0);">其实在query方法参数中可以写子级字段，也可以写多个参数</SPAN>。比如:</P>
+<DIV class="cnblogs_code">
+<PRE>session.query(Student.id,Student.name).filter(Student.name.like(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">F%</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>)).all()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询了所有名字F开头的学生的学号和姓名</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;　　有意思的是，如果query参数写的只是一个表名，那么返回的列表是对象的列表。而如果我写出来若干个字段名的话，返回的列表其中每一项都是一个tuple，一个tuple里面就是一行内指定字段的值了。</P>
+<P class="subtitlesec">　　●&nbsp; 删除</P> 
+<P>　　删除相对简单一些：</P>
+<DIV class="cnblogs_code">
+<PRE>target = session.query(Student).get(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">10001</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+session.delete(target)
+session.commit()</SPAN></PRE></DIV>
+<P class="subtitlesec">　　●&nbsp; 修改</P> 
+<P>　　修改的话直接在对象身上修改，修改可以反映到数据库中去</P>
+<DIV class="cnblogs_code">
+<PRE>target = session.query(Student).filter(Student.Sname == <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Kim</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">).first()
+target.Sname </SPAN>= <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Kimmy</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">
+session.commit()
+session.close()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">#之后在到数据库后台，或者这里查询看到的就是Kimmy了</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN> session.query(Student).filter_by(Sname=<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Kimmy</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>).first()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">有结果</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P class="subtitle">■　　表之间的关系</P>
+<P>　　作为关系型数据库，关系可以说是最重要的一种逻辑结构了。上述所有涉及到表的设计中，都没有涉及到表之间的关系的确认。下面简单讲一下表之间的关系如何表现出来。</P>
+<P>　　从编码层面上来讲，要进行两个表的关联主要做两件事，1.明确外键。2.用relationship函数关联两者。只声明了外键是什么没有relationship函数返回的属性做桥梁的话，关系在操作上的便利性体现不出来；如果只声明了关系而不明确外键的话，SQLAlchemy会不知道两者通过何种字段关联，从而报错。</P>
+<P>　　下面来考虑这样一个场景：有一张User表，上面有id和name两个字段，一个id当然只有一个名字。另一张表Address记录了邮箱地址，有id,addr和user_id三个字段，因为一个user可能有多个邮箱地址，所以没有直接用user_id作为主键，而另起了一个主键。现在我想通过一个名字，查询到所有这个人的邮箱地址可以怎么做？一般而言，我可能会先查询User表中的id，然后去Address表的user_id字段中找相同的id。这样操作比较繁琐。如果可以为两张表添加一个关系，联系两张表在一起，这样从编码的角度来说就可以一句话就解决问题，比如：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine,Column,String,Integer,ForeignKey
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> sessionmaker,relationship
+
+engine </SPAN>= create_engine(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+mysqldb://weiyz:123@localhost:3306/test</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+Session </SPAN>= sessionmaker(bind=<SPAN style="color: rgb(0, 0, 0);">engine)
+Base </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> declarative_base()
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> User(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">users</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    id </SPAN>= Column(Integer,primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(20),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+
+    addresses </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">Address</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Address(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">address</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    id </SPAN>= Column(Integer,primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    address </SPAN>= Column(String(20),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    user_id </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">users.id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))　　<SPAN style="color: rgb(0, 128, 0);">#请注意，设置外键的时候用的是表名.字段名。其实在表和表类的抉择中，只要参数是字符串，往往是表名；如果是对象则是表类对象。</SPAN>
+
+    user </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">User</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>)</PRE></DIV>
+<P>　　经过上面的对表的定义，数据库中的users和address两张表就通过外键有了联系，为了利用好这种联系，我们就可以灵活运用User类中的addresses属性和Address类中的user属性了。这里说的运用，既可以指在类内直接调用，比如在Address中可以加入一个__repr__(self)方法，返回的信息中当然最好有地址所属人的名字，在没有联系时很难做到这一点，但是有了联系之后，现在只需要self.user.name就可以了。</P>
+<P>　　再比如说，回到这节最前面说到的那个场景。想通过一个名字直接搜到他的所有邮箱地址，那么就可以直接调用属性：</P>
+<P>　　session.query(User).filter_by(name="xxx").first().addresses</P>
+<P>　　神奇的一点是，SQLAlchemy会根据关系的对应情况自动给关系相关属性的类型。比如这里的User下面的addresses自动是一个list类型，而Address下面的user由于设定了外键的缘故，一个地址最多只能应对一个用户，所以自动识别成一个非列表类型。</P>
+<P class="subtitlesec">　　●&nbsp; 用backref做一点小改进</P> 
+<P>　　上面的例子中，我们分别为User和Address两个类分别添加了连到对方的关系。这么写好像略显繁琐一点，用from sqlalchemy.orm 
+import backref的这个backref可以更加方便地一次性写清双向的关系。这就是直接把backref='user'作为参数添加在addresses = 
+relationship('Adress',backref='user')中，然后把user=relationship(xxx)直接删掉。或者反过来把backref添加在user中再把addresses删掉。</P>
+<P class="subtitlesec">　　●&nbsp; 关于relationship方法的一些参数</P> 
+<P>　　relationship方法除了传递一个类名和可以加上backref之外，还有一些其他的参数。比如还有uselist=True/False这样一个参数。让uselist成为False之后，所有原先因为有多条结果而成为list类型的关系属性，比如上面例子中的User类下的addresses这个属性，会变成一个单个的变量。同时对于确实是有多个结果的情况系统会给出一个警告。总之，让uselist=False之后可以让这个关系每次通过关系来调用数据的时候都是fetchone而不是fetchall。</P>
+<P>　　relationship还有另外一个参数，就是lazy。这个参数更加复杂一些。一般而言，就像上面的例子一样，我们通过关系属性来通过一个表的查询对象查询另一个表中的数据，形式上来说是直接.addresses就得到结果了。这是lazy="select"（默认是select）的结果。有时候，直接这么获得的数据比较多比较大，比如一个人有成千上万个邮箱地址的话，或许我不想这么直白地列出所有数据，而是对这些数据做一个二次加工。这时候就要用到lazy="dynamic"模式。在这个模式下，.addresses得到的仍然是一个query对象，所以我们可以进一步调用filter之类的方法来缩小范围。为了提高lazy的使用正确性，SQLAlchemy还规定了，不能再多对一，一对一以及uselist=False的这些模式的关系中使用。</P>
+<P class="subtitlesec">　　●&nbsp; 关于多对多关系</P> 
+<P>　　上面这个例子一个用户对应多个地址，而一个地址只对应一个用户，所以说是一个一对多关系。在现实问题中还有很多多对多关系，比如老师和班级，一个老师可能在很多班级任教，而一个班级显然也有很多不同科目的老师。这种就是多对多关系。</P>
+<P>　　在利用ORM进行多对多关系的抽象时通常需要一个第三表来承载这种关系，且在老师和班级表中都不能设置外键，一旦设置外键就表明这个每一行这个字段的值只能对应一个值了，又变回一对多关系。总之多对多关系可以像下例中一样构造：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Class(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">class</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    class_id </SPAN>= Column(Integer,primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(20),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这里不加teacher = Column(Integer,ForeignKey('teacher.teacher_id'))之类的字段，因为这样又会变回一对多关系</SPAN>
+    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">为了篇幅其他字段就不加了，意思意思</SPAN>
+    class_teacher = relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">ClassTeacher</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">class</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Teacher(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">teacher</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    teacher_id </SPAN>= Column(Integer,primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(20),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">同样，这里也不用加class = xxx</SPAN>
+    teacher_class = relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">ClassTeacher</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">teacher</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> ClassTeacher(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">class_teacher</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这就是所谓的一张视图表？没有实际存在数据，但是凭借关系型数据库的特点可以体现出一些数据关系</SPAN>
+    teacher_id = Column(Interger,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">teacher.teacher_id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>),primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    class_id </SPAN>= Column(Interger,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">class.class_id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>),primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这张第三表中有两个主键，表示不能有class_id和teacher_id都相同的两项</SPAN>
+
+<SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">##可以看到，通过第三表做桥梁，把多对多关系架构了起来。实际运用可以参考下面###<BR></SPAN>
+<SPAN style="color: rgb(0, 0, 255);">class</SPAN> = session.query(Class).filter(Class.name == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">三年二班</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).first()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN> class_teacher_rel <SPAN style="color: rgb(0, 0, 255);">in</SPAN> <SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);">.class_teacher:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);"> class_teacher_rel.teacher.name<BR>
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">"""</SPAN><SPAN style="color: rgb(0, 128, 0);">这里比较绕了，首先class是查询得到的Class表中的一条记录的对象，调用class_teacher属性，通过在Class中设置的关系链接到ClassTeacher表中，得到一个列表<BR>，每项都是这个class相关的teacher的关系（不是teacher对象本身而是ClassTeacher对象，可以理解成是一种关系的对象）。<BR>然后根据在Teacher中定义的backref，通过ClassTeacher反向调用teacher就可以获得Teacher对象了。接下来再调用name属性就没什么可说的了。"""</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P class="subtitle">■　　一个比较好的实践</P>
+<P>　　下面这个是摘录自书上的一个简单的ORM程序，虽然它只针对一个表进行数据的操作，但是利用了上下文管理器和包装操作方法来让需要进行数据库操作的人几乎感觉不到SQL的影子，完全就是很pythonic的方法来执行操作的。下面把这个实践整个写下来，顺便记录一点小技巧。</P>
+<P>　　首先编写orm.py文件。在这个文件中定义了基本的数据库连接和配置信息，创建了数据库连接引擎，另外还通过继承Base类来定义了表结构。</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 128);"> 1</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">####orm.py#####</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 2</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> coding=utf-8</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 3</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 4</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 128, 128);"> 5</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine,Column,Integer,String
+</SPAN><SPAN style="color: rgb(0, 128, 128);"> 6</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 7</SPAN> db_connect_string = <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+mysqldb://weiyz:123456@localhost:3306/test</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 8</SPAN> engine =<SPAN style="color: rgb(0, 0, 0);"> create_engine(db_connect_string)
+</SPAN><SPAN style="color: rgb(0, 128, 128);"> 9</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">10</SPAN> Base =<SPAN style="color: rgb(0, 0, 0);"> declarative_base()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">11</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">12</SPAN> <SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Account(Base):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">13</SPAN>     <SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">account</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">14</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">15</SPAN>     id = Column(Integer,primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">16</SPAN>     user_name = Column(String(50),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">17</SPAN>     password = Column(String(200),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">18</SPAN>     salary =<SPAN style="color: rgb(0, 0, 0);"> Column(Integer)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">19</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">20</SPAN>     <SPAN style="color: rgb(0, 0, 255);">def</SPAN> is_active(self):    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这个和下面几个方法都是意思意思，就是说表类中其实也可以定义一些方法，让数据对象的操作可以更优雅好看</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">21</SPAN>         <SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> True
+</SPAN><SPAN style="color: rgb(0, 128, 128);">22</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">23</SPAN>     <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> is_anonymous(self):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">24</SPAN>         <SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> False
+</SPAN><SPAN style="color: rgb(0, 128, 128);">25</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">26</SPAN>     <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> get_id(self):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">27</SPAN>         <SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> self.id
+</SPAN><SPAN style="color: rgb(0, 128, 128);">28</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">29</SPAN>     <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> get_authorized(self):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">30</SPAN>         <SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> True
+</SPAN><SPAN style="color: rgb(0, 128, 128);">31</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">32</SPAN>     <SPAN style="color: rgb(0, 0, 255);">def</SPAN> <SPAN style="color: rgb(128, 0, 128);">__repr__</SPAN><SPAN style="color: rgb(0, 0, 0);">(self):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">33</SPAN>         <SPAN style="color: rgb(0, 0, 255);">return</SPAN> <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">&lt;type 'Account'&gt;{}:{}</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">.format(self.id,self.user_name)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">34</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">35</SPAN> Base.metadata.create_all(engine)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">原文中少了这句，这样的话假如原来库中没有定义的表的话就会报错</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>　　然后是编写了orm_ope.py，这里主要分成两部分，上半部分构造了对话对象的“生成器”，并且用了contextlib这个上下文管理工具包装进了对话对象的commit,rollback,close等方法，让真正的操作方法不用管这些操作。下半部分则是对一些操作的封装，把原来复杂的session.query()之类的语句凝练成一个函数，调用起来更加方便，看不出任何数据库的痕迹。</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 128);"> 1</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">####orm_ope.py#####</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 2</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> coding=utf-8</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 3</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 4</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> scoped_session,sessionmaker
+</SPAN><SPAN style="color: rgb(0, 128, 128);"> 5</SPAN> <SPAN style="color: rgb(0, 0, 255);">import</SPAN> orm  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">把上面orm中定义好的东西拿来用</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 6</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 7</SPAN> SessionType = scoped_session(sessionmaker(bind=<SPAN style="color: rgb(0, 0, 0);">orm.engine))
+</SPAN><SPAN style="color: rgb(0, 128, 128);"> 8</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">这里引入了scoped_session，相比于直接的sessionmaker，scoped_session返回的对象构造出来的对话对象是全局唯一的，不同的对话对象实例都指向一个对象引用    。</SPAN>
+<SPAN style="color: rgb(0, 128, 128);"> 9</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> GetSession():
+</SPAN><SPAN style="color: rgb(0, 128, 128);">10</SPAN>     <SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> SessionType()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">11</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">12</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> contextlib <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> contextmanager
+</SPAN><SPAN style="color: rgb(0, 128, 128);">13</SPAN> <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">##contextlib的用法可以看相关的那篇，这里不多说了###</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">14</SPAN> <SPAN style="color: rgb(0, 0, 0);">@contextmanager
+</SPAN><SPAN style="color: rgb(0, 128, 128);">15</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> session_scope():
+</SPAN><SPAN style="color: rgb(0, 128, 128);">16</SPAN>     session =<SPAN style="color: rgb(0, 0, 0);"> GetSession()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">17</SPAN>     <SPAN style="color: rgb(0, 0, 255);">try</SPAN><SPAN style="color: rgb(0, 0, 0);">:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">18</SPAN>         <SPAN style="color: rgb(0, 0, 255);">yield</SPAN><SPAN style="color: rgb(0, 0, 0);"> session
+</SPAN><SPAN style="color: rgb(0, 128, 128);">19</SPAN> <SPAN style="color: rgb(0, 0, 0);">        session.commit()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">20</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">21</SPAN>     <SPAN style="color: rgb(0, 0, 255);">except</SPAN><SPAN style="color: rgb(0, 0, 0);"> Exception as e:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">22</SPAN> <SPAN style="color: rgb(0, 0, 0);">        session.rollback()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">23</SPAN>         <SPAN style="color: rgb(0, 0, 255);">raise</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">24</SPAN>     <SPAN style="color: rgb(0, 0, 255);">finally</SPAN><SPAN style="color: rgb(0, 0, 0);">:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">25</SPAN> <SPAN style="color: rgb(0, 0, 0);">        session.close()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">26</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">27</SPAN> <SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> or_
+</SPAN><SPAN style="color: rgb(0, 128, 128);">28</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN> GetAccount(id=None,user_name=<SPAN style="color: rgb(0, 0, 0);">None):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">29</SPAN> <SPAN style="color: rgb(0, 0, 0);">    with session_scope() as session:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">30</SPAN>         res = session.query(orm.Account).filter(or_(orm.Account.id == id,orm.Account.user_name ==<SPAN style="color: rgb(0, 0, 0);"> user_name)).first()
+</SPAN><SPAN style="color: rgb(0, 128, 128);">31</SPAN>         <SPAN style="color: rgb(0, 0, 255);">yield</SPAN><SPAN style="color: rgb(0, 0, 0);"> res
+</SPAN><SPAN style="color: rgb(0, 128, 128);">32</SPAN>         <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">获取信息时，由于上下文管理的原因，如果写return，那么总是在返回值返回上层调用之前session就已经close了。这导致的问题就是报错DetachedInstanceError。所以这里一定要写yield</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">33</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">34</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> GetAllAccount():
+</SPAN><SPAN style="color: rgb(0, 128, 128);">35</SPAN> <SPAN style="color: rgb(0, 0, 0);">    with session_scope() as session:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">36</SPAN>         <SPAN style="color: rgb(0, 0, 255);">for</SPAN> account <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> session.query(orm.Account).all():
+</SPAN><SPAN style="color: rgb(0, 128, 128);">37</SPAN>             <SPAN style="color: rgb(0, 0, 255);">yield</SPAN><SPAN style="color: rgb(0, 0, 0);"> account
+</SPAN><SPAN style="color: rgb(0, 128, 128);">38</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">39</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> InsertAccount(user,password,salary):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">40</SPAN> <SPAN style="color: rgb(0, 0, 0);">    with session_scope() as session:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">41</SPAN>         account = orm.Account(user_name=user,password=password,salary=<SPAN style="color: rgb(0, 0, 0);">salary)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">42</SPAN> <SPAN style="color: rgb(0, 0, 0);">        session.add(account)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">43</SPAN>
+<SPAN style="color: rgb(0, 128, 128);">44</SPAN> <SPAN style="color: rgb(0, 0, 255);">def</SPAN><SPAN style="color: rgb(0, 0, 0);"> DeleteAccount(id):
+</SPAN><SPAN style="color: rgb(0, 128, 128);">45</SPAN> <SPAN style="color: rgb(0, 0, 0);">    with session_scope() as session:
+</SPAN><SPAN style="color: rgb(0, 128, 128);">46</SPAN>         account =<SPAN style="color: rgb(0, 0, 0);"> session.query(orm.Account).get(id)
+</SPAN><SPAN style="color: rgb(0, 128, 128);">47</SPAN>         session.delete(account)</PRE></DIV>
+<P>　　可以包装的方法还有很多，比如UpdateAccount之类的，这个不复杂就不多写了。在定义完这些内容之后，就可以直接调用这些已经包装好的方法来进行数据库操作：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">##main.py###</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);"> coding=utf-8</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">from</SPAN> orm_ope <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> GetAccount,GetAllAccount,InsertAccount,DeleteAccount,ClearAccount
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> faker <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> Factory
+</SPAN><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> random
+</SPAN><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> hashlib
+
+faker </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> Factory.create()
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> <SPAN style="color: rgb(128, 0, 128);">__name__</SPAN> == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">__main__</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">:
+    </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> for acc in GetAllAccount():</SPAN>
+    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">     print acc</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">    ClearAccount()
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN> range(10<SPAN style="color: rgb(0, 0, 0);">):
+        user </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> faker.name()
+        md5 </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> hashlib.md5()
+        md5.update(faker.word())
+        password </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> md5.hexdigest()
+        InsertAccount(user</SPAN>=user,password=password,salary=round(random.random()*10000,2))</PRE></DIV>
+<P>&nbsp;</P>
+<P>　　可能有人会觉得这样包装方法虽然是方便了，但是带来问题也不小，比如这里所有方法都只针对Account一张表，如果我有很多很多表需要操作，那么我是不是要写这么多方法呢？其实这里说的只是一种使代码更加好看的一种方法，今天也在网上看到有人让query_user 
+= session.query(User)，query_account = 
+session.query(Account)这样简单的优化，可以用不同的query对象来灵活应用。总之具体问题具体分析吧，可能不存在一种最好的包装方法，在优雅和工作量上做一个权衡就好。</P>
+<P>　　*今天突然想到，其实不用把每个表的增删查改单独做成一个函数，如果<SPAN 
+style="color: rgb(255, 0, 0);"><STRONG>把表本身也作为一个参数传递给函数的话，所有表的增删查改都可以统一到四个函数里面</STRONG></SPAN>了。比如下面这样一个函数：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">def</SPAN> Insert(table=None,**<SPAN style="color: rgb(0, 0, 0);">kwargs):
+  </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> <SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> table:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">raise</SPAN> Exception(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">table is not clarified!</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+  with session_scope() as session:
+    obj </SPAN>= table(**<SPAN style="color: rgb(0, 0, 0);">kwargs)
+    session.add(obj)</SPAN></PRE></DIV>
+<P>&nbsp;　　删查改的也都是大同小异，可以自己再想想。删查改可能要比增更加复杂，因为涉及到了传递进来的参数要进行处理的问题，这时不要忘了kwargs是一个字典的形式，或者不要kwargs，对方法的参数做一些规定来简化我们的这个函数。</P>
+<P>&nbsp;</P>
+<P class="subtitle">■　　利用ORM查询时有用的其他一些方法</P>
+<P>　　session.query(xxx)得到的是一个query对象，上面说过很多后面可以接上的方法，实际上还有更多如下：</P>
+<P>　　one()　　如果返回行数不为1，那么就报错；若刚好返回结果就一条就返回这条记录的对象</P>
+<P>　　limit(n)　　最多只返回n条结果</P>
+<P>　　offset(n)　　直接跳过前n条记录，从n+1条开始返回</P>
+<P>　　order_by(Table.attribute 或者 'attribute')　　返回结果按照给出的字段排序。</P>
+<P>　　order_by(User.name.desc()) 或者 order_by('name desc')</P>
+<P>　　filter(condition1).filter(condition2)　　多个拼接的filter就相当于and_(condition1,condition2...)</P>
+<P><STRONG>　　请注意以上所有方法都要<SPAN 
+style="color: rgb(255, 0, 0);">在all()之前调用</SPAN>，all出来已经是一个列表了，不能在作为调用方调用这些方法了。</STRONG></P>
+<P>　　还可以些数据库自带的函数，在用之前记得from sqlalchemy import 
+func，就可以通过func来调用了。这些函数不是放在调用链中，大多数时候都是放在query方法的参数位置，</P>
+<P>　　比如func.count()　　统计一共有多少条记录作为结果等等</P>
+<P>　　更多异想天开的方法和更多进阶技巧也可以参考这篇文章：【http://www.jb51.net/article/49789.htm】</P>
+<P>&nbsp;</P>
+<P class="subtitle">■　　更复杂的查询</P>
+<P>　　实际开发中经常用到的是连接查询，反映在SQL语句里面就是含有JOIN的查询语句。而在ORM模型中，我们可以通过调用join方法来进行连接操作。比如:</P>
+<DIV class="cnblogs_code">
+<PRE>students = session.query(Student).join(Class).filter(Class.level == 3<SPAN style="color: rgb(0, 0, 0);">).all()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN> student <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> students:
+  </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN> stduent.name</PRE></DIV>
+<P>&nbsp;　　介于都快忘了什么是连接操作，再来复习一下。如果有一张students和一张classes表，通过students.class_id和classes.id两个形成外键，这样子我们在想要得到students.id和classes.name之间的关系时就可以按照下面的SQL语句来操作：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">SELECT</SPAN> students.id,classes.name <SPAN style="color: rgb(0, 0, 255);">from</SPAN> students,classes <SPAN style="color: rgb(0, 0, 255);">where</SPAN> students.class_id <SPAN style="color: rgb(128, 128, 128);">=</SPAN> classes.id;</PRE></DIV>
+<P>　　如果没有后面那个where子句的话，得到的是students.id和classes.name形成的笛卡尔积。可以认为这个语句是先得出这个笛卡尔积然后用where条件来筛选结果的。另一种获得这种关系的语句就是用到了所谓的内连接：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">SELECT</SPAN> students.id,classes.name <SPAN style="color: rgb(0, 0, 255);">FROM</SPAN> students <SPAN style="color: rgb(0, 0, 255);">INNER</SPAN> <SPAN style="color: rgb(128, 128, 128);">JOIN</SPAN> classes <SPAN style="color: rgb(0, 0, 255);">on</SPAN> students.class_id <SPAN style="color: rgb(128, 128, 128);">=</SPAN> classes.id;</PRE></DIV>
+<P>　　用了一个INNER 
+JOIN，让students和classes两表间形成连接，而on子句则是指定了哪些是外键。这种连接也是内连接，最为简单的连接的一种。至于什么是外连接，等/不等值连接，左连接，右连接，自然连接等等请参看数据库概论。。这里不多说了。</P>
+<P>　　按照这种连接的思路，如何把SQL转换成python语句呢？做法就像上面一样，其实print 
+session.query(Student).join(Class)就可以看到这句语句背后的SQL：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);"> session.query(orm.Student.name,orm.Class.name).join(orm.Class)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">###结果####</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">SELECT students.name AS students_name, classes.name AS classes_name
+FROM students INNER JOIN classes ON classes.id </SPAN>= students.class_name</PRE></DIV>
+<P>　　可以看到，ORM自动识别了两表间的外键连接，不用我们再去手动指定，所以on后面的子句是不用管的。如果不需要自动设置外键或者需要手动指定关联的外键，那么需要在join方法中手动指定。比如：</P>
+<DIV class="cnblogs_code">
+<PRE>session.query(orm.Student.name,orm.Class.name).join(orm.Class,orm.Class.level == orm.Student.level)</PRE></DIV>
+<P>&nbsp;</P>
+<P>■　　关于flask_sqlalchemy的一些补充</P>
+<P>　　大言不惭在最上面说了不如学原生的。。然而flask项目中用了一下之后发现flask_sqlalchemy也还是不错的。特此补充一下。一些基本的概念就不说了，直接说一下怎么用吧。</P>
+<P>　　和其他flask的拓展模块一样，在简单的项目中，初始化sqlalchemy可以这样操作：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> flask <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> Flask
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> flask_sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> SQLAlchemy
+
+app </SPAN>= Flask(<SPAN style="color: rgb(128, 0, 128);">__name__</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+app.config[</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">SQLALCHEMY_DATABASE_URI</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>] = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql://weiyz:123456@192.168.1.105:3306/flask_DB</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+app.config[</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">SQLALCHEMY_COMMIT_ON_TEARDOWN</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>] =<SPAN style="color: rgb(0, 0, 0);"> True
+
+db </SPAN>= SQLAlchemy(app)</PRE></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>　　和flask_bootstrap以及flask_moment这些插件不同的是，这里的db不是创建完就似乎没什么用了，之后的ORM操作基本上都是基于它的。比如和原生SQLAlchemy类似的，要用python类来建立表模型的时候：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">###models.py#####</SPAN>
+
+<SPAN style="color: rgb(0, 0, 255);">from</SPAN> . <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> db
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Student(db.models):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">students</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    sno </SPAN>= db.Column(db.String(10),primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+    sname </SPAN>= db.Column(db.String(20),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    
+
+db.create_all()</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>　　可以看到，和原生的相比，每个操作前都要写上db了，这主要是为了给ORM操作一些上下文的信息，其他的参数什么的基本上和原生的是一致的。而且比较方便的是不用在create_engine什么的了，直接一步SQLAlchemy(app)搞定。当然这之前要在app的config字典里面配置好该配置的东西，比如这里就写出了必须的两样，URI和断开连接前自动commit的设置。不过需要说明的是，省事是省事了，但是灵活性自然也就差了。比如之前想要往数据库中存点中文数据，但是无论如何接受不了除了latin-1（默认编码）格式以外格式的数据。如果是走原生的SQLAlchemy的话估计就可以自己设定新表的编码格式。</P>
+<P>　　在具体的数据操作方面，增删操作是一样的，就是用db.session.add和db.session.delete操作一个对象来进行。改的话虽然也是在对象身上直接改属性的值就行，但是需要经过add再commit才能使生效。而查操作是完全不同的。可以看到在原生的SQLAlchemy中，查询操作是基于session.query(表类对象)来实现的，但是在flask_sqlalchemy中，查询操作被包装得更加完善，所有表类对象都被赋予了直接query的权限。也就是说查询操作变得像下面这样：</P>
+<P>　　Student.query.filter_by(name='Frank').first()</P>
+<P>　　Student.query.all()</P>
+<P>　　……</P>
+<P>　　过滤器方法除了filter_by还有filter，limit，offset，order_by，group_by等。这些过滤器方法返回的都是一个新查询</P>
+<P>　　结果获取方法除了first还有all，first_or_404，get，get_or_404，count</P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV></DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2017-08-07 14:51</SPAN> <A 
+href="http://www.cnblogs.com/franknihao/">K.Takanashi</A> 阅读(<SPAN id="post_view_count">...</SPAN>) 
+评论(<SPAN id="post_comment_count">...</SPAN>)  <A href="https://i.cnblogs.com/EditPosts.aspx?postid=7268752" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(7268752);return false;" href="https://www.cnblogs.com/franknihao/p/7268752.html#">收藏</A></DIV></DIV>
+<SCRIPT type="text/javascript">var allowComments=true,cb_blogId=337951,cb_entryId=7268752,cb_blogApp=currentBlogApp,cb_blogUserGuid='eaf109ff-e302-e711-845c-ac853d9f53ac',cb_entryCreatedDate='2017/8/7 14:51:00';loadViewCount(cb_entryId);var cb_postType=1;</SCRIPT>
+	 </DIV><!--end: topics 文章、评论容器--> </DIV><A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);" clientidmode="Static" 
+runat="server">刷新评论</A><A onclick="return RefreshPage();" href="https://www.cnblogs.com/franknihao/p/7268752.html#">刷新页面</A><A 
+href="https://www.cnblogs.com/franknihao/p/7268752.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="ad_t2"></DIV>
+<DIV id="opt_under_post"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c1"></DIV>
+<DIV id="under_post_news"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c2"></DIV>
+<DIV id="under_post_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</SCRIPT>
+ </DIV></DIV><!--end: forFlow -->	 </DIV><!--end: mainContent 主体内容容器-->	 
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done--> 
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+						 
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+			 </DIV></DIV><!--end: sideBarMain -->	 </DIV><!--end: sideBar 侧边栏容器 -->	 
+<DIV class="clear"></DIV></DIV><!--end: main -->	 
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2017 K.Takanashi	 </DIV><!--end: footer --> 
+</DIV><!--end: home 自定义的最大容器 --> </BODY></HTML>

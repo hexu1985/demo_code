@@ -1,0 +1,30 @@
+p.mytitle {
+	border-radius: 10px; border: 2px solid black; text-align: center; color: rgb(187, 187, 187); font-size: 28px; background-color: black;
+}
+p.mytitle:hover {
+	border: 2px solid rgb(51, 153, 0);
+}
+p.subtitle {
+	padding: 3px; border-radius: 5px; color: rgb(187, 187, 187); font-size: 16px; font-weight: bold; background-color: black;
+}
+p.subtitle:hover {
+	background-color: darkblue;
+}
+p.subtitlesec:hover {
+	background-color: darkblue;
+}
+p.subtitlesec {
+	padding: 3px; border-radius: 5px; color: rgb(187, 187, 187); font-size: 13px; font-weight: bold; display: inline; background-color: black;
+}
+div.quote {
+	padding-left: 15px; background-color: azure;
+}
+div.main {
+	line-height: 1.5em;
+}
+span.chord {
+	top: -1.5em; color: blue; font-size: smaller; text-decoration: none; position: relative; cursor: pointer;
+}
+span.word {
+	left: -0.5em; position: relative;
+}
