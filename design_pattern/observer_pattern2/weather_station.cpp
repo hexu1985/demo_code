@@ -1,3 +1,5 @@
+#include <iostream>
+#include <iomanip>
 #include "weather_data.h"
 #include "current_conditions_display.h"
 #include "forecast_display.h"
@@ -5,6 +7,7 @@
 
 int main(int argc, char *argv[])
 {
+    std::cout << std::fixed << std::setprecision(1);
     Weather_data weather_data;
 
     Current_conditions_display current_display(&weather_data);
