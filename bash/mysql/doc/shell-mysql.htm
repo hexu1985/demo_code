@@ -1,0 +1,575 @@
+<!DOCTYPE HTML>
+<!-- saved from url=(0037)http://www.jb51.net/article/56944.htm -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-CN"><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="gb2312"> 
+<META name="applicable-device" content="pc"> 
+<META name="viewport" content="width=device-width, initial-scale=1"> 
+<META http-equiv="Cache-Control" content="no-siteapp"> 
+<META http-equiv="Cache-Control" content="no-transform"> 
+<TITLE>Shell脚本中执行sql语句操作mysql的5种方法_linux shell_脚本之家</TITLE> 
+<META http-equiv="X-UA-Compatible" content="IE=EDGE"> 
+<META name="keywords" content="Shell脚本,执行sql语句,操作mysql"> 
+<META name="description" content="这篇文章主要介绍了Shell脚本中执行sql语句操作mysql的5种方法,本文讲解了将SQL语句直接嵌入到shell脚本文件中、命令行调用单独的SQL文件、使用管道符调用SQL文件等方法,需要的朋友可以参考下"> 
+<LINK href="http://m.jb51.net/article/56944.htm" rel="alternate" media="only screen and(max-width: 640px)"> 
+<META http-equiv="mobile-agent" content="format=html5; url=http://m.jb51.net/article/56944.htm"> 
+<META http-equiv="mobile-agent" content="format=xhtml; url=http://m.jb51.net/article/56944.htm"> 
+<SCRIPT type="text/javascript">
+var tougao="junjie";var lmname="linux shell";
+(function(){var reWriteUrl=function(url){if(url){var Splits=url.split("/"),siteName=window.location.pathname;if(typeof siteName!=="undefined"){return "http://m.jb51.net"+siteName}}};if(/Android|webOS|iPhone|iPad|Windows Phone|iPod|BlackBerry|SymbianOS|Nokia|Mobile/i.test(navigator.userAgent)){var url=window.location.href;var pathname=window.location.pathname;if(url.indexOf("?pc")<0){try{window.location.href=reWriteUrl(url)}catch(e){}}}})();
+</SCRIPT>
+ <LINK href="shell-mysql_files/base.css" rel="stylesheet" type="text/css"> <LINK 
+href="shell-mysql_files/common.css" rel="stylesheet" type="text/css"> 
+<SCRIPT src="shell-mysql_files/jquery.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT>
+if (!window.jQuery) {
+	var script = document.createElement('script');
+	script.src = "/skin/js/jquery.js";
+	document.body.appendChild(script);}
+</SCRIPT>
+ 
+<SCRIPT src="shell-mysql_files/function.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18739"></HEAD> 
+<BODY><!--head Star --> 
+<DIV id="head">
+<DIV class="toolBar">
+<DIV class="main"><!--topNav Star -->     
+<DIV class="topNav clearfix">
+<UL class="navList fl">
+  <LI>
+  <DIV class="one"><A href="http://www.jb51.net/" 
+  target="_blank">脚本之家</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://www.jb51.net/softs/" target="_blank">软件下载<I 
+  class="icon"></I></A></DIV>
+  <DIV class="two"><A href="http://www.jb51.net/softs/android.html" target="_blank">android软件</A><A 
+  href="http://www.jb51.net/softs/mac.html" target="_blank">MAC软件</A><A href="http://www.jb51.net/qudong/" 
+  target="_blank">驱动下载</A><A href="http://www.jb51.net/fonts/" 
+  target="_blank">字体下载</A><A href="http://www.jb51.net/dll/" 
+  target="_blank">DLL下载</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://www.jb51.net/codes/" target="_blank">源码下载<I 
+  class="icon"></I></A></DIV>
+  <DIV class="two"><A href="http://www.jb51.net/codes/asp.html" 
+  target="_blank">asp源码</A><A href="http://www.jb51.net/codes/php.html" target="_blank">php源码</A><A 
+  href="http://www.jb51.net/codes/aspnet.html" target="_blank">asp.net源码</A><A 
+  href="http://www.jb51.net/codes/jsp.html" target="_blank">jsp源码</A><A href="http://www.jb51.net/codes/editor.html" 
+  target="_blank">网页编辑器</A><A href="http://www.jb51.net/codes/list123_1.html" 
+  target="_blank">数据库管理</A><A href="http://www.jb51.net/codes/list124_1.html" 
+  target="_blank">常用组件</A><A href="http://www.jb51.net/jiaoben/" 
+  target="_blank">脚本下载</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://tools.jb51.net/" target="_blank">在线工具<I 
+  class="icon"></I></A></DIV>
+  <DIV class="two"><A href="http://www.jb51.net/shouce/" 
+  target="_blank">在线手册</A><A href="http://www.jb51.net/tools/cssyasuo.shtml" 
+  target="_blank">CSS格式化</A><A href="http://tools.jb51.net/code/js" target="_blank">JS格式化</A><A 
+  href="http://www.jb51.net/tools/html-js.htm" target="_blank">Html转化为Js</A><A 
+  href="http://tools.jb51.net/regex/javascript" 
+  target="_blank">js正则表达式</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://www.jb51.net/w3school/" 
+  target="_blank">网页教程基础</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://s.jb51.net/" 
+  target="_blank">服务器常用软件</A></DIV></LI>
+  <LI>
+  <DIV class="one"><A href="http://m.jb51.net/" target="_blank">手机版</A></DIV>
+  <DIV class="two"><IMG src="shell-mysql_files/m.jb51.net.png" 
+  data-baiduimageplus-ignore=""></DIV></LI>
+  <LI class="watch">
+  <DIV class="one"><A href="http://www.jb51.net/about.htm" target="_blank" rel="nofollow"><I 
+  class="icon"></I>关注微信</A></DIV>
+  <DIV class="two"><IMG src="shell-mysql_files/weixin_200.gif" 
+  data-baiduimageplus-ignore=""></DIV></LI></UL>
+<DIV class="navUser mt5 fr" id="jb51_topbar"></DIV></DIV><!--topNav End -->   
+</DIV></DIV>
+<DIV class="main clearfix">
+<DIV class="mtb10 clearfix">
+<DIV class="logo"><A href="http://www.jb51.net/"><IMG title="脚本之家" alt="脚本之家" 
+src="shell-mysql_files/logo.gif"></A></DIV>
+<DIV class="logom fl"><SPAN class="jbTestPos" id="logo_m"></SPAN></DIV>
+<DIV class="logor fr"><SPAN class="jbTestPos" id="logo_r"></SPAN></DIV></DIV><!-- 导航--> 
+<DIV class="nav_top clearfix">
+<UL>
+  <LI><A href="http://www.jb51.net/web/">网页制作</A></LI>
+  <LI><A href="http://www.jb51.net/list/index_1.htm">网络编程</A></LI>
+  <LI><A href="http://www.jb51.net/list/index_96.htm">脚本专栏</A></LI>
+  <LI><A href="http://www.jb51.net/jiaoben/">脚本下载</A></LI>
+  <LI><A href="http://www.jb51.net/list/index_104.htm">数据库</A></LI>
+  <LI><A href="http://www.jb51.net/cms/">CMS教程</A></LI>
+  <LI><A href="http://www.jb51.net/books/">电子书籍</A></LI>
+  <LI><A href="http://www.jb51.net/pingmian/">平面设计</A></LI>
+  <LI><A href="http://www.jb51.net/media/">媒体动画</A></LI>
+  <LI><A href="http://www.jb51.net/os/">操作系统</A></LI>
+  <LI><A href="http://www.jb51.net/yunying/">网站运营</A></LI>
+  <LI><A href="http://www.jb51.net/hack/">网络安全</A></LI>
+  <LI class="last"><A href="http://www.jb51.net/shouce/">在线手册</A></LI></UL></DIV><!--导航结束--> 
+<DIV class="subnav clearfix">
+<UL>
+  <LI><A title="vbs" href="http://www.jb51.net/list/list_114_1.htm">vbs</A></LI> 
+  <LI><A title="DOS/BAT" 
+  href="http://www.jb51.net/list/list_106_1.htm">DOS/BAT</A></LI> 
+  <LI><A title="hta" href="http://www.jb51.net/list/list_110_1.htm">hta</A></LI> 
+  <LI><A title="htc" href="http://www.jb51.net/list/list_111_1.htm">htc</A></LI> 
+  <LI><A title="python" 
+  href="http://www.jb51.net/list/list_97_1.htm">python</A></LI> 
+  <LI><A title="perl" 
+  href="http://www.jb51.net/list/list_125_1.htm">perl</A></LI> 
+  <LI><A title="游戏相关" 
+  href="http://www.jb51.net/list/list_138_1.htm">游戏相关</A></LI> 
+  <LI><A title="VBA" href="http://www.jb51.net/list/list_161_1.htm">VBA</A></LI> 
+  <LI><A title="远程脚本" 
+  href="http://www.jb51.net/list/list_163_1.htm">远程脚本</A></LI> 
+  <LI><A title="ColdFusion" 
+  href="http://www.jb51.net/list/list_178_1.htm">ColdFusion</A></LI> 
+  <LI><A title="ruby专题" 
+  href="http://www.jb51.net/list/list_201_1.htm">ruby专题</A></LI> 
+  <LI><A title="autoit" 
+  href="http://www.jb51.net/list/list_213_1.htm">autoit</A></LI> 
+  <LI><A title="seraphzone" 
+  href="http://www.jb51.net/list/list_214_1.htm">seraphzone</A></LI> 
+  <LI><A title="PowerShell" 
+  href="http://www.jb51.net/list/list_234_1.htm">PowerShell</A></LI> 
+  <LI><A title="linux shell" 
+  href="http://www.jb51.net/list/list_235_1.htm">linux shell</A></LI> 
+  <LI><A title="Lua" href="http://www.jb51.net/list/list_245_1.htm">Lua</A></LI> 
+  <LI><A title="Golang" 
+  href="http://www.jb51.net/list/list_246_1.htm">Golang</A></LI> 
+  <LI><A title="Erlang" 
+  href="http://www.jb51.net/list/list_249_1.htm">Erlang</A></LI> 
+  <LI><A title="其它" href="http://www.jb51.net/list/list_130_1.htm">其它</A></LI> 
+</UL></DIV>
+<DIV class="NavBar clearfix ptb10">
+<DIV class="fl w690">
+<DIV class="box mb15 mt10"><I class="icon"></I>您的位置：<A href="http://www.jb51.net/">首页</A> 
+→ <A title="脚本专栏" href="http://www.jb51.net/list/index_96.htm">脚本专栏</A> → <A 
+title="linux shell" href="http://www.jb51.net/list/list_235_1.htm">linux 
+shell</A> → 正文内容 Shell脚本执行sql语句</DIV></DIV>
+<DIV class="fr w300">
+<DIV class="search">
+<FORM action="http://so.jb51.net/cse/search" 
+target="_blank"><INPUT name="s" type="hidden" value="10520733385329581432">     
+<INPUT name="ie" type="hidden" value="gbk">     <INPUT name="q" class="key_input" type="text" placeholder="请输入关键词" value=""> 
+    <INPUT class="c_btn" type="submit" value="搜索"> 
+</FORM></DIV></DIV></DIV></DIV><!--head End --> 
+<DIV class="main mb10 clearfix">
+<DIV class="clearfix"><SPAN class="jbTestPos" id="tonglan1"></SPAN></DIV></DIV><!--content Star --> 
+<DIV id="contents">
+<DIV class="main clearfix">
+<DIV class="w690 fl">
+<DIV class="article-content border">
+<DIV class="title">
+<H1 class="YaHei">Shell脚本中执行sql语句操作mysql的5种方法</H1>
+<P>投稿：junjie  字体：[<A href="javascript:turnbig()">增加</A> <A href="javascript:turnsmall()">减小</A>] 
+类型：转载 时间：2014-10-31<A 
+href="http://www.jb51.net/article/56944.htm#comments">我要评论</A></P></DIV>
+<DIV class="art_desc mt10">
+<DIV 
+id="art_demo">这篇文章主要介绍了Shell脚本中执行sql语句操作mysql的5种方法,本文讲解了将SQL语句直接嵌入到shell脚本文件中、命令行调用单独的SQL文件、使用管道符调用SQL文件等方法,需要的朋友可以参考下</DIV></DIV>
+<DIV class="lbd clearfix"><SPAN class="jbTestPos" id="art_up"></SPAN></DIV>
+<DIV id="content">
+<P>对于自动化运维，诸如备份恢复之类的，DBA经常需要将SQL语句封装到shell脚本。本文描述了在Linux环境下mysql数据库中，shell脚本下调用sql语句的几种方法，供大家参考。对于脚本输出的结果美化，需要进一步完善和调整。以下为具体的示例及其方法。</P>
+<P><STRONG>1、将SQL语句直接嵌入到shell脚本文件中</STRONG></P>
+<P>
+<DIV class="codetitle"><SPAN><A class="copybut" id="copybut34626" style="cursor: pointer;" 
+onclick="doCopy('code34626')" data="34626"><U>复制代码</U></A></SPAN> 代码如下:</DIV>
+<DIV class="codebody" id="code34626"><BR>--演示环境&nbsp; <BR>[root@SZDB ~]# more 
+/etc/issue&nbsp; <BR>CentOS release 5.9 (Final)&nbsp; <BR>Kernel \r on an 
+\m&nbsp; <BR>&nbsp; <BR>root@localhost[(none)]&gt; show variables like 
+'version';&nbsp; <BR>+---------------+------------+&nbsp; <BR>| Variable_name | 
+Value&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; <BR>
++---------------+------------+&nbsp; <BR>| 
+version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | 5.6.12-log |&nbsp; <BR>
++---------------+------------+&nbsp; <BR>&nbsp; <BR>[root@SZDB ~]# more 
+shell_call_sql1.sh&nbsp;&nbsp; <BR>#!/bin/bash&nbsp; <BR># Define log&nbsp; <BR>
+TIMESTAMP=`date +%Y%m%d%H%M%S`&nbsp; <BR>LOG=call_sql_${TIMESTAMP}.log&nbsp; 
+<BR>echo "Start execute sql statement at `date`." &gt;&gt;${LOG}&nbsp; <BR>
+&nbsp; <BR># execute sql stat&nbsp; <BR>mysql -uroot -p123456 -e "&nbsp; <BR>tee 
+/tmp/temp.log&nbsp; <BR>drop database if exists tempdb;&nbsp; <BR>create 
+database tempdb;&nbsp; <BR>use tempdb&nbsp; <BR>create table if not exists 
+tb_tmp(id smallint,val varchar(20));&nbsp; <BR>insert into tb_tmp values 
+(1,'jack'),(2,'robin'),(3,'mark');&nbsp; <BR>select * from tb_tmp;&nbsp; <BR>
+notee&nbsp; <BR>quit"&nbsp; <BR>&nbsp; <BR>echo -e "\n"&gt;&gt;${LOG}&nbsp; <BR>
+echo "below is output result."&gt;&gt;${LOG}&nbsp; <BR>cat 
+/tmp/temp.log&gt;&gt;${LOG}&nbsp; <BR>echo "script executed 
+successful."&gt;&gt;${LOG}&nbsp; <BR>exit;&nbsp; <BR>&nbsp; <BR>[root@SZDB ~]# 
+./shell_call_sql1.sh&nbsp;&nbsp; <BR>Logging to file '/tmp/temp.log'&nbsp; <BR>
++------+-------+&nbsp; <BR>| id&nbsp;&nbsp; | val&nbsp;&nbsp; |&nbsp; <BR>
++------+-------+&nbsp; <BR>|&nbsp;&nbsp;&nbsp; 1 | jack&nbsp; |&nbsp; <BR>
+|&nbsp;&nbsp;&nbsp; 2 | robin |&nbsp; <BR>|&nbsp;&nbsp;&nbsp; 3 | mark&nbsp; 
+|&nbsp; <BR>+------+-------+&nbsp; <BR>Outfile disabled.&nbsp; <BR></DIV>
+<P></P>
+<P><STRONG>2、命令行调用单独的SQL文件</STRONG></P>
+<P>
+<DIV class="codetitle"><SPAN><A class="copybut" id="copybut26340" style="cursor: pointer;" 
+onclick="doCopy('code26340')" data="26340"><U>复制代码</U></A></SPAN> 代码如下:</DIV>
+<DIV class="codebody" id="code26340"><BR>[root@SZDB ~]# more 
+temp.sql&nbsp;&nbsp; <BR>tee /tmp/temp.log&nbsp; <BR>drop database if exists 
+tempdb;&nbsp; <BR>create database tempdb;&nbsp; <BR>use tempdb&nbsp; <BR>create 
+table if not exists tb_tmp(id smallint,val varchar(20));&nbsp; <BR>insert into 
+tb_tmp values (1,'jack'),(2,'robin'),(3,'mark');&nbsp; <BR>select * from 
+tb_tmp;&nbsp; <BR>notee&nbsp; <BR>&nbsp; <BR>[root@SZDB ~]# mysql -uroot 
+-p123456 -e "source /root/temp.sql"&nbsp; <BR>Logging to file 
+'/tmp/temp.log'&nbsp; <BR>+------+-------+&nbsp; <BR>| id&nbsp;&nbsp; | 
+val&nbsp;&nbsp; |&nbsp; <BR>+------+-------+&nbsp; <BR>|&nbsp;&nbsp;&nbsp; 1 | 
+jack&nbsp; |&nbsp; <BR>|&nbsp;&nbsp;&nbsp; 2 | robin |&nbsp; <BR>
+|&nbsp;&nbsp;&nbsp; 3 | mark&nbsp; |&nbsp; <BR>+------+-------+&nbsp; <BR>
+Outfile disabled.&nbsp; <BR></DIV>
+<P></P>
+<P><STRONG>3、使用管道符调用SQL文件</STRONG></P>
+<P>
+<DIV class="codetitle"><SPAN><A class="copybut" id="copybut4314" style="cursor: pointer;" 
+onclick="doCopy('code4314')" data="4314"><U>复制代码</U></A></SPAN> 代码如下:</DIV>
+<DIV class="codebody" id="code4314"><BR>[root@SZDB ~]# mysql -uroot -p123456 
+&lt;/root/temp.sql&nbsp; <BR>Logging to file '/tmp/temp.log'&nbsp; <BR>
+id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; val&nbsp; <BR>
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jack&nbsp; <BR>
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; robin&nbsp; <BR>
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mark&nbsp; <BR>Outfile disabled.&nbsp; 
+<BR>&nbsp; <BR>#使用管道符调用SQL文件以及输出日志&nbsp; <BR>[root@SZDB ~]# mysql -uroot 
+-p123456 &lt;/root/temp.sql &gt;/tmp/temp.log&nbsp; <BR>[root@SZDB ~]# more 
+/tmp/temp.log&nbsp; <BR>Logging to file '/tmp/temp.log'&nbsp; <BR>
+id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; val&nbsp; <BR>
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jack&nbsp; <BR>
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; robin&nbsp; <BR>
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mark&nbsp; <BR>Outfile disabled.&nbsp; 
+<BR></DIV>
+<P></P>
+<P><STRONG>4、shell脚本中MySQL提示符下调用SQL</STRONG></P>
+<P>
+<DIV class="codetitle"><SPAN><A class="copybut" id="copybut43835" style="cursor: pointer;" 
+onclick="doCopy('code43835')" data="43835"><U>复制代码</U></A></SPAN> 代码如下:</DIV>
+<DIV class="codebody" id="code43835"><BR>[root@SZDB ~]# more 
+shell_call_sql2.sh&nbsp; <BR>#!/bin/bash&nbsp; <BR>mysql -uroot -p123456 
+&lt;&lt;EOF&nbsp; <BR>source /root/temp.sql;&nbsp; <BR>select 
+current_date();&nbsp; <BR>delete from tempdb.tb_tmp where id=3;&nbsp; <BR>select 
+* from tempdb.tb_tmp where id=2;&nbsp; <BR>EOF&nbsp; <BR>exit;&nbsp; <BR>
+[root@SZDB ~]# ./shell_call_sql2.sh&nbsp; <BR>Logging to file 
+'/tmp/temp.log'&nbsp; <BR>id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; val&nbsp; <BR>
+1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jack&nbsp; <BR>
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; robin&nbsp; <BR>
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mark&nbsp; <BR>Outfile disabled.&nbsp; 
+<BR>current_date()&nbsp; <BR>2014-10-14&nbsp; <BR>
+id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; val&nbsp; <BR>
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; robin&nbsp; <BR></DIV>
+<P></P>
+<P><STRONG>5、shell脚本中变量输入与输出</STRONG></P>
+<P>
+<DIV class="codetitle"><SPAN><A class="copybut" id="copybut25272" style="cursor: pointer;" 
+onclick="doCopy('code25272')" data="25272"><U>复制代码</U></A></SPAN> 代码如下:</DIV>
+<DIV class="codebody" id="code25272"><BR>[root@SZDB ~]# more 
+shell_call_sql3.sh&nbsp; <BR>#!/bin/bash&nbsp; <BR>cmd="select count(*) from 
+tempdb.tb_tmp"&nbsp; <BR>cnt=$(mysql -uroot -p123456 -s -e "${cmd}")&nbsp; <BR>
+echo "Current count is : ${cnt}"&nbsp; <BR>exit&nbsp;&nbsp; <BR>[root@SZDB ~]# 
+./shell_call_sql3.sh&nbsp;&nbsp; <BR>Warning: Using a password on the command 
+line interface can be insecure.&nbsp; <BR>Current count is : 3&nbsp; <BR>&nbsp; 
+<BR>[root@SZDB ~]# echo "select count(*) from tempdb.tb_tmp"|mysql -uroot 
+-p123456 -s&nbsp; <BR>3&nbsp; <BR>&nbsp; <BR>[root@SZDB ~]# more 
+shell_call_sql4.sh&nbsp; <BR>#!/bin/bash&nbsp; <BR>id=1&nbsp; <BR>cmd="select 
+count(*) from tempdb.tb_tmp where id=${id}"&nbsp; <BR>cnt=$(mysql -uroot 
+-p123456 -s -e "${cmd}")&nbsp; <BR>echo "Current count is : ${cnt}"&nbsp; <BR>
+exit&nbsp;&nbsp; <BR>&nbsp; <BR>[root@SZDB ~]# ./shell_call_sql4.sh&nbsp;&nbsp; 
+<BR>Current count is : 1&nbsp; <BR>&nbsp; <BR>
+#以上脚本演示中，作抛砖引玉只用，对于输出的结果不是很规整友好，需要进一步改善和提高。&nbsp; <BR></DIV>
+<P></P></DIV><!--endmain--> 
+<DIV class="art_xg">
+<H4>您可能感兴趣的文章:</H4>
+<UL>
+  <LI><A title="Shell脚本实现监控MySQL主从同步" href="http://www.jb51.net/article/59495.htm" 
+  target="_blank">Shell脚本实现监控MySQL主从同步</A></LI>
+  <LI><A title="CentOS下mysql定时备份Shell脚本分享" href="http://www.jb51.net/article/58826.htm" 
+  target="_blank">CentOS下mysql定时备份Shell脚本分享</A></LI>
+  <LI><A title="shell脚本连接、读写、操作mysql数据库实例" href="http://www.jb51.net/article/53955.htm" 
+  target="_blank">shell脚本连接、读写、操作mysql数据库实例</A></LI>
+  <LI><A title="把mysql查询结果保存到文件的shell脚本" href="http://www.jb51.net/article/48421.htm" 
+  target="_blank">把mysql查询结果保存到文件的shell脚本</A></LI>
+  <LI><A title="Mysql 忘记root密码和修改root密码的解决方法(小结)" href="http://www.jb51.net/article/101260.htm" 
+  target="_blank">Mysql 忘记root密码和修改root密码的解决方法(小结)</A></LI>
+  <LI><A title="Mysql 忘记root密码的完美解决方法" href="http://www.jb51.net/article/100925.htm" 
+  target="_blank">Mysql 忘记root密码的完美解决方法</A></LI>
+  <LI><A title="在Linux环境下mysql的root密码忘记解决方法（三种）" href="http://www.jb51.net/article/100766.htm" 
+  target="_blank">在Linux环境下mysql的root密码忘记解决方法（三种）</A></LI>
+  <LI><A title="Mysql 5.7 忘记root密码或重置密码的详细方法" href="http://www.jb51.net/article/100211.htm" 
+  target="_blank">Mysql 5.7 忘记root密码或重置密码的详细方法</A></LI>
+  <LI><A title="MySQL密码忘了怎么办？MySQL重置root密码方法" href="http://www.jb51.net/article/85494.htm" 
+  target="_blank">MySQL密码忘了怎么办？MySQL重置root密码方法</A></LI>
+  <LI><A title="Mysql5.7忘记root密码及mysql5.7修改root密码的方法" href="http://www.jb51.net/article/77858.htm" 
+  target="_blank">Mysql5.7忘记root密码及mysql5.7修改root密码的方法</A></LI>
+  <LI><A title="MySQL5.7安装过程并重置root密码的方法（shell 脚本）" href="http://www.jb51.net/article/101317.htm" 
+  target="_blank">MySQL5.7安装过程并重置root密码的方法（shell 脚本）</A></LI></UL></DIV>
+<DIV class="lbd clearfix"><SPAN class="jbTestPos" id="art_down"></SPAN> </DIV>
+<DIV id="shoucang"></DIV>
+<DIV class="tags mt10"><STRONG>Tags：</STRONG><A title="搜索关于Shell的文章" href="http://common.jb51.net/tag/Shell/1.htm" 
+target="_blank">Shell</A> <A title="搜索关于sql的文章" href="http://common.jb51.net/tag/sql/1.htm" 
+target="_blank">sql</A> <A title="搜索关于mysql的文章" href="http://common.jb51.net/tag/mysql/1.htm" 
+target="_blank">mysql</A> </DIV>
+<DIV class="relatedarticle clearfix mt5">
+<H2>相关文章</H2>
+<UL>
+  <LI><SPAN>2017-05-05</SPAN><A title="Linux查找占用的端口,并杀死进程的方法" href="http://www.jb51.net/article/112876.htm" 
+  target="_blank">Linux查找占用的端口,并杀死进程的方法</A></LI>
+  <LI><SPAN>2014-03-03</SPAN><A title="Shell脚本判断IP地址是否合法的方法" href="http://www.jb51.net/article/48045.htm" 
+  target="_blank">Shell脚本判断IP地址是否合法的方法</A></LI>
+  <LI><SPAN>2015-10-10</SPAN><A title="Linux执行.sh文件时提示No such file or directory该怎么办(三种解决办法)" 
+  href="http://www.jb51.net/article/73684.htm" target="_blank">Linux执行.sh文件时提示No 
+  such file or directory该怎么办(三种</A></LI>
+  <LI><SPAN>2014-05-05</SPAN><A title="Bash Shell字符串操作小结" href="http://www.jb51.net/article/50435.htm" 
+  target="_blank">Bash Shell字符串操作小结</A></LI>
+  <LI><SPAN>2015-12-12</SPAN><A title="1 秒内启动Linux的方法" href="http://www.jb51.net/article/76058.htm" 
+  target="_blank">1 秒内启动Linux的方法</A></LI>
+  <LI><SPAN>2014-01-01</SPAN><A title="linux命令学习之10个网络命令和监控命令" href="http://www.jb51.net/article/46348.htm" 
+  target="_blank">linux命令学习之10个网络命令和监控命令</A></LI>
+  <LI><SPAN>2013-11-11</SPAN><A title="linux基础之Shell Script入门介绍" href="http://www.jb51.net/article/42928.htm" 
+  target="_blank">linux基础之Shell Script入门介绍</A></LI>
+  <LI><SPAN>2014-12-12</SPAN><A title="Shell脚本自动删除指定大小以上的备份文件" href="http://www.jb51.net/article/59248.htm" 
+  target="_blank">Shell脚本自动删除指定大小以上的备份文件</A></LI>
+  <LI><SPAN>2017-03-03</SPAN><A title="详解Linux 中五个重启命令" href="http://www.jb51.net/article/108748.htm" 
+  target="_blank">详解Linux 中五个重启命令</A></LI>
+  <LI><SPAN>2015-10-10</SPAN><A title="Linux基础命令日常积累" href="http://www.jb51.net/article/73991.htm" 
+  target="_blank">Linux基础命令日常积累</A></LI></UL></DIV>
+<DIV class="lbd clearfix mt5"><SPAN class="jbTestPos" id="art_down2"></SPAN> 
+</DIV><A href="http://www.jb51.net/article/56944.htm#comments"></A> 
+<DIV id="comments">
+<H2>最新评论</H2>
+<DIV class="pd5">
+<DIV id="SOHUCS" sid="art_56944"></DIV></DIV></DIV></DIV><!--endborder-->       
+</DIV><!--end fl-->       
+<DIV class="w300 fr">
+<DIV class="r300 clearfix"><SPAN class="jbTestPos" id="side_up"></SPAN></DIV>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">大家感兴趣的内容</H4>
+<UL class="newsList newList-in">
+  <LI><EM class="no1">1</EM><A title="linux shell中 if else以及大于、小于、等于逻辑表达式介绍" 
+  href="http://www.jb51.net/article/34332.htm" target="_blank">linux shell中 if 
+  else以及大于、</A></LI>
+  <LI><EM class="no2">2</EM><A title="Linux中执行shell脚本的4种方法总结" href="http://www.jb51.net/article/53924.htm" 
+  target="_blank">Linux中执行shell脚本的4种方法总</A></LI>
+  <LI><EM class="no3">3</EM><A title="linux命令详解之useradd命令使用方法" href="http://www.jb51.net/article/45848.htm" 
+  target="_blank">linux命令详解之useradd命令使用</A></LI>
+  <LI><EM class="no4">4</EM><A title="hbase shell基础和常用命令详解" href="http://www.jb51.net/article/31172.htm" 
+  target="_blank">hbase shell基础和常用命令详解</A></LI>
+  <LI><EM class="no5">5</EM><A title="Shell脚本8种字符串截取方法总结" href="http://www.jb51.net/article/56563.htm" 
+  target="_blank">Shell脚本8种字符串截取方法总结</A></LI>
+  <LI><EM class="no6">6</EM><A title="Shell脚本IF条件判断和判断条件总结" href="http://www.jb51.net/article/56553.htm" 
+  target="_blank">Shell脚本IF条件判断和判断条件总</A></LI>
+  <LI><EM class="no7">7</EM><A title="Shell字符串比较相等、不相等方法小结" href="http://www.jb51.net/article/56559.htm" 
+  target="_blank">Shell字符串比较相等、不相等方法</A></LI>
+  <LI><EM class="no8">8</EM><A title="Shell脚本中执行sql语句操作mysql的5种方法" href="http://www.jb51.net/article/56944.htm" 
+  target="_blank">Shell脚本中执行sql语句操作mysq</A></LI>
+  <LI><EM class="no9">9</EM><A title="Linux下统计当前文件夹下的文件个数、目录个数" href="http://www.jb51.net/article/56474.htm" 
+  target="_blank">Linux下统计当前文件夹下的文件个</A></LI>
+  <LI><EM class="no10">10</EM><A title="Shell逐行读取文件的4种方法" href="http://www.jb51.net/article/59041.htm" 
+  target="_blank">Shell逐行读取文件的4种方法</A></LI></UL></DIV></DIV>
+<DIV class="r300 clearfix mt10"><SPAN class="jbTestPos" id="idctu"></SPAN></DIV>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">最近更新的内容</H4>
+<UL class="newsListA">
+  <UL>
+    <LI><A title="ubuntu与centos中更换ip的shell代码" href="http://www.jb51.net/article/34222.htm" 
+    target="_blank">ubuntu与centos中更换ip的shell代码</A></LI>
+    <LI><A title="Linux下交互式与非交互式修改用户密码的例子" href="http://www.jb51.net/article/57930.htm" 
+    target="_blank">Linux下交互式与非交互式修改用户密码的例</A></LI>
+    <LI><A title="Shell脚本实现随机数多种方法介绍（date、random、uuid)" href="http://www.jb51.net/article/57949.htm" 
+    target="_blank">Shell脚本实现随机数多种方法介绍（date、</A></LI>
+    <LI><A title="脚本实现SSH登录邮件报警" href="http://www.jb51.net/article/69873.htm" 
+    target="_blank">脚本实现SSH登录邮件报警</A></LI>
+    <LI><A title="SHELL脚本监控JAVA进程的代码" href="http://www.jb51.net/article/81530.htm" 
+    target="_blank">SHELL脚本监控JAVA进程的代码</A></LI>
+    <LI><A title="linux 查看端口占用命令实例详解" href="http://www.jb51.net/article/119657.htm" 
+    target="_blank">linux 查看端口占用命令实例详解</A></LI>
+    <LI><A title="使用netcat(瑞士军刀)进行文件传输" href="http://www.jb51.net/article/78922.htm" 
+    target="_blank">使用netcat(瑞士军刀)进行文件传输</A></LI>
+    <LI><A title="Shell获取字符串长度的多种方法总结" href="http://www.jb51.net/article/121290.htm" 
+    target="_blank">Shell获取字符串长度的多种方法总结</A></LI>
+    <LI><A title="一个简单的linux命令 mkdir" href="http://www.jb51.net/article/100869.htm" 
+    target="_blank">一个简单的linux命令 mkdir</A></LI>
+    <LI><A title="shell编程中的字符串截取方法小结" href="http://www.jb51.net/article/62434.htm" 
+    target="_blank">shell编程中的字符串截取方法小结</A></LI></UL></UL></DIV></DIV>
+<DIV class="r300 clearfix mt10"><SPAN class="jbTestPos" 
+id="idctu1"></SPAN></DIV>
+<DIV class="tabTitleBar mt10 bgf borderTblue">
+<DIV class="borderTnone pb10 YaHei">
+<H4 class="blue">常用在线小工具</H4>
+<UL class="newsListA"><SPAN class="jbTestPos" 
+id="bctools"></SPAN></UL></DIV></DIV>
+<DIV class="r300 clearfix mt10" id="idctu2"><SPAN class="jbTestPos" 
+id="idctu2"></SPAN></DIV>
+<DIV class="mt10 rFixedBox"><SPAN class="jbTestPos" id="r_2"></SPAN> 
+</DIV></DIV><!--end fr-->       </DIV></DIV><!--end content--> 
+<DIV id="footer">
+<DIV class="main clearfix">
+<P><A href="http://www.jb51.net/about.htm" target="_blank">关于我们</A> -  <A href="http://www.jb51.net/support.htm" 
+target="_blank">广告合作</A> -  <A href="http://www.jb51.net/linkus.htm" target="_blank">联系我们</A> 
+-   <A href="http://www.jb51.net/sm.htm" target="_blank">免责声明</A> -   <A href="http://www.jb51.net/sitemap.htm" 
+target="_blank">网站地图</A> -  <A href="tencent://message/?uin=461478385&amp;Site=http://www.jb51.net" 
+target="_blank">投诉建议</A> -  <A href="http://www.jb51.net/up.htm" 
+target="_blank">在线投稿</A> </P>
+<P>&copy;CopyRight 2006-2017 JB51.Net Inc All Rights Reserved. 脚本之家 
+版权所有</P></DIV></DIV><!--end footer--> <LINK href="shell-mysql_files/shCore.css" 
+rel="stylesheet" type="text/css"> <LINK href="shell-mysql_files/shThemeDefault.css" 
+rel="Stylesheet" type="text/css"> 
+<SCRIPT src="shell-mysql_files/shCore.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="shell-mysql_files/shAutoloader.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+(function(){
+    var bp = document.createElement('script');
+    bp.src = '//push.zhanzhang.baidu.com/push.js';
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+if (top.location != self.location)top.location=self.location;
+$(function(){
+	$('#content').find('img').each(function(){
+        var img = this;
+        if (img.width >= 650){
+            img.style.width = "650px";
+            img.style.height = "auto";
+            //$(img).removeAttr('height');
+            var aTag = document.createElement('a');
+            aTag.href = img.src;
+			aTag.target="_blank";
+            $(aTag).addClass('bPic')
+            .insertAfter(img).append(img)
+          }
+    });
+	$(window).scroll(function()
+    {	
+    	//rFixedBox跟随滚动
+    	var h = $(window).height();
+        var top = $(window).scrollTop();
+    	var rFixedBox = $('.rFixedBox').prev().offset();
+        var fixedTop = rFixedBox.top;
+		
+        if(top>=fixedTop+344)
+        {
+			var h1 = parseInt($('#content').children('.main').height());
+			if(parseInt(top) + 340 < h1){
+				$('.rFixedBox').css({'position':'fixed','top': 0});
+			}else{
+				$('.rFixedBox').css({'position':'absolute','top': h1-510});
+			}
+        }
+        else
+        {
+            $('.rFixedBox').css({'position':'static', 'top':0});   
+        }	
+       /* return true;*/
+    });
+/*$(document).ready(function() {
+  $("#content img").unveil();
+});	*/
+SyntaxHighlighter.autoloader(
+	'applescript			/jslib/syntaxhighlighter/scripts/shBrushAppleScript.js',
+	'actionscript3 as3		/jslib/syntaxhighlighter/scripts/shBrushAS3.js',
+	'bash shell				/jslib/syntaxhighlighter/scripts/shBrushBash.js',
+	'coldfusion cf			/jslib/syntaxhighlighter/scripts/shBrushColdFusion.js',
+	'cpp c					/jslib/syntaxhighlighter/scripts/shBrushCpp.js',
+	'obj-c objc				/jslib/syntaxhighlighter/scripts/shBrushObjC.js',
+	'c# c-sharp csharp		/jslib/syntaxhighlighter/scripts/shBrushCSharp.js',
+	'css					/jslib/syntaxhighlighter/scripts/shBrushCss.js',
+	'delphi pascal			/jslib/syntaxhighlighter/scripts/shBrushDelphi.js',
+	'diff patch pas			/jslib/syntaxhighlighter/scripts/shBrushDiff.js',
+	'erl erlang				/jslib/syntaxhighlighter/scripts/shBrushErlang.js',
+	'groovy					/jslib/syntaxhighlighter/scripts/shBrushGroovy.js',
+	'haxe hx				/jslib/syntaxhighlighter/scripts/shBrushHaxe.js',
+	'java					/jslib/syntaxhighlighter/scripts/shBrushJava.js',
+	'jfx javafx				/jslib/syntaxhighlighter/scripts/shBrushJavaFX.js',
+	'js jscript javascript	/jslib/syntaxhighlighter/scripts/shBrushJScript.js',
+	'perl pl				/jslib/syntaxhighlighter/scripts/shBrushPerl.js',
+	'php					/jslib/syntaxhighlighter/scripts/shBrushPhp.js',
+	'text plain				/jslib/syntaxhighlighter/scripts/shBrushPlain.js',
+	'py python				/jslib/syntaxhighlighter/scripts/shBrushPython.js',
+	'ruby rails ror rb		/jslib/syntaxhighlighter/scripts/shBrushRuby.js',
+	'scala					/jslib/syntaxhighlighter/scripts/shBrushScala.js',
+	'sql					/jslib/syntaxhighlighter/scripts/shBrushSql.js',
+	'vb vbnet				/jslib/syntaxhighlighter/scripts/shBrushVb.js',
+	'ps powershell			/jslib/syntaxhighlighter/scripts/shBrushPowerShell.js',
+	'xml xhtml xslt html	/jslib/syntaxhighlighter/scripts/shBrushXml.js'
+);
+SyntaxHighlighter.all();
+});
+var ourl="";
+</SCRIPT>
+ 
+<SCRIPT src="shell-mysql_files/arct.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<SCRIPT>jbLoader();</SCRIPT>
+
+<SCRIPT class="closetag">jbLoader(true);</SCRIPT>
+ 
+<DIV id="tongji">
+<SCRIPT src="shell-mysql_files/tongji.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+//tu+
+var cpro_id = "u1893014";
+document.write('<scri'+'pt src="http://cpro.baidustatic.com/cpro/ui/i.js" type="text/javascript"></s'+'cript>');
+</SCRIPT>
+ 
+<SCRIPT src="shell-mysql_files/changyan.js" type="text/javascript" charset="utf-8"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+window.changyan.api.config({
+appid: 'cyrHH3dwi',
+conf: 'prod_1dc5dc80970106099d43fe242b7465fc'
+});
+</SCRIPT>
+ </DIV>
+<SCRIPT src="shell-mysql_files/pl.htm" type="text/javascript"></SCRIPT>
+ </DIV></BODY></HTML><!-- published at 2017/10/11 8:59:56By dxycms qq:461478385  -->
