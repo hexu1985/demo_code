@@ -1,0 +1,2310 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0058)http://blog.csdn.net/fengbingchun/article/details/39667571 -->
+<!DOCTYPE html PUBLIC "" ""><HTML><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     <LINK href="http://blog.csdn.net/fengbingchun/article/details/39667571" 
+rel="canonical">     
+<SCRIPT type="text/javascript">
+        var username = "fengbingchun";
+        var _blogger = username;
+        var blog_address = "http://blog.csdn.net/fengbingchun";
+        var static_host = "http://csdnimg.cn/release/phoenix/";
+        var currentUserName = ""; 
+        var fileName = '39667571';
+        var commentscount = 3;
+        var islock = false
+        window.quickReplyflag = true;
+        var totalFloor = 2;
+        var isBole = false;
+        var isDigg = false;
+        var isExpert=false;
+        var isAdm = false;
+    </SCRIPT>
+     
+<META http-equiv="content-type" content="text/html; charset=utf-8">     
+<META http-equiv="X-UA-Compatible" content="IE=Edge">     
+<META name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+    
+<META name="apple-mobile-web-app-status-bar-style" content="black">     
+<SCRIPT src="gtest-intro_files/jquery-1.9.1.min.js" type="text/javascript"></SCRIPT>
+     <LINK href="gtest-intro_files/bootstrap.min.css" rel="stylesheet">     
+<LINK href="gtest-intro_files/avatar.css" rel="stylesheet">     <LINK href="gtest-intro_files/main-3b7030529b.css" 
+rel="stylesheet">     <LINK href="gtest-intro_files/content_toolbar.css" rel="stylesheet"> 
+    
+<SCRIPT src="gtest-intro_files/main-1.0.2.js"></SCRIPT>
+     
+<SCRIPT src="gtest-intro_files/tracking_for_recommend.js" type="text/javascript" charset="utf-8"></SCRIPT>
+     
+<SCRIPT src="gtest-intro_files/tracking-1.0.2.js" type="text/javascript" charset="utf-8"></SCRIPT>
+     
+<SCRIPT src="gtest-intro_files/main-b1ff9eb997.js" type="text/javascript"></SCRIPT>
+     
+<SCRIPT src="gtest-intro_files/ds.js"></SCRIPT>
+     
+<SCRIPT type="text/javascript">
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+    </SCRIPT>
+     
+<META name="description" content="gtest简介及简单使用！">     
+<META name="keywords" content="">     
+<META http-equiv="Cache-Control" content="no-siteapp"><LINK href="#" rel="alternate" 
+media="handheld">     
+<META name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+    <TITLE>gtest简介及简单使用 - CSDN博客</TITLE>     <LINK href="http://csdnimg.cn/public/favicon.ico" 
+rel="SHORTCUT ICON"> 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18739"></HEAD> 
+<BODY>
+<SCRIPT id="toolbar-tpl-scriptId" src="gtest-intro_files/content_toolbar.js" type="text/javascript" domain="http://blog.csdn.net/" skin="black" prod="download"></SCRIPT>
+ 
+<DIV class="container clearfix"><main><ARTICLE>
+<H1 class="csdn_top">gtest简介及简单使用</H1>
+<DIV class="article_bar clearfix">
+<DIV class="artical_tag"><SPAN class="original">                原创               
+ </SPAN>                 <SPAN class="time">2014年09月29日 11:34:56</SPAN>          
+   </DIV>
+<UL class="article_tags clearfix csdn-tracking-statistics" 
+  data-mod="popu_377"><LI class="tit">标签：</LI><!--          [startarticletags]--> 
+                  <!--          [endarticletags]-->             </UL>
+<UL class="right_bar">
+  <LI><BUTTON class="btn-noborder"><I class="icon iconfont icon-read"></I><SPAN 
+  class="txt">21926</SPAN></BUTTON></LI>
+  <LI class="edit"><A class="btn-noborder" href="http://blog.csdn.net/fengbingchun/article/details/"><I 
+  class="icon iconfont icon-bianji"></I><SPAN class="txt">编辑</SPAN>              
+         </A>                 </LI>
+  <LI class="del"><A class="btn-noborder" onclick="javascript:deleteArticle(fileName);return false;"><I 
+  class="icon iconfont icon-shanchu"></I><SPAN class="txt">删除</SPAN>             
+          </A>                 </LI></UL></DIV>
+<DIV class="article_content csdn-tracking-statistics" id="article_content" 
+data-mod="popu_519" data-dsm="post">
+<P><SPAN style="white-space: pre;">	</SPAN>gtest是一个跨平台(Liunx、Mac OS 
+X、Windows、Cygwin、Windows CE and 
+Symbian)的C++测试框架，有google公司发布。gtest测试框架是在不同平台上为编写C++测试而生成的。</P>
+<P><SPAN style="white-space: pre;">	</SPAN>从<A href="http://code.google.com/p/googletest/downloads/detail?name=gtest-1.7.0.zip&amp;can=2&amp;q">http://code.google.com/p/googletest/downloads/detail?name=gtest-1.7.0.zip&amp;can=2&amp;q</A>=下载最新的gtest-1.7.0版本</P>
+<P>&nbsp;</P>
+<P><SPAN style="white-space: pre;">	</SPAN>在Windows下编译gtest步骤：(1)、将gtest-1.7.0.zip进行解压缩；(2)、用vs2010打开msvc目录下的gtest.sln工程，需要进行转换，生成gtest、gtest_main、gtest_prod_test、gtest_unittest四个工程；(3)、分别在Debug和Release下，选中Solution 
+‘gtest’，点击右键，执行Rebuild 
+Solution，会在msvc/gtest/Debug下生成gtestd.lib、gtest_maind.lib库，在msvc/gtest/Release下生成gtest.lib、gtest_main.lib库。</P>
+<P><SPAN style="white-space: pre;">	</SPAN>Widows下举例：(1)、在Solution 
+&nbsp;‘gtest’中新建一个Testgtest工程；(2)、新加一个fun.h文件，此文件内容为：</P>
+<P></P>
+<PRE class="cpp">#ifndef _FOO_H_
+#define _FOO_H_
+
+int add(int a, int b)
+{
+	return a + b;
+}
+
+#endif//_FOO_H_</PRE><BR>
+<P></P>
+<P>(3)、修改工程属性：A、General -&gt; Character Set: Use Multi-Byte Character 
+Set；B、C/C++ -&gt; General -&gt; Additional IncludeDirectories: 
+../../gtest-1.7.0/include；C、C/C++ -&gt; Code Generation -&gt; Runtime Library: 
+Debug下， Multi-threaded Debug(/MTd) ， 
+Release下，Multi-threaded(MT)；</P>(4)、stdafx.h文件内容为：<BR>
+<P></P>
+<PRE class="cpp">#pragma once
+
+#include "targetver.h"
+
+#include &lt;stdio.h&gt;
+
+#include "gtest/gtest.h"</PRE><BR>(5)、stdafx.cpp文件内容为：<BR>
+<P></P>
+<P></P>
+<PRE class="cpp">#include "stdafx.h"
+
+#ifdef _DEBUG
+	#pragma comment(lib, "../../gtest-1.7.0/msvc/gtest/Debug/gtestd.lib")
+	#pragma comment(lib, "../../gtest-1.7.0/msvc/gtest/Debug/gtest_maind.lib")
+#else
+	#pragma comment(lib, "../../gtest-1.7.0/msvc/gtest/Release/gtest.lib")
+	#pragma comment(lib, "../../gtest-1.7.0/msvc/gtest/Release/gtest_main.lib") 
+#endif</PRE><BR>(6)、Testgtest.cpp文件内容为：<BR>
+<P></P>
+<P></P>
+<PRE class="cpp">#include "stdafx.h"
+#include "fun.h"
+
+TEST(fun, add)
+{
+	EXPECT_EQ(1, add(2,-1));
+	EXPECT_EQ(5, add(2,3));
+}
+
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&amp;argc, argv);
+	return RUN_ALL_TESTS();
+}</PRE><BR><SPAN style="white-space: pre;">	</SPAN>运行此工程即可输出相关信息。修改EXPECT_EQ可查看结果值为错误时的输出信息。<BR>
+<P></P>
+<P><BR></P>
+<P></P>
+<P><SPAN style="white-space: pre;">	</SPAN>在Ubuntu下编译gtest步骤：在gtest-1.7.0.zip目录下，依次执行：unzip&nbsp;gtest-1.7.0.zip 
+;</P>
+<P>cd&nbsp; gtest-1.7.0 ;&nbsp;./configure ;&nbsp; make &nbsp;; cd &nbsp;lib ; 
+mv .libs&nbsp;libs 
+;此时，会在gtest-1.7.0/lib/libs目录下生成libgtest.a和libgtest_main.a库(说明：gtest-1.7.0/lib下会生成libgtest.la和libgtest_main.la库，.la为libtool生成的共享库，其实是个配置文档。lib下的libs文件刚开始生成时是隐藏文件，需要用mv指令转成正常文件，libs除了libgtest.a和libgtest_main.a库还有其它一些文件，没有什么用，全部删除即可)。</P>
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Ubuntu下举例：(1)、在gtest-1.7.0同一目录下新建一个test文件；(2)、此test文件夹下存放fun.h和gtest_test.cpp文件，fun.h文件内容与Windows下的fun.h内容完全一致；</P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+(3)、gtest_test.cpp文件内容为：<BR>
+<P></P>
+<PRE class="cpp">#include "../gtest-1.7.0/include/gtest/gtest.h"
+
+#include "fun.h"
+
+ 
+
+TEST(fun, add)
+
+{
+
+	EXPECT_EQ(1, add(2,-1));
+
+	EXPECT_EQ(5, add(2,3));
+
+}
+
+ 
+
+int main(int argc, char** argv)
+
+{
+
+	::testing::InitGoogleTest(&amp;argc, argv);
+
+	return RUN_ALL_TESTS();
+
+}</PRE><BR>
+<P></P>
+<P>(4)、将终端定位到/test目录下，输入 &nbsp;g++ &nbsp;-g &nbsp;gtest_test.cpp&nbsp;-o 
+&nbsp;gtest_test &nbsp;-I../gtest-1.7.0/include &nbsp;-L../gtest-1.7.0/lib/libs 
+&nbsp;-lgtest &nbsp;-lgtest_main &nbsp;-lpthread 
+;会在/test目录下生成gtest_test执行文件；</P>(5)、执行 ./gtest_test 输出信息与Windows下一致。<BR>
+<P><BR></P>
+<P><SPAN style="white-space: pre;">	</SPAN>更通用的做法是：不必在每个平台下分别编译生成静态库，可以直接使用/fused-src/gtest下的gtest.h和gtest-all.cc两个文件，此两个文件包含了所有你需要用到的Google 
+Test的东西。如果没有/fuse-src这个文件，可以使用/scripts/fuse_gtest_files.py这个文件生成，操作步骤是：(1)、配置好python；(2)、打开命令提示符，将其定位到/scripts文件夹下，输入命令：python 
+&nbsp;fuse_gtest_files.py&nbsp;fused_gtest 
+;会在/scripts文件夹下生成一个fused_gtest/gtest文件，里面包含gtest.h和gtest-all.cc两个文件，此两个文件和/fuse-src中的同名文件内容是完全一致的。<BR></P>
+<P><BR></P>
+<P>下面是对gtest的一些总结：</P>
+<P></P>
+<P align="left">1.&nbsp; TEST(test_case_name, test_name)</P>
+<P align="left">TEST_F(test_fixture,test_name)</P>
+<P align="left">TEST宏的作用是创建一个简单测试，它定义了一个测试函数，在这个函数里可以使用任何C++代码并使用提供的断言来进行检查。</P>
+<P align="left">多个测试场景需要相同数据配置的情况，用TEST_F。</P>
+<P align="left">2.&nbsp; gtest中，断言的宏可以分为两类，一类是ASSERT系列，一类是EXPECT系列。</P>
+<P align="left">{ASSERT|EXPECT}_EQ(expected,actual): Tests that expected == 
+actual</P>
+<P 
+align="left">{ASSERT|EXPECT}_NE(v1,v2):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tests that v1 != v2</P>
+<P 
+align="left">{ASSERT|EXPECT}_LT(v1,v2):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tests that v1 &lt; v2</P>
+<P 
+align="left">{ASSERT|EXPECT}_LE(v1,v2):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tests that v1 &lt;= v2</P>
+<P 
+align="left">{ASSERT|EXPECT}_GT(v1,v2):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tests that v1 &gt; v2</P>
+<P 
+align="left">{ASSERT|EXPECT}_GE(v1,v2):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+Tests that v1 &gt;= v2</P>
+<P 
+align="left">EXPECT_*和ASSERT_*的区别：(1)、EXPECT_*失败时，案例继续往下执行；(2)、ASSERT_*失败时，直接在当前函数中返回，当前函数中ASSERT_*后面的语句将不会执行，退出当前函数，并非退出当前案例。</P>
+<P align="left">断言：布尔值检查、数值型数据检查、字符串检查、显示成功或失败、异常检查、Predicate 
+Assertions、浮点型检查、Windows HRESULT assertions、类型检查。</P>
+<P 
+align="left">3.&nbsp;&nbsp;::testing::InitGoogleTest(&amp;argc,argv):gtest的测试案例允许接收一系列的命令行参数，将命令行参数传递给gtest，进行一些初始化操作。gtest的命令行参数非常丰富。</P>
+<P align="left">4.&nbsp; RUN_ALL_TESTS():运行所有测试案例。</P>
+<P align="left">5.&nbsp;&nbsp;可以通过操作符"&lt;&lt;"将一些自定义的信息输出，如在EXPECT_EQ(v1, 
+v2)&lt;&lt; "thisis a error! "</P>
+<P 
+align="left">6.&nbsp;&nbsp;gtest的事件一共有3种：(1)、全局的，所有案例执行前后；(2)、TestSuite级别的，在某一批案例中第一个案例前，最后一个案例执行后；(3)、TestCase级别的，每个TestCase前后。</P>
+<P 
+align="left">全局事件：要实现全局事件，必须写一个类，继承testing::Environment类，实现里面的SetUp和TearDown方法。SetUp方法在所有案例执行前执行；TearDown方法在所有案例执行后执行。</P>
+<P 
+align="left">TestSuite事件：需要写一个类，继承testing::Test，然后实现两个静态方法：(1)、SetUpTestCase方法在第一个TestCase之前执行；(2)、TearDownTestCase方法在最后一个TestCase之后执行。</P>
+<P 
+align="left">TestCase事件：是挂在每个案例执行前后的，需要实现的是SetUp方法和TearDown方法。(1)、SetUp方法在每个TestCase之前执行；(2)、TearDown方法在每个TestCase之后执行。</P>
+<P 
+align="left">每个基于gtest的测试过程，是可以分为多个TestSuite级别，而每个TestSuite级别又可以分为多个TestCase级别。这样分层的结构的好处，是可以针对不同的TestSuite级别或者TestCase级别设置不同的参数、事件机制等，并且可以与实际测试的各个模块层级相互对应，便于管理。</P>
+<P 
+align="left">7.&nbsp;&nbsp;参数化：必须添加一个类，继承testing::TestWithParam&lt;T&gt;，其中T就是你需要参数化的参数类型。</P>
+<P 
+align="left">8.&nbsp;&nbsp;编写死亡测试案例时，TEST的第一个参数，即test_case_name，请使用DeathTest后缀，原因是gtest会优先运行死亡测试案例，应该是为线程安全考虑。</P>
+<P 
+align="left">9.&nbsp;&nbsp;testing::AddGlobalTestEnvironment(newFooEnvironment):在main函数中创建和注册全局环境对象。</P>
+<P align="left">10.&nbsp; 
+对于运行参数，gtest提供了三种设置的途径：(1)、系统环境变量；(2)、命令行参数；(3)、代码中指定FLAG。</P>命令行参数：(1)、--gtest_list_tests:使用这个参数时，将不会执行里面的测试案例，而是输出一个案例的列表；(2)、<A 
+name="OLE_LINK4"></A><A 
+name="OLE_LINK3">--gtest_filter</A>:对执行的测试案例进行过滤，支持通配符；(3)、--gtest_also_run_disabled_tests:执行案例时，同时也执行被置为无效的测试案例；(4)、--gtest_repeat=[COUNT]:设置案例重复运行次数；(5)、--gtest_color=(yes|no|auto):输出命令行时是否使用一些五颜六色的颜色，默认是auto；(6)、--gtest_print_time:输出命令时是否打印每个测试案例的执行时间，默认是不打印的；(7)、--gtest_output=xml[:DIRECTORY_PATH\|:FILE_PATH:将测试结果输出到一个xml中，如—gtest_output=xml:d:\foo.xml&nbsp; 
+指定输出到d:\foo.xml 
+,如果不是指定了特定的文件路径，gtest每次输出的报告不会覆盖，而会以数字后缀的方式创建；(8)、--gtest_break_on_failure:调试模式下，当案例失败时停止，方便调试；(9)、--gtest_throw_on_failure:当案例失败时以C++异常的方式抛出；(10)、--gtest_catch_exceptions:是否捕捉异常，gtest默认是不捕捉异常的，这个参数只在Windows下有效。<BR>
+<P><BR></P>
+<P>在gtest-1.7.0/samples的文件夹中有10个gtest的例子，我将其添加到一个工程中，便于查看：</P>
+<P>1. 新建一个gtestSamples的工程；</P>
+<P>2. 
+此工程下的文件包括：(1)、gtest/gtest.h；(2)、gtest-all.cc；(3)、fun.h；(4)、fun.cpp；(5)、gtestSamlpes.cpp。</P>
+<P>3. gtest.h和gtest-all.cc两个文件为gtest-1.7.0/fused-src中的原始文件；</P>
+<P>4. fun.h文件内容为：</P>
+<P></P>
+<PRE class="cpp">#ifndef _FUN_H_
+#define _FUN_H_
+
+#include &lt;string.h&gt;
+#include &lt;algorithm&gt;
+
+// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
+int Factorial(int n);
+
+// Returns true if n is a prime number.
+bool IsPrime(int n);
+
+// A simple string class.
+class MyString {
+private:
+	const char* c_string_;
+	const MyString&amp; operator=(const MyString&amp; rhs);
+
+public:
+	// Clones a 0-terminated C string, allocating memory using new.
+	static const char* CloneCString(const char* a_c_string);
+
+	////////////////////////////////////////////////////////////
+	//
+	// C'tors
+
+	// The default c'tor constructs a NULL string.
+	MyString() : c_string_(NULL) {}
+
+	// Constructs a MyString by cloning a 0-terminated C string.
+	explicit MyString(const char* a_c_string) : c_string_(NULL) {
+		Set(a_c_string);
+	}
+
+	// Copy c'tor
+	MyString(const MyString&amp; string) : c_string_(NULL) {
+		Set(string.c_string_);
+	}
+
+	////////////////////////////////////////////////////////////
+	//
+	// D'tor.  MyString is intended to be a final class, so the d'tor
+	// doesn't need to be virtual.
+	~MyString() { delete[] c_string_; }
+
+	// Gets the 0-terminated C string this MyString object represents.
+	const char* c_string() const { return c_string_; }
+
+	size_t Length() const {
+		return c_string_ == NULL ? 0 : strlen(c_string_);
+	}
+
+	// Sets the 0-terminated C string this MyString object represents.
+	void Set(const char* c_string);
+};
+
+// Queue is a simple queue implemented as a singled-linked list.
+//
+// The element type must support copy constructor.
+template &lt;typename E&gt;  // E is the element type
+class Queue;
+
+// QueueNode is a node in a Queue, which consists of an element of
+// type E and a pointer to the next node.
+template &lt;typename E&gt;  // E is the element type
+class QueueNode {
+	friend class Queue&lt;E&gt;;
+
+public:
+	// Gets the element in this node.
+	const E&amp; element() const { return element_; }
+
+	// Gets the next node in the queue.
+	QueueNode* next() { return next_; }
+	const QueueNode* next() const { return next_; }
+
+private:
+	// Creates a node with a given element value.  The next pointer is
+	// set to NULL.
+	explicit QueueNode(const E&amp; an_element) : element_(an_element), next_(NULL) {}
+
+	// We disable the default assignment operator and copy c'tor.
+	const QueueNode&amp; operator = (const QueueNode&amp;);
+	QueueNode(const QueueNode&amp;);
+
+	E element_;
+	QueueNode* next_;
+};
+
+template &lt;typename E&gt;  // E is the element type.
+class Queue {
+public:
+	// Creates an empty queue.
+	Queue() : head_(NULL), last_(NULL), size_(0) {}
+
+	// D'tor.  Clears the queue.
+	~Queue() { Clear(); }
+
+	// Clears the queue.
+	void Clear() {
+		if (size_ &gt; 0) {
+			// 1. Deletes every node.
+			QueueNode&lt;E&gt;* node = head_;
+			QueueNode&lt;E&gt;* next = node-&gt;next();
+			for (; ;) {
+				delete node;
+				node = next;
+				if (node == NULL) break;
+				next = node-&gt;next();
+			}
+
+			// 2. Resets the member variables.
+			head_ = last_ = NULL;
+			size_ = 0;
+		}
+	}
+
+	// Gets the number of elements.
+	size_t Size() const { return size_; }
+
+	// Gets the first element of the queue, or NULL if the queue is empty.
+	QueueNode&lt;E&gt;* Head() { return head_; }
+	const QueueNode&lt;E&gt;* Head() const { return head_; }
+
+	// Gets the last element of the queue, or NULL if the queue is empty.
+	QueueNode&lt;E&gt;* Last() { return last_; }
+	const QueueNode&lt;E&gt;* Last() const { return last_; }
+
+	// Adds an element to the end of the queue.  A copy of the element is
+	// created using the copy constructor, and then stored in the queue.
+	// Changes made to the element in the queue doesn't affect the source
+	// object, and vice versa.
+	void Enqueue(const E&amp; element) {
+		QueueNode&lt;E&gt;* new_node = new QueueNode&lt;E&gt;(element);
+
+		if (size_ == 0) {
+			head_ = last_ = new_node;
+			size_ = 1;
+		} else {
+			last_-&gt;next_ = new_node;
+			last_ = new_node;
+			size_++;
+		}
+	}
+
+	// Removes the head of the queue and returns it.  Returns NULL if
+	// the queue is empty.
+	E* Dequeue() {
+		if (size_ == 0) {
+			return NULL;
+		}
+
+		const QueueNode&lt;E&gt;* const old_head = head_;
+		head_ = head_-&gt;next_;
+		size_--;
+		if (size_ == 0) {
+			last_ = NULL;
+		}
+
+		E* element = new E(old_head-&gt;element());
+		delete old_head;
+
+		return element;
+	}
+
+	// Applies a function/functor on each element of the queue, and
+	// returns the result in a new queue.  The original queue is not
+	// affected.
+	template &lt;typename F&gt;
+	Queue* Map(F function) const {
+		Queue* new_queue = new Queue();
+		for (const QueueNode&lt;E&gt;* node = head_; node != NULL; node = node-&gt;next_) {
+			new_queue-&gt;Enqueue(function(node-&gt;element()));
+		}
+
+		return new_queue;
+	}
+
+private:
+	QueueNode&lt;E&gt;* head_;  // The first node of the queue.
+	QueueNode&lt;E&gt;* last_;  // The last node of the queue.
+	size_t size_;  // The number of elements in the queue.
+
+	// We disallow copying a queue.
+	Queue(const Queue&amp;);
+	const Queue&amp; operator = (const Queue&amp;);
+};
+
+// A simple monotonic counter.
+class Counter {
+private:
+	int counter_;
+
+public:
+	// Creates a counter that starts at 0.
+	Counter() : counter_(0) {}
+
+	// Returns the current counter value, and increments it.
+	int Increment();
+
+	// Prints the current counter value to STDOUT.
+	void Print() const;
+};
+
+// The prime table interface.
+class PrimeTable {
+public:
+	virtual ~PrimeTable() {}
+
+	// Returns true iff n is a prime number.
+	virtual bool IsPrime(int n) const = 0;
+
+	// Returns the smallest prime number greater than p; or returns -1
+	// if the next prime is beyond the capacity of the table.
+	virtual int GetNextPrime(int p) const = 0;
+};
+
+// Implementation #1 calculates the primes on-the-fly.
+class OnTheFlyPrimeTable : public PrimeTable {
+public:
+	virtual bool IsPrime(int n) const {
+		if (n &lt;= 1) return false;
+
+		for (int i = 2; i*i &lt;= n; i++) {
+			// n is divisible by an integer other than 1 and itself.
+			if ((n % i) == 0) return false;
+		}
+
+		return true;
+	}
+
+	virtual int GetNextPrime(int p) const {
+		for (int n = p + 1; n &gt; 0; n++) {
+			if (IsPrime(n)) return n;
+		}
+
+		return -1;
+	}
+};
+
+// Implementation #2 pre-calculates the primes and stores the result
+// in an array.
+class PreCalculatedPrimeTable : public PrimeTable {
+public:
+	// 'max' specifies the maximum number the prime table holds.
+	explicit PreCalculatedPrimeTable(int max)
+		: is_prime_size_(max + 1), is_prime_(new bool[max + 1]) {
+			CalculatePrimesUpTo(max);
+	}
+	virtual ~PreCalculatedPrimeTable() { delete[] is_prime_; }
+
+	virtual bool IsPrime(int n) const {
+		return 0 &lt;= n &amp;&amp; n &lt; is_prime_size_ &amp;&amp; is_prime_[n];
+	}
+
+	virtual int GetNextPrime(int p) const {
+		for (int n = p + 1; n &lt; is_prime_size_; n++) {
+			if (is_prime_[n]) return n;
+		}
+
+		return -1;
+	}
+
+private:
+	void CalculatePrimesUpTo(int max) {
+		::std::fill(is_prime_, is_prime_ + is_prime_size_, true);
+		is_prime_[0] = is_prime_[1] = false;
+
+		for (int i = 2; i &lt;= max; i++) {
+			if (!is_prime_[i]) continue;
+
+			// Marks all multiples of i (except i itself) as non-prime.
+			for (int j = 2*i; j &lt;= max; j += i) {
+				is_prime_[j] = false;
+			}
+		}
+	}
+
+	const int is_prime_size_;
+	bool* const is_prime_;
+
+	// Disables compiler warning "assignment operator could not be generated."
+	void operator=(const PreCalculatedPrimeTable&amp; rhs);
+};
+
+#endif//_FUN_H_</PRE><BR>fun.cpp文件内容为：
+<P></P>
+<PRE class="cpp">#include "fun.h"
+#include &lt;stdio.h&gt;
+
+// Returns n! (the factorial of n).  For negative n, n! is defined to be 1.
+int Factorial(int n) {
+	int result = 1;
+	for (int i = 1; i &lt;= n; i++) {
+		result *= i;
+	}
+
+	return result;
+}
+
+// Returns true if n is a prime number.
+bool IsPrime(int n) {
+	// Trivial case 1: small numbers
+	if (n &lt;= 1) return false;
+
+	// Trivial case 2: even numbers
+	if (n % 2 == 0) return n == 2;
+
+	// Now, we have that n is odd and n &gt;= 3.
+
+	// Try to divide n by every odd number i, starting from 3
+	for (int i = 3; ; i += 2) {
+		// We only have to try i up to the squre root of n
+		if (i &gt; n/i) break;
+
+		// Now, we have i &lt;= n/i &lt; n.
+		// If n is divisible by i, n is not prime.
+		if (n % i == 0) return false;
+	}
+
+	// n has no integer factor in the range (1, n), and thus is prime.
+	return true;
+}
+
+// Clones a 0-terminated C string, allocating memory using new.
+const char* MyString::CloneCString(const char* a_c_string) {
+	if (a_c_string == NULL) return NULL;
+
+	const size_t len = strlen(a_c_string);
+	char* const clone = new char[ len + 1 ];
+	memcpy(clone, a_c_string, len + 1);
+
+	return clone;
+}
+
+// Sets the 0-terminated C string this MyString object
+// represents.
+void MyString::Set(const char* a_c_string) {
+	// Makes sure this works when c_string == c_string_
+	const char* const temp = MyString::CloneCString(a_c_string);
+	delete[] c_string_;
+	c_string_ = temp;
+}
+
+// Returns the current counter value, and increments it.
+int Counter::Increment() {
+	return counter_++;
+}
+
+// Prints the current counter value to STDOUT.
+void Counter::Print() const {
+	printf("%d", counter_);
+}</PRE><BR>gtestSamlpes.cpp文件的内容为：<BR>
+<P></P>
+<PRE class="cpp">#include "gtest/gtest.h"
+#include "fun.h"
+
+#define BRANCH_1 //BRANCH_1 //BRANCH_2 //BRANCH_3
+
+#if defined  BRANCH_1
+
+/*-------------------------------------------TEST macro-----------------------*/
+//Sample 1: This sample shows how to write a simple unit test for a function,
+// using Google C++ testing framework.
+//
+// Writing a unit test using Google C++ testing framework is easy as 1-2-3:
+// Step 1. Include necessary header files such that the stuff your
+// test logic needs is declared.
+// Step 2. Use the TEST macro to define your tests.
+// Step 3. Call RUN_ALL_TESTS() in main().
+
+// TEST has two parameters: the test case name and the test name.
+// After using the macro, you should define your test logic between a
+// pair of braces.  You can use a bunch of macros to indicate the
+// success or failure of a test.
+// The test case name and the test name should both be valid C++
+// identifiers.  And you should not use underscore (_) in the names.
+
+// Tests Factorial().
+// Tests factorial of negative numbers.
+TEST(FactorialTest, Negative) {
+	// This test is named "Negative", and belongs to the "FactorialTest"
+	// test case.
+	EXPECT_EQ(1, Factorial(-5));
+	EXPECT_EQ(1, Factorial(-1));
+	EXPECT_GT(Factorial(-10), 0);
+
+	// EXPECT_EQ(expected, actual) is the same as
+	//
+	// EXPECT_TRUE((expected) == (actual))
+	//
+	// except that it will print both the expected value and the actual
+	// value when the assertion fails.  This is very helpful for
+	// debugging.  Therefore in this case EXPECT_EQ is preferred.
+	//
+	// On the other hand, EXPECT_TRUE accepts any Boolean expression,
+	// and is thus more general.
+}
+
+// Tests factorial of 0.
+TEST(FactorialTest, Zero) {
+	EXPECT_EQ(1, Factorial(0));
+}
+
+// Tests factorial of positive numbers.
+TEST(FactorialTest, Positive) {
+	EXPECT_EQ(1, Factorial(1));
+	EXPECT_EQ(2, Factorial(2));
+	EXPECT_EQ(6, Factorial(3));
+	EXPECT_EQ(40320, Factorial(8));
+}
+
+// Tests IsPrime()
+// Tests negative input.
+TEST(IsPrimeTest, Negative) {
+	// This test belongs to the IsPrimeTest test case.
+
+	EXPECT_FALSE(IsPrime(-1));
+	EXPECT_FALSE(IsPrime(-2));
+	EXPECT_FALSE(IsPrime(INT_MIN));
+}
+
+// Tests some trivial cases.
+TEST(IsPrimeTest, Trivial) {
+	EXPECT_FALSE(IsPrime(0));
+	EXPECT_FALSE(IsPrime(1));
+	EXPECT_TRUE(IsPrime(2));
+	EXPECT_TRUE(IsPrime(3));
+}
+
+// Tests positive input.
+TEST(IsPrimeTest, Positive) {
+	EXPECT_FALSE(IsPrime(4));
+	EXPECT_TRUE(IsPrime(5));
+	EXPECT_FALSE(IsPrime(6));
+	EXPECT_TRUE(IsPrime(23));
+}
+
+//Sample 2: This sample shows how to write a more complex unit test for a class
+// that has multiple member functions.
+//
+// Usually, it's a good idea to have one test for each method in your
+// class.  You don't have to do that exactly, but it helps to keep
+// your tests organized.  You may also throw in additional tests as
+// needed.
+
+// Tests the default c'tor.
+TEST(MyString, DefaultConstructor) {
+	const MyString s;
+
+	// Asserts that s.c_string() returns NULL.
+	//
+	// If we write NULL instead of
+	//
+	//   static_cast&lt;const char *&gt;(NULL)
+	//
+	// in this assertion, it will generate a warning on gcc 3.4.  The
+	// reason is that EXPECT_EQ needs to know the types of its
+	// arguments in order to print them when it fails.  Since NULL is
+	// #defined as 0, the compiler will use the formatter function for
+	// int to print it.  However, gcc thinks that NULL should be used as
+	// a pointer, not an int, and therefore complains.
+	//
+	// The root of the problem is C++'s lack of distinction between the
+	// integer number 0 and the null pointer constant.  Unfortunately,
+	// we have to live with this fact.
+	EXPECT_STREQ(NULL, s.c_string());
+
+	EXPECT_EQ(0u, s.Length());
+}
+
+const char kHelloString[] = "Hello, world!";
+
+// Tests the c'tor that accepts a C string.
+TEST(MyString, ConstructorFromCString) {
+	const MyString s(kHelloString);
+	EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
+	EXPECT_EQ(sizeof(kHelloString)/sizeof(kHelloString[0]) - 1,
+		s.Length());
+}
+
+// Tests the copy c'tor.
+TEST(MyString, CopyConstructor) {
+	const MyString s1(kHelloString);
+	const MyString s2 = s1;
+	EXPECT_EQ(0, strcmp(s2.c_string(), kHelloString));
+}
+
+// Tests the Set method.
+TEST(MyString, Set) {
+	MyString s;
+
+	s.Set(kHelloString);
+	EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
+
+	// Set should work when the input pointer is the same as the one
+	// already in the MyString object.
+	s.Set(s.c_string());
+	EXPECT_EQ(0, strcmp(s.c_string(), kHelloString));
+
+	// Can we set the MyString to NULL?
+	s.Set(NULL);
+	EXPECT_STREQ(NULL, s.c_string());
+}
+
+//Sample 4: another basic example of using Google Test
+// Tests the Increment() method.
+TEST(Counter, Increment) {
+	Counter c;
+
+	// EXPECT_EQ() evaluates its arguments exactly once, so they
+	// can have side effects.
+
+	EXPECT_EQ(0, c.Increment());
+	EXPECT_EQ(1, c.Increment());
+	EXPECT_EQ(2, c.Increment());
+}
+
+/*------------------------------------TEST_F macro------------------------------------*/
+//Sample 3: In this example, we use a more advanced feature of Google Test called
+// test fixture.
+//
+// A test fixture is a place to hold objects and functions shared by
+// all tests in a test case.  Using a test fixture avoids duplicating
+// the test code necessary to initialize and cleanup those common
+// objects for each test.  It is also useful for defining sub-routines
+// that your tests need to invoke a lot.
+//
+// The tests share the test fixture in the sense of code sharing, not
+// data sharing.  Each test is given its own fresh copy of the
+// fixture.  You cannot expect the data modified by one test to be
+// passed on to another test, which is a bad idea.
+//
+// The reason for this design is that tests should be independent and
+// repeatable.  In particular, a test should not fail as the result of
+// another test's failure.  If one test depends on info produced by
+// another test, then the two tests should really be one big test.
+//
+// The macros for indicating the success/failure of a test
+// (EXPECT_TRUE, FAIL, etc) need to know what the current test is
+// (when Google Test prints the test result, it tells you which test
+// each failure belongs to).  Technically, these macros invoke a
+// member function of the Test class.  Therefore, you cannot use them
+// in a global function.  That's why you should put test sub-routines
+// in a test fixture.
+
+// To use a test fixture, derive a class from testing::Test.
+class QueueTest : public testing::Test {
+protected:  // You should make the members protected s.t. they can be
+	// accessed from sub-classes.
+
+	// virtual void SetUp() will be called before each test is run.  You
+	// should define it if you need to initialize the varaibles.
+	// Otherwise, this can be skipped.
+	virtual void SetUp() {
+		q1_.Enqueue(1);
+		q2_.Enqueue(2);
+		q2_.Enqueue(3);
+	}
+
+	// virtual void TearDown() will be called after each test is run.
+	// You should define it if there is cleanup work to do.  Otherwise,
+	// you don't have to provide it.
+	//
+	// virtual void TearDown() {
+	// }
+
+	// A helper function that some test uses.
+	static int Double(int n) {
+		return 2*n;
+	}
+
+	// A helper function for testing Queue::Map().
+	void MapTester(const Queue&lt;int&gt; * q) {
+		// Creates a new queue, where each element is twice as big as the
+		// corresponding one in q.
+		const Queue&lt;int&gt; * const new_q = q-&gt;Map(Double);
+
+		// Verifies that the new queue has the same size as q.
+		ASSERT_EQ(q-&gt;Size(), new_q-&gt;Size());
+
+		// Verifies the relationship between the elements of the two queues.
+		for ( const QueueNode&lt;int&gt; * n1 = q-&gt;Head(), * n2 = new_q-&gt;Head();
+			n1 != NULL; n1 = n1-&gt;next(), n2 = n2-&gt;next() ) {
+				EXPECT_EQ(2 * n1-&gt;element(), n2-&gt;element());
+		}
+
+		delete new_q;
+	}
+
+	// Declares the variables your tests want to use.
+	Queue&lt;int&gt; q0_;
+	Queue&lt;int&gt; q1_;
+	Queue&lt;int&gt; q2_;
+};
+
+// When you have a test fixture, you define a test using TEST_F
+// instead of TEST.
+// Tests the default c'tor.
+TEST_F(QueueTest, DefaultConstructor) {
+	// You can access data in the test fixture here.
+	EXPECT_EQ(0u, q0_.Size());
+}
+
+// Tests Dequeue().
+TEST_F(QueueTest, Dequeue) {
+	int * n = q0_.Dequeue();
+	EXPECT_TRUE(n == NULL);
+
+	n = q1_.Dequeue();
+	ASSERT_TRUE(n != NULL);
+	EXPECT_EQ(1, *n);
+	EXPECT_EQ(0u, q1_.Size());
+	delete n;
+
+	n = q2_.Dequeue();
+	ASSERT_TRUE(n != NULL);
+	EXPECT_EQ(2, *n);
+	EXPECT_EQ(1u, q2_.Size());
+	delete n;
+}
+
+// Tests the Queue::Map() function.
+TEST_F(QueueTest, Map) {
+	MapTester(&amp;q0_);
+	MapTester(&amp;q1_);
+	MapTester(&amp;q2_);
+}
+
+// Sample 5: This sample teaches how to reuse a test fixture in multiple test
+// cases by deriving sub-fixtures from it.
+//
+// When you define a test fixture, you specify the name of the test
+// case that will use this fixture.  Therefore, a test fixture can
+// be used by only one test case.
+//
+// Sometimes, more than one test cases may want to use the same or
+// slightly different test fixtures.  For example, you may want to
+// make sure that all tests for a GUI library don't leak important
+// system resources like fonts and brushes.  In Google Test, you do
+// this by putting the shared logic in a super (as in "super class")
+// test fixture, and then have each test case use a fixture derived
+// from this super fixture.
+
+// In this sample, we want to ensure that every test finishes within
+// ~5 seconds.  If a test takes longer to run, we consider it a
+// failure.
+//
+// We put the code for timing a test in a test fixture called
+// "QuickTest".  QuickTest is intended to be the super fixture that
+// other fixtures derive from, therefore there is no test case with
+// the name "QuickTest".  This is OK.
+//
+// Later, we will derive multiple test fixtures from QuickTest.
+class QuickTest : public testing::Test {
+protected:
+	// Remember that SetUp() is run immediately before a test starts.
+	// This is a good place to record the start time.
+	virtual void SetUp() {
+		start_time_ = time(NULL);
+	}
+
+	// TearDown() is invoked immediately after a test finishes.  Here we
+	// check if the test was too slow.
+	virtual void TearDown() {
+		// Gets the time when the test finishes
+		const time_t end_time = time(NULL);
+
+		// Asserts that the test took no more than ~5 seconds.  Did you
+		// know that you can use assertions in SetUp() and TearDown() as
+		// well?
+		EXPECT_TRUE(end_time - start_time_ &lt;= 5) &lt;&lt; "The test took too long.";
+	}
+
+	// The UTC time (in seconds) when the test starts
+	time_t start_time_;
+};
+
+// We derive a fixture named IntegerFunctionTest from the QuickTest
+// fixture.  All tests using this fixture will be automatically
+// required to be quick.
+class IntegerFunctionTest : public QuickTest {
+	// We don't need any more logic than already in the QuickTest fixture.
+	// Therefore the body is empty.
+};
+
+// Now we can write tests in the IntegerFunctionTest test case.
+
+// Tests Factorial()
+TEST_F(IntegerFunctionTest, Factorial) {
+	// Tests factorial of negative numbers.
+	EXPECT_EQ(1, Factorial(-5));
+	EXPECT_EQ(1, Factorial(-1));
+	EXPECT_GT(Factorial(-10), 0);
+
+	// Tests factorial of 0.
+	EXPECT_EQ(1, Factorial(0));
+
+	// Tests factorial of positive numbers.
+	EXPECT_EQ(1, Factorial(1));
+	EXPECT_EQ(2, Factorial(2));
+	EXPECT_EQ(6, Factorial(3));
+	EXPECT_EQ(40320, Factorial(8));
+}
+
+// Tests IsPrime()
+TEST_F(IntegerFunctionTest, IsPrime) {
+	// Tests negative input.
+	EXPECT_FALSE(IsPrime(-1));
+	EXPECT_FALSE(IsPrime(-2));
+	EXPECT_FALSE(IsPrime(INT_MIN));
+
+	// Tests some trivial cases.
+	EXPECT_FALSE(IsPrime(0));
+	EXPECT_FALSE(IsPrime(1));
+	EXPECT_TRUE(IsPrime(2));
+	EXPECT_TRUE(IsPrime(3));
+
+	// Tests positive input.
+	EXPECT_FALSE(IsPrime(4));
+	EXPECT_TRUE(IsPrime(5));
+	EXPECT_FALSE(IsPrime(6));
+	EXPECT_TRUE(IsPrime(23));
+}
+
+// The next test case (named "QueueTest") also needs to be quick, so
+// we derive another fixture from QuickTest.
+//
+// The QueueTest test fixture has some logic and shared objects in
+// addition to what's in QuickTest already.  We define the additional
+// stuff inside the body of the test fixture, as usual.
+class QueueTest1 : public QuickTest {
+protected:
+	virtual void SetUp() {
+		// First, we need to set up the super fixture (QuickTest).
+		QuickTest::SetUp();
+
+		// Second, some additional setup for this fixture.
+		q1_.Enqueue(1);
+		q2_.Enqueue(2);
+		q2_.Enqueue(3);
+	}
+
+	// By default, TearDown() inherits the behavior of
+	// QuickTest::TearDown().  As we have no additional cleaning work
+	// for QueueTest, we omit it here.
+	//
+	// virtual void TearDown() {
+	//   QuickTest::TearDown();
+	// }
+
+	Queue&lt;int&gt; q0_;
+	Queue&lt;int&gt; q1_;
+	Queue&lt;int&gt; q2_;
+};
+
+// Now, let's write tests using the QueueTest fixture.
+
+// Tests the default constructor.
+TEST_F(QueueTest1, DefaultConstructor) {
+	EXPECT_EQ(0u, q0_.Size());
+}
+
+// Tests Dequeue().
+TEST_F(QueueTest1, Dequeue) {
+	int* n = q0_.Dequeue();
+	EXPECT_TRUE(n == NULL);
+
+	n = q1_.Dequeue();
+	EXPECT_TRUE(n != NULL);
+	EXPECT_EQ(1, *n);
+	EXPECT_EQ(0u, q1_.Size());
+	delete n;
+
+	n = q2_.Dequeue();
+	EXPECT_TRUE(n != NULL);
+	EXPECT_EQ(2, *n);
+	EXPECT_EQ(1u, q2_.Size());
+	delete n;
+}
+
+/*-------------------TYPED_TEST macro and TYPED_TEST_P macro------------------*/
+//Sample 6: This sample shows how to test common properties of multiple
+// implementations of the same interface (aka interface tests).
+
+// First, we define some factory functions for creating instances of
+// the implementations.  You may be able to skip this step if all your
+// implementations can be constructed the same way.
+
+template &lt;class T&gt;
+PrimeTable* CreatePrimeTable();
+
+template &lt;&gt;
+PrimeTable* CreatePrimeTable&lt;OnTheFlyPrimeTable&gt;() {
+	return new OnTheFlyPrimeTable;
+}
+
+template &lt;&gt;
+PrimeTable* CreatePrimeTable&lt;PreCalculatedPrimeTable&gt;() {
+	return new PreCalculatedPrimeTable(10000);
+}
+
+// Then we define a test fixture class template.
+template &lt;class T&gt;
+class PrimeTableTest : public testing::Test {
+protected:
+	// The ctor calls the factory function to create a prime table
+	// implemented by T.
+	PrimeTableTest() : table_(CreatePrimeTable&lt;T&gt;()) {}
+
+	virtual ~PrimeTableTest() { delete table_; }
+
+	// Note that we test an implementation via the base interface
+	// instead of the actual implementation class.  This is important
+	// for keeping the tests close to the real world scenario, where the
+	// implementation is invoked via the base interface.  It avoids
+	// got-yas where the implementation class has a method that shadows
+	// a method with the same name (but slightly different argument
+	// types) in the base interface, for example.
+	PrimeTable* const table_;
+};
+
+#if GTEST_HAS_TYPED_TEST
+
+using testing::Types;
+
+// Google Test offers two ways for reusing tests for different types.
+// The first is called "typed tests".  You should use it if you
+// already know *all* the types you are gonna exercise when you write
+// the tests.
+
+// To write a typed test case, first use
+//
+//   TYPED_TEST_CASE(TestCaseName, TypeList);
+//
+// to declare it and specify the type parameters.  As with TEST_F,
+// TestCaseName must match the test fixture name.
+
+// The list of types we want to test.
+typedef Types&lt;OnTheFlyPrimeTable, PreCalculatedPrimeTable&gt; Implementations;
+
+TYPED_TEST_CASE(PrimeTableTest, Implementations);
+
+// Then use TYPED_TEST(TestCaseName, TestName) to define a typed test,
+// similar to TEST_F.
+TYPED_TEST(PrimeTableTest, ReturnsFalseForNonPrimes) {
+	// Inside the test body, you can refer to the type parameter by
+	// TypeParam, and refer to the fixture class by TestFixture.  We
+	// don't need them in this example.
+
+	// Since we are in the template world, C++ requires explicitly
+	// writing 'this-&gt;' when referring to members of the fixture class.
+	// This is something you have to learn to live with.
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(-5));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(0));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(1));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(4));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(6));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(100));
+}
+
+TYPED_TEST(PrimeTableTest, ReturnsTrueForPrimes) {
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(2));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(3));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(5));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(7));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(11));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(131));
+}
+
+TYPED_TEST(PrimeTableTest, CanGetNextPrime) {
+	EXPECT_EQ(2, this-&gt;table_-&gt;GetNextPrime(0));
+	EXPECT_EQ(3, this-&gt;table_-&gt;GetNextPrime(2));
+	EXPECT_EQ(5, this-&gt;table_-&gt;GetNextPrime(3));
+	EXPECT_EQ(7, this-&gt;table_-&gt;GetNextPrime(5));
+	EXPECT_EQ(11, this-&gt;table_-&gt;GetNextPrime(7));
+	EXPECT_EQ(131, this-&gt;table_-&gt;GetNextPrime(128));
+}
+
+// That's it!  Google Test will repeat each TYPED_TEST for each type
+// in the type list specified in TYPED_TEST_CASE.  Sit back and be
+// happy that you don't have to define them multiple times.
+
+#endif  // GTEST_HAS_TYPED_TEST
+
+#if GTEST_HAS_TYPED_TEST_P
+
+using testing::Types;
+
+// Sometimes, however, you don't yet know all the types that you want
+// to test when you write the tests.  For example, if you are the
+// author of an interface and expect other people to implement it, you
+// might want to write a set of tests to make sure each implementation
+// conforms to some basic requirements, but you don't know what
+// implementations will be written in the future.
+//
+// How can you write the tests without committing to the type
+// parameters?  That's what "type-parameterized tests" can do for you.
+// It is a bit more involved than typed tests, but in return you get a
+// test pattern that can be reused in many contexts, which is a big
+// win.  Here's how you do it:
+
+// First, define a test fixture class template.  Here we just reuse
+// the PrimeTableTest fixture defined earlier:
+
+template &lt;class T&gt;
+class PrimeTableTest2 : public PrimeTableTest&lt;T&gt; {
+};
+
+// Then, declare the test case.  The argument is the name of the test
+// fixture, and also the name of the test case (as usual).  The _P
+// suffix is for "parameterized" or "pattern".
+TYPED_TEST_CASE_P(PrimeTableTest2);
+
+// Next, use TYPED_TEST_P(TestCaseName, TestName) to define a test,
+// similar to what you do with TEST_F.
+TYPED_TEST_P(PrimeTableTest2, ReturnsFalseForNonPrimes) {
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(-5));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(0));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(1));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(4));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(6));
+	EXPECT_FALSE(this-&gt;table_-&gt;IsPrime(100));
+}
+
+TYPED_TEST_P(PrimeTableTest2, ReturnsTrueForPrimes) {
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(2));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(3));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(5));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(7));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(11));
+	EXPECT_TRUE(this-&gt;table_-&gt;IsPrime(131));
+}
+
+TYPED_TEST_P(PrimeTableTest2, CanGetNextPrime) {
+	EXPECT_EQ(2, this-&gt;table_-&gt;GetNextPrime(0));
+	EXPECT_EQ(3, this-&gt;table_-&gt;GetNextPrime(2));
+	EXPECT_EQ(5, this-&gt;table_-&gt;GetNextPrime(3));
+	EXPECT_EQ(7, this-&gt;table_-&gt;GetNextPrime(5));
+	EXPECT_EQ(11, this-&gt;table_-&gt;GetNextPrime(7));
+	EXPECT_EQ(131, this-&gt;table_-&gt;GetNextPrime(128));
+}
+
+// Type-parameterized tests involve one extra step: you have to
+// enumerate the tests you defined:
+REGISTER_TYPED_TEST_CASE_P(
+	PrimeTableTest2,  // The first argument is the test case name.
+	// The rest of the arguments are the test names.
+	ReturnsFalseForNonPrimes, ReturnsTrueForPrimes, CanGetNextPrime);
+
+// At this point the test pattern is done.  However, you don't have
+// any real test yet as you haven't said which types you want to run
+// the tests with.
+
+// To turn the abstract test pattern into real tests, you instantiate
+// it with a list of types.  Usually the test pattern will be defined
+// in a .h file, and anyone can #include and instantiate it.  You can
+// even instantiate it more than once in the same program.  To tell
+// different instances apart, you give each of them a name, which will
+// become part of the test case name and can be used in test filters.
+
+// The list of types we want to test.  Note that it doesn't have to be
+// defined at the time we write the TYPED_TEST_P()s.
+typedef Types&lt;OnTheFlyPrimeTable, PreCalculatedPrimeTable&gt;
+	PrimeTableImplementations;
+INSTANTIATE_TYPED_TEST_CASE_P(OnTheFlyAndPreCalculated,    // Instance name
+	PrimeTableTest2,             // Test case name
+	PrimeTableImplementations);  // Type list
+
+#endif  // GTEST_HAS_TYPED_TEST_P
+
+/*-----------------------------TEST_P macro--------------------------------*/
+//Sample 7: This sample shows how to test common properties of multiple
+// implementations of an interface (aka interface tests) using
+// value-parameterized tests. Each test in the test case has
+// a parameter that is an interface pointer to an implementation
+// tested.
+
+#if GTEST_HAS_PARAM_TEST
+
+using ::testing::TestWithParam;
+using ::testing::Values;
+
+// As a general rule, to prevent a test from affecting the tests that come
+// after it, you should create and destroy the tested objects for each test
+// instead of reusing them.  In this sample we will define a simple factory
+// function for PrimeTable objects.  We will instantiate objects in test's
+// SetUp() method and delete them in TearDown() method.
+typedef PrimeTable* CreatePrimeTableFunc();
+
+PrimeTable* CreateOnTheFlyPrimeTable() {
+	return new OnTheFlyPrimeTable();
+}
+
+template &lt;size_t max_precalculated&gt;
+PrimeTable* CreatePreCalculatedPrimeTable() {
+	return new PreCalculatedPrimeTable(max_precalculated);
+}
+
+// Inside the test body, fixture constructor, SetUp(), and TearDown() you
+// can refer to the test parameter by GetParam().  In this case, the test
+// parameter is a factory function which we call in fixture's SetUp() to
+// create and store an instance of PrimeTable.
+class PrimeTableTest1 : public TestWithParam&lt;CreatePrimeTableFunc*&gt; {
+public:
+	virtual ~PrimeTableTest1() { delete table_; }
+	virtual void SetUp() { table_ = (*GetParam())(); }
+	virtual void TearDown() {
+		delete table_;
+		table_ = NULL;
+	}
+
+protected:
+	PrimeTable* table_;
+};
+
+TEST_P(PrimeTableTest1, ReturnsFalseForNonPrimes) {
+	EXPECT_FALSE(table_-&gt;IsPrime(-5));
+	EXPECT_FALSE(table_-&gt;IsPrime(0));
+	EXPECT_FALSE(table_-&gt;IsPrime(1));
+	EXPECT_FALSE(table_-&gt;IsPrime(4));
+	EXPECT_FALSE(table_-&gt;IsPrime(6));
+	EXPECT_FALSE(table_-&gt;IsPrime(100));
+}
+
+TEST_P(PrimeTableTest1, ReturnsTrueForPrimes) {
+	EXPECT_TRUE(table_-&gt;IsPrime(2));
+	EXPECT_TRUE(table_-&gt;IsPrime(3));
+	EXPECT_TRUE(table_-&gt;IsPrime(5));
+	EXPECT_TRUE(table_-&gt;IsPrime(7));
+	EXPECT_TRUE(table_-&gt;IsPrime(11));
+	EXPECT_TRUE(table_-&gt;IsPrime(131));
+}
+
+TEST_P(PrimeTableTest1, CanGetNextPrime) {
+	EXPECT_EQ(2, table_-&gt;GetNextPrime(0));
+	EXPECT_EQ(3, table_-&gt;GetNextPrime(2));
+	EXPECT_EQ(5, table_-&gt;GetNextPrime(3));
+	EXPECT_EQ(7, table_-&gt;GetNextPrime(5));
+	EXPECT_EQ(11, table_-&gt;GetNextPrime(7));
+	EXPECT_EQ(131, table_-&gt;GetNextPrime(128));
+}
+
+// In order to run value-parameterized tests, you need to instantiate them,
+// or bind them to a list of values which will be used as test parameters.
+// You can instantiate them in a different translation module, or even
+// instantiate them several times.
+//
+// Here, we instantiate our tests with a list of two PrimeTable object
+// factory functions:
+INSTANTIATE_TEST_CASE_P(
+	OnTheFlyAndPreCalculated,
+	PrimeTableTest1,
+	Values(&amp;CreateOnTheFlyPrimeTable, &amp;CreatePreCalculatedPrimeTable&lt;1000&gt;));
+
+#else
+
+// Google Test may not support value-parameterized tests with some
+// compilers. If we use conditional compilation to compile out all
+// code referring to the gtest_main library, MSVC linker will not link
+// that library at all and consequently complain about missing entry
+// point defined in that library (fatal error LNK1561: entry point
+// must be defined). This dummy test keeps gtest_main linked in.
+TEST(DummyTest, ValueParameterizedTestsAreNotSupportedOnThisPlatform) {}
+
+#endif  // GTEST_HAS_PARAM_TEST
+
+// Sample 8: This sample shows how to test code relying on some global flag variables.
+// Combine() helps with generating all possible combinations of such flags,
+// and each test is given one combination as a parameter.
+
+#if GTEST_HAS_COMBINE
+
+// Suppose we want to introduce a new, improved implementation of PrimeTable
+// which combines speed of PrecalcPrimeTable and versatility of
+// OnTheFlyPrimeTable (see prime_tables.h). Inside it instantiates both
+// PrecalcPrimeTable and OnTheFlyPrimeTable and uses the one that is more
+// appropriate under the circumstances. But in low memory conditions, it can be
+// told to instantiate without PrecalcPrimeTable instance at all and use only
+// OnTheFlyPrimeTable.
+class HybridPrimeTable : public PrimeTable {
+public:
+	HybridPrimeTable(bool force_on_the_fly, int max_precalculated)
+		: on_the_fly_impl_(new OnTheFlyPrimeTable),
+		precalc_impl_(force_on_the_fly ? NULL :
+		new PreCalculatedPrimeTable(max_precalculated)),
+		max_precalculated_(max_precalculated) {}
+	virtual ~HybridPrimeTable() {
+		delete on_the_fly_impl_;
+		delete precalc_impl_;
+	}
+
+	virtual bool IsPrime(int n) const {
+		if (precalc_impl_ != NULL &amp;&amp; n &lt; max_precalculated_)
+			return precalc_impl_-&gt;IsPrime(n);
+		else
+			return on_the_fly_impl_-&gt;IsPrime(n);
+	}
+
+	virtual int GetNextPrime(int p) const {
+		int next_prime = -1;
+		if (precalc_impl_ != NULL &amp;&amp; p &lt; max_precalculated_)
+			next_prime = precalc_impl_-&gt;GetNextPrime(p);
+
+		return next_prime != -1 ? next_prime : on_the_fly_impl_-&gt;GetNextPrime(p);
+	}
+
+private:
+	OnTheFlyPrimeTable* on_the_fly_impl_;
+	PreCalculatedPrimeTable* precalc_impl_;
+	int max_precalculated_;
+};
+
+using ::testing::TestWithParam;
+using ::testing::Bool;
+using ::testing::Values;
+using ::testing::Combine;
+
+// To test all code paths for HybridPrimeTable we must test it with numbers
+// both within and outside PreCalculatedPrimeTable's capacity and also with
+// PreCalculatedPrimeTable disabled. We do this by defining fixture which will
+// accept different combinations of parameters for instantiating a
+// HybridPrimeTable instance.
+class PrimeTableTest3 : public TestWithParam&lt; ::std::tr1::tuple&lt;bool, int&gt; &gt; {
+protected:
+	virtual void SetUp() {
+		// This can be written as
+		//
+		// bool force_on_the_fly;
+		// int max_precalculated;
+		// tie(force_on_the_fly, max_precalculated) = GetParam();
+		//
+		// once the Google C++ Style Guide allows use of ::std::tr1::tie.
+		//
+		bool force_on_the_fly = ::std::tr1::get&lt;0&gt;(GetParam());
+		int max_precalculated = ::std::tr1::get&lt;1&gt;(GetParam());
+		table_ = new HybridPrimeTable(force_on_the_fly, max_precalculated);
+	}
+	virtual void TearDown() {
+		delete table_;
+		table_ = NULL;
+	}
+	HybridPrimeTable* table_;
+};
+
+TEST_P(PrimeTableTest3, ReturnsFalseForNonPrimes) {
+	// Inside the test body, you can refer to the test parameter by GetParam().
+	// In this case, the test parameter is a PrimeTable interface pointer which
+	// we can use directly.
+	// Please note that you can also save it in the fixture's SetUp() method
+	// or constructor and use saved copy in the tests.
+
+	EXPECT_FALSE(table_-&gt;IsPrime(-5));
+	EXPECT_FALSE(table_-&gt;IsPrime(0));
+	EXPECT_FALSE(table_-&gt;IsPrime(1));
+	EXPECT_FALSE(table_-&gt;IsPrime(4));
+	EXPECT_FALSE(table_-&gt;IsPrime(6));
+	EXPECT_FALSE(table_-&gt;IsPrime(100));
+}
+
+TEST_P(PrimeTableTest3, ReturnsTrueForPrimes) {
+	EXPECT_TRUE(table_-&gt;IsPrime(2));
+	EXPECT_TRUE(table_-&gt;IsPrime(3));
+	EXPECT_TRUE(table_-&gt;IsPrime(5));
+	EXPECT_TRUE(table_-&gt;IsPrime(7));
+	EXPECT_TRUE(table_-&gt;IsPrime(11));
+	EXPECT_TRUE(table_-&gt;IsPrime(131));
+}
+
+TEST_P(PrimeTableTest3, CanGetNextPrime) {
+	EXPECT_EQ(2, table_-&gt;GetNextPrime(0));
+	EXPECT_EQ(3, table_-&gt;GetNextPrime(2));
+	EXPECT_EQ(5, table_-&gt;GetNextPrime(3));
+	EXPECT_EQ(7, table_-&gt;GetNextPrime(5));
+	EXPECT_EQ(11, table_-&gt;GetNextPrime(7));
+	EXPECT_EQ(131, table_-&gt;GetNextPrime(128));
+}
+
+// In order to run value-parameterized tests, you need to instantiate them,
+// or bind them to a list of values which will be used as test parameters.
+// You can instantiate them in a different translation module, or even
+// instantiate them several times.
+//
+// Here, we instantiate our tests with a list of parameters. We must combine
+// all variations of the boolean flag suppressing PrecalcPrimeTable and some
+// meaningful values for tests. We choose a small value (1), and a value that
+// will put some of the tested numbers beyond the capability of the
+// PrecalcPrimeTable instance and some inside it (10). Combine will produce all
+// possible combinations.
+INSTANTIATE_TEST_CASE_P(MeaningfulTestParameters,
+	PrimeTableTest3,
+	Combine(Bool(), Values(1, 10)));
+
+#else
+
+// Google Test may not support Combine() with some compilers. If we
+// use conditional compilation to compile out all code referring to
+// the gtest_main library, MSVC linker will not link that library at
+// all and consequently complain about missing entry point defined in
+// that library (fatal error LNK1561: entry point must be
+// defined). This dummy test keeps gtest_main linked in.
+TEST(DummyTest, CombineIsNotSupportedOnThisPlatform) {}
+
+#endif  // GTEST_HAS_COMBINE
+
+int main (int argc, char* argv[])
+{
+	testing::InitGoogleTest(&amp;argc, argv);
+	//::testing::GTEST_FLAG(filter) = "IsPrimeTest.*:FactorialTest.*";
+	return RUN_ALL_TESTS();
+
+	return 0;
+}
+
+#endif 
+
+#if defined BRANCH_2
+// Sample 9: This sample shows how to use Google Test listener API to implement
+// an alternative console output and how to use the UnitTest reflection API
+// to enumerate test cases and tests and to inspect their results.
+using ::testing::EmptyTestEventListener;
+using ::testing::InitGoogleTest;
+using ::testing::Test;
+using ::testing::TestCase;
+using ::testing::TestEventListeners;
+using ::testing::TestInfo;
+using ::testing::TestPartResult;
+using ::testing::UnitTest;
+
+namespace {
+
+	// Provides alternative output mode which produces minimal amount of
+	// information about tests.
+	class TersePrinter : public EmptyTestEventListener {
+	private:
+		// Called before any test activity starts.
+		virtual void OnTestProgramStart(const UnitTest&amp; /* unit_test */) {}
+
+		// Called after all test activities have ended.
+		virtual void OnTestProgramEnd(const UnitTest&amp; unit_test) {
+			fprintf(stdout, "TEST %s\n", unit_test.Passed() ? "PASSED" : "FAILED");
+			fflush(stdout);
+		}
+
+		// Called before a test starts.
+		virtual void OnTestStart(const TestInfo&amp; test_info) {
+			fprintf(stdout,
+				"*** Test %s.%s starting.\n",
+				test_info.test_case_name(),
+				test_info.name());
+			fflush(stdout);
+		}
+
+		// Called after a failed assertion or a SUCCEED() invocation.
+		virtual void OnTestPartResult(const TestPartResult&amp; test_part_result) {
+			fprintf(stdout,
+				"%s in %s:%d\n%s\n",
+				test_part_result.failed() ? "*** Failure" : "Success",
+				test_part_result.file_name(),
+				test_part_result.line_number(),
+				test_part_result.summary());
+			fflush(stdout);
+		}
+
+		// Called after a test ends.
+		virtual void OnTestEnd(const TestInfo&amp; test_info) {
+			fprintf(stdout,
+				"*** Test %s.%s ending.\n",
+				test_info.test_case_name(),
+				test_info.name());
+			fflush(stdout);
+		}
+	};  // class TersePrinter
+
+	TEST(CustomOutputTest, PrintsMessage) {
+		printf("Printing something from the test body...\n");
+	}
+
+	TEST(CustomOutputTest, Succeeds) {
+		SUCCEED() &lt;&lt; "SUCCEED() has been invoked from here";
+	}
+
+	TEST(CustomOutputTest, Fails) {
+		EXPECT_EQ(1, 2)
+			&lt;&lt; "This test fails in order to demonstrate alternative failure messages";
+	}
+
+}  // namespace
+
+int main(int argc, char **argv) {
+	InitGoogleTest(&amp;argc, argv);
+
+	bool terse_output = false;
+	if (argc &gt; 1 &amp;&amp; strcmp(argv[1], "--terse_output") == 0 )
+		terse_output = true;
+	else
+		printf("%s\n", "Run this program with --terse_output to change the way "
+		"it prints its output.");
+
+	UnitTest&amp; unit_test = *UnitTest::GetInstance();
+
+	// If we are given the --terse_output command line flag, suppresses the
+	// standard output and attaches own result printer.
+	if (terse_output) {
+		TestEventListeners&amp; listeners = unit_test.listeners();
+
+		// Removes the default console output listener from the list so it will
+		// not receive events from Google Test and won't print any output. Since
+		// this operation transfers ownership of the listener to the caller we
+		// have to delete it as well.
+		delete listeners.Release(listeners.default_result_printer());
+
+		// Adds the custom output listener to the list. It will now receive
+		// events from Google Test and print the alternative output. We don't
+		// have to worry about deleting it since Google Test assumes ownership
+		// over it after adding it to the list.
+		listeners.Append(new TersePrinter);
+	}
+	int ret_val = RUN_ALL_TESTS();
+
+	// This is an example of using the UnitTest reflection API to inspect test
+	// results. Here we discount failures from the tests we expected to fail.
+	int unexpectedly_failed_tests = 0;
+	for (int i = 0; i &lt; unit_test.total_test_case_count(); ++i) {
+		const TestCase&amp; test_case = *unit_test.GetTestCase(i);
+		for (int j = 0; j &lt; test_case.total_test_count(); ++j) {
+			const TestInfo&amp; test_info = *test_case.GetTestInfo(j);
+			// Counts failed tests that were not meant to fail (those without
+			// 'Fails' in the name).
+			if (test_info.result()-&gt;Failed() &amp;&amp;
+				strcmp(test_info.name(), "Fails") != 0) {
+					unexpectedly_failed_tests++;
+			}
+		}
+	}
+
+	// Test that were meant to fail should not affect the test program outcome.
+	if (unexpectedly_failed_tests == 0)
+		ret_val = 0;
+
+	return ret_val;
+}
+
+#endif
+
+#if defined BRANCH_3
+// Sample 10: This sample shows how to use Google Test listener API to implement
+// a primitive leak checker.
+using ::testing::EmptyTestEventListener;
+using ::testing::InitGoogleTest;
+using ::testing::Test;
+using ::testing::TestCase;
+using ::testing::TestEventListeners;
+using ::testing::TestInfo;
+using ::testing::TestPartResult;
+using ::testing::UnitTest;
+
+namespace {
+
+	// We will track memory used by this class.
+	class Water {
+	public:
+		// Normal Water declarations go here.
+
+		// operator new and operator delete help us control water allocation.
+		void* operator new(size_t allocation_size) {
+			allocated_++;
+			return malloc(allocation_size);
+		}
+
+		void operator delete(void* block, size_t /* allocation_size */) {
+			allocated_--;
+			free(block);
+		}
+
+		static int allocated() { return allocated_; }
+
+	private:
+		static int allocated_;
+	};
+
+	int Water::allocated_ = 0;
+
+	// This event listener monitors how many Water objects are created and
+	// destroyed by each test, and reports a failure if a test leaks some Water
+	// objects. It does this by comparing the number of live Water objects at
+	// the beginning of a test and at the end of a test.
+	class LeakChecker : public EmptyTestEventListener {
+	private:
+		// Called before a test starts.
+		virtual void OnTestStart(const TestInfo&amp; /* test_info */) {
+			initially_allocated_ = Water::allocated();
+		}
+
+		// Called after a test ends.
+		virtual void OnTestEnd(const TestInfo&amp; /* test_info */) {
+			int difference = Water::allocated() - initially_allocated_;
+
+			// You can generate a failure in any event handler except
+			// OnTestPartResult. Just use an appropriate Google Test assertion to do
+			// it.
+			EXPECT_LE(difference, 0) &lt;&lt; "Leaked " &lt;&lt; difference &lt;&lt; " unit(s) of Water!";
+		}
+
+		int initially_allocated_;
+	};
+
+	TEST(ListenersTest, DoesNotLeak) {
+		Water* water = new Water;
+		delete water;
+	}
+
+	// This should fail when the --check_for_leaks command line flag is
+	// specified.
+	TEST(ListenersTest, LeaksWater) {
+		Water* water = new Water;
+		EXPECT_TRUE(water != NULL);
+	}
+
+}  // namespace
+
+int main(int argc, char **argv) {
+	InitGoogleTest(&amp;argc, argv);
+
+	bool check_for_leaks = false;
+	if (argc &gt; 1 &amp;&amp; strcmp(argv[1], "--check_for_leaks") == 0 )
+		check_for_leaks = true;
+	else
+		printf("%s\n", "Run this program with --check_for_leaks to enable "
+		"custom leak checking in the tests.");
+
+	// If we are given the --check_for_leaks command line flag, installs the
+	// leak checker.
+	if (check_for_leaks) {
+		TestEventListeners&amp; listeners = UnitTest::GetInstance()-&gt;listeners();
+
+		// Adds the leak checker to the end of the test event listener list,
+		// after the default text output printer and the default XML report
+		// generator.
+		//
+		// The order is important - it ensures that failures generated in the
+		// leak checker's OnTestEnd() method are processed by the text and XML
+		// printers *before* their OnTestEnd() methods are called, such that
+		// they are attributed to the right test. Remember that a listener
+		// receives an OnXyzStart event *after* listeners preceding it in the
+		// list received that event, and receives an OnXyzEnd event *before*
+		// listeners preceding it.
+		//
+		// We don't need to worry about deleting the new listener later, as
+		// Google Test will do it.
+		listeners.Append(new LeakChecker);
+	}
+	return RUN_ALL_TESTS();
+}
+
+#endif</PRE><BR><BR></DIV></ARTICLE>
+<DIV class="readall_box csdn-tracking-statistics" data-mod="popu_376">
+<DIV class="read_more_mask"></DIV><A class="btn btn-large btn-gray-fred read_more_btn" 
+target="_self">阅读全文</A>       </DIV>
+<DIV class="article_copyright"></DIV>
+<UL class="article_collect clearfix csdn-tracking-statistics" data-mod="popu_378">
+  <LI class="tit">本文已收录于以下专栏：</LI><!--          [startarticlecolumns]-->         
+                          <!--          [endarticlecolumns]-->       </UL>
+<DIV class="comment_box clearfix">
+<DIV id="comment_form">
+<DIV id="commentsbmitarear"></DIV></DIV></DIV>
+<DIV class="comment_li_outbox">
+<DIV id="comment_list"></DIV></DIV>
+<DIV class="more_comment">
+<DIV class="trackgin-ad" id="comment_bar" data-mod="popu_385"></DIV></DIV>
+<H3 class="recommend_tit" id="related">相关文章推荐</H3>
+<DIV class="recommend_list clearfix" id="rasss">
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/breaksoftware/article/details/50917733" 
+  target="_blank" strategy="BlogCommendFromBaidu_0">Google 
+  Test(GTest)使用方法和源码解析——概况</A></H2>
+  <DIV class="summary">                              
+  本文将以GTest的1.7版本为参照，讲解GTest测试框架的简单使用和特性。                          </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/breaksoftware" target="_blank" 
+    strategy="BlogCommendFromBaidu_0"><IMG title="breaksoftware" alt="breaksoftware" 
+    src="gtest-intro_files/3_breaksoftware.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/breaksoftware">breaksoftware</A></LI>
+    <LI class="time">2016年04月07日 23:53</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>7008</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/jcjc918/article/details/52029455" target="_blank" 
+  strategy="BlogCommendFromBaidu_1">google gtest 快速入门</A></H2>
+  <DIV class="summary">gtest 提供了一套优秀的 C++ 
+  单元测试解决方案，简单易用，功能完善，非常适合在项目中使用以保证代码质量。...                          </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/jcjc918" target="_blank" 
+    strategy="BlogCommendFromBaidu_1"><IMG title="jcjc918" alt="jcjc918" src="gtest-intro_files/3_jcjc918.jpg"></A></LI>
+    <LI class="user_name"><A 
+href="http://blog.csdn.net/jcjc918">jcjc918</A></LI>
+    <LI class="time">2016年09月10日 23:01</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>1686</SPAN></LI></UL></DD></DL>
+<SCRIPT>
+                      (function() {
+                          var s = "_" + Math.random().toString(36).slice(2);
+                          document.write('<div id="' + s + '"></div>');
+                          (window.slotbydup=window.slotbydup || []).push({
+                              id: '4765209',
+                              container: s,
+                              size: '808,120',
+                              display: 'inlay-fix'
+                          });
+                      })();
+                  </SCRIPT>
+                                                                 
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/breaksoftware/article/details/51059406" 
+  target="_blank" strategy="BlogCommendFromBaidu_2">Google 
+  Test(GTest)使用方法和源码解析——断言的使用方法和解析</A></H2>
+  <DIV class="summary">                              本文介绍了GTest中各种断言宏。           
+                 </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/breaksoftware" target="_blank" 
+    strategy="BlogCommendFromBaidu_2"><IMG title="breaksoftware" alt="breaksoftware" 
+    src="gtest-intro_files/3_breaksoftware.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/breaksoftware">breaksoftware</A></LI>
+    <LI class="time">2016年04月07日 23:55</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>3159</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/ONEDAY_789/article/details/76718463" target="_blank" 
+  strategy="BlogCommendFromBaidu_3">gtest的介绍和使用</A></H2>
+  <DIV class="summary">gtest的TEST宏、ASSERT宏、事件机制、死亡测试、gtest测试单链表                  
+          </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/ONEDAY_789" target="_blank" 
+    strategy="BlogCommendFromBaidu_3"><IMG title="ONEDAY_789" alt="ONEDAY_789" 
+    src="gtest-intro_files/3_oneday_789.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/ONEDAY_789">ONEDAY_789</A></LI>
+    <LI class="time">2017年08月05日 14:06</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>611</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/carolzhang8406/article/details/54668462" 
+  target="_blank" strategy="BlogCommendFromBaidu_4">gtest Test_F 和Test 
+  区别</A></H2>
+  <DIV class="summary">                              一般来说简单的测试用TEST 简单测试TEST
+   Cpp代码 #include gtest/gtest.h&gt;&nbsp;&nbsp; int Factorial( int n 
+  )&nbsp;&nbsp; {&nbsp;&nbsp;&nbsp; if(n==2) retu...                          
+  </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/carolzhang8406" target="_blank" 
+    strategy="BlogCommendFromBaidu_4"><IMG title="carolzhang8406" alt="carolzhang8406" 
+    src="gtest-intro_files/3_carolzhang8406.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/carolzhang8406">carolzhang8406</A></LI>
+    <LI class="time">2017年01月22日 14:44</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>2948</SPAN></LI></UL></DD></DL><!-- 广告位：PC端-博客详情通栏7（feed流）-808*120 --> 
+                  
+<SCRIPT>
+                      (function() {
+                          var s = "_" + Math.random().toString(36).slice(2);
+                          document.write('<div id="' + s + '"></div>');
+                          (window.slotbydup=window.slotbydup || []).push({
+                              id: '4983339',
+                              container: s,
+                              size: '808,120',
+                              display: 'inlay-fix'
+                          });
+                      })();
+                  </SCRIPT>
+                                                                               
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/zhongguoren666/article/details/8781628" 
+  target="_blank" strategy="BlogCommendFromBaidu_5">gtest使用</A></H2>
+  <DIV class="summary">                              首先#include ，当然工程的头文件路径要设置正确 
+  1.简单测试TEST Cpp代码 #include &nbsp;&nbsp; int Factorial( int n ) &nbsp;&nbsp;{... 
+                           </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/zhongguoren666" target="_blank" 
+    strategy="BlogCommendFromBaidu_5"><IMG title="zhongguoren666" alt="zhongguoren666" 
+    src="gtest-intro_files/3_zhongguoren666.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/zhongguoren666">zhongguoren666</A></LI>
+    <LI class="time">2013年04月10日 10:51</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>6688</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/xiaqunfeng123/article/details/53188814" 
+  target="_blank" strategy="BlogCommendFromBaidu_6">vs2013环境下配置gtest</A></H2>
+  <DIV class="summary">好记性不如烂笔头o(^▽^)ovs2013环境下配置gtestvs2013环境下配置gtest 前言 前期准备
+   开始第一个demo 常见问题前言一开始按照这里玩转Google开源C++单元测试框架Go...                          
+  </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/xiaqunfeng123" target="_blank" 
+    strategy="BlogCommendFromBaidu_6"><IMG title="xiaqunfeng123" alt="xiaqunfeng123" 
+    src="gtest-intro_files/3_xiaqunfeng123.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/xiaqunfeng123">xiaqunfeng123</A></LI>
+    <LI class="time">2016年11月16日 17:20</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>1207</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/russell_tao/article/details/7333226" target="_blank" 
+  strategy="BlogCommendFromBaidu_7">如何用googletest写单元测试</A></H2>
+  <DIV 
+  class="summary">googletest是一个用来写C++单元测试的框架，它是跨平台的，可应用在windows、linux、Mac等OS平台上。下面，我来说明如何使用最新的1.6版本gtest写自己的单元测试。
+   本文包...                          </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/russell_tao" target="_blank" 
+    strategy="BlogCommendFromBaidu_7"><IMG title="russell_tao" alt="russell_tao" 
+    src="gtest-intro_files/3_russell_tao.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/russell_tao">russell_tao</A></LI>
+    <LI class="time">2012年03月12日 10:55</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>30411</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/skyflying2012/article/details/22731673" 
+  target="_blank" strategy="BlogCommendFromBaidu_8">gtest实现架构简单分析</A></H2>
+  <DIV class="summary">                              
+  公司现在需要一套成型的测试框架，选中了现在开源的gtest测试框架，公司将这个任务交给了我，要在gtest框架基础上进行一些修改，这几天一直在看gtest源码，不懂C++，看起来有点难，不过还是有一些... 
+                           </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/skyflying2012" target="_blank" 
+    strategy="BlogCommendFromBaidu_8"><IMG title="skyflying2012" alt="skyflying2012" 
+    src="gtest-intro_files/3_skyflying2012.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/skyflying2012">skyflying2012</A></LI>
+    <LI class="time">2014年04月01日 14:41</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>6130</SPAN></LI></UL></DD></DL>
+<DL class="clearfix csdn-tracking-statistics" data-mod="popu_387" data-dsm="post" 
+data-feed-show="false" data-poputype="feed">
+  <DD>
+  <H2><A href="http://blog.csdn.net/zmqarenas/article/details/21630095" target="_blank" 
+  strategy="BlogCommendFromBaidu_9">gtest中TEST和TEST_F使用的区别</A></H2>
+  <DIV class="summary">                              首先#include 
+  gtest/gtest.h&gt;，当然工程的头文件路径要设置正确 1.简单测试TEST Cpp代码 #include 
+  gtest/gtest.h&gt;&nbsp;&nbsp; int Facto...                          </DIV>
+  <UL>
+    <LI class="avatar_img"><A href="http://blog.csdn.net/zmqarenas" target="_blank" 
+    strategy="BlogCommendFromBaidu_9"><IMG title="zmqarenas" alt="zmqarenas" 
+    src="gtest-intro_files/3_zmqarenas.jpg"></A></LI>
+    <LI class="user_name"><A 
+    href="http://blog.csdn.net/zmqarenas">zmqarenas</A></LI>
+    <LI class="time">2014年03月20日 16:33</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>1947</SPAN></LI></UL></DD></DL></DIV></main><ASIDE>
+<DIV class="right_box user_info">
+<DL class="inf_bar clearfix">
+  <DT class="csdn-tracking-statistics" data-mod="popu_381"><A href="http://blog.csdn.net/fengbingchun" 
+  target="_blank"><IMG class="avatar_pic" src="gtest-intro_files/3_fengbingchun.jpg"> 
+                </A>               <SPAN title="" class="medals"><svg xmlns="http://www.w3.org/2000/svg" 
+  class="icon" aria-hidden="true"><use 
+  xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bokezhuanjia" />  
+               </svg>                   </SPAN></DT>
+  <DD>
+  <H3 class="csdn-tracking-statistics" data-mod="popu_380"><A id="uid" href="http://blog.csdn.net/fengbingchun" 
+  target="_blank">fengbingchun</A></H3><SPAN class="csdn-tracking-statistics" 
+  data-mod="popu_379"><A class="btn btn-redborder-small " id="span_add_follow" 
+  target="_self">＋关注</A></SPAN>           </DD></DL>
+<DIV class="inf_number_box clearfix">
+<DL>
+  <DT>原创</DT>
+  <DD>496</DD></DL>
+<DL>
+  <DT>粉丝</DT>
+  <DD id="fan">1863</DD></DL>
+<DL>
+  <DT>喜欢</DT>
+  <DD>0</DD></DL>
+<DL>
+  <DT>码云</DT>
+  <DD>&nbsp;</DD></DL></DIV>
+<DIV class="writings">
+<DIV class="public_signal clearfix">
+<H3>他的最新文章</H3><A class="more" href="http://blog.csdn.net/fengbingchun" target="_blank"><SPAN>更多文章</SPAN></A> 
+        </DIV>
+<UL class="inf_list clearfix csdn-tracking-statistics" data-mod="popu_382">
+  <LI class="clearfix"><A href="http://blog.csdn.net/fengbingchun/article/details/78696814" 
+  target="_blank">C/C++中#pragma once的使用</A>               </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/fengbingchun/article/details/78681323" 
+  target="_blank">C++11多线程中std::call_once的使用</A>               </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/fengbingchun/article/details/78670376" 
+  target="_blank">C++11容器中新增加的emplace相关函数的使用</A>               
+</LI></UL></DIV></DIV>
+<DIV class="user-hotArticle">
+<H3><A 
+href="http://blog.csdn.net/fengbingchun/article/details/39667571#related">相关推荐</A></H3>
+<UL class="hotArticle-list csdn-tracking-statistics" data-mod="popu_563"><!--           [StartRelatedArticles]--> 
+                                                  
+  <LI><A href="http://blog.csdn.net/breaksoftware/article/details/50917733" 
+  data-mod="popu_559">Google Test(GTest)使用方法和源码解析——概况</A></LI>
+  <LI><A href="http://blog.csdn.net/jcjc918/article/details/52029455" data-mod="popu_560">google 
+  gtest 快速入门</A></LI>
+  <LI><A href="http://blog.csdn.net/breaksoftware/article/details/51059406" 
+  data-mod="popu_561">Google Test(GTest)使用方法和源码解析——断言的使用方法和解析</A></LI>
+  <LI><A href="http://blog.csdn.net/ONEDAY_789/article/details/76718463" 
+  data-mod="popu_562">gtest的介绍和使用</A></LI><!--            [EndRelatedArticles]--> 
+          </UL></DIV>
+<DIV class="extension_other csdn-tracking-statistics" data-mod="popu_389"><!--u3032528--> 
+    
+<DIV class="flashrecommend">
+<SCRIPT src="gtest-intro_files/bwocoltlyzdec.js" type="text/javascript"></SCRIPT>
+     </DIV></DIV><!--    [StartShowSelfColumn]-->     <!--    [EndShowSelfColumn]--> 
+    
+<DIV class="fixRight"><!-- 广告位：PC端-博客详情右侧视窗2（feed流）-300*300 -->         
+<SCRIPT>
+            (function() {
+                var s = "_" + Math.random().toString(36).slice(2);
+                document.write('<div id="' + s + '"></div>');
+                (window.slotbydup=window.slotbydup || []).push({
+                    id: '5384130',
+                    container: s,
+                    size: '300,300',
+                    display: 'inlay-fix'
+                });
+            })();
+        </SCRIPT>
+         
+<DIV class="extension_other csdn-tracking-statistics bottomRcom" style="position: absolute; z-index: -5; opacity: 0; pointer-events: none;" 
+data-mod="popu_389"><!--u3032528-->             
+<DIV class="flashrecommend"><!-- 请置于所有广告位代码之前 -->                 
+<SCRIPT src="gtest-intro_files/dm.js"></SCRIPT>
+                 <!-- 广告位：PC端-博客详情页右侧视窗1（feed流）-300*250 -->                 
+<SCRIPT>
+                    (function() {
+                        var s = "_" + Math.random().toString(36).slice(2);
+                        document.write('<div id="' + s + '"></div>');
+                        (window.slotbydup=window.slotbydup || []).push({
+                            id: '4770930',
+                            container: s,
+                            size: '300,250',
+                            display: 'inlay-fix'
+                        });
+                    })();
+                </SCRIPT>
+             </DIV></DIV></DIV>
+<DIV class="user-hotArticle">
+<H3>他的热门文章</H3>
+<UL class="hotArticle-list csdn-tracking-statistics" data-mod="popu_521"><!--            [StartHotArticles]--> 
+                                                  
+  <LI><A 
+  href="http://blog.csdn.net/fengbingchun/article/details/50529500">卷积神经网络(CNN)基础介绍</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>54696</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/fengbingchun/article/details/50274471">人工神经网络简介</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>49701</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/fengbingchun/article/details/8493877">tesseract-ocr3.02字符识别过程操作步骤</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>42088</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/fengbingchun/article/details/17335477">OpenCV中resize函数五种插值算法的实现过程</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>39110</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/fengbingchun/article/details/45479125">有效的rtsp流媒体测试地址汇总</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>36667</SPAN></DIV></LI><!--            [EndHotArticles]--> 
+          </UL></DIV><!--    [startcustom]-->     <!--    [endcustom]--> 
+</ASIDE></DIV>
+<DIV class="left_fixed">
+<DIV class="left_show_button"><SPAN><I 
+class="icon iconfont icon-youjiantou"></I>         </SPAN>     </DIV>
+<UL class="left_menu">
+  <LI><BUTTON class="left-fixed-btn btn-like csdn-tracking-statistics" data-mod="popu_373" 
+  target="_self"><A class="iconbox border_red" href="javascript:void(0);"><I 
+  class="icon iconfont icon-dianzan"></I></A><A class="txt" href="javascript:void(0);">1</A></BUTTON> 
+          </LI>
+  <LI id="blog_artical_directory"><BUTTON class="left-fixed-btn left_menu_btn csdn-tracking-statistics" 
+  data-mod="popu_372" target="_self"><A class="iconbox border_black" href="javascript:void(0);"><I 
+  class="icon iconfont icon-mulu"></I></A></BUTTON>         </LI>
+  <LI class="menu_con">
+  <DIV class="list_father">
+  <DIV class="arr_box"><BUTTON class="btn-noborder arr-btn scroll-down  left_scroll_down"><I 
+  class="icon iconfont icon-xiajiantou"></I></BUTTON>                     
+  <BUTTON class="btn-noborder arr-btn scroll-up left_scroll_top"><I class="icon iconfont icon-shangjiantou"></I></BUTTON> 
+                  </DIV>
+  <DIV class="arr"></DIV>
+  <DIV id="csdnBlogDir"></DIV></DIV></LI><!--        <li>-->         <!--            <button class="left-fixed-btn btn-like tracking-ad" data-mod="popu_373" target="_self">--> 
+          <!--                <span class="iconbox border_red"><i class="icon iconfont icon-xihuan-"></i></span>--> 
+          <!--                <span class="txt">喜欢</span>-->         <!--                <span class="untxt">取消喜欢</span>--> 
+          <!--            </button>-->         <!--        </li>-->         
+  <LI><BUTTON class="left-fixed-btn csdn-tracking-statistics" id="com-quick-collect" 
+  data-mod="popu_374" target="_self"><A class="iconbox border_purple" href="javascript:void(0);"><I 
+  class="icon iconfont icon-shoucang"></I></A></BUTTON>         </LI>
+  <LI><BUTTON class="left-fixed-btn btn-pinglun csdn-tracking-statistics" 
+  data-mod="popu_544"><A class="iconbox border_purple" href="javascript:void(0);"><I 
+  class="icon iconfont icon-pinglun"></I></A></BUTTON>         </LI>
+  <LI id="share_box"><BUTTON class="left-fixed-btn  csdn-tracking-statistics" 
+  data-mod="popu_375" target="_self"><A class="iconbox border_orange" href="javascript:void(0);"><I 
+  class="icon iconfont icon-fenxiang"></I></A></BUTTON>             
+  <DIV class="bdsharebuttonbox csdn-tracking-statistics" data-mod="popu_172">
+  <DIV class="outside"><SPAN class="iconbox border_red2"><I class="icon iconfont icon-xinlang"></I></SPAN><A 
+  title="分享到新浪微博" class="bds_tsina" href="http://blog.csdn.net/fengbingchun/article/details/39667571#" 
+  data-cmd="tsina"></A>                 </DIV>
+  <DIV class="outside"><SPAN class="iconbox border_green"><I class="icon iconfont icon-weixin"></I></SPAN><A 
+  title="分享到微信" class="bds_weixin" href="http://blog.csdn.net/fengbingchun/article/details/39667571#" 
+  data-cmd="weixin"></A>                 </DIV>
+  <DIV class="outside"><SPAN class="iconbox border_blue"><I class="icon iconfont icon-QQ"></I></SPAN><A 
+  title="分享到QQ空间" class="bds_qzone" href="http://blog.csdn.net/fengbingchun/article/details/39667571#" 
+  data-cmd="qzone"></A>                 </DIV></DIV></LI></UL></DIV>
+<DIV class="right_fixed">
+<DIV class="r_ico"><I class="icon iconfont icon-jubao"></I><SPAN class="txt" id="reportBtn">内容举报</SPAN></DIV>
+<DIV class="returnTop"><I 
+class="icon iconfont icon-fanhuidingbu"></I><SPAN>返回顶部</SPAN></DIV></DIV>
+<DIV id="pop_win"></DIV>
+<DIV id="popup_mask"></DIV>
+<DIV class="pop_CA_cover"></DIV>
+<DIV class="pop pop_CA">
+<DIV class="CA_header">        收藏助手         <SPAN class="cancel_icon" id="fapancle"></SPAN></DIV><IFRAME 
+width="100%" height="360" id="collectIframe" src="gtest-intro_files/o.htm" 
+frameborder="0" scrolling="no"></IFRAME> </DIV><!--举报--> 
+<DIV id="report_dialog" style="left: 343.5px; top: 250px;">
+<DIV id="panel_report">
+<DIV class="panel_head">不良信息举报</DIV>
+<FORM class="panel_body" id="frmReport" method="post">
+<TABLE class="pop_table" border="0" cellspacing="4" cellpadding="0">
+  <TBODY>
+  <TR>
+    <TD colspan="2">您举报文章：<A href="http://blog.csdn.net/fengbingchun/article/details/39667571" 
+      target="_blank">gtest简介及简单使用</A></TD></TR>
+  <TR>
+    <TH style="width: 60px;">举报原因：</TH>
+    <TD id="panel_reporttype"><LABEL><INPUT name="report_type" class="report_type" 
+      id="report_sex" type="radio" value="1">色情</LABEL>                     
+      <LABEL><INPUT name="report_type" class="report_type" id="report_Politics" 
+      type="radio" value="2">政治</LABEL>                     <LABEL><INPUT name="report_type" 
+      class="report_type" id="report_copy" type="radio" value="3">抄袭</LABEL>     
+                      <LABEL><INPUT name="report_type" class="report_type" id="report_ad" 
+      type="radio" value="4">广告</LABEL>                     <LABEL><INPUT name="report_type" 
+      class="report_type" id="report_want" type="radio" value="5">招聘</LABEL>     
+                      <LABEL><INPUT name="report_type" class="report_type" id="report_call" 
+      type="radio" value="6">骂人</LABEL>                     <BR><LABEL><INPUT 
+      name="report_type" class="report_type" id="report_other" type="radio" 
+      value="7">其他</LABEL>                     <INPUT name="report_other_content" id="report_other_content" style="display: none;" type="text" maxlength="30"> 
+                      </TD></TR>
+  <TR id="panel_originalurl" style="display: none;">
+    <TH>原文地址：</TH>
+    <TD><INPUT name="originalurl" id="originalurl" style="width: 90%;" type="text" value="http://"> 
+                      </TD></TR>
+  <TR>
+    <TH id="sp_reason">原因补充：</TH>
+    <TD><TEXTAREA name="report_description" id="report_description" style="width: 300px;" rows="3"></TEXTAREA> 
+                          
+      <P id="sp_n" 
+      style="margin: 0px; padding: 0px; color: rgb(153, 153, 153);">(最多只允许输入30个字)</P></TD></TR>
+  <TR>
+    <TD></TD>
+    <TD><INPUT name="submit" align="middle" class="btn_1" id="btnSubmitReport" 
+      type="image" src="gtest-intro_files/btn_submit.jpg">                     
+      <SPAN style="padding-left: 20px;"></SPAN>                     <IMG align="middle" 
+      id="btnCloseReportDialog" src="gtest-intro_files/btn_cancel.jpg">          
+                 
+      <DIV id="error" 
+style="color: red;"></DIV></TD></TR></TBODY></TABLE></FORM></DIV>
+<SCRIPT language="javascript" type="text/javascript">
+        var isComment=0;
+        //显示隐藏地址
+        $(function () {
+          console.log("version:phoenix");
+            if(isComment){
+                $("#report_description").attr("disabled",true);
+                $("#sp_n").hide();
+                $("#sp_reason").html("评论内容：");
+            }
+            $(".report_type").click(function () {
+                $("#panel_originalurl,#report_other_content").hide();
+                switch ($(this).val()) {
+                    case '3':
+                        $("#panel_originalurl").show();
+                        $("#originalurl").focus();
+                        break;
+                    case '7':
+                        if(isComment){
+                            $("#report_other_content").show().focus();
+                        }
+                        break;
+                }
+
+            });
+
+            $("#frmReport").submit(function () {
+                if (!currentUserName) {
+
+                    if (confirm("您的操作必须登录，是否登录？")) {
+                        location.href = "http://passport.csdn.net/account/login?from=" + encodeURIComponent(location.href);
+                        return false;
+                    }
+                    return false;
+                }
+
+                var reportType = $("input[name=report_type]:checked").val();
+                if(!reportType){
+                    alert("请选择举报原因！");
+                    return false;
+                }
+                var otherInfo = "";
+                switch (reportType) {
+                    case '3':
+                        otherInfo = $("#originalurl").val();
+                        if (otherInfo == ""||otherInfo=="http://") {
+                            alert("举报抄袭必须提供原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        } else if(!checkeURL(otherInfo)) {
+                            alert("请输入正确的原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        }
+                        break;
+                    case '7':
+                        otherInfo = $("#report_other_content").val();
+                        if (isComment && !otherInfo) {
+                            alert("请填写举报的具体原因！");
+                            $("#report_other_content").focus();
+                            return false;
+                        }
+                        if(!isComment){
+                            if(!$("#report_description").val()){
+                                alert("请填写举报的具体原因！");
+                                $("#report_description").focus();
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                if(!isComment){
+                    if($("#report_description").val().length>30){
+                        alert("举报原因最多只允许输入30个字！");
+                        return false;
+                    }
+                }
+	            nowTime = {
+		            year: new Date().getFullYear(),
+		            month: parseInt(new Date().getMonth())+1,
+		            day: new Date().getDate(),
+		            hours: parseInt(new Date().getHours())+1,
+		            minutes: parseInt(new Date().getMinutes())+1,
+		            seconds: parseInt(new Date().getSeconds())+1
+	            };
+	            var data = {
+		            articleId: fileName,
+		            commentId: 0,
+		            reportType: reportType,
+		            originalurl: $("#originalurl").val(),
+		            report_other_content: $("#report_other_content").val(),
+		            report_description: $("#report_description").val(),
+		            currentUserName: currentUserName,
+		            updatetime: nowTime.year+'/'+nowTime.month+'/'+nowTime.day+' '+ nowTime.hours+':'+nowTime.minutes+':'+seconds,
+		            blogUser: username
+	            };
+	            if(!isComment){//如果是举报文章
+		            data.report_other_content = data.report_description;
+		            // data.report_description = "1. 神经网络这是一个常见的神经网络的图：这是一个常见的三层神经网络的基本构成，Layer L1是输入层，Layer L2是隐含层";
+	            }
+
+	            $.post(blog_address + "/common/report?id="+fileName+"&t=2", data, function (data) {
+		            if (data.result == 1){
+			            SetError("感谢您的举报，我们会尽快审核！");
+		            }else{
+			            if (data.content) alert(data.content);
+		            }
+
+	            });
+                return false;
+            });
+
+            $("#btnCloseReportDialog").click(function () {
+                CloseDiv();
+            });
+
+        });
+
+        //提示后关闭方法
+        function SetError(error) {
+            $("#btnCloseReportDialog").trigger("click");
+            alert(error);
+            CloseDiv();
+        }
+
+        //关闭方法
+        function CloseDiv() {
+
+            $.removeMask();
+            $("#report_dialog").hide();
+            return false;
+        }
+
+        //验证url
+        function checkeURL(url){
+            return /^http(s)?:\/\/([\w-]+\.)+[\w-]+/i.test(url);
+        }
+    </SCRIPT>
+ </DIV><!--  fixme 后期清理掉  --> 
+<DIV id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+<SCRIPT id="adJs52b5334"></SCRIPT>
+     
+<SCRIPT>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</SCRIPT>
+ </DIV>
+<SCRIPT src="gtest-intro_files/bootstrap.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="gtest-intro_files/MathJax.js" type="text/javascript"></SCRIPT>
+ <!-- <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script> --> 
+<SCRIPT>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    if($(".article_collect li").length==1){$(".article_collect").hide();}
+    if($(".article_tags li").length==1){$(".article_tags").hide();}
+    $(".edit a").attr("href","http://write.blog.csdn.net/postedit/"+fileName);
+    $.each($(".edu_li a"),function(){$(this).attr("href",$(this).attr("href").replace("blog7","blog9"))});
+    new CNick('#uid').showNickname();
+
+    if($("#fan").html()=="")
+    {
+	    $("#fan").html(0);
+    }
+</SCRIPT>
+ 
+<SCRIPT src="gtest-intro_files/appendMark.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    appendMark($('.recommend_list').children('a').find('dt'),$('.extension_other'))
+</SCRIPT>
+ 
+<DIV id="loginWrap"></DIV>
+<DIV id="dlMask"></DIV></BODY></HTML>
