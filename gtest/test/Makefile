@@ -8,7 +8,7 @@ LDPATH =
 VPATH = 
 
 SOURCES = $(shell ls *.cpp)
-PROGS = gtest_test
+PROGS = test
 
 all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
