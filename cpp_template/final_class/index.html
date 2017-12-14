@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>C++实现final类, 利用template和C++11特性实现</title>
+    </head>
+    <body>
+        <center><h3>C++实现final类, 利用template和C++11特性实现</h3></center>
+        <p>
+            &emsp;&emsp;这里介绍一种利用template和C++11特性实现类似于Java中final关键字作用于类的效果(参见参考资料: Java final类).
+            假设我们有一个Base类, 但是我们不想让任何类来继承自这个类，同时我们还希望这个类和普通类没啥两样,
+            比如可以在栈上分配等, 我们怎么能做到呢, 实现方式也已经算是一种惯用法(参见参考资料: C++ 实现不允许继承的类).
+            我这里想要介绍的是, 通过template和C++11的friend新特性实现一个类似于boost::noncopyable语法方式(参见参考资料: boost::noncopyable介绍).
+        </p>
+        <p>先举个例子</p>
+        <p><pre>
+//--------------------------
+// demo.cpp
+//--------------------------
+class Base {
+public:
+    Base() {}
+    
+};
+
+class Derived: public Base {    // (1)
+public:
+    Derived() {}
+};
+
+int main()
+{
+    Base b;     // (2)
+    Derived d;  // (3)
+    return 0;
+}
+        </pre></p>
+        <p>
+            就demo.cpp而言, 我们希望最终的效果是行(1)会编译报错, 行(2)能编译通过, 行(3)自然由于行(1)的报错也不能通过编译.
+        </p> 
+        <p>
+            通过将Base类virtual继承自Final_class<Base>, 我们就可以达到上述效果, 下面上菜.
+        </p> 
+        <p><pre>
+//--------------------------
+// final_class.h
+//--------------------------
+#ifndef __final_class_h
+#define __final_class_h
+
+template &lt;typename T&gt;
+class Final_class {
+    friend T;
+
+private:
+    Final_class() {}
+};
+
+#endif
+        </pre></p>
+        <p><pre>
+//--------------------------
+// base.h
+//--------------------------
+#ifndef __base_h
+#define __base_h
+
+#include "final_class.h"
+
+class Base: virtual Final_class&lt;Base&gt; {
+public:
+    Base() {}
+};
+
+#endif
+        </pre></p>
+        <p><pre>
+//--------------------------
+// base.cpp
+//--------------------------
+#include "base.h"
+
+int main()
+{
+    Base b;
+    return 0;
+}
+        </pre></p>
+        <p>
+            通过g++ -o base base.cpp命令验证, base.cpp是可以编译通过的.
+        </p>
+        <p><pre>
+//--------------------------
+// derived.h
+//--------------------------
+#ifndef __derived_h
+#define __derived_h
+
+#include "base.h"
+
+class Derived: public Base {
+public:
+    Derived() {}
+};
+
+#endif
+        </pre></p>
+        <p><pre>
+//--------------------------
+// derived.cpp
+//--------------------------
+#include "derived.h"
+
+int main()
+{
+    Derived d;
+    return 0;
+}
+        </pre></p>
+        <p>
+            通过g++ -o derived derived.cpp命令验证, derived.cpp是会编译报错的. 在我的编译环境下, 报错信息如下:
+        </p>
+        <p><pre>
+derived.h: 在构造函数‘Derived::Derived()’中:
+derived.h:8:15: 错误：‘Final_class<T>::Final_class() [with T = Base]’ is private within this context
+     Derived() {}
+               ^
+In file included from base.h:4:0,
+                 from derived.h:4,
+                 from derived.cpp:1:
+final_class.h:9:5: 附注：declared private here
+     Final_class() {}
+     ^~~~~~~~~~~
+        </pre></p>
+		<p>
+			完整的示例代码参见
+			<a href="https://github.com/hexu1985/algo_code/tree/master/final_class">final_class</a>
+		</p>
+        <p>
+            参考资料
+            <ul>
+                <li>
+                    <a href="https://www.cnblogs.com/frankyou/p/6023029.html">Java final类</a>
+                </li>
+                <li>
+                    <a href="https://www.cnblogs.com/thinkingfor/archive/2010/09/14/1825937.html">C++ 实现不允许继承的类</a>
+                </li>
+                <li>
+                    <a href="http://blog.csdn.net/huang_xw/article/details/8248960">boost::noncopyable介绍</a>
+                </li>
+            </ul>
+        </p>
+    </body>
+</html>
