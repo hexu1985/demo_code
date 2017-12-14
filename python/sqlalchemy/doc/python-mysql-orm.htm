@@ -1,0 +1,1097 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0047)https://www.cnblogs.com/pycode/p/mysql-orm.html -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-cn"><HEAD><META content="IE=10.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="utf-8"> 
+<META name="viewport" content="width=device-width, initial-scale=1"> 
+<TITLE>python对Mysql操作和使用ORM框架（SQLAlchemy） - 君醉 - 博客园</TITLE> <LINK href="python-mysql-orm_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="python-mysql-orm_files/bundle-SimpleMemory.css" 
+rel="stylesheet" type="text/css"> <LINK id="mobile-style" href="python-mysql-orm_files/bundle-SimpleMemory-mobile.css" 
+rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)"> 
+<LINK title="RSS" href="http://www.cnblogs.com/pycode/rss" rel="alternate" type="application/rss+xml"> 
+<LINK title="RSD" href="http://www.cnblogs.com/pycode/rsd.xml" rel="EditURI" 
+type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/pycode/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="python-mysql-orm_files/jquery.js" type="text/javascript"></SCRIPT>
+  
+<SCRIPT type="text/javascript">var currentBlogApp = 'pycode', cb_enable_mathjax=false;var isLogined=false;</SCRIPT>
+ 
+<SCRIPT src="python-mysql-orm_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.9600.18739"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" 
+href="http://www.cnblogs.com/pycode/"><IMG id="blogLogo" alt="返回主页" src="python-mysql-orm_files/logo.gif"></A>			
+		<!--done--> 
+<H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/pycode/">君醉</A></H1>
+<H2>Just Do IT，Not At ALL</H2></DIV><!--end: blogTitle 博客的标题和副标题 -->	 
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A class="menu" id="blog_nav_sitehome" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A class="menu" id="blog_nav_myhome" 
+  href="http://www.cnblogs.com/pycode/">首页</A></LI>
+  <LI></LI>
+  <LI><A class="menu" id="blog_nav_contact" href="https://msg.cnblogs.com/send/%E5%90%9B%E9%86%89" 
+  rel="nofollow">联系</A></LI>
+  <LI><!----></LI>
+  <LI><A class="menu" id="blog_nav_admin" href="https://i.cnblogs.com/" rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats">
+<DIV id="blog_stats"><SPAN id="stats_post_count">随笔 - 80&nbsp; </SPAN> <SPAN id="stats_article_count">文章 
+- 5&nbsp; </SPAN> <SPAN id="stats-comment_count">评论 - 7</SPAN> </DIV></DIV><!--end: blogStats -->
+	 </DIV><!--end: navigator 博客导航栏 --> </DIV><!--end: header 头部 --> 
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow">
+<DIV id="post_detail"><!--done--> 
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/pycode/p/mysql-orm.html">python对Mysql操作和使用ORM框架（SQLAlchemy）</A>
+		 </H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV id="cnblogs_post_body">
+<H1 id="toc_0">python对mysql的操作</H1>
+<H2 id="toc_1">Mysql 常见操作</H2>
+<H3 id="toc_2">数据库操作</H3>
+<UL>
+  <LI>创建数据库</LI></UL>
+<P>　　　　create database fuzjtest</P>
+<UL>
+  <LI>删除数据库</LI></UL>
+<P>　　　　drop database fuzjtest</P>
+<UL>
+  <LI>查询数据库</LI></UL>
+<P>　　　　show databases</P>
+<UL>
+  <LI>切换数据库</LI></UL>
+<P>　　　　use databas 123123 ###用户授权</P>
+<UL>
+  <LI>创建用户</LI></UL>
+<P>　　　　create user '用户名'@'IP地址' identified by '密码';</P>
+<UL>
+  <LI>删除用户</LI></UL>
+<P>　　　　drop user '用户名'@'IP地址';</P>
+<UL>
+  <LI>修改用户</LI></UL>
+<P>　　　　rename user '用户名'@'IP地址'; to '新用户名'@'IP地址';;</P>
+<UL>
+  <LI>修改密码</LI></UL>
+<P>　　　　set password for '用户名'@'IP地址' = Password('新密码')</P>
+<UL>
+  <LI>查看权限</LI></UL>
+<P>　　　　 show grants for '用户'@'IP地址'</P>
+<UL>
+  <LI>授权</LI></UL>
+<P>　　　　grant 权限 on 数据库.表 to '用户'@'IP地址'</P>
+<UL>
+  <LI>
+  <P>取消权限<BR>revoke 权限 on 数据库.表 from '用户'@'IP地址'</P>
+  <P>PS：用户权限相关数据保存在mysql数据库的user表中，所以也可以直接对其进行操作（不建议）<BR>授权数据库</P></LI></UL>
+<DIV class="cnblogs_code" onclick="cnblogs_code_show('a039e76d-2052-4fbb-8091-2fd970176e13')"><IMG 
+class="code_img_closed" id="code_img_closed_a039e76d-2052-4fbb-8091-2fd970176e13" 
+alt="" src="python-mysql-orm_files/ContractedBlock.gif"><IMG class="code_img_opened" 
+id="code_img_opened_a039e76d-2052-4fbb-8091-2fd970176e13" style="display: none;" 
+onclick="cnblogs_code_hide('a039e76d-2052-4fbb-8091-2fd970176e13',event)" alt="" 
+src="python-mysql-orm_files/ExpandedBlockStart.gif"> 
+<DIV class="cnblogs_code_hide" id="cnblogs_code_open_a039e76d-2052-4fbb-8091-2fd970176e13">
+<PRE><SPAN style="color: rgb(0, 0, 0);">all privileges  除grant外的所有权限
+select          仅查权限
+select,insert   查和插入权限
+...
+usage                   无访问权限
+alter                   使用alter table
+alter routine           使用alter procedure和drop procedure
+create                  使用create table
+create routine          使用create procedure
+create temporary tables 使用create temporary tables
+create user             使用create user、drop user、rename user和revoke  all privileges
+create view             使用create view
+delete                  使用delete
+drop                    使用drop table
+execute                 使用call和存储过程
+file                    使用select into outfile 和 load data infile
+grant option            使用grant 和 revoke
+index                   使用index
+insert                  使用insert
+lock tables             使用lock table
+process                 使用show full processlist
+select                  使用select
+show databases          使用show databases
+show view               使用show view
+update                  使用update
+reload                  使用flush
+shutdown                使用mysqladmin shutdown(关闭MySQL)
+super                   􏱂􏰈使用change master、kill、logs、purge、master和set </SPAN><SPAN style="color: rgb(0, 0, 255);">global</SPAN><SPAN style="color: rgb(0, 0, 0);">。还允许mysqladmin􏵗􏵘􏲊􏲋调试登陆
+replication client      服务器位置的访问
+replication slave       由复制从属使用</SPAN></PRE></DIV><SPAN 
+class="cnblogs_code_collapse">相关权限</SPAN></DIV>
+<DIV class="cnblogs_code" onclick="cnblogs_code_show('936d4d1a-d29c-425e-bed7-0bea1282b8cd')"><IMG 
+class="code_img_closed" id="code_img_closed_936d4d1a-d29c-425e-bed7-0bea1282b8cd" 
+alt="" src="python-mysql-orm_files/ContractedBlock.gif"><IMG class="code_img_opened" 
+id="code_img_opened_936d4d1a-d29c-425e-bed7-0bea1282b8cd" style="display: none;" 
+onclick="cnblogs_code_hide('936d4d1a-d29c-425e-bed7-0bea1282b8cd',event)" alt="" 
+src="python-mysql-orm_files/ExpandedBlockStart.gif"> 
+<DIV class="cnblogs_code_hide" id="cnblogs_code_open_936d4d1a-d29c-425e-bed7-0bea1282b8cd">
+<PRE><SPAN style="color: rgb(0, 0, 0);">对于目标数据库以及内部其他：
+  数据库名.</SPAN>*<SPAN style="color: rgb(0, 0, 0);">           数据库中的所有
+  数据库名.表          指定数据库中的某张表
+  数据库名.存储过程     指定数据库中的存储过程
+  </SPAN>*.*                所有数据库</PRE></DIV><SPAN 
+class="cnblogs_code_collapse">对数据库授权</SPAN></DIV>
+<DIV class="cnblogs_code" onclick="cnblogs_code_show('7087981a-d017-4ce7-b97a-888158ed88c8')"><IMG 
+class="code_img_closed" id="code_img_closed_7087981a-d017-4ce7-b97a-888158ed88c8" 
+alt="" src="python-mysql-orm_files/ContractedBlock.gif"><IMG class="code_img_opened" 
+id="code_img_opened_7087981a-d017-4ce7-b97a-888158ed88c8" style="display: none;" 
+onclick="cnblogs_code_hide('7087981a-d017-4ce7-b97a-888158ed88c8',event)" alt="" 
+src="python-mysql-orm_files/ExpandedBlockStart.gif"> 
+<DIV class="cnblogs_code_hide" id="cnblogs_code_open_7087981a-d017-4ce7-b97a-888158ed88c8">
+<PRE><SPAN style="color: rgb(0, 0, 0);">用户名@IP地址         用户只能在改IP下才能访问
+用户名@</SPAN>192.168.1.%   用户只能在改IP段下才能访问(通配符%<SPAN style="color: rgb(0, 0, 0);">表示任意)
+用户名@</SPAN>%             用户可以再任意IP下访问(默认IP地址为%)</PRE></DIV><SPAN 
+class="cnblogs_code_collapse">对用户和IP</SPAN></DIV>
+<P>&nbsp;</P>
+<P>实例</P>
+<DIV class="cnblogs_code">
+<PRE>grant all privileges on db1.tb1 TO <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">用户名</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>@<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">IP</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+
+grant select on db1.</SPAN>* TO <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">用户名</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>@<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">IP</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+
+grant select,insert on </SPAN>*.* TO <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">用户名</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>@<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">IP</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+
+revoke select on db1.tb1 </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">用户名</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>@<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">IP</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<H3 id="toc_3">表操作</H3>
+<UL>
+  <LI>
+  <P>创建表</P>
+  <UL>
+    <LI>语法</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 0);">create table 表名(
+    列名  类型  是否可以为空，
+    列名  类型  是否可以为空
+)</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>参数</LI></UL></LI></UL>
+<DIV class="cnblogs_code">
+<PRE>1<SPAN style="color: rgb(0, 0, 0);">.是否可空，null表示空，非字符串
+          </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN> null    -<SPAN style="color: rgb(0, 0, 0);"> 不可空
+          null        </SPAN>-<SPAN style="color: rgb(0, 0, 0);"> 可空
+
+</SPAN>2<SPAN style="color: rgb(0, 0, 0);">.默认值，创建列时可以指定默认值，当插入数据时如果未主动设置，则自动添加默认值
+          create table tb1(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN> null defalut 2<SPAN style="color: rgb(0, 0, 0);">,
+              num int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null
+          )
+</SPAN>3<SPAN style="color: rgb(0, 0, 0);">.自增，如果为某列设置自增列，插入数据时无需设置此列，默认将自增（表中只能有一个自增列）
+          create table tb1(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null auto_increment primary key,
+              num int null
+          )
+          或
+          create table tb1(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null auto_increment,
+              num int null,
+              index(nid)
+          )
+          注意：</SPAN>1<SPAN style="color: rgb(0, 0, 0);">、对于自增列，必须是索引（含主键）。
+               </SPAN>2<SPAN style="color: rgb(0, 0, 0);">、对于自增可以设置步长和起始值
+                   show session variables like </SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">auto_inc%</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">;
+                   set session auto_increment_increment</SPAN>=2<SPAN style="color: rgb(0, 0, 0);">;
+                   set session auto_increment_offset</SPAN>=10<SPAN style="color: rgb(0, 0, 0);">;
+
+                   shwo </SPAN><SPAN style="color: rgb(0, 0, 255);">global</SPAN>  variables like <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">auto_inc%</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">;
+                   set </SPAN><SPAN style="color: rgb(0, 0, 255);">global</SPAN> auto_increment_increment=2<SPAN style="color: rgb(0, 0, 0);">;
+                   set </SPAN><SPAN style="color: rgb(0, 0, 255);">global</SPAN> auto_increment_offset=10<SPAN style="color: rgb(0, 0, 0);">;
+
+ </SPAN>4<SPAN style="color: rgb(0, 0, 0);">.主键，一种特殊的唯一索引，不允许有空值，如果主键使用单个列，则它的值必须唯一，如果是多列，则其组合必须唯一。
+          create table tb1(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null auto_increment primary key,
+              num int null
+          )
+          或
+          create table tb1(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null,
+              num int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null,
+              primary key(nid,num)
+          )
+
+ </SPAN>5<SPAN style="color: rgb(0, 0, 0);">.外键，一个特殊的索引，只能是指定内容
+          creat table color(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null primary key,
+              name char(</SPAN>16) <SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null
+          )
+
+          create table fruit(
+              nid int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null primary key,
+              smt char(</SPAN>32<SPAN style="color: rgb(0, 0, 0);">) null ,
+              color_id int </SPAN><SPAN style="color: rgb(0, 0, 255);">not</SPAN><SPAN style="color: rgb(0, 0, 0);"> null,
+              constraint fk_cc foreign key (color_id) references color(nid)
+          )</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>删除表</LI></UL>
+<P>　　　drop table 表名</P>
+<UL>
+  <LI>
+  <P>清空表</P>
+  <P>delete from 表名<BR>truncate table 表名</P></LI>
+  <LI>
+  <P>修改表</P>
+  <UL>
+    <LI>添加列：</LI></UL></LI></UL>
+<P>　　　　　　alter table 表名 add 列名 类型</P>
+<UL>
+  <LI style="list-style-type: none;">
+  <UL>
+    <LI>删除列：</LI></UL></LI></UL>
+<P>　　　　　　alter table 表名 drop column 列名</P>
+<UL>
+  <LI style="list-style-type: none;">
+  <UL>
+    <LI>
+    <P>修改列：<BR>alter table 表名 modify column 列名 类型;  -- 类型<BR>alter table 表名 
+    change 原列名 新列名 类型; -- 列名，类型</P></LI>
+    <LI>
+    <P>添加主键：</P></LI>
+    <LI>
+    <P>删除主键：<BR>alter table 表名 drop primary key;<BR>alter table 表名  modify  列名 
+    int, drop primary key;</P></LI>
+    <LI>
+    <P>添加外键：</P></LI></UL></LI></UL>
+<P>&nbsp;</P>
+<P>　　　　　　alter table 从表 add constraint 外键名称（形如：FK_从表_主表） foreign key 从表(外键字段) 
+references 主表(主键字段);</P>
+<P>&nbsp;</P>
+<UL>
+  <LI style="list-style-type: none;">
+  <UL>
+    <LI>
+    <P>删除外键：</P></LI></UL></LI></UL>
+<P>&nbsp;</P>
+<P>　　　　　　alter table 表名 drop foreign key 外键名称</P>
+<P>&nbsp;</P>
+<UL>
+  <LI style="list-style-type: none;">
+  <UL>
+    <LI>
+    <P>修改默认值：</P></LI></UL></LI></UL>
+<P>&nbsp;</P>
+<P>　　　　　　ALTER TABLE testalter_tbl ALTER i SET DEFAULT 1000;</P>
+<P>&nbsp;</P>
+<UL>
+  <LI style="list-style-type: none;">
+  <UL>
+    <LI>
+    <P>删除默认值：</P></LI></UL></LI></UL>
+<P>&nbsp;</P>
+<P>　　　　　　ALTER TABLE testalter_tbl ALTER i DROP DEFAULT;</P>
+<P>&nbsp;</P>
+<H3 id="toc_4">基本操作</H3>
+<UL>
+  <LI>增</LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 0);">insert into 表 (列名,列名...) values (值,值,值...)
+insert into 表 (列名,列名...) values (值,值,值...),(值,值,值...)
+insert into 表 (列名,列名...) select (列名,列名...) </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>删</LI></UL>
+<DIV class="cnblogs_code">
+<PRE>delete <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> 表
+delete </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id＝1 <SPAN style="color: rgb(0, 0, 255);">and</SPAN> name＝<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>改</LI></UL>
+<DIV class="cnblogs_code">
+<PRE> update 表 set name ＝ <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> where id&gt;1</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>查</LI></UL>
+<DIV class="cnblogs_code">
+<PRE>select * <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> 表
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id &gt; 1<SPAN style="color: rgb(0, 0, 0);">
+select nid,name,gender as gg </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id &gt; 1</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>
+  <P>高级操作</P>
+  <UL>
+    <LI>
+    <P>条件</P>
+    <DIV class="cnblogs_code">
+<PRE>select * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id &gt; 1 <SPAN style="color: rgb(0, 0, 255);">and</SPAN> name != <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">alex</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> <SPAN style="color: rgb(0, 0, 255);">and</SPAN> num = 12<SPAN style="color: rgb(0, 0, 0);">;
+
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id between 5 <SPAN style="color: rgb(0, 0, 255);">and</SPAN> 16<SPAN style="color: rgb(0, 0, 0);">;
+
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id <SPAN style="color: rgb(0, 0, 255);">in</SPAN> (11,22,33<SPAN style="color: rgb(0, 0, 0);">)
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id <SPAN style="color: rgb(0, 0, 255);">not</SPAN> <SPAN style="color: rgb(0, 0, 255);">in</SPAN> (11,22,33<SPAN style="color: rgb(0, 0, 0);">)
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where id <SPAN style="color: rgb(0, 0, 255);">in</SPAN> (select nid <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表)</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>通配符</P>
+    <DIV class="cnblogs_code">
+<PRE>select * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where name like <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">ale%</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> -<SPAN style="color: rgb(0, 0, 0);"> ale开头的所有（多个字符串）
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where name like <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">ale_</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> - ale开头的所有（一个字符）</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>限制</P>
+    <DIV class="cnblogs_code">
+<PRE>select * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 limit 5; -<SPAN style="color: rgb(0, 0, 0);"> 前5行
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 limit 4,5; -<SPAN style="color: rgb(0, 0, 0);"> 从第4行开始的5行
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 limit 5 offset 4 - 从第4行开始的5行</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>排序</P>
+    <DIV class="cnblogs_code">
+<PRE>select * <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 order by 列 asc -<SPAN style="color: rgb(0, 0, 0);"> 根据 “列” 从小到大排列
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 order by 列 desc -<SPAN style="color: rgb(0, 0, 0);"> 根据 “列” 从大到小排列
+select </SPAN>* <SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 order by 列1 desc,列2 asc - 根据 “列1” 从大到小排列，如果相同则按列2从小到大排序</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>分组</P>
+    <DIV class="cnblogs_code">
+<PRE>select num <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> 表 group by num
+select num,nid </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> 表 group by num,nid
+select num,nid </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 where nid &gt; 10<SPAN style="color: rgb(0, 0, 0);"> group by num,nid order nid desc
+select num,nid,count(</SPAN>*),sum(score),max(score),min(score) <SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> 表 group by num,nid
+
+select num </SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> 表 group by num having max(id) &gt; 10<SPAN style="color: rgb(0, 0, 0);">
+
+特别的：group by 必须在where之后，order by之前</SPAN></PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>连表</P>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 0);">无对应关系则不显示
+select A.num, A.name, B.name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A,B
+Where A.nid </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> B.nid
+
+无对应关系则不显示
+select A.num, A.name, B.name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A inner join B
+on A.nid </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> B.nid
+
+A表所有显示，如果B中无对应关系，则值为null
+select A.num, A.name, B.name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A left join B
+on A.nid </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> B.nid
+
+B表所有显示，如果B中无对应关系，则值为null
+select A.num, A.name, B.name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A right join B
+on A.nid </SPAN>= B.nid</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>组合</P>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 0);">组合，自动处理重合
+select nickname
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A
+union
+select name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> B
+
+组合，不处理重合
+select nickname
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN><SPAN style="color: rgb(0, 0, 0);"> A
+union all
+select name
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> B</PRE></DIV>
+    <P>&nbsp;</P>
+    <H2 id="toc_5">python操作Mysql</H2>
+    <P>python3中第三方模块pymysql，提供python对mysql的操作<BR>pip3 install 
+  pymysql</P></LI></UL></LI>
+  <LI>
+  <P>执行sql语句</P></LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> pymysql
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建连接</SPAN>
+conn = pymysql.connect(host=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">127.0.0.1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, port=3306, user=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, passwd=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, db=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建游标</SPAN>
+cursor =<SPAN style="color: rgb(0, 0, 0);"> conn.cursor()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">conn.set_charset('utf-8')</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 执行SQL，并返回收影响行数</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);">effect_row = cursor.execute("create table user (id int not NULL auto_increment primary key  ,name char(16) not null) ")    #创建一个user表</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);">print(effect_row)</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 执行SQL，并返回受影响行数，使用占位符 实现动态传参</SPAN>
+cursor.execute(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">SET CHARACTER SET utf8;</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+effect_row </SPAN>= cursor.execute(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">insert into user (name) values (%s) </SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+effect_row </SPAN>= cursor.executemany(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">insert into user (name) values (%s) </SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, [(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,),(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">,)])
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">print(effect_row)</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 执行多个SQL，并返回受影响行数，列表中每个元素都相当于一个条件</SPAN>
+effect_row = cursor.executemany(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">update user set name = %s WHERE  id = %s</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, [(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>,1),(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">jeck</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>,2<SPAN style="color: rgb(0, 0, 0);">)])
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(effect_row)</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>获取新创建数据自增ID</LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">使用游标的lastrowid方法获取</SPAN>
+new_id = cursor.lastrowid</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>获取查询数据</LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> pymysql
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建连接</SPAN>
+conn = pymysql.connect(host=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">127.0.0.1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, port=3306, user=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, passwd=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, db=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建游标</SPAN>
+cursor =<SPAN style="color: rgb(0, 0, 0);"> conn.cursor()
+
+
+cursor.execute(</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">select * from user</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取第一行数据</SPAN>
+row_1 =<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchone()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_1)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取前n行数据</SPAN>
+row_2 = cursor.fetchmany(3<SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_2)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取所有数据</SPAN>
+row_3 =<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchall()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_3)
+conn.commit()
+cursor.close()
+conn.close()</SPAN><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> pymysql
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建连接</SPAN>
+conn = pymysql.connect(host=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">127.0.0.1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, port=3306, user=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, passwd=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, db=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建游标</SPAN>
+cursor =<SPAN style="color: rgb(0, 0, 0);"> conn.cursor()
+
+
+cursor.execute(</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">select * from user</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取第一行数据</SPAN>
+row_1 =<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchone()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_1)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取前n行数据</SPAN>
+row_2 = cursor.fetchmany(3<SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_2)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取所有数据，返回元组形式</SPAN>
+row_3 =<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchall()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_3)
+conn.commit()
+cursor.close()
+conn.close()</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>输出：</P>
+<DIV class="cnblogs_code">
+<PRE>(1, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+((</SPAN>2, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">jeck</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (3, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (4, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+((</SPAN>5, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (6, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (7, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (8, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (9, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (10, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (11, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (12, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (13, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (14, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (15, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (16, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (17, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (18, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (19, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (20, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (21, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (22, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (23, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (24, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (25, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (26, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>))</PRE></DIV>
+<P>&nbsp;</P>
+<P>注：在fetch数据时按照顺序进行，可以使用cursor.scroll(num,mode)来移动游标位置，如：</P>
+<P>cursor.scroll(1,mode='relative') # 
+相对当前位置移动<BR>cursor.scroll(2,mode='absolute') # 相对绝对位置移动</P>
+<UL>
+  <LI>fetch数据类型</LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> pymysql
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建连接</SPAN>
+conn = pymysql.connect(host=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">127.0.0.1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, port=3306, user=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, passwd=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, db=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建游标</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);">cursor = conn.cursor()</SPAN>
+cursor = conn.cursor(cursor=<SPAN style="color: rgb(0, 0, 0);">pymysql.cursors.DictCursor)
+
+cursor.execute(</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">select * from user</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+row_1 </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchone()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_1)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取前n行数据</SPAN>
+row_2 = cursor.fetchmany(3<SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_2)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 获取所有数据</SPAN>
+row_3 =<SPAN style="color: rgb(0, 0, 0);"> cursor.fetchall()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(row_3)
+conn.commit()
+cursor.close()
+conn.close()</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>输出结果：</P>
+<DIV class="cnblogs_code">
+<PRE>{<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 1, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">}
+[{</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 2, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">jeck</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 3, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 4, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">}]
+[{</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 5, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 6, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 7, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 8, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 9, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 10, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 11, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 12, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 13, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 14, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 15, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 16, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 17, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 18, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 19, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">323</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 20, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">123</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 21, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">456</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 22, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">789</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 23, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">0</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 24, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 25, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}, {<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: 26, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>}]</PRE></DIV>
+<P>&nbsp;</P>
+<PRE><SPAN style="line-height: 1.5; font-family: verdana, Arial, Helvetica, sans-serif; font-size: 2em;">ORM框架</SPAN></PRE>
+<P>SQLAlchemy是Python编程语言下的一款ORM框架，该框架建立在数据库API之上，使用关系对象映射进行数据库操作，简言之便是：将对象转换成SQL，然后使用数据API执行SQL并获取执行结果。<BR><IMG 
+alt="" 
+src="python-mysql-orm_files/952555-20160729110817044-661804168.jpg">￼<BR>SQLAlchemy本身无法操作数据库，其必须以来pymsql等第三方插件，Dialect用于和数据API进行交流，根据配置文件的不同调用不同的数据库API，从而实现对数据库的操作，如：</P>
+<DIV class="cnblogs_code">
+<PRE>MySQL-<SPAN style="color: rgb(0, 0, 0);">Python
+    mysql</SPAN>+mysqldb://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;[:&lt;port&gt;]/&lt;dbname&gt;<SPAN style="color: rgb(0, 0, 0);">
+  
+pymysql
+    mysql</SPAN>+pymysql://&lt;username&gt;:&lt;password&gt;@&lt;host&gt;/&lt;dbname&gt;[?&lt;options&gt;<SPAN style="color: rgb(0, 0, 0);">]
+  
+MySQL</SPAN>-<SPAN style="color: rgb(0, 0, 0);">Connector
+    mysql</SPAN>+mysqlconnector://&lt;user&gt;:&lt;password&gt;@&lt;host&gt;[:&lt;port&gt;]/&lt;dbname&gt;<SPAN style="color: rgb(0, 0, 0);">
+  
+cx_Oracle
+    oracle</SPAN>+cx_oracle://user:<SPAN style="color: rgb(0, 0, 255);">pass</SPAN>@host:port/dbname[?key=value&amp;key=<SPAN style="color: rgb(0, 0, 0);">value...]
+  
+更多详见：http:</SPAN>//docs.sqlalchemy.org/en/latest/dialects/index.html</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>底层处理</LI></UL>
+<P>使用 Engine/ConnectionPooling/Dialect 
+进行数据库操作，Engine使用ConnectionPooling连接数据库，然后再通过Dialect执行SQL语句。</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">创建引擎</SPAN>
+engine = create_engine(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+pymysql://fuzj:123123@127.0.0.1:3306/fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, max_overflow=5<SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">执行sql语句</SPAN>
+engine.execute(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">INSERT INTO user (name) VALUES ('dadadadad')</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+result </SPAN>= engine.execute(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">select * from user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+res </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> result.fetchall()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(res)</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>
+  <P>ORM功能使用<BR>使用 ORM/Schema Type/SQL Expression 
+  Language/Engine/ConnectionPooling/Dialect 
+  所有组件对数据进行操作。根据类创建对象，对象转换成SQL，执行SQL。</P>
+  <UL>
+    <LI>创建表</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> Column, Integer, String, ForeignKey, UniqueConstraint, Index
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> sessionmaker, relationship
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+
+engine </SPAN>= create_engine(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+pymysql://fuzj:123123@127.0.0.1:3306/123</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, max_overflow=5<SPAN style="color: rgb(0, 0, 0);">)
+
+Base </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> declarative_base()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 创建单表</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Users(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">users</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+id </SPAN>= Column(Integer, primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+name </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+extra </SPAN>= Column(String(16<SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__table_args__</SPAN> =<SPAN style="color: rgb(0, 0, 0);"> (
+UniqueConstraint(</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">uix_id_name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+   Index(</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">ix_id_name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">extra</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 一对多</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Favor(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">favor</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+nid </SPAN>= Column(Integer, primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+caption </SPAN>= Column(String(50), default=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">red</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, unique=<SPAN style="color: rgb(0, 0, 0);">True)
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Person(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">person</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+nid </SPAN>= Column(Integer, primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+name </SPAN>= Column(String(32), index=True, nullable=<SPAN style="color: rgb(0, 0, 0);">True)
+favor_id </SPAN>= Column(Integer, ForeignKey(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">favor.nid</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 多对多</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> ServerToGroup(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">servertogroup</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+nid </SPAN>= Column(Integer, primary_key=True, autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+server_id </SPAN>= Column(Integer, ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">server.id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+group_id </SPAN>= Column(Integer, ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">group.id</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Group(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">group</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+id </SPAN>= Column(Integer, primary_key=<SPAN style="color: rgb(0, 0, 0);">True)
+name </SPAN>= Column(String(64), unique=True, nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Server(Base):
+</SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">server</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+
+id </SPAN>= Column(Integer, primary_key=True, autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+hostname </SPAN>= Column(String(64), unique=True, nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+port </SPAN>= Column(Integer, default=22<SPAN style="color: rgb(0, 0, 0);">)
+
+Base.metadata.create_all(engine)  </SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">创建表</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);"> Base.metadata.drop_all(engine)   #删除表 </SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>增</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>obj = Users(name=<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">alex0</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, extra=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+session.add(obj)
+session.add_all([
+    Users(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">alex1</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, extra=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    Users(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">alex2</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, extra=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+])
+session.commit()</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>删</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>session.query(Users).filter(Users.id &gt; 2<SPAN style="color: rgb(0, 0, 0);">).delete()
+session.commit()</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>改</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>session.query(Users).filter(Users.id &gt; 2).update({<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">name</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> : <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">099</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">})
+session.query(Users).filter(Users.id </SPAN>&gt; 2).update({Users.name: Users.name + <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">099</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>}, synchronize_session=<SPAN style="color: rgb(0, 0, 0);">False)
+session.query(Users).filter(Users.id </SPAN>&gt; 2).update({<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">num</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>: Users.num + 1}, synchronize_session=<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">evaluate</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+session.commit()</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>查</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>ret =<SPAN style="color: rgb(0, 0, 0);"> session.query(Users).all()
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(Users.name, Users.extra).all()
+ret </SPAN>= session.query(Users).filter_by(name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">alex</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).all()
+ret </SPAN>= session.query(Users).filter_by(name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">alex</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()</PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>其它</LI></UL></LI></UL>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">　条件</SPAN>
+ret = session.query(Users).filter_by(name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">alex</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).all()
+ret </SPAN>= session.query(Users).filter(Users.id &gt; 1, Users.name == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).all()
+ret </SPAN>= session.query(Users).filter(Users.id.between(1, 3), Users.name == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).all()
+ret </SPAN>= session.query(Users).filter(Users.id.in_([1,3,4<SPAN style="color: rgb(0, 0, 0);">])).all()
+ret </SPAN>= session.query(Users).filter(~Users.id.in_([1,3,4<SPAN style="color: rgb(0, 0, 0);">])).all()
+ret </SPAN>= session.query(Users).filter(Users.id.in_(session.query(Users.id).filter_by(name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))).all()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> and_, or_
+ret </SPAN>= session.query(Users).filter(and_(Users.id &gt; 3, Users.name == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)).all()
+ret </SPAN>= session.query(Users).filter(or_(Users.id &lt; 2, Users.name == <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)).all()
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(Users).filter(
+    or_(
+        Users.id </SPAN>&lt; 2<SPAN style="color: rgb(0, 0, 0);">,
+        and_(Users.name </SPAN>== <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">eric</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, Users.id &gt; 3<SPAN style="color: rgb(0, 0, 0);">),
+        Users.extra </SPAN>!= <SPAN style="color: rgb(128, 0, 0);">""</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    )).all()
+
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 通配符</SPAN>
+ret = session.query(Users).filter(Users.name.like(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">e%</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)).all()
+ret </SPAN>= session.query(Users).filter(~Users.name.like(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">e%</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)).all()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 限制</SPAN>
+ret = session.query(Users)[1:2<SPAN style="color: rgb(0, 0, 0);">]
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 排序</SPAN>
+ret =<SPAN style="color: rgb(0, 0, 0);"> session.query(Users).order_by(Users.name.desc()).all()
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(Users).order_by(Users.name.desc(), Users.id.asc()).all()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 分组</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.sql <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> func
+
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(Users).group_by(Users.extra).all()
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(
+    func.max(Users.id),
+    func.sum(Users.id),
+    func.min(Users.id)).group_by(Users.name).all()
+
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(
+    func.max(Users.id),
+    func.sum(Users.id),
+    func.min(Users.id)).group_by(Users.name).having(func.min(Users.id) </SPAN>&gt;2<SPAN style="color: rgb(0, 0, 0);">).all()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 连表</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">
+ret </SPAN>= session.query(Users, Favor).filter(Users.id ==<SPAN style="color: rgb(0, 0, 0);"> Favor.nid).all()
+
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(Person).join(Favor).all()
+
+ret </SPAN>= session.query(Person).join(Favor, isouter=<SPAN style="color: rgb(0, 0, 0);">True).all()
+
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);"> 组合</SPAN>
+q1 = session.query(Users.name).filter(Users.id &gt; 2<SPAN style="color: rgb(0, 0, 0);">)
+q2 </SPAN>= session.query(Favor.caption).filter(Favor.nid &lt; 2<SPAN style="color: rgb(0, 0, 0);">)
+ret </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> q1.union(q2).all()
+
+q1 </SPAN>= session.query(Users.name).filter(Users.id &gt; 2<SPAN style="color: rgb(0, 0, 0);">)
+q2 </SPAN>= session.query(Favor.caption).filter(Favor.nid &lt; 2<SPAN style="color: rgb(0, 0, 0);">)
+ret </SPAN>= q1.union_all(q2).all()</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>ORM解决中文编码问题 sqlalchemy 默认使用latin-1进行编码。所以当出现中文时就会报如下错误：</LI></UL>
+<DIV class="cnblogs_code">
+<PRE>UnicodeEncodeError: <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">latin-1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN> codec can<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">t encode characters in position 39-41: ordinal not in range(256)</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<PRE><SPAN style="line-height: 1.5; font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px;"><BR>解决方法：</SPAN></PRE>
+<P>在连接数据库的时候直接指定字符编码：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">engine = create_engine("mysql+pymysql://fuzj:123.com@127.0.0.1:3306/fuzj?charset=utf8", max_overflow=5,encoding='utf-8')</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>参考：<A 
+href="http://firefish.blog.51cto.com/298258/112794">http://firefish.blog.51cto.com/298258/112794</A></P>
+<UL>
+  <LI>ORM 指定查询返回数据格式 默认使用query查询返回的结果为一个对象</LI></UL>
+<DIV class="cnblogs_code">
+<PRE>res =<SPAN style="color: rgb(0, 0, 0);"> session.query(User).all()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">使用for循环遍历列表才能取出name</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> res:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(i.name)
+
+输出结果：
+[</SPAN>&lt;<SPAN style="color: rgb(128, 0, 128);">__main__</SPAN>.User object at 0x10385c438&gt;, &lt;<SPAN style="color: rgb(128, 0, 128);">__main__</SPAN>.User object at 0x10385c4a8&gt;, &lt;<SPAN style="color: rgb(128, 0, 128);">__main__</SPAN>.User object at 0x10385c550&gt;, &lt;<SPAN style="color: rgb(128, 0, 128);">__main__</SPAN>.User object at 0x10385c5f8&gt;, &lt;<SPAN style="color: rgb(128, 0, 128);">__main__</SPAN>.User object at 0x10385c6a0&gt;<SPAN style="color: rgb(0, 0, 0);">]
+fuzj
+jie
+张三
+李四
+王五</SPAN></PRE></DIV>
+<P>&nbsp;</P>
+<P>使用__repr__定义返回的数据</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> User(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer,primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(10),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    role </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">role.rid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+    group </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Role</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">uuu</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">Role为类名</SPAN>
+
+    <SPAN style="color: rgb(0, 0, 255);">def</SPAN> <SPAN style="color: rgb(128, 0, 128);">__repr__</SPAN><SPAN style="color: rgb(0, 0, 0);">(self):
+        output </SPAN>= <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">(%s,%s,%s)</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> %<SPAN style="color: rgb(0, 0, 0);">(self.nid,self.name,self.role)
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> output
+        
+res </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(User).all()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res)
+
+输出：
+[(</SPAN>1,fuzj,1), (2,jie,2), (3,张三,2), (4,李四,1), (5,王五,3)]</PRE></DIV>
+<P>&nbsp;</P>
+<UL>
+  <LI>
+  <P>ORM 一对多具体使用</P>
+  <P>mysql表中一对多指的是表A中的数据和表B中的数据存在对应的映射关系，表A中的数据在表B中对应存在多个对应关系，如表A存放用户的角色 
+  DBA，SA，表B中存放用户，表B通过外键关联之表A中，多个用户可以属于同一个角色</P>
+  <UL>
+    <LI>
+    <P>设计两张表，user表和role表，</P>
+    <P>user 
+    表中存放用户，role表中存放用户角色，role表中角色对应user表中多个用户，user表中一个用户只对应role表中一个角色，中间通过外键约束</P></LI></UL>
+  <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> Column, Integer, String,ForeignKey
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> sessionmaker,relationship
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+
+engine </SPAN>= create_engine(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">mysql+pymysql://fuzj:123.com@127.0.0.1:3306/fuzj?charset=utf8</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>, max_overflow=5,encoding=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">utf-8</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">) 
+Base </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> declarative_base()
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Role(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">role</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    rid </SPAN>= Column(Integer, primary_key=True, autoincrement=True)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">主键，自增</SPAN>
+    role_name = Column(String(10<SPAN style="color: rgb(0, 0, 0);">))
+
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">def</SPAN> <SPAN style="color: rgb(128, 0, 128);">__repr__</SPAN><SPAN style="color: rgb(0, 0, 0);">(self):
+        output </SPAN>= <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">(%s,%s)</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> %<SPAN style="color: rgb(0, 0, 0);">(self.rid,self.role_name)
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> output
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> User(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer,primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(10),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    role </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">role.rid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>))  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">外键关联</SPAN>
+
+    <SPAN style="color: rgb(0, 0, 255);">def</SPAN> <SPAN style="color: rgb(128, 0, 128);">__repr__</SPAN><SPAN style="color: rgb(0, 0, 0);">(self):
+        output </SPAN>= <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">(%s,%s,%s)</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> %<SPAN style="color: rgb(0, 0, 0);">(self.nid,self.name,self.role)
+        </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN><SPAN style="color: rgb(0, 0, 0);"> output
+Base.metadata.create_all(engine)
+
+Session </SPAN>= sessionmaker(bind=<SPAN style="color: rgb(0, 0, 0);">engine)
+session </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> Session()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">添加角色数据</SPAN>
+session.add(Role(role_name=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">dba</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+session.add(Role(role_name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+session.add(Role(role_name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">net</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">添加用户数据</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">session.add_all([
+    User(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,role=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    User(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">jie</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,role=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    User(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">张三</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,role=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    User(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">李四</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,role=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    User(name</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">王五</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,role=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+])
+session.commit()
+session.close()</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>普通连表查询</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>res = session.query(User,Role).join(Role).all()    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询所有用户,及对应的role id</SPAN>
+res1 = session.query(User.name,Role.role_name).join(Role).all()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询所有用户和角色,</SPAN>
+res2 = session.query(User.name,Role.role_name).join(Role,isouter=True).filter(Role.role_name==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).all() <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询所有DBA的用户</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res1)
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res2)
+
+输出结果：
+[((</SPAN>1,fuzj,1), (1,dba)), ((2,jie,2), (2,sa)), ((3,张三,2), (2,sa)), ((4,李四,1), (1,dba)), ((5,王五,3), (3<SPAN style="color: rgb(0, 0, 0);">,net))]
+[(</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">dba</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">jie</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">张三</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">李四</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">dba</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">王五</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">net</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)]
+[(</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">jie</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">张三</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>, <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sa</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>)]</PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>
+    <P>使用relationship 添加影射关系进行查询</P>
+    <UL>
+      <LI>首先在User表中添加relationship影射关系</LI></UL>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> User(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer,primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    name </SPAN>= Column(String(10),nullable=<SPAN style="color: rgb(0, 0, 0);">False)
+    role </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">role.rid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+    group </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Role</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">uuu</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">Role为类名</SPAN></PRE></DIV>
+    <P>&nbsp;</P>
+    <UL>
+      <LI>查询</LI></UL>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">正向查询</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN>(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">正向查询</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+res </SPAN>= session.query(User).all()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询所有的用户和角色</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> res:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(i.name,i.group.role_name)    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">此时的i.group 就是role表对应的关系</SPAN>
+res = session.query(User).filter(User.name==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">fuzj</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询fuzj用户和角色</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(res.name,res.group.role_name)
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">反向查找</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">反向查找</SPAN>
+res = session.query(Role).filter(Role.role_name ==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">dba</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()   <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查找dba组下的所有用户</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN>(res.uuu)   <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">此时 print的结果为[(1,fuzj,1), (4,李四,1)]</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> res.uuu:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(i.name,res.role_name)
+
+输出结果：
+正向查询
+fuzj dba
+jie sa
+张三 sa
+李四 dba
+王五 net
+fuzj dba
+反向查找
+[(</SPAN>1,fuzj,1), (4,李四,1<SPAN style="color: rgb(0, 0, 0);">)]
+fuzj dba
+李四 dba</SPAN></PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>说明</P>
+    <P>relationship 
+    在user表中创建了新的字段，这个字段只用来存放user表中和role表中的对应关系，在数据库中并不实际存在<BR>正向查找： 
+    先从user表中查到符合name的用户之后，此时结果中已经存在和role表中的对应关系，group对象即role表，所以直接使用obj.group.role_name就可以取出对应的角色<BR>反向查找：relationship参数中backref='uuu'，会在role表中的每个字段中加入uuu，而uuu对应的就是本字段在user表中对应的所有用户，所以，obj.uuu.name会取出来用户名<BR>所谓正向和反向查找是对于relationship关系映射所在的表而说，如果通过该表（user表）去查找对应的关系表（role表），就是正向查找，反正通过对应的关系表（role表）去查找该表（user表）即为反向查找。而relationship往往会和ForeignKey共存在一个表中。</P></LI></UL></LI>
+  <LI>
+  <P>ORM 多对多具体使用</P>
+  <P>Mysql多对多关系指的是两张表A和B本没有任何关系，而是通过第三张表C建立关系，通过关系表C，使得表A在表B中存在多个关联数据，表B在表A中同样存在多个关联数据</P>
+  <UL>
+    <LI>创建三张表 host表 hostuser表 host_to_hostuser表</LI></UL>
+  <P>host表中存放主机，hostuser表中存放主机的用户， 
+  host_to_hostuser表中存放主机用户对应的主机，hostuser表中用户对应host表中多个主机，host表中主机对应hostuser表中多个用户，中间关系通过host_to_hostuser表进行关联。host_to_hostuser和host表、user表进行外键约束</P>
+  <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.ext.declarative <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> declarative_base
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> Column, Integer, String,ForeignKey
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy.orm <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> sessionmaker,relationship
+</SPAN><SPAN style="color: rgb(0, 0, 255);">from</SPAN> sqlalchemy <SPAN style="color: rgb(0, 0, 255);">import</SPAN><SPAN style="color: rgb(0, 0, 0);"> create_engine
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Host(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer, primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    hostname </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+    port </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+    ip </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> HostUser(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host_user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer, primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    username </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+
+</SPAN><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> HostToHostUser(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host_to_host_user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer, primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+
+    host_id </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host.nid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+    host_user_id </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host_user.nid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+
+Base.metadata.create_all(engine)
+
+Session </SPAN>= sessionmaker(bind=<SPAN style="color: rgb(0, 0, 0);">engine)
+session </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> Session()
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">添加数据</SPAN>
+<SPAN style="color: rgb(0, 0, 0);">session.add_all([
+    Host(hostname</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,port=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">22</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,ip=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1.1.1.1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    Host(hostname</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,port=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">22</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,ip=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1.1.1.2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    Host(hostname</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,port=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">22</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,ip=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1.1.1.3</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    Host(hostname</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c4</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,port=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">22</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,ip=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1.1.1.4</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    Host(hostname</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c5</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,port=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">22</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,ip=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">1.1.1.5</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+])
+
+session.add_all([
+    HostUser(username</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">root</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    HostUser(username</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">db</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    HostUser(username</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">nb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+    HostUser(username</SPAN>=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">),
+])
+
+session.add_all([
+    HostToHostUser(host_id</SPAN>=1,host_user_id=1<SPAN style="color: rgb(0, 0, 0);">),
+    HostToHostUser(host_id</SPAN>=1,host_user_id=2<SPAN style="color: rgb(0, 0, 0);">),
+    HostToHostUser(host_id</SPAN>=1,host_user_id=3<SPAN style="color: rgb(0, 0, 0);">),
+    HostToHostUser(host_id</SPAN>=2,host_user_id=2<SPAN style="color: rgb(0, 0, 0);">),
+    HostToHostUser(host_id</SPAN>=2,host_user_id=4<SPAN style="color: rgb(0, 0, 0);">),
+    HostToHostUser(host_id</SPAN>=2,host_user_id=3<SPAN style="color: rgb(0, 0, 0);">),
+])
+
+session.commit()
+session.close()</SPAN></PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>普通多次查询</LI></UL>
+  <DIV class="cnblogs_code">
+<PRE>host_id = session.query(Host.nid).filter(Host.hostname==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()   <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查找hostbane对应的hostid,返回结果为元组(2,)</SPAN>
+user_id_list = session.query(HostToHostUser.host_user_id).filter(HostToHostUser.host_id==host_id[0]).all()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询hostid对应的所有userid</SPAN>
+user_id_list = zip(*user_id_list)   <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">user_id_list 初始值为[(2,), (4,), (3,)],使用zip转换为[2,4,3]对象</SPAN><SPAN style="color: rgb(0, 128, 0);">
+#</SPAN><SPAN style="color: rgb(0, 128, 0);">print(list(user_id_list))    #结果为[(2, 4, 3)]</SPAN>
+user_list = session.query(HostUser.username).filter(HostUser.nid.in_(list(user_id_list)[0])).all()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查询符合条件的用户</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">print</SPAN><SPAN style="color: rgb(0, 0, 0);">(user_list)
+
+</SPAN><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">或者：</SPAN>
+user_id_list = session.query(HostToHostUser.host_user_id).join(Host).filter(Host.hostname==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).all()
+user_id_list </SPAN>= zip(*<SPAN style="color: rgb(0, 0, 0);">user_id_list)
+user_list </SPAN>=<SPAN style="color: rgb(0, 0, 0);"> session.query(HostUser.username).filter(HostUser.nid.in_(list(user_id_list)[0])).all()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(user_list)</PRE></DIV>
+  <P>&nbsp;</P>
+<PRE><CODE class="language-python">
+
+输出结果：</CODE></PRE>
+  <DIV class="cnblogs_code">
+<PRE>[(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">db</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">nb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,), (<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,)]</PRE></DIV>
+  <P>&nbsp;</P>
+  <UL>
+    <LI>
+    <P>使用relationship映射关系查询</P>
+    <UL>
+      <LI>首先在关系表Host_to_hostuser中加入relationship关系映射</LI></UL>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> HostToHostUser(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host_to_host_user</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer, primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+
+    host_id </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host.nid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+    host_user_id </SPAN>= Column(Integer,ForeignKey(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host_user.nid</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">))
+    host </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">Host</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">h</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>) <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">对应host表</SPAN>
+    host_user = relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">HostUser</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">u</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>) <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">对应host_user表</SPAN></PRE></DIV>
+    <P>&nbsp;</P>
+    <UL>
+      <LI>查询</LI></UL>
+    <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查找一个服务器上有哪些用户</SPAN>
+res = session.query(Host).filter(Host.hostname==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c2</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>).first()  <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">返回的是符合条件的服务器对象</SPAN>
+res2 = res.h    <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">通过relationship反向查找 Host_to_Hostuser中的对应关系</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN> res2:   <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">i为host_to_hostuser表和host表中c2主机有对应关系的条目</SPAN>
+    <SPAN style="color: rgb(0, 0, 255);">print</SPAN>(i.host_user.username)        <SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">正向查找, 通过relationship ,找到host_to_hostuser中对应的hostuser 即i.host_user</SPAN>
+
+<SPAN style="color: rgb(0, 128, 0);">#</SPAN><SPAN style="color: rgb(0, 128, 0);">查找此用户有哪些服务器</SPAN>
+res = session.query(HostUser).filter(HostUser.username==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">sb</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).first()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> res.u:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(i.host.hostname)</PRE></DIV>
+    <P>&nbsp;</P></LI>
+    <LI>
+    <P>扩展查询</P></LI></UL>
+  <P>不查询关系表，直接在hostuser表中指定关系表，然后获取host表</P></LI></UL>
+<P>在host表中使用 relationship的secondary指定关系表。</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 255);">class</SPAN><SPAN style="color: rgb(0, 0, 0);"> Host(Base):
+    </SPAN><SPAN style="color: rgb(128, 0, 128);">__tablename__</SPAN> = <SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">host</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">
+    nid </SPAN>= Column(Integer, primary_key=True,autoincrement=<SPAN style="color: rgb(0, 0, 0);">True)
+    hostname </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+    port </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+    ip </SPAN>= Column(String(32<SPAN style="color: rgb(0, 0, 0);">))
+    host_user </SPAN>= relationship(<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">HostUser</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN>,secondary=<SPAN style="color: rgb(0, 0, 255);">lambda</SPAN> :HostToHostUser.<SPAN style="color: rgb(128, 0, 128);">__table__</SPAN>,backref=<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">h</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">)
+
+注意使用lambda是为了使表的顺序不在闲置
+
+查询：
+
+host_obj </SPAN>= session.query(Host).filter(Host.hostname==<SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(128, 0, 0);">c1</SPAN><SPAN style="color: rgb(128, 0, 0);">'</SPAN><SPAN style="color: rgb(0, 0, 0);">).first()
+</SPAN><SPAN style="color: rgb(0, 0, 255);">for</SPAN> i <SPAN style="color: rgb(0, 0, 255);">in</SPAN><SPAN style="color: rgb(0, 0, 0);"> host_obj.host_user:
+    </SPAN><SPAN style="color: rgb(0, 0, 255);">print</SPAN>(i.username)</PRE></DIV>
+<P>&nbsp;</P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV></DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2016-07-29 11:09</SPAN> <A 
+href="http://www.cnblogs.com/pycode/">君醉</A> 阅读(<SPAN 
+id="post_view_count">...</SPAN>) 评论(<SPAN id="post_comment_count">...</SPAN>)  
+<A href="https://i.cnblogs.com/EditPosts.aspx?postid=5717581" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(5717581);return false;" href="https://www.cnblogs.com/pycode/p/mysql-orm.html#">收藏</A></DIV></DIV>
+<SCRIPT type="text/javascript">var allowComments=true,cb_blogId=284251,cb_entryId=5717581,cb_blogApp=currentBlogApp,cb_blogUserGuid='d344d6af-9415-e611-9fc1-ac853d9f53cc',cb_entryCreatedDate='2016/7/29 11:09:00';loadViewCount(cb_entryId);var cb_postType=1;</SCRIPT>
+	 </DIV><!--end: topics 文章、评论容器--> </DIV><A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);" clientidmode="Static" 
+runat="server">刷新评论</A><A onclick="return RefreshPage();" href="https://www.cnblogs.com/pycode/p/mysql-orm.html#">刷新页面</A><A 
+href="https://www.cnblogs.com/pycode/p/mysql-orm.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="ad_t2"></DIV>
+<DIV id="opt_under_post"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c1"></DIV>
+<DIV id="under_post_news"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c2"></DIV>
+<DIV id="under_post_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</SCRIPT>
+ </DIV></DIV><!--end: forFlow -->	 </DIV><!--end: mainContent 主体内容容器-->	 
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done--> 
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+						 
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+			 </DIV></DIV><!--end: sideBarMain -->	 </DIV><!--end: sideBar 侧边栏容器 -->	 
+<DIV class="clear"></DIV></DIV><!--end: main -->	 
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2017 君醉	 </DIV><!--end: footer --> 
+</DIV><!--end: home 自定义的最大容器 --> </BODY></HTML>
