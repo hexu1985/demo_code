@@ -18,4 +18,4 @@ clean:
 	$(RM) $(PROGS)
 
 $(PROGS): $(SOURCES) $(HEADERS)
-	$(CXX) -o $@ $(CXXFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
+	$(CXX) -o $@ $(CXXFLAGS) $(INCLUDES) $(SOURCES) $(LDFLAGS) $(LDPATH)
