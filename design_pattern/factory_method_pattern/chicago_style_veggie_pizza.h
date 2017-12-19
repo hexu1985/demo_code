@@ -1,0 +1,24 @@
+#ifndef __chicago_style_veggie_pizza_h
+#define __chicago_style_veggie_pizza_h
+
+#include "pizza.h"
+
+class ChicagoStyleVeggiePizza: public Pizza {
+public:
+    ChicagoStyleVeggiePizza() {
+        name = "Chicago Deep Dish Veggie Pizza";
+        dough = "Extra Thick Crust Dough";
+        sauce = "Plum Tomato Sauce";
+
+        toppings.push_back("Shredded Mozzarella Cheese");
+        toppings.push_back("Black Olives");
+        toppings.push_back("Spinach");
+        toppings.push_back("Eggplant");
+    }
+
+    void cut() {
+        std::cout << "Cutting the pizza into square slices" << std::endl;
+    }
+};
+
+#endif
