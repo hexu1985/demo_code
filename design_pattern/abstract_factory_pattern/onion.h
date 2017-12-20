@@ -1,13 +1,13 @@
-#ifndef __red_pepper_h
-#define __red_pepper_h
+#ifndef __onion_h
+#define __onion_h
 
 #include <string>
 #include "veggies.h"
 
-class RedPepper: public Veggies {
+class Onion: public Veggies {
 public:
     std::string toString() {
-        return "Red Pepper";
+        return "Onion";
     }
 };
 

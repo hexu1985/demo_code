@@ -20,6 +20,6 @@ public:
         sauce = ingredientFactory->createSauce();
         cheese = ingredientFactory->createCheese();
     }
-}
+};
 
 #endif

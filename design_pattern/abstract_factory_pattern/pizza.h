@@ -7,8 +7,15 @@
 #include <iostream>
 #include <sstream>
 
+#include "dough.h"
+#include "sauce.h"
+#include "veggies.h"
+#include "cheese.h"
+#include "pepperoni.h"
+#include "clams.h"
+
 class Pizza {
-private:
+protected:
     std::string name;
 
     Dough *dough = 0;
@@ -54,7 +61,7 @@ public:
     std::string toString() {
         // code to display pizza name and ingredients
         std::ostringstream os;
-        os << "---- " << name << " ----\n"
+        os << "---- " << name << " ----\n";
         if (dough) {
             os << dough->toString() << "\n";
         }
@@ -68,7 +75,7 @@ public:
             for (size_t i = 0; i < veggies.size(); i++) {
                 os << veggies[i]->toString();
                 if (i < veggies.size()-1) {
-                    result.append(", ");
+                    os << ", ";
                 }
             }
             os << "\n";

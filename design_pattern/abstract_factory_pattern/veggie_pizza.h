@@ -21,6 +21,6 @@ public:
         cheese = ingredientFactory->createCheese();
         veggies = ingredientFactory->createVeggies();
     }
-}
+};
 
 #endif

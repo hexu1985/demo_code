@@ -2,6 +2,7 @@
 #define __pizza_store_h
 
 #include <string>
+#include "pizza.h"
 
 class PizzaStore {
 protected: 
@@ -10,7 +11,7 @@ protected:
 public:
     Pizza *orderPizza(const std::string &type) {
         Pizza *pizza = createPizza(type);
-        std::cout << "--- Making a " << pizza->getName() << " ---";
+        std::cout << "--- Making a " << pizza->getName() << " ---\n";
         pizza->prepare();
         pizza->bake();
         pizza->cut();

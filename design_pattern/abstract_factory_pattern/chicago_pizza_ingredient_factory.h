@@ -3,10 +3,10 @@
 
 #include "pizza_ingredient_factory.h"
 #include "thick_crust_dough.h"
-#include "plumtomato_sauce.h"
+#include "plum_tomato_sauce.h"
 #include "mozzarella_cheese.h"
 #include "black_olives.h"
-#include "spinach .h"
+#include "spinach.h"
 #include "eggplant.h"
 #include "sliced_pepperoni.h"
 #include "frozen_clams.h"

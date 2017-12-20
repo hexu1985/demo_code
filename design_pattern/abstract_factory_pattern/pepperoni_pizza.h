@@ -22,6 +22,6 @@ public:
         veggies = ingredientFactory->createVeggies();
         pepperoni = ingredientFactory->createPepperoni();
     }
-}
+};
 
 #endif
