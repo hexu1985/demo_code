@@ -10,28 +10,28 @@ int main(int argc, char *argv[]) {
 
     std::unique_ptr<Pizza> pizza;
     pizza.reset(nyStore->orderPizza("cheese"));
-    std::cout << "Ethan ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Ethan ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(chicagoStore->orderPizza("cheese"));
-    std::cout << "Joel ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Joel ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(nyStore->orderPizza("clam"));
-    std::cout << "Ethan ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Ethan ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(chicagoStore->orderPizza("clam"));
-    std::cout << "Joel ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Joel ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(nyStore->orderPizza("pepperoni"));
-    std::cout << "Ethan ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Ethan ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(chicagoStore->orderPizza("pepperoni"));
-    std::cout << "Joel ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Joel ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(nyStore->orderPizza("veggie"));
-    std::cout << "Ethan ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Ethan ordered a " << pizza->toString() << "\n\n";
 
     pizza.reset(chicagoStore->orderPizza("veggie"));
-    std::cout << "Joel ordered a " << pizza->getName() << "\n\n";
+    std::cout << "Joel ordered a " << pizza->toString() << "\n\n";
 
     return 0;
 }
