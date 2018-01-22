@@ -31,6 +31,9 @@ using namespace apache::thrift;
 using namespace apache::thrift::protocol;
 using namespace apache::thrift::transport;
 
+//using boost::shared_ptr;
+using ::apache::thrift::stdcxx::shared_ptr;
+
 using namespace demo;
 
 int main(int argc, char** argv) {
@@ -46,9 +49,9 @@ int main(int argc, char** argv) {
     if (tmp != 0) port = tmp;
   }
 
-  boost::shared_ptr<TSocket> socket(new TSocket(host, port));
-  boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
-  boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+  shared_ptr<TSocket> socket(new TSocket(host, port));
+  shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+  shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
   EchoTestClient client(protocol);
 
   try {
