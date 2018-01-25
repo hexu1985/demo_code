@@ -1,0 +1,6 @@
+project(HELLO)
+set(LIB_SRC hello.c)
+set(APP_SRC main.c)
+add_library(hello ${LIB_SRC})
+add_executable(test ${APP_SRC})
+target_link_libraries(test hello)

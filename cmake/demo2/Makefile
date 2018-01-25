@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/hexu/git/demo/cmake/demo1
+CMAKE_SOURCE_DIR = /home/hexu/git/demo/cmake/demo2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/hexu/git/demo/cmake/demo1
+CMAKE_BINARY_DIR = /home/hexu/git/demo/cmake/demo2
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hexu/git/demo/cmake/demo1/CMakeFiles /home/hexu/git/demo/cmake/demo1/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hexu/git/demo/cmake/demo2/CMakeFiles /home/hexu/git/demo/cmake/demo2/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/hexu/git/demo/cmake/demo1/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/hexu/git/demo/cmake/demo2/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,6 +123,33 @@ hello/fast:
 	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
+hello.o: hello.c.o
+
+.PHONY : hello.o
+
+# target to build an object file
+hello.c.o:
+	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/hello.c.o
+.PHONY : hello.c.o
+
+hello.i: hello.c.i
+
+.PHONY : hello.i
+
+# target to preprocess a source file
+hello.c.i:
+	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/hello.c.i
+.PHONY : hello.c.i
+
+hello.s: hello.c.s
+
+.PHONY : hello.s
+
+# target to generate assembly for a file
+hello.c.s:
+	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/hello.c.s
+.PHONY : hello.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... hello"
 	@echo "... edit_cache"
+	@echo "... hello.o"
+	@echo "... hello.i"
+	@echo "... hello.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
