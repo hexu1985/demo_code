@@ -1,0 +1,6 @@
+include_directories(${PROJECT_SOURCE_DIR}/lib)
+link_directories(${PROJECT_SOURCE_DIR}/build/lib)
+set(APP_SRC main.c)
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/bin)
+add_executable(test ${APP_SRC})
+target_link_libraries(test hello)
