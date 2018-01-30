@@ -2,9 +2,9 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
-INCLUDES = -I../../../third-party/snmp++/include -I../../../third-party/snmp++
+INCLUDES = -I../../../third-party/snmp++/include
 LDFLAGS = -lsnmp++
-LDPATH = -L../../../third-party/snmp++/src/.libs -Wl,-R../../../third-party/snmp++/src/.libs -Wl,--enable-new-dtags
+LDPATH = -L../../../third-party/snmp++/lib -Wl,-R../../../third-party/snmp++/lib -Wl,--enable-new-dtags
 
 SOURCES = $(shell ls *.cpp)
 PROGS = $(SOURCES:%.cpp=%)
