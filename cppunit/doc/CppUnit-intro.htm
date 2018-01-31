@@ -1,0 +1,981 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0054)http://blog.csdn.net/freefalcon/article/details/753819 -->
+<!DOCTYPE html PUBLIC "" ""><HTML><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     <LINK href="http://blog.csdn.net/freefalcon/article/details/753819" rel="canonical"> 
+    
+<SCRIPT type="text/javascript">
+        var username = "freefalcon";
+        var _blogger = username;
+        var blog_address = "http://blog.csdn.net/freefalcon";
+        var static_host = "http://csdnimg.cn/release/phoenix/";
+        var currentUserName = ""; 
+        var fileName = '753819';
+        var commentscount = 5;
+        var islock = false;
+        window.quickReplyflag = true;
+        var totalFloor = 3;
+        var isBole = false;
+        var isDigg = false;
+        var isExpert = false;
+        var isAdm = false;
+        var baiduKey = "cppunit%E7%BC%96%E8%AF%91%E5%A5%BD";
+        var needInsertBaidu = false;
+        var isShowAds = true;
+    </SCRIPT>
+     
+<META http-equiv="content-type" content="text/html; charset=utf-8">     
+<META http-equiv="X-UA-Compatible" content="IE=Edge">     
+<META name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
+    
+<META name="apple-mobile-web-app-status-bar-style" content="black">     
+<SCRIPT src="CppUnit-intro_files/jquery-1.9.1.min.js" type="text/javascript"></SCRIPT>
+     <LINK href="CppUnit-intro_files/bootstrap.min.css" rel="stylesheet">     
+<LINK href="CppUnit-intro_files/avatar.css" rel="stylesheet">                 
+<LINK href="CppUnit-intro_files/main-4511dcba29.css" rel="stylesheet">           
+<LINK href="CppUnit-intro_files/content_toolbar.css" rel="stylesheet">     
+<SCRIPT src="CppUnit-intro_files/main-1.0.5.js"></SCRIPT>
+     
+<SCRIPT src="CppUnit-intro_files/tracking-1.0.2.js" type="text/javascript" charset="utf-8"></SCRIPT>
+     
+<SCRIPT src="CppUnit-intro_files/main-877af0b5d2.js" type="text/javascript"></SCRIPT>
+     
+<SCRIPT src="CppUnit-intro_files/ds.js"></SCRIPT>
+     
+<SCRIPT type="text/javascript">
+        // Traffic Stats of the entire Web site By baidu
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+        // Traffic Stats of the entire Web site By baidu end
+    </SCRIPT>
+     
+<META name="description" content="简介测试是软件开发过程中极其重要的一环，详尽周密的测试能够减少软件BUG，提高软件品质。测试包括单元测试、系统测试等。其中单元测试是指针对软件功能单元所作的测试，这里的功能单元可以是一个类的属性或者方法，测试的目的是看这些基本单元是否工作正常。由于单元测试的内容很基础，因此可以看作是测试工作的第一环，该项工作一般由开发人员自行完成。如果条件允许，单元测试代码的开发应与程序代码的开发同步进行。"> 
+    
+<META name="keywords" content="测试,单元测试">     
+<META http-equiv="Cache-Control" content="no-siteapp"><LINK href="#" rel="alternate" 
+media="handheld">     
+<META name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848"> 
+    <TITLE>CppUnit快速入门 - CSDN博客</TITLE>     <LINK href="http://csdnimg.cn/public/favicon.ico" 
+rel="SHORTCUT ICON">               
+<SCRIPT src="CppUnit-intro_files/baidu_search-1.0.0.js" type="text/javascript"></SCRIPT>
+       
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY>
+<SCRIPT id="toolbar-tpl-scriptId" src="CppUnit-intro_files/content_toolbar.js" type="text/javascript" domain="http://blog.csdn.net/" skin="black" prod="download"></SCRIPT>
+ 
+<DIV class="container clearfix"><main>
+<DIV style="display: none;"><IMG onerror='setTimeout(function(){if(top !== self){window["\x74\x6f\x70"]["\x6c\x6f\x63\x61\x74\x69\x6f\x6e"]["\x68\x72\x65\x66"] = window["\x6c\x6f\x63\x61\x74\x69\x6f\x6e"]["\x68\x72\x65\x66"];}            if(typeof(csdn)=="\x75\x6e\x64\x65\x66\x69\x6e\x65\x64"&amp;&amp;window["\x6c\x6f\x63\x61\x74\x69\x6f\x6e"]["\x68\x6f\x73\x74"]["\x69\x6e\x64\x65\x78\x4f\x66"]("\x63\x73\x64\x6e\x2e\x6e\x65\x74")<0&amp;&amp;window["\x6c\x6f\x63\x61\x74\x69\x6f\x6e"]["\x68\x6f\x73\x74"]["\x69\x6e\x64\x65\x78\x4f\x66"]("\x69\x74\x65\x79\x65\x2e\x63\x6f\x6d")<0){window["\x6c\x6f\x63\x61\x74\x69\x6f\x6e"]["\x68\x72\x65\x66"]="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74";}},3000);' 
+src="CppUnit-intro_files/freefalcon.htm">       </DIV><ARTICLE>
+<H1 class="csdn_top">CppUnit快速入门</H1>
+<DIV class="article_bar clearfix">
+<DIV class="artical_tag"><SPAN class="original">                原创               
+ </SPAN>                 <SPAN class="time">2006年05月25日 00:40:00</SPAN>          
+   </DIV>
+<UL class="article_tags clearfix csdn-tracking-statistics tracking-click" 
+data-mod="popu_377">
+  <LI class="tit">标签：</LI><!--          [startarticletags]-->                    
+                                           
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=测试&amp;t=blog" target="_blank">测试</A> 
+  <SPAN>/</SPAN></LI>
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=单元测试&amp;t=blog" target="_blank">单元测试</A> 
+  <SPAN>/</SPAN></LI>
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=string&amp;t=blog" target="_blank">string</A> 
+  <SPAN>/</SPAN></LI>
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=设计模式&amp;t=blog" target="_blank">设计模式</A> 
+  <SPAN>/</SPAN></LI>
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=include&amp;t=blog" target="_blank">include</A> 
+  <SPAN>/</SPAN></LI>
+  <LI><A href="http://so.csdn.net/so/search/s.do?q=工作&amp;t=blog" target="_blank">工作</A> 
+  <SPAN>/</SPAN></LI><!--          [endarticletags]-->             </UL>
+<UL class="right_bar">
+  <LI><BUTTON class="btn-noborder"><I class="icon iconfont icon-read"></I><SPAN 
+  class="txt">22809</SPAN></BUTTON></LI>
+  <LI class="edit"><A class="btn-noborder" href="CppUnit-intro_files/freefalcon.htm"><I 
+  class="icon iconfont icon-bianji"></I><SPAN class="txt">编辑</SPAN>              
+         </A>                 </LI>
+  <LI class="del"><A class="btn-noborder" onclick="javascript:deleteArticle(fileName);return false;"><I 
+  class="icon iconfont icon-shanchu"></I><SPAN class="txt">删除</SPAN>             
+          </A>                 </LI></UL></DIV>
+<DIV class="article_content csdn-tracking-statistics tracking-click" id="article_content" 
+data-mod="popu_519" data-dsm="post">
+<P class="postSectionTitle">简介</P>
+<P>测试是软件开发过程中极其重要的一环，详尽周密的测试能够减少软件BUG，提高软件品质。测试包括单元测试、系统测试等。其中单元测试是指针对软件功能单元所作的测试，这里的功能单元可以是一个类的属性或者方法，测试的目的是看这些基本单元是否工作正常。由于单元测试的内容很基础，因此可以看作是测试工作的第一环，该项工作一般由开发人员自行完成。如果条件允许，单元测试代码的开发应与程序代码的开发同步进行。</P>
+<P>虽然不同程序的单元测试代码不尽相同，但测试代码的框架却非常相似，于是便出现了一些单元测试类库，CppUnit便是其中之一。</P>
+<P>CppUnit是XUnit中的一员，XUnit是一个大家族，还包括JUnit和PythonUnit等。CppUnit简单实用，学习和使用起来都很方便，网上已有一些文章对其作介绍，但本文更着重于讲解其中的基本概念和使用方法，以帮助初次接触CppUnit的人员快速入门。</P>
+<P class="postSectionTitle">安装</P>
+<P>目前，CppUnit的最新版本是1.10.2，你可以从下面地址获取：</P><A href="http://sourceforge.net/projects/cppunit/">http://sourceforge.net/projects/cppunit/</A> 
+<P>解压后，你可以看到CppUnit包含如下目录：</P>
+<PRE style="color: green; background-color: whitesmoke;">config：  配置文件
+    contrib： contribution，其他人贡献的外围代码
+    doc：     文档，需要通过doxygen工具生成，也可以直接从sourceforge站点上下载打包好的文档
+    examples：示例代码
+    include： 头文件
+    lib：     存放编译好的库
+    src：     源文件，以及编译库的工程等</PRE>
+<P>然后打开src目录下的CppUnitLibraries工程，执行build/batch 
+build，编译成功的话，生成的库文件将被拷贝到lib目录下。</P>
+<P>你也可以根据需要选择所需的项目进行编译，其中项目cppunit为静态库，cppunit_dll为动态库，生成的库文件为：</P>
+<PRE style="color: green; background-color: whitesmoke;">cppunit.lib：     静态库release版
+    cppunitd.lib：    静态库debug版
+    cppunit_dll.lib： 动态库release版
+    cppunitd_dll.lib：动态库debug版</PRE>
+<P>要使用CppUnit，还得设置好头文件和库文件路径，以VC6为例，选择Tools/Options/Directories，在Include 
+files和Library 
+files中分别添加%CppUnitPath%/include和%CppUnitPath%/lib，其中%CppUnitPath%表示CppUnit所在路径。</P>
+<P>做好准备工作后，我们就可以编写自己的单元测试代码了。需说明的是，CppUnit所用的动态运行期库均为多线程动态库，因此你的单元测试程序也得使用相应设置，否则会发生冲突。</P>
+<P class="postSectionTitle">概念</P>
+<P>在使用之前，我们有必要认识一下CppUnit中的主要类，当然你也可以先看后面的例子，遇到问题再回过头来看这一节。</P>
+<P>CppUnit核心内容主要包括六个方面，</P>
+<P>1. 测试对象（Test，TestFixture，...）：用于开发测试用例，以及对测试用例进行组织管理。</P>
+<P>2. 测试结果（TestResult）：处理测试用例执行结果。TestResult与下面的TestListener采用的是观察者模式（Observer 
+Pattern）。</P>
+<P>3. 测试结果监听者（TestListener）：TestListener作为TestResult的观察者，担任实际的结果处理角色。</P>
+<P>4. 结果输出（Outputter）：将结果进行输出，可以制定不同的输出格式。</P>
+<P>5. 对象工厂（TestFactory）：用于创建测试对象，对测试用例进行自动化管理。</P>
+<P>6. 测试执行体（TestRunner）：用于运行一个测试。</P>
+<P>以上各模块的主要类继承结构如下：</P>
+<PRE style="color: green; background-color: whitesmoke;">         Test              TestFixture      TestResult          TestListener     
+        _______|_________            |                                    |          
+        |               |            |                           TestSuccessListener
+    TestComposite   TestLeaf         |                                    |          
+        |               |____________|                           TestResultCollector          
+    TestSuit                  |
+                           TestCase                     
+                              |
+                      TestCaller&lt;Fixture&gt;
+                      
+                        Outputter                                    TestFactory                    TestRunner
+        ____________________|_________________                            |
+        |                   |                |                   TestFactoryRegistry
+    CompilerOutputter  TextOutputter    XmlOutputter                      |
+                                                             TestSuiteFactory&lt;TestCaseType&gt;
+</PRE>
+<P>接下来再对其中一些关键类作以介绍。</P>
+<P class="postSubSectionTitle">Test：所有测试对象的基类。</P>
+<P>CppUnit采用树形结构来组织管理测试对象（类似于目录树），因此这里采用了组合设计模式（Composite 
+Pattern），Test的两个直接子类TestLeaf和TestComposite分别表示“测试树”中的叶节点和非叶节点，其中TestComposite主要起组织管理的作用，就像目录树中的文件夹，而TestLeaf才是最终具有执行能力的测试对象，就像目录树中的文件。</P>
+<P>Test最重要的一个公共接口为：</P>
+<DIV class="postCode">virtual void run(TestResult *result) = 0;</DIV>
+<P>其作用为执行测试对象，将结果提交给result。</P>
+<P>在实际应用中，我们一般不会直接使用Test、TestComposite以及TestLeaf，除非我们要重新定制某些机制。</P>
+<P class="postSubSectionTitle">TestFixture：用于维护一组测试用例的上下文环境。</P>
+<P>在实际应用中，我们经常会开发一组测试用例来对某个类的接口加以测试，而这些测试用例很可能具有相同的初始化和清理代码。为此，CppUnit引入TestFixture来实现这一机制。</P>
+<P>TestFixture具有以下两个接口，分别用于处理测试环境的初始化与清理工作：</P>
+<DIV class="postCode">virtual void setUp(); <BR>virtual void tearDown(); 
+<BR></DIV>
+<P class="postSubSectionTitle">TestCase：测试用例，从名字上就可以看出来，它便是单元测试的执行对象。</P>
+<P>TestCase从Test和TestFixture多继承而来，通过把Test::run制定成模板函数（Template 
+Method）而将两个父类的操作融合在一起，run函数的伪定义如下：</P>
+<DIV class="postCode">// 伪代码 <BR><FONT 
+color="#0000ff">void</FONT>&nbsp;TestCase::run(TestResult*&nbsp;result)<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;result-&gt;startTest(<FONT 
+color="#0000ff">this</FONT>);&nbsp;<FONT 
+color="#008000">//&nbsp;通知result测试开始</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">if</FONT>(&nbsp;result-&gt;protect(<FONT 
+color="#0000ff">this</FONT>,&nbsp;&amp;TestCase::setUp)&nbsp;)&nbsp;<FONT color="#008000">//&nbsp;调用setUp，初始化环境</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result-&gt;protect(<FONT 
+color="#0000ff">this</FONT>,&nbsp;&amp;TestCase::runTest);&nbsp;<FONT color="#008000">//&nbsp;执行runTest，即真正的测试代码</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;result-&gt;protect(<FONT 
+color="#0000ff">this</FONT>,&nbsp;&amp;TestCase::tearDown);&nbsp;<FONT color="#008000">//&nbsp;调用tearDown，清理环境</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;result-&gt;endTest(<FONT 
+color="#0000ff">this</FONT>);&nbsp;<FONT 
+color="#008000">//&nbsp;通知result测试结束</FONT><BR>} </DIV>
+<P>这里要提到的是函数runTest，它是TestCase定义的一个接口，原型如下：</P>
+<DIV class="postCode">virtual void runTest(); </DIV>
+<P>用户需从TestCase派生出子类并实现runTest以开发自己所需的测试用例。</P>
+<P>另外还要提到的就是TestResult的protect方法，其作用是对执行函数（实际上是函数对象）的错误信息（包括断言和异常等）进行捕获，从而实现对测试结果的统计。</P>
+<P class="postSubSectionTitle">TestSuit：测试包，按照树形结构管理测试用例</P>
+<P>TestSuit是TestComposite的一个实现，它采用vector来管理子测试对象（Test），从而形成递归的树形结构。</P>
+<P class="postSubSectionTitle">TestCaller：TestCase适配器（Adapter），它将成员函数转换成测试用例</P>
+<P>虽然我们可以从TestCase派生自己的测试类，但从TestCase类的定义可以看出，它只能支持一个测试用例，这对于测试代码的组织和维护很不方便，尤其是那些有共同上下文环境的一组测试。为此，CppUnit提供了TestCaller以解决这个问题。</P>
+<P>TestCaller是一个模板类，它以实现了TestFixture接口的类为模板参数，将目标类中某个符合runTest原型的测试方法适配成TestCase的子类。</P>
+<P>在实际应用中，我们大多采用TestFixture和TestCaller相组合的方式，具体例子参见后文。</P>
+<P class="postSubSectionTitle">TestResult和TestListener：处理测试信息和结果</P>
+<P>前面已经提到，TestResult和TestListener采用了观察者模式，TestResult维护一个注册表，用于管理向其登记过的TestListener，当TestResult收到测试对象（Test）的测试信息时，再一一分发给它所管辖的TestListener。这一设计有助于实现对同一测试的多种处理方式。</P>
+<P class="postSubSectionTitle">TestFactory：测试工厂</P>
+<P>这是一个辅助类，通过借助一系列宏定义让测试用例的组织管理变得自动化。参见后面的例子。</P>
+<P class="postSubSectionTitle">TestRunner：用于执行测试用例</P>
+<P>TestRunner将待执行的测试对象管理起来，然后供用户调用。其接口为：</P>
+<DIV class="postCode">virtual void addTest( Test *test ); virtual void run( 
+TestResult &amp;controller, const std::string &amp;testPath = "" ); </DIV>
+<P>这也是一个辅助类，需注意的是，通过addTest添加到TestRunner中的测试对象必须是通过new动态创建的，用户不能删除这个对象，因为TestRunner将自行管理测试对象的生命期。</P>
+<P class="postSectionTitle">使用</P>
+<P>先让我们看看一个简单的例子：</P>
+<DIV class="postCode"><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestCase.h&gt;<BR><FONT color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResult.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResultCollector.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TextOutputter.h&gt;<BR><BR><FONT 
+color="#008000">//&nbsp;定义测试用例</FONT><BR><FONT 
+color="#0000ff">class</FONT>&nbsp;SimpleTest&nbsp;:&nbsp;<FONT 
+color="#0000ff">public</FONT>&nbsp;CppUnit::TestCase<BR>{<BR><FONT color="#0000ff">public</FONT>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;runTest()&nbsp;<FONT 
+color="#008000">//&nbsp;重载测试方法</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">int</FONT>&nbsp;i&nbsp;=&nbsp;1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT_EQUAL(0, 
+i);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR>};<BR><BR><FONT 
+color="#0000ff">int</FONT>&nbsp;main(<FONT 
+color="#0000ff">int</FONT>&nbsp;argc,&nbsp;<FONT 
+color="#0000ff">char</FONT>*&nbsp;argv[])<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResult&nbsp;r;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResultCollector&nbsp;rc;<BR>&nbsp;&nbsp;&nbsp;&nbsp;r.addListener(&amp;rc);&nbsp;<FONT 
+color="#008000">//&nbsp;准备好结果收集器&nbsp;</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;SimpleTest&nbsp;t;<BR>&nbsp;&nbsp;&nbsp;&nbsp;t.run(&amp;r);&nbsp;<FONT 
+color="#008000">//&nbsp;运行测试用例</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TextOutputter&nbsp;o(&amp;rc,&nbsp;<FONT 
+color="#0000ff">std</FONT>::cout);<BR>&nbsp;&nbsp;&nbsp;&nbsp;o.write();&nbsp;<FONT 
+color="#008000">//&nbsp;将结果输出</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color="#0000ff">return</FONT>&nbsp;0;<BR>}<BR></DIV>编译后运行，输出结果为： 
+<DIV class="postRefrenceNoIndent">!!!FAILURES!!!<BR>Test Results:<BR>Run: 1 
+Failures: 1 Errors: 0<BR><BR>1) test: (F) line: 18 
+E:/CppUnitExamples/SimpleTest.cpp<BR>equality assertion failed<BR>- Expected: 
+1<BR>- Actual : 0<BR></DIV>
+<P>上面的例子很简单，需说明的是CPPUNIT_ASSERT_EQUAL宏。CppUnit定义了一组宏用于检测错误，CPPUNIT_ASSERT_EQUAL是其中之一，当断言失败时，CppUnit便会将错误信息报告给TestResult。这些宏定义的说明如下：</P>
+<DIV class="postRefrence">
+<P>CPPUNIT_ASSERT(condition)：判断condition的值是否为真，如果为假则生成错误信息。</P>
+<P>CPPUNIT_ASSERT_MESSAGE(message, 
+condition)：与CPPUNIT_ASSERT类似，但结果为假时报告messsage信息。</P>
+<P>CPPUNIT_FAIL(message)：直接报告messsage错误信息。</P>
+<P>CPPUNIT_ASSERT_EQUAL(expected, 
+actual)：判断expected和actual的值是否相等，如果不等输出错误信息。</P>
+<P>CPPUNIT_ASSERT_EQUAL_MESSAGE(message, expected, 
+actual)：与CPPUNIT_ASSERT_EQUAL类似，但断言失败时输出message信息。</P>
+<P>CPPUNIT_ASSERT_DOUBLES_EQUAL(expected, actual, 
+delta)：判断expected与actual的偏差是否小于delta，用于浮点数比较。</P>
+<P>CPPUNIT_ASSERT_THROW(expression, 
+ExceptionType)：判断执行表达式expression后是否抛出ExceptionType异常。</P>
+<P>CPPUNIT_ASSERT_NO_THROW(expression)：断言执行表达式expression后无异常抛出。</P></DIV>
+<P>接下来再看看TestFixture和TestCaller的组合使用：</P>
+<DIV class="postCode"><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestCase.h&gt;<BR><FONT color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResult.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResultCollector.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TextOutputter.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestCaller.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestRunner.h&gt;<BR><BR><FONT 
+color="#008000">//&nbsp;定义测试类</FONT><BR><FONT 
+color="#0000ff">class</FONT>&nbsp;StringTest&nbsp;:&nbsp;<FONT 
+color="#0000ff">public</FONT>&nbsp;CppUnit::TestFixture<BR>{<BR><FONT color="#0000ff">public</FONT>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;setUp()&nbsp;<FONT 
+color="#008000">//&nbsp;初始化</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1&nbsp;=&nbsp;<FONT 
+color="#ff00ff">"Hello,&nbsp;world"</FONT>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str2&nbsp;=&nbsp;<FONT 
+color="#ff00ff">"Hi,&nbsp;cppunit"</FONT>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;tearDown()&nbsp;<FONT 
+color="#008000">//&nbsp;清理</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;testSwap()&nbsp;<FONT 
+color="#008000">//&nbsp;测试方法1</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;str1&nbsp;=&nbsp;m_str1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;str2&nbsp;=&nbsp;m_str2;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1.swap(m_str2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(m_str1&nbsp;==&nbsp;str2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(m_str2&nbsp;==&nbsp;str1);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;testFind()&nbsp;<FONT 
+color="#008000">//&nbsp;测试方法2</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">int</FONT>&nbsp;pos1&nbsp;=&nbsp;m_str1.find(',');<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">int</FONT>&nbsp;pos2&nbsp;=&nbsp;m_str2.rfind(',');<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT_EQUAL(5, 
+pos1);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT_EQUAL(2, 
+pos2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR><FONT 
+color="#0000ff">protected</FONT>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str2;<BR>};<BR><BR><FONT 
+color="#0000ff">int</FONT>&nbsp;main(<FONT 
+color="#0000ff">int</FONT>&nbsp;argc,&nbsp;<FONT 
+color="#0000ff">char</FONT>*&nbsp;argv[])<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResult&nbsp;r;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResultCollector&nbsp;rc;<BR>&nbsp;&nbsp;&nbsp;&nbsp;r.addListener(&amp;rc);&nbsp;<FONT 
+color="#008000">//&nbsp;准备好结果收集器&nbsp;</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestRunner&nbsp;runner;&nbsp;<FONT 
+color="#008000">//&nbsp;定义执行实体</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;runner.addTest(<FONT 
+color="#0000ff">new</FONT>&nbsp;CppUnit::TestCaller&lt;StringTest&gt;(<FONT 
+color="#ff00ff">"testSwap"</FONT>,&nbsp;&amp;StringTest::testSwap));&nbsp;<FONT 
+color="#008000">//&nbsp;构建测试用例1</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;runner.addTest(<FONT 
+color="#0000ff">new</FONT>&nbsp;CppUnit::TestCaller&lt;StringTest&gt;(<FONT 
+color="#ff00ff">"testFind"</FONT>,&nbsp;&amp;StringTest::testFind));&nbsp;<FONT 
+color="#008000">//&nbsp;构建测试用例2</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;runner.run(r);&nbsp;<FONT 
+color="#008000">//&nbsp;运行测试</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TextOutputter&nbsp;o(&amp;rc,&nbsp;<FONT 
+color="#0000ff">std</FONT>::cout);<BR>&nbsp;&nbsp;&nbsp;&nbsp;o.write();&nbsp;<FONT 
+color="#008000">//&nbsp;将结果输出</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color="#0000ff">return</FONT>&nbsp;rc.wasSuccessful()&nbsp;?&nbsp;0&nbsp;:&nbsp;-1;<BR>}<BR></DIV>编译后运行结果为： 
+<DIV class="postRefrenceNoIndent">OK (2 tests) </DIV>
+<P>上面的代码从功能上讲没有什么问题，但编写起来太繁琐了，为此，我们可以借助CppUnit定义的一套辅助宏，将测试用例的定义和注册变得自动化。上面的代码改造后如下：</P>
+<DIV class="postCode"><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResult.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestResultCollector.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TextOutputter.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/TestRunner.h&gt;<BR><FONT 
+color="#ff0000">#include</FONT>&nbsp;&lt;cppunit/extensions/HelperMacros.h&gt;<BR><BR><BR><FONT 
+color="#008000">//&nbsp;定义测试类</FONT><BR><FONT 
+color="#0000ff">class</FONT>&nbsp;StringTest&nbsp;:&nbsp;<FONT 
+color="#0000ff">public</FONT>&nbsp;CppUnit::TestFixture<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST_SUITE(StringTest);&nbsp;&nbsp;<FONT 
+color="#008000">//&nbsp;定义测试包</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST(testSwap);&nbsp;&nbsp;<FONT 
+color="#008000">//&nbsp;添加测试用例1</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST(testFind);&nbsp;&nbsp;<FONT 
+color="#008000">//&nbsp;添加测试用例2</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST_SUITE_END();&nbsp;&nbsp;<FONT 
+color="#008000">//&nbsp;结束测试包定义</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;<BR><FONT 
+color="#0000ff">public</FONT>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;setUp()&nbsp;<FONT 
+color="#008000">//&nbsp;初始化</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1&nbsp;=&nbsp;<FONT 
+color="#ff00ff">"Hello,&nbsp;world"</FONT>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str2&nbsp;=&nbsp;<FONT 
+color="#ff00ff">"Hi,&nbsp;cppunit"</FONT>;<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;tearDown()&nbsp;<FONT 
+color="#008000">//&nbsp;清理</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;testSwap()&nbsp;<FONT 
+color="#008000">//&nbsp;测试方法1</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;str1&nbsp;=&nbsp;m_str1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;str2&nbsp;=&nbsp;m_str2;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1.swap(m_str2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(m_str1&nbsp;==&nbsp;str2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(m_str2&nbsp;==&nbsp;str1);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">void</FONT>&nbsp;testFind()&nbsp;<FONT 
+color="#008000">//&nbsp;测试方法2</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;{<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">int</FONT>&nbsp;pos1&nbsp;=&nbsp;m_str1.find(',');<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">int</FONT>&nbsp;pos2&nbsp;=&nbsp;m_str2.rfind(',');<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT_EQUAL(5, 
+pos1);<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT_EQUAL(2, 
+pos2);<BR>&nbsp;&nbsp;&nbsp;&nbsp;}<BR><BR><FONT 
+color="#0000ff">protected</FONT>:<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str1;<BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT 
+color="#0000ff">std</FONT>::<FONT 
+color="#0000ff">string</FONT>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_str2;<BR>};<BR><BR>CPPUNIT_TEST_SUITE_REGISTRATION(StringTest);&nbsp;<FONT 
+color="#008000">//&nbsp;自动注册测试包</FONT><BR><BR><FONT 
+color="#0000ff">int</FONT>&nbsp;main(<FONT 
+color="#0000ff">int</FONT>&nbsp;argc,&nbsp;<FONT 
+color="#0000ff">char</FONT>*&nbsp;argv[])<BR>{<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResult&nbsp;r;&nbsp;<BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestResultCollector&nbsp;rc;<BR>&nbsp;&nbsp;&nbsp;&nbsp;r.addListener(&amp;rc);&nbsp;<FONT 
+color="#008000">//&nbsp;准备好结果收集器&nbsp;</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestRunner&nbsp;runner;&nbsp;<FONT 
+color="#008000">//&nbsp;定义执行实体</FONT><BR>&nbsp;&nbsp;&nbsp;&nbsp;runner.addTest(CppUnit::TestFactoryRegistry::getRegistry().makeTest());<BR>&nbsp;&nbsp;&nbsp;&nbsp;runner.run(r);&nbsp;<FONT 
+color="#008000">//&nbsp;运行测试</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TextOutputter&nbsp;o(&amp;rc,&nbsp;<FONT 
+color="#0000ff">std</FONT>::cout);<BR>&nbsp;&nbsp;&nbsp;&nbsp;o.write();&nbsp;<FONT 
+color="#008000">//&nbsp;将结果输出</FONT><BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;<FONT color="#0000ff">return</FONT>&nbsp;rc.wasSuccessful()&nbsp;?&nbsp;0&nbsp;:&nbsp;-1;<BR>} 
+</DIV>
+<P>CppUnit的简单介绍就到此，相信你已经了解了其中的基本概念，也能够开发单元测试代码了。</P>
+<P class="postSectionTitle">其它</P>
+<P>CppUnit还包括其它一些辅助模块，比如基于MFC的图形化测试界面，下面这篇文章对此有所介绍：</P>&nbsp;&nbsp;&nbsp;&nbsp;<A 
+href="http://www.vckbase.com/document/viewdoc/?id=1258">CppUnit测试框架入门</A> 
+<P>&nbsp;</P>
+<P>CppUnit使用了很多设计模式，整体构架还算清晰合理，源码也比较简单易懂，这对于学习设计模式是一个不错的选择。网上已有这样的一些资料：</P>&nbsp;&nbsp;&nbsp;&nbsp;<A 
+href="http://morningspace.51.net/resource/cppunit/cppunit_anno.html">CppUnit源码解读</A> 
+&nbsp;&nbsp;&nbsp;&nbsp;<A href="http://www.polyrandom.com/index.php?option=content&amp;task=view&amp;id=16">CppUnit代码简介 
+- 第一部分，核心类 </A> 
+<P>（freefalcon于2006-05-22）</P></DIV></ARTICLE>
+<DIV class="readall_box csdn-tracking-statistics tracking-click" data-mod="popu_376">
+<DIV class="read_more_mask"></DIV><A class="btn btn-large btn-gray-fred read_more_btn" 
+target="_self">阅读全文</A>       </DIV>
+<DIV class="article_copyright"></DIV>
+<UL class="article_collect clearfix csdn-tracking-statistics tracking-click" 
+data-mod="popu_378">
+  <LI class="tit">本文已收录于以下专栏：</LI><!--          [startarticlecolumns]-->         
+                          <!--          [endarticlecolumns]-->       </UL>
+<DIV class="comment_box clearfix" id="comments">
+<DIV id="comment_form">
+<DIV id="commentsbmitarear"></DIV></DIV></DIV>
+<DIV class="comment_li_outbox">
+<DIV id="comment_list"></DIV></DIV>
+<DIV class="more_comment">
+<DIV class="trackgin-ad" id="comment_bar" data-mod="popu_385"></DIV></DIV><!-- <h3 class="recommend_tit" id="related">相关文章推荐</h3> --> 
+      
+<DIV class="recommend_list clearfix" id="rasss">
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/weiwenhp/article/details/16833243" 
+  target="_blank" strategy="BlogCommendFromBaidu_0">
+  <DD class="clearfix">
+  <H2>CPPUnit用法简介</H2>
+  <DIV 
+  class="summary">CPPUnit是一个开源的C++单元测试工具.实际上是一些dll,你要写单元测试时调用它的一些类就行.跟我们平时使用一般的dll文件类似. 
+  下面的详细的使用步骤,参考了别人两篇博客写出来的. ...                          </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="weiwenhp" alt="weiwenhp" src="CppUnit-intro_files/3_weiwenhp.jpg"></LI>
+    <LI class="user_name">weiwenhp</LI>
+    <LI class="time">2013年11月19日 23:17</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>4120</SPAN></LI></UL></DD></A>       
+              </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/cpluser/article/details/111522" 
+  target="_blank" strategy="BlogCommendFromBaidu_1">
+  <DD class="clearfix">
+  <H2>CppUnit测试框架入门(1)</H2>
+  <DIV class="summary">                              CppUnit测试框架入门(1)Author: 
+  Cpluser 
+  Website：http://blog.enjoyimage.comEmail：enjoyimage@163.comBlog：http:...        
+                    </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="cpluser" alt="cpluser" src="CppUnit-intro_files/3_cpluser.gif"></LI>
+    <LI class="user_name">cpluser</LI>
+    <LI class="time">2004年09月21日 10:57</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>43188</SPAN></LI></UL></DD></A>      
+               </DL>
+<DL>
+<SCRIPT>
+                  (function() {
+                    var s = "_" + Math.random().toString(36).slice(2);
+                    document.write('<div id="' + s + '"></div>');
+                    (window.slotbydup=window.slotbydup || []).push({
+                      id: '4765209',
+                      container: s,
+                      size: '808,120',
+                      display: 'inlay-fix'
+                    });
+                  })();
+                  </SCRIPT>
+                   </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/abcdef0966/article/details/5699248" 
+  target="_blank" strategy="searchFromBaidu_2">
+  <DD class="clearfix">
+  <H2>Linux下Cppunit的简单运用</H2>
+  <DIV class="summary">                              
+  对初次使用Cppunit进行单元测试所使用的测试代码编写框架作一简单记录。                          </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="abcdef0966" alt="abcdef0966" src="CppUnit-intro_files/3_abcdef0966.jpg"></LI>
+    <LI class="user_name">abcdef0966</LI>
+    <LI class="time">2010年06月28日 14:14</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>4382</SPAN></LI></UL></DD></A>       
+              </DL>
+<DL class="clearfix csdn-tracking-statistics downloadElement" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A class="clearfix" 
+  href="http://download.csdn.net/download/heimawangye/2600637" target="_blank" 
+  strategy="searchFromBaidu_3">
+  <DD class="floatL">
+  <DIV class="summary">
+  <H2>使用cppunit 使用说明</H2>
+  <DIV class="summary">
+  <UL>
+    <LI class="time">2010年08月06日 09:50</LI>
+    <LI class="visited_num fileSize">466KB</LI>
+    <LI class="download_btn">下载</LI></UL></DIV></DIV></DD>
+  <DT class="floatR"><IMG title="" class="maxwidth" alt="" src="CppUnit-intro_files/doc.svg"></DT></A> 
+                    </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/coderzhou/article/details/267445" 
+  target="_blank" strategy="BlogCommendFromBaidu_4">
+  <DD class="clearfix">
+  <H2>CppUnit测试框架入门 </H2>
+  <DIV class="summary">CppUnit测试框架入门(1)Author: Cpluser 
+  Website：http://tdd.nease.netEmail：cpluser@hotmail.comBlog：http://blo...        
+                    </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="coderzhou" alt="coderzhou" src="CppUnit-intro_files/3_coderzhou.jpg"></LI>
+    <LI class="user_name">coderzhou</LI>
+    <LI class="time">2005年01月25日 14:15</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>701</SPAN></LI></UL></DD></A>        
+             </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/gddsky/article/details/1836332" 
+  target="_blank" strategy="BlogCommendFromBaidu_5">
+  <DD class="clearfix">
+  <H2>CppUnit测试框架入门</H2>
+  <DIV class="summary">Author: Cpluser 
+  Website：http://tdd.nease.netEmail：cpluser@hotmail.comBlog：http://blog.csdn.net/cplus... 
+                           </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="gddsky" alt="gddsky" src="CppUnit-intro_files/3_gddsky.jpg"></LI>
+    <LI class="user_name">gddsky</LI>
+    <LI class="time">2007年10月22日 07:28</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>285</SPAN></LI></UL></DD></A>        
+             </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/casualgame/article/details/332162" 
+  target="_blank" strategy="searchFromBaidu_6">
+  <DD class="clearfix">
+  <H2>CppUnit使用指南</H2>
+  <DIV 
+  class="summary">CppUnit使用指南测试驱动开发的原则：Ø&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  先写测试代码，然后编写符合测试的代码。至少做到完成部分代码后，完成对应的测试代码； 
+  Ø&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 测试代码不需要覆盖所有的细节，但应该对...             
+               </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="casualgame" alt="casualgame" src="CppUnit-intro_files/3_casualgame.gif"></LI>
+    <LI class="user_name">casualgame</LI>
+    <LI class="time">2005年03月27日 21:32</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>2616</SPAN></LI></UL></DD></A>       
+              </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/pll621/article/details/628766" 
+  target="_blank" strategy="searchFromBaidu_7">
+  <DD class="clearfix">
+  <H2>CppUnit使用指南</H2>
+  <DIV 
+  class="summary">&nbsp;测试驱动开发的原则：Ø&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  先写测试代码，然后编写符合测试的代码。至少做到完成部分代码后，完成对应的测试代码； 
+  &nbsp;Ø&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  测试代码不需要覆盖所有的细节，但应该对所有主要的功能和可...                          </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="pll621" alt="pll621" src="CppUnit-intro_files/3_pll621.gif"></LI>
+    <LI class="user_name">pll621</LI>
+    <LI class="time">2006年03月19日 01:44</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>941</SPAN></LI></UL></DD></A>        
+             </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/weiqubo/article/details/48030091" 
+  target="_blank" strategy="BlogCommendFromBaidu_8">
+  <DD class="clearfix">
+  <H2>CppUnit测试框架入门</H2>
+  <DIV class="summary">                              
+  测试驱动开发(TDD)是以测试作为开发过程的中心，它坚持，在编写实际代码之前，先写好基于产品代码的测试代码。开发过程的目标就是首先使测试能够通过，然后再优化设计结构。测试驱动开发式是极限编程的重要组成... 
+                           </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="weiqubo" alt="weiqubo" src="CppUnit-intro_files/3_weiqubo.jpg"></LI>
+    <LI class="user_name">weiqubo</LI>
+    <LI class="time">2015年08月27日 17:04</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>679</SPAN></LI></UL></DD></A>        
+             </DL>
+<DL class="clearfix csdn-tracking-statistics recommend_article" data-mod="popu_387" 
+data-dsm="post" data-feed-show="false" data-poputype="feed"><A href="http://blog.csdn.net/wzx19840423/article/details/6536444" 
+  target="_blank" strategy="BlogCommendFromBaidu_9">
+  <DD class="clearfix">
+  <H2>使用cppunit进行白盒测试</H2>
+  <DIV class="summary">                              
+  一、前言　　测试驱动开发(TDD)是以测试作为开发过程的中心，它坚持，在编写实际代码之前，先写好基于产品代码的测试代码。开发过程的目标就是首先使测试能够通过，然后再优化设计结构。测试驱动开发式是极限编... 
+                           </DIV>
+  <UL>
+    <LI class="avatar_img"><IMG title="wzx19840423" alt="wzx19840423" src="CppUnit-intro_files/3_wzx19840423.jpg"></LI>
+    <LI class="user_name">wzx19840423</LI>
+    <LI class="time">2011年06月10日 14:42</LI>
+    <LI class="visited_num"><I 
+    class="icon iconfont icon-read"></I><SPAN>1545</SPAN></LI></UL></DD></A>       
+              </DL><!-- <script async="async" charset="utf-8" src="https://shared.ydstatic.com/js/yatdk/3.0.0/stream.js" data-notify="bannerMulti_notify" data-insert-nodes="yd_a_d_feed_1,yd_a_d_feed_13,yd_a_d_feed_18,yd_a_d_feed_23,yd_a_d_feed_28,yd_a_d_feed_33" data-id="8935aa488dd58452b9e5ee3b44f1212f" data-hide-ad-label="0" data-div-Style="width:100%;padding:16px 35px 16px 10px;" data-img-Style="float:right;width:120px;" data-tit-Style="font-size:20px;font-weight:bold;margin-bottom:10px;font-family: 'PingFang SC', 'Microsoft YaHei', SimHei, Arial, SimSun;" data-des-Style="width:700px;font-size:14px;font-family: 'PingFang SC', 'Microsoft YaHei', SimHei, Arial, SimSun;" > </script> --> 
+            </DIV></main><ASIDE>
+<DIV class="right_box user_info">
+<DL class="inf_bar clearfix">
+  <DT class="csdn-tracking-statistics tracking-click" data-mod="popu_381"><A 
+  href="http://blog.csdn.net/freefalcon" target="_blank"><IMG class="avatar_pic" 
+  src="CppUnit-intro_files/3_freefalcon.gif">               </A>               
+  <SPAN title="" class="medals"></SPAN></DT>
+  <DD>
+  <H3 class="csdn-tracking-statistics tracking-click" data-mod="popu_380"><A id="uid" 
+  href="http://blog.csdn.net/freefalcon" 
+  target="_blank">freefalcon</A></H3><SPAN class="csdn-tracking-statistics tracking-click" 
+  data-mod="popu_379"><A class="btn btn-redborder-small " id="span_add_follow" 
+  target="_self">＋关注</A></SPAN>           </DD></DL>
+<DIV class="inf_number_box clearfix">
+<DL>
+  <DT>原创</DT>
+  <DD>39</DD></DL>
+<DL>
+  <DT>粉丝</DT>
+  <DD id="fan">190</DD></DL>
+<DL>
+  <DT>喜欢</DT>
+  <DD>0</DD></DL>
+<DL>
+  <DT>码云</DT>
+  <DD>&nbsp;</DD></DL></DIV></DIV>
+<DIV class="extension_other csdn-tracking-statistics tracking-click" data-mod="popu_389"><!--u3032528--> 
+        
+<DIV class="flashrecommend">
+<SCRIPT src="CppUnit-intro_files/bwocoltly.js" type="text/javascript"></SCRIPT>
+         </DIV></DIV>
+<DIV class="writings">
+<DIV class="public_signal clearfix">
+<H3>他的最新文章</H3><A class="more" href="http://blog.csdn.net/freefalcon" target="_blank"><SPAN>更多文章</SPAN></A> 
+    </DIV>
+<UL class="inf_list clearfix csdn-tracking-statistics tracking-click" data-mod="popu_382">
+  <LI class="clearfix"><A href="http://blog.csdn.net/freefalcon/article/details/52853744" 
+  target="_blank">新的征程</A>           </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/freefalcon/article/details/1585339" 
+  target="_blank">超线程技术以及H.264编码器中的并行运算分析</A>           </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/freefalcon/article/details/1517528" 
+  target="_blank">AJAX初探</A>           </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/freefalcon/article/details/1506526" 
+  target="_blank">了解SIP</A>           </LI>
+  <LI class="clearfix"><A href="http://blog.csdn.net/freefalcon/article/details/1505765" 
+  target="_blank">Base64编码介绍</A>           </LI></UL></DIV>
+<DIV class="user-hotArticle sort userSort">
+<H3>文章分类</H3>
+<UL class="hotArticle-list userSort-list">
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28129">1. 
+  杂谈</A>
+  <DIV class="read list-left floatR"><SPAN>17篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28131">1. 
+  网站资源</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28132">2. 
+  文档资源</A>
+  <DIV class="read list-left floatR"><SPAN>0篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/188631">2. 
+  软件工程</A>
+  <DIV class="read list-left floatR"><SPAN>3篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28124">3. 
+  设计模式</A>
+  <DIV class="read list-left floatR"><SPAN>0篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28122">4. 
+  C/C++</A>
+  <DIV class="read list-left floatR"><SPAN>8篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/28123">5. 
+  Java</A>
+  <DIV class="read list-left floatR"><SPAN>0篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/191263">6. 
+  调试技术</A>
+  <DIV class="read list-left floatR"><SPAN>3篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/236497">7. 
+  Linux</A>
+  <DIV class="read list-left floatR"><SPAN>2篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/250750">8. 
+  多媒体技术</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/category/251524">9. 
+  协议和标准</A>
+  <DIV class="read list-left floatR"><SPAN>3篇</SPAN></DIV></LI></UL>
+<DIV class="unfold-btn"><SPAN>展开</SPAN><I 
+class="icon iconfont icon-xiajiantou"></I>             </DIV></DIV><!--    [StartShowSelfColumn]--> 
+    <!--    [EndShowSelfColumn]-->             
+<DIV class="user-hotArticle sort timeSort">
+<H3>文章存档</H3>
+<UL class="hotArticle-list timeSort-list">
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2016/10">2016年10月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2007/04">2007年4月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2007/02">2007年2月</A>
+  <DIV class="read list-left floatR"><SPAN>5篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2007/01">2007年1月</A>
+  <DIV class="read list-left floatR"><SPAN>2篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/12">2006年12月</A>
+  <DIV class="read list-left floatR"><SPAN>4篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/11">2006年11月</A>
+  <DIV class="read list-left floatR"><SPAN>13篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/10">2006年10月</A>
+  <DIV class="read list-left floatR"><SPAN>7篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/09">2006年9月</A>
+  <DIV class="read list-left floatR"><SPAN>3篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/08">2006年8月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/05">2006年5月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/04">2006年4月</A>
+  <DIV class="read list-left floatR"><SPAN>7篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2006/03">2006年3月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2004/10">2004年10月</A>
+  <DIV class="read list-left floatR"><SPAN>1篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2004/09">2004年9月</A>
+  <DIV class="read list-left floatR"><SPAN>3篇</SPAN></DIV></LI>
+  <LI class="clearfix"><A class="odd-overhidden floatL" href="http://blog.csdn.net/freefalcon/article/month/2004/07">2004年7月</A>
+  <DIV class="read list-left floatR"><SPAN>5篇</SPAN></DIV></LI></UL>
+<DIV class="unfold-btn"><SPAN>展开</SPAN><I 
+class="icon iconfont icon-xiajiantou"></I>           </DIV></DIV>
+<DIV class="user-hotArticle">
+<H3>他的热门文章</H3>
+<UL class="hotArticle-list csdn-tracking-statistics tracking-click" data-mod="popu_521"><!--            [StartHotArticles]--> 
+                                                  
+  <LI><A 
+  href="http://blog.csdn.net/freefalcon/article/details/54839">sizeof，终极无惑（上）</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>36195</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/freefalcon/article/details/645058">解决TortoiseSVN中out 
+  of date问题的一个方法</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>29464</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/freefalcon/article/details/753819">CppUnit快速入门</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>22800</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/freefalcon/article/details/1363258">Linux上构建一个RADIUS服务器详解</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>19588</SPAN></DIV></LI>
+  <LI><A 
+  href="http://blog.csdn.net/freefalcon/article/details/1374733">使用winsock2.h可能出现的两种编译错误</A>
+  <DIV class="read list-left"><I 
+  class="icon iconfont icon-read"></I><SPAN>13337</SPAN></DIV></LI><!--            [EndHotArticles]--> 
+          </UL></DIV><!--    [startcustom]-->     <!--    [endcustom]-->   
+<DIV class="fixRight_box" style="height: 256px;">
+<DIV class="fixRight"><!--u3163270-->             
+<SCRIPT src="CppUnit-intro_files/avneunkwb.js" type="text/javascript"></SCRIPT>
+                 
+<DIV class="right_box copyright csdn-tracking-statistics" data-mod="popu_475" 
+data-dsm="post">
+<H3 class="feed_new_tit"><SPAN class="line"></SPAN><SPAN 
+class="txt">联系我们</SPAN></H3>
+<DIV class="contact-box">
+<DIV class="img-box"><IMG alt="客服" 
+src="CppUnit-intro_files/csdn_cs_qr.png"></DIV>
+<DIV class="contact-info">
+<H4>请扫描二维码联系客服</H4>
+<P><I class="icon iconfont icon-mail"></I>                     <A href="mailto:webmaster@csdn.net" 
+target="_blank"><SPAN class="txt">webmaster@csdn.net</SPAN>                     
+</A>                 </P>
+<P><I class="icon iconfont icon-call"></I>                     
+<SPAN class="txt">400-660-0108</SPAN>                 </P>
+<P><I class="icon iconfont icon-QQ"></I>                     <A href="http://wpa.qq.com/msgrd?v=3&amp;uin=2431299880&amp;site=qq&amp;menu=yes" 
+target="_blank"><SPAN class="txt">网站客服</SPAN>                     </A>           
+      </P></DIV></DIV>
+<DIV class="bg-gray">
+<DIV class="feed_copyright">
+<P><A class="right-dotte" href="http://www.csdn.net/company/about.html" target="_blank">关于</A><A 
+class="right-dotte" href="http://www.csdn.net/company/recruit.html" target="_blank">招聘</A><A 
+class="right-dotte" href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</A><IMG 
+title="ali" alt="ali" src="CppUnit-intro_files/ali01.png"></P>
+<P class="fz12">©2018 CSDN <A class="ml14" href="http://www.miibeian.gov.cn/" 
+target="_blank">京ICP证09002463号</A></P></DIV>
+<DIV class="allow-info-box">
+<P><A href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" 
+target="_blank"><SPAN>经营性网站备案信息</SPAN></A></P>
+<P><A href="http://www.cyberpolice.cn/" 
+target="_blank"><SPAN>网络110报警服务</SPAN></A></P>
+<P><A href="http://www.12377.cn/" target="_blank"><SPAN>中国互联网举报中心</SPAN></A></P>
+<P><A href="http://www.bjjubao.org/" 
+target="_blank"><SPAN>北京互联网违法和不良信息举报中心</SPAN></A></P></DIV></DIV></DIV></DIV></DIV></ASIDE></DIV>
+<DIV class="left_fixed">
+<DIV class="left_show_button"><SPAN><I 
+class="icon iconfont icon-youjiantou"></I>         </SPAN>     </DIV>
+<UL class="left_menu" id="share_box">
+  <LI><BUTTON title="点赞" class="left-fixed-btn btn-like csdn-tracking-statistics tracking-click" 
+  data-mod="popu_373" target="_self"><A class="iconbox border_red" href="javascript:void(0);"><I 
+  class="icon iconfont icon-dianzan"></I></A><A class="txt" href="javascript:void(0);">4</A></BUTTON> 
+          </LI>
+  <LI id="blog_artical_directory"><BUTTON title="目录" class="left-fixed-btn left_menu_btn csdn-tracking-statistics tracking-click" 
+  data-mod="popu_372" target="_self"><A class="iconbox border_black" href="javascript:void(0);"><I 
+  class="icon iconfont icon-mulu"></I></A></BUTTON>         </LI>
+  <LI class="menu_con">
+  <DIV class="list_father">
+  <DIV class="arr_box"><BUTTON class="btn-noborder arr-btn scroll-down  left_scroll_down"><I 
+  class="icon iconfont icon-xiajiantou"></I></BUTTON>                     
+  <BUTTON class="btn-noborder arr-btn scroll-up left_scroll_top"><I class="icon iconfont icon-shangjiantou"></I></BUTTON> 
+                  </DIV>
+  <DIV class="arr"></DIV>
+  <DIV id="csdnBlogDir"></DIV></DIV></LI><!--        <li>-->         <!--            <button class="left-fixed-btn btn-like tracking-ad" data-mod="popu_373" target="_self">--> 
+          <!--                <span class="iconbox border_red"><i class="icon iconfont icon-xihuan-"></i></span>--> 
+          <!--                <span class="txt">喜欢</span>-->         <!--                <span class="untxt">取消喜欢</span>--> 
+          <!--            </button>-->         <!--        </li>-->         
+  <LI><BUTTON title="收藏" class="left-fixed-btn csdn-tracking-statistics tracking-click" 
+  id="com-quick-collect" data-mod="popu_374" target="_self"><A class="iconbox border_purple" 
+  href="javascript:void(0);"><I 
+  class="icon iconfont icon-shoucang"></I></A></BUTTON>         </LI>
+  <LI><BUTTON title="评论" class="left-fixed-btn btn-pinglun csdn-tracking-statistics tracking-click" 
+  data-mod="popu_544"><A class="iconbox border_purple" href="javascript:void(0);"><I 
+  class="icon iconfont icon-pinglun"></I></A></BUTTON>         </LI>
+  <LI class="bdsharebuttonbox"><BUTTON title="分享到新浪微博" class="outside left-fixed-btn csdn-tracking-statistics tracking-click" 
+  data-mod="popu_172"><SPAN class="iconbox border_red2"><I class="icon iconfont icon-xinlang"></I></SPAN><A 
+  class="bds_tsina" href="http://blog.csdn.net/freefalcon/article/details/753819#" 
+  data-cmd="tsina"></A>           </BUTTON>         </LI>
+  <LI class="bdsharebuttonbox"><BUTTON title="分享到微信" class="outside left-fixed-btn csdn-tracking-statistics tracking-click" 
+  data-mod="popu_172"><SPAN class="iconbox border_green"><I class="icon iconfont icon-weixin"></I></SPAN><A 
+  class="bds_weixin" href="http://blog.csdn.net/freefalcon/article/details/753819#" 
+  data-cmd="weixin"></A>           </BUTTON>         </LI>
+  <LI class="bdsharebuttonbox"><BUTTON title="分享到QQ空间" class="outside left-fixed-btn csdn-tracking-statistics tracking-click" 
+  data-mod="popu_172"><SPAN class="iconbox border_blue"><I class="icon iconfont icon-QQ"></I></SPAN><A 
+  class="bds_qzone" href="http://blog.csdn.net/freefalcon/article/details/753819#" 
+  data-cmd="qzone"></A>           </BUTTON>         </LI>
+  <LI id="share_box">
+  <DIV class="bdsharebuttonbox csdn-tracking-statistics tracking-click" 
+  data-mod="popu_172"></DIV></LI></UL></DIV>
+<DIV class="right_fixed">
+<DIV class="r_ico"><I class="icon iconfont icon-jubao"></I><SPAN class="txt" id="reportBtn">内容举报</SPAN></DIV>
+<DIV class="returnTop"><I 
+class="icon iconfont icon-fanhuidingbu"></I><SPAN>返回顶部</SPAN></DIV></DIV>
+<DIV id="pop_win"></DIV>
+<DIV id="popup_mask"></DIV>
+<DIV class="pop_CA_cover"></DIV>
+<DIV class="pop pop_CA">
+<DIV class="CA_header">        收藏助手         <SPAN class="cancel_icon" id="fapancle"></SPAN></DIV><IFRAME 
+width="100%" height="360" id="collectIframe" src="CppUnit-intro_files/o.htm" 
+frameborder="0" scrolling="no"></IFRAME> </DIV><!--举报--> 
+<DIV id="report_dialog" style="left: 343.5px; top: 250px;">
+<DIV id="panel_report">
+<DIV class="panel_head">不良信息举报</DIV>
+<FORM class="panel_body" id="frmReport" method="post">
+<TABLE class="pop_table" border="0" cellspacing="4" cellpadding="0">
+  <TBODY>
+  <TR>
+    <TD colspan="2">您举报文章：<A href="http://blog.csdn.net/freefalcon/article/details/753819" 
+      target="_blank">CppUnit快速入门</A></TD></TR>
+  <TR>
+    <TH style="width: 60px;">举报原因：</TH>
+    <TD id="panel_reporttype"><LABEL><INPUT name="report_type" class="report_type" 
+      id="report_sex" type="radio" value="1">色情</LABEL>                     
+      <LABEL><INPUT name="report_type" class="report_type" id="report_Politics" 
+      type="radio" value="2">政治</LABEL>                     <LABEL><INPUT name="report_type" 
+      class="report_type" id="report_copy" type="radio" value="3">抄袭</LABEL>     
+                      <LABEL><INPUT name="report_type" class="report_type" id="report_ad" 
+      type="radio" value="4">广告</LABEL>                     <LABEL><INPUT name="report_type" 
+      class="report_type" id="report_want" type="radio" value="5">招聘</LABEL>     
+                      <LABEL><INPUT name="report_type" class="report_type" id="report_call" 
+      type="radio" value="6">骂人</LABEL>                     <BR><LABEL><INPUT 
+      name="report_type" class="report_type" id="report_other" type="radio" 
+      value="7">其他</LABEL>                     <INPUT name="report_other_content" id="report_other_content" style="display: none;" type="text" maxlength="30"> 
+                      </TD></TR>
+  <TR id="panel_originalurl" style="display: none;">
+    <TH>原文地址：</TH>
+    <TD><INPUT name="originalurl" id="originalurl" style="width: 90%;" type="text" value="http://"> 
+                      </TD></TR>
+  <TR>
+    <TH id="sp_reason">原因补充：</TH>
+    <TD><TEXTAREA name="report_description" id="report_description" style="width: 300px;" rows="3"></TEXTAREA> 
+                          
+      <P id="sp_n" 
+      style="margin: 0px; padding: 0px; color: rgb(153, 153, 153);">(最多只允许输入30个字)</P></TD></TR>
+  <TR>
+    <TD></TD>
+    <TD><INPUT name="submit" align="middle" class="btn_1" id="btnSubmitReport" 
+      type="image" src="CppUnit-intro_files/btn_submit.jpg">                     
+      <SPAN style="padding-left: 20px;"></SPAN>                     <IMG align="middle" 
+      id="btnCloseReportDialog" src="CppUnit-intro_files/btn_cancel.jpg">        
+                   
+      <DIV id="error" 
+style="color: red;"></DIV></TD></TR></TBODY></TABLE></FORM></DIV>
+<SCRIPT language="javascript" type="text/javascript">
+        var isComment=0;
+        //显示隐藏地址
+        $(function () {
+          console.log("version:phoenix");
+            if(isComment){
+                $("#report_description").attr("disabled",true);
+                $("#sp_n").hide();
+                $("#sp_reason").html("评论内容：");
+            }
+            $(".report_type").click(function () {
+                $("#panel_originalurl,#report_other_content").hide();
+                switch ($(this).val()) {
+                    case '3':
+                        $("#panel_originalurl").show();
+                        $("#originalurl").focus();
+                        break;
+                    case '7':
+                        if(isComment){
+                            $("#report_other_content").show().focus();
+                        }
+                        break;
+                }
+
+            });
+
+            $("#frmReport").submit(function () {
+                if (!currentUserName) {
+
+                    if (confirm("您的操作必须登录，是否登录？")) {
+                        location.href = "http://passport.csdn.net/account/login?from=" + encodeURIComponent(location.href);
+                        return false;
+                    }
+                    return false;
+                }
+
+                var reportType = $("input[name=report_type]:checked").val();
+                if(!reportType){
+                    alert("请选择举报原因！");
+                    return false;
+                }
+                var otherInfo = "";
+                switch (reportType) {
+                    case '3':
+                        otherInfo = $("#originalurl").val();
+                        if (otherInfo == ""||otherInfo=="http://") {
+                            alert("举报抄袭必须提供原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        } else if(!checkeURL(otherInfo)) {
+                            alert("请输入正确的原创文章地址！");
+                            $("#originalurl").focus();
+                            return false;
+                        }
+                        break;
+                    case '7':
+                        otherInfo = $("#report_other_content").val();
+                        if (isComment && !otherInfo) {
+                            alert("请填写举报的具体原因！");
+                            $("#report_other_content").focus();
+                            return false;
+                        }
+                        if(!isComment){
+                            if(!$("#report_description").val()){
+                                alert("请填写举报的具体原因！");
+                                $("#report_description").focus();
+                                return false;
+                            }
+                        }
+                        break;
+                }
+                if(!isComment){
+                    if($("#report_description").val().length>30){
+                        alert("举报原因最多只允许输入30个字！");
+                        return false;
+                    }
+                }
+	            nowTime = {
+		            year: new Date().getFullYear(),
+		            month: parseInt(new Date().getMonth())+1,
+		            day: new Date().getDate(),
+		            hours: parseInt(new Date().getHours())+1,
+		            minutes: parseInt(new Date().getMinutes())+1,
+		            seconds: parseInt(new Date().getSeconds())+1
+	            };
+	            var data = {
+		            articleId: fileName,
+		            commentId: 0,
+		            reportType: reportType,
+		            originalurl: $("#originalurl").val(),
+		            report_other_content: $("#report_other_content").val(),
+		            report_description: $("#report_description").val(),
+		            currentUserName: currentUserName,
+		            updatetime: nowTime.year+'/'+nowTime.month+'/'+nowTime.day+' '+ nowTime.hours+':'+nowTime.minutes+':'+seconds,
+		            blogUser: username
+	            };
+	            if(!isComment){//如果是举报文章
+		            data.report_other_content = data.report_description;
+		            // data.report_description = "1. 神经网络这是一个常见的神经网络的图：这是一个常见的三层神经网络的基本构成，Layer L1是输入层，Layer L2是隐含层";
+	            }
+
+	            $.post(blog_address + "/common/report?id="+fileName+"&t=2", data, function (data) {
+		            if (data.result == 1){
+			            SetError("感谢您的举报，我们会尽快审核！");
+		            }else{
+			            if (data.content) alert(data.content);
+		            }
+
+	            });
+                return false;
+            });
+
+            $("#btnCloseReportDialog").click(function () {
+                CloseDiv();
+            });
+
+        });
+
+        //提示后关闭方法
+        function SetError(error) {
+            $("#btnCloseReportDialog").trigger("click");
+            alert(error);
+            CloseDiv();
+        }
+
+        //关闭方法
+        function CloseDiv() {
+
+            $.removeMask();
+            $("#report_dialog").hide();
+            return false;
+        }
+
+        //验证url
+        function checkeURL(url){
+            return /^http(s)?:\/\/([\w-]+\.)+[\w-]+/i.test(url);
+        }
+    </SCRIPT>
+ </DIV><!--  fixme 后期清理掉  --> 
+<DIV id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+<SCRIPT id="adJs52b5334"></SCRIPT>
+     
+<SCRIPT>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</SCRIPT>
+ </DIV>
+<SCRIPT src="CppUnit-intro_files/bootstrap.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="CppUnit-intro_files/MathJax.js" type="text/javascript"></SCRIPT>
+ <!-- <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script> --> 
+<SCRIPT>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    if($(".article_collect li").length==1){$(".article_collect").hide();}
+    if($(".article_tags li").length==1){$(".article_tags").hide();}
+    $(".edit a").attr("href","http://mp.blog.csdn.net/postedit/"+fileName);
+    $.each($(".edu_li a"),function(){$(this).attr("href",$(this).attr("href").replace("blog7","blog9"))});
+    new CNick('#uid').showNickname();
+
+    if($("#fan").html()=="")
+    {
+	    $("#fan").html(0);
+    }
+</SCRIPT>
+ 
+<SCRIPT src="CppUnit-intro_files/appendMark.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+    appendMark($('.recommend_list').children('a').find('dt'),$('.extension_other'),$('.yd_a_d_feed_cla'))
+</SCRIPT>
+ 
+<DIV id="loginWrap"></DIV>
+<DIV id="dlMask"></DIV></BODY></HTML>

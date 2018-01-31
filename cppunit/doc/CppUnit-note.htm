@@ -1,0 +1,1198 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0044)https://my.oschina.net/hevakelcj/blog/408858 -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-CN"><HEAD><META content="IE=11.0000" 
+http-equiv="X-UA-Compatible">
+     
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">     
+<META http-equiv="Content-Language" content="zh-CN">     
+<META name="robots" content="index, follow">     
+<META name="viewport" content="width=device-width, initial-scale=1">     
+<META name="author" content="临峰不畏,hevakelcj">             
+<META name="keywords" content="cppunit,C++,CppUnit学习笔记">         
+<META name="description" content="展示了自己做的两个示例测试代码" itemprop="description">     
+<TITLE>CppUnit学习笔记 - 技术手札</TITLE>     <LINK title="CppUnit学习笔记 - 技术手札 - 开源中国社区" 
+href="https://my.oschina.net/hevakelcj/rss" rel="alternate" type="application/rss+xml"> 
+    <LINK href="/img/favicon.ico?t=1451964198000" rel="shortcut icon" type="image/x-icon"> 
+    <LINK href="CppUnit-note_files/leeui_layout.css" rel="stylesheet" type="text/css"> 
+                        
+<META content="CppUnit学习笔记 - 技术手札 - 开源中国社区" itemprop="name"> 
+<META content="https://www.oschina.net/img/logo_s2.png" itemprop="image">        
+     <LINK href="CppUnit-note_files/icon-svg.min.css" rel="stylesheet" type="text/css"> 
+                    <LINK href="CppUnit-note_files/blog.min.css" rel="stylesheet" 
+type="text/css">                         
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD>
+<BODY style="background: rgb(248, 248, 248);"><val data-value="false" data-name="isMobileDevice"></val> 
+        <x-foo-define data-define="blog_detail"></x-foo-define>     <val 
+data-value="243525" data-name="owner_id"></val>     <val data-value="https://my.oschina.net/hevakelcj" 
+data-name="owner_home_url"></val>     <val data-value="https%3A%2F%2Fmy.oschina.net%2Fhevakelcj%2Fblog%2F408858" 
+data-name="this_page"></val>             <val data-value="false" data-name="g_user_login"></val> 
+        <val data-value="https://www.oschina.net/home/login?goto_page=https%3A%2F%2Fmy.oschina.net%2Fhevakelcj%2Fblog%2F408858" 
+data-name="goto_this_page"></val>         <val data-value="false" data-name="is_owner"></val> 
+            <val data-value="408858" data-name="blog_id"></val>                  
+               
+<STYLE>
+.header-navbar .top-banner .menus .mayun {
+  color: #F8E71C;
+  position: relative;
+}
+.header-navbar .top-banner .menus #icon_mayun {
+    font-size: 12px;
+    line-height: 18px;
+    position: absolute;
+    top: 10px;
+    width: 36px;
+    margin-left: 4px;
+    padding: 0 3px;
+    text-align: center;
+    color: #fff;
+    border-radius: 2px;
+    background: #c71d24;
+}
+.header-navbar .top-banner .menus #icon_mayun:after {
+    position: absolute;
+    left: 0;
+    display: inline-block;
+    width: 36px;
+    height: 18px;
+    content: '';
+    opacity: .6;
+    background: url(/dist/www/imgs/flash.gif?t=1505734150000) center no-repeat;
+    background-size: contain;
+}
+</STYLE>
+ <HEADER class="header-navbar">
+<DIV class="box top-banner">
+<DIV class="box vertical box-aw"><A class="osc-logo" href="https://www.oschina.net/"></A> 
+            
+<DIV class="menus"><A class="menu-item" href="https://www.oschina.net/">首页</A>   
+              
+<DIV class="menu-item menu-drop"><A class="project" href="https://www.oschina.net/project"> 
+                       开源项目                         <I class="icon-svg icon-arr-down-white"></I> 
+                    </A>                     
+<DIV class="menu-drop-down">
+<UL class="drop-list">
+  <LI><A href="https://www.oschina.net/project/zh">国产开源项目</A></LI>
+  <LI><A href="https://www.oschina.net/project/tags">项目分类</A></LI>
+  <LI><A href="https://www.oschina.net/project/list?sort=time">最新收录项目</A></LI>
+  <LI class="split"></LI>
+  <LI><A href="https://www.oschina.net/project/lang/19/java">Java 开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/194/csharp">C# 开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/22/php">PHP 开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/21/c">C/C++ 开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/26/ruby">Ruby 开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/25/python">Python 
+  开源软件</A></LI>
+  <LI><A href="https://www.oschina.net/project/lang/358/go">Go开源软件</A></LI>
+  <LI><A 
+  href="https://www.oschina.net/project/lang/28/javascript">JS开源软件</A></LI></UL></DIV></DIV>
+<DIV class="box menu-item menu-drop"><A class="question" href="https://www.oschina.net/question"> 
+                       问答                         <I class="icon-svg icon-arr-down-white"></I> 
+                    </A>                     
+<DIV class="menu-drop-down">
+<UL class="drop-list">
+  <LI><A href="https://www.oschina.net/question?catalog=1"> 技术问答</A></LI>
+  <LI><A href="https://www.oschina.net/question?catalog=2"> 技术分享</A></LI>
+  <LI><A href="https://www.oschina.net/question?catalog=3">IT大杂烩</A></LI>
+  <LI><A href="https://www.oschina.net/question?catalog=100"> 职业生涯</A></LI>
+  <LI><A href="https://www.oschina.net/question?catalog=4"> 站务/建议</A></LI>
+  <LI><A href="https://www.oschina.net/alipay"> 支付宝专区</A></LI>
+  <LI><A href="https://www.oschina.net/mopaas">MoPaaS专区</A></LI>
+  <LI><A href="https://www.oschina.net/hardware"> 
+开源硬件专区</A></LI></UL></DIV></DIV><A class="menu-item tweets" href="https://www.oschina.net/tweets">动弹</A> 
+                <A class="menu-item blog" 
+href="https://www.oschina.net/blog">博客</A>                 <A class="menu-item tran" 
+href="https://www.oschina.net/translate">翻译</A>                 <A class="menu-item news" 
+href="https://www.oschina.net/news">资讯</A>                 
+<DIV class="menu-item menu-drop"><A class="mobile" href="https://www.oschina.net/android"> 
+                       专题                         <I class="icon-svg icon-arr-down-white"></I> 
+                    </A>                     
+<DIV class="menu-drop-down">
+<UL class="drop-list drop-list-inline">
+  <LI><A class="font-red" href="https://www.oschina.net/event/ych">源创会</A></LI>
+  <LI><A href="https://www.oschina.net/question/tag/%E9%AB%98%E6%89%8B%E9%97%AE%E7%AD%94">高手问答</A><A 
+  href="https://www.oschina.net/question/tag/%E5%BC%80%E6%BA%90%E8%AE%BF%E8%B0%88">访谈</A></LI>
+  <LI><A href="https://my.oschina.net/editorial-story/blog">周刊</A><A href="https://my.oschina.net/xxiaobian/blog">乱弹</A></LI>
+  <LI><A href="https://www.oschina.net/company">公司开源导航页</A></LI></UL>
+<DIV class="split"></DIV>
+<UL class="drop-list mobile">
+  <LI class="android"><A 
+  href="https://www.oschina.net/android">Android开发专区</A></LI>
+  <LI class="ios"><A href="https://www.oschina.net/ios/home">iOS开发专区</A></LI>
+  <LI class="ios"><A 
+  href="https://www.oschina.net/ios/codingList">iOS代码库</A></LI>
+  <LI class="wp7"><A href="https://www.oschina.net/wp">Windows Phone</A></LI>
+  <LI class="wp7"><A href="https://www.oschina.net/ibm">IBM开发专区</A></LI>
+  <LI class="wp7"><A href="http://hsbn.oschina.net/" 
+  target="_blank">高安全区块链社区</A></LI></UL></DIV></DIV><A class="menu-item event" 
+href="https://www.oschina.net/event">活动</A>                 <A class="menu-item event" 
+href="https://job.oschina.net/">招聘</A>                 <A class="menu-item event mayun" 
+href="https://gitee.com/?from=osc-index" target="_blank">码云<SPAN 
+id="icon_mayun">特惠</SPAN></A>             </DIV></DIV>
+<DIV class="box-fr user-bar">
+<DIV class="box user-info">                                                    [ 
+<A href="https://www.oschina.net/home/login?goto_page=https%3A%2F%2Fmy.oschina.net%2Fhevakelcj%2Fblog%2F408858">登录</A> 
+| <A href="https://www.oschina.net/home/reg?goto_page=https%3A%2F%2Fmy.oschina.net%2Fhevakelcj%2Fblog%2F408858">注册</A> 
+]                             </DIV></DIV></DIV></HEADER><!-- 此script用于百度统计工具--> 
+<SCRIPT>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?a411c4d1664dd70048ee98afe7b28f0b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</SCRIPT>
+     
+<DIV>
+<SCRIPT src="CppUnit-note_files/jweixin-1.2.0.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="CppUnit-note_files/jquery.js" type="text/javascript"></SCRIPT>
+     <val data-value="wx880def15e694b905" data-name="weixinAppid"></val>     
+<val data-value="1517390936578" data-name="weixinTimestamp"></val>     <val 
+data-value="9f2e6053-c91a-4a95-9513-8d8529770d42" 
+data-name="weixinNonceStr"></val>     <val data-value="377be4c16e4d3ff80d76e70b6afadb1cb24888d7" 
+data-name="weixinSignature"></val>     <val data-value="https://my.oschina.net/hevakelcj/blog/408858" 
+data-name="weixinUrl"></val>                 <val data-value="" data-name="weixinShareTitle"></val> 
+    <val data-value="" data-name="weixinShareDescription"></val>     <val 
+data-value="https://www.oschina.net/img/osclogo/png/logo_4wechat.png?t=1512641765000" 
+data-name="weixinShareImgUrl"></val>             
+<SCRIPT src="CppUnit-note_files/jweixin-1.2.0.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="CppUnit-note_files/jquery.js" type="text/javascript"></SCRIPT>
+     <val data-value="wx880def15e694b905" data-name="weixinAppid"></val>     
+<val data-value="1517390936584" data-name="weixinTimestamp"></val>     <val 
+data-value="9d15d8d6-74f7-4e7e-a4d0-172ebfaa3a63" 
+data-name="weixinNonceStr"></val>     <val data-value="a260ca51f65d5b91d849b7cdcfa271177ae6c63f" 
+data-name="weixinSignature"></val>     <val data-value="https://my.oschina.net/hevakelcj/blog/408858" 
+data-name="weixinUrl"></val>                 <val data-value="CppUnit学习笔记" 
+data-name="weixinShareTitle"></val>     <val data-value="展示了自己做的两个示例测试代码" 
+data-name="weixinShareDescription"></val>     <val data-value="https://static.oschina.net/uploads/space/2017/0606/104418_CPLl_2733728.png" 
+data-name="weixinShareImgUrl"></val> <val data-value="false" data-name="is_login"></val> 
+<val data-value="/dist/www/vendor/highlight/9.5.0/highlight.js?t=1491732257000" 
+data-name="hljs_js_url"></val> <val data-value="/build/www/vendor/highlight/9.4.0/styles/zenburn.css?t=1474300001000" 
+data-name="hljs_css_url"></val> <val data-value="/dist/www/vendor/jquery.atwho/jquery.atwho.js?t=1491732257000" 
+data-name="atwho_js_url"></val> <val data-value="/dist/www/vendor/jquery.atwho/jquery.atwho.css?t=1491732257000" 
+data-name="atwho_css_url"></val> <val data-value="/action/user/follow" 
+data-name="user_follow_url"></val> <val data-value="/action/user/unfollow" 
+data-name="user_unfollow_url"></val> <LINK href="CppUnit-note_files/comp-report.css" 
+rel="stylesheet" type="text/css"> 
+<STYLE>
+    .hide {
+        display: none;
+        opacity: 0;
+    }
+
+</STYLE>
+ <!-- content     --> 
+<DIV class="blog blog-article">
+<DIV data-tracepid="floatAdbox" data-traceid="floatAdbox" name="floatAdbox">
+<STYLE>
+    .float_adbox {display:none;position:fixed;left:0;bottom:10px;z-index: 10001;}
+    .float_adbox .close-left {position:absolute;top:74px;left:26px;cursor:pointer;}
+</STYLE>
+ 
+<DIV class="float_adbox"><A href="https://gitee.com/gitee-stars/6?from=osc-index" 
+target="_blank"><IMG class="float-people" alt="Float_left" src="CppUnit-note_files/173815_TThb_1046130.png"> 
+        <IMG class="close-left" alt="Icon_close" src="CppUnit-note_files/173815_drYD_1046130.png"> 
+    </A> </DIV>
+<SCRIPT src="CppUnit-note_files/jquery.min.js"></SCRIPT>
+ 
+<SCRIPT src="CppUnit-note_files/js.cookie.min.js"></SCRIPT>
+ 
+<SCRIPT>
+    var leftPeople = $('.float_adbox');
+    var isVisit = Cookies.get('visit-gitee-stars-bts-06');
+    if (isVisit == 1) {
+        leftPeople.hide();
+    } else {
+        leftPeople.show();
+    }
+    $('.close-left').on('click', function (e) {
+        e.preventDefault();
+        Cookies.set('visit-gitee-stars-bts-06', 1, { expires: 90, path: '/' });
+        leftPeople.slideUp();
+    })
+</SCRIPT>
+             </DIV>
+<DIV class="blog-head" id="blog-head">
+<DIV class="blog-service"><!-- 赞、收藏、分享 -->             
+<DIV class="operate">
+<UL><val data-value="true" data-name="isAllowBlogDonate"></val>                
+                               <!-- 打賞 -->                         
+  <LI class="opr-btn-blog btn-reward-blog "><A class="btn" href="javascript:void(0);" 
+  data-violet="reward" data-popupbox-model="reward"><I class="icon-svg icon-reward-blog"></I> 
+                              </A>                         </LI><!-- 点赞 -->      
+                 
+  <LI class="opr-btn-blog btn-like-blog "><A class="btn" onclick="page.vote(408858);" 
+  href="javascript:void(0);" data-violet="favor"><I class="icon-svg icon-thumbs-o-up-blog"></I> 
+                          </A>                     </LI><!-- 收藏 -->              
+         
+  <LI class="opr-btn-blog btn-favor-blog hover"><A class="btn " href="javascript:void(0);" 
+  data-thispage="https://my.oschina.net/hevakelcj/blog/408858" data-userid="" 
+  data-blogtype="3" data-blogid="408858"><I class="icon-svg icon-star-blog"></I> 
+                          </A>                                             </LI><!-- 分享 --> 
+                      
+  <LI class="opr-btn-blog btn-share-blog hover"><A class="btn" href="javascript:void(0);"><I 
+  class="icon-svg icon-share-o-blog"></I>                         </A>           
+                
+  <DIV class="operate-dropdown share-dropdown">
+  <DIV class="bdsharebuttonbox"><A title="分享到一键分享" class="bds_mshare" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="mshare">一键分享</A><A title="分享到QQ空间" class="bds_qzone" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="qzone">QQ空间</A><A title="分享到微信" class="bds_weixin" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="weixin">微信</A><A title="分享到腾讯微博" class="bds_tqq" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="tqq">腾讯微博</A><A title="分享到新浪微博" class="bds_tsina" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="tsina">新浪微博</A><A title="分享到QQ好友" class="bds_sqq" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="sqq">QQ好友</A><A title="分享到有道云笔记" class="bds_youdao" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="youdao">有道云笔记</A></DIV>
+<SCRIPT>window._bd_share_config = {
+                                "common": {
+                                    "bdSnsKey": {},
+                                    "bdText": "",
+                                    "bdMini": "2",
+                                    "bdMiniList": ["mshare", "qzone", "tsina", "weixin", "tqq", "sqq"],
+                                    "bdPic": "",
+                                    "bdStyle": "0",
+                                    "bdSize": "16"
+                                }, "share": {"bdSize": 16}
+                            };
+                            with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/js/bdshare_api/share.js?t=1466497427000'];</SCRIPT>
+                           </DIV></LI></UL></DIV><!-- 标题 -->             
+<DIV class="blog-heading">
+<DIV class="title">                    CppUnit学习笔记                 </DIV>
+<DIV class="user-info">
+<DIV class="name"><A href="https://my.oschina.net/hevakelcj/home" target="_blank">临峰不畏</A> 
+                    </DIV><SPAN class="text-gary time">发表于3年前</SPAN>             
+    </DIV></DIV></DIV></DIV>
+<DIV class="blog-detail"><!-- 侧边栏-目录 -->                                     
+<DIV class="blog-wrapper">
+<DIV class="sidebar md-hide">
+<DIV class="catalogWrap" id="catalogWrap"><SPAN 
+class="sidebar-scrollbar"></SPAN>                             
+<UL class="anchor-content" id="catalogWrapMenu"></UL></DIV></DIV></DIV>
+<DIV class="blog-wrapper">
+<DIV class="back-list"><A class="font-green" 
+href="https://www.oschina.net/blog">博客专区</A> &gt; <A class="font-green" href="https://my.oschina.net/hevakelcj/blog">临峰不畏 
+               的博客</A> &gt; 博客详情             </DIV></DIV><!-- 广告 -->             
+        
+<DIV class="blog-title-ad">
+<DIV class="blog-wrapper">
+<DIV id="blog-title-ad" data-tracepid="blogup" data-traceid="blog_ali"><A style="max-width: 780px;" 
+href="http://click.aliyun.com/m/8845/" target="_blank"><!--<img src="https://static.oschina.net/uploads/space/2016/1208/124327_Ke03_2982602.jpg">--></A></DIV>
+<SCRIPT>
+    function success_jsonpCallback(data) {
+        var obj = eval(data);
+        if( obj.success ){
+            var contents = eval(obj.data[0].content);
+            if(contents.length > 0){
+                var content = contents[0];
+                $('#blog-title-ad').prepend("<a  href='"+ content.url +"' target='_blank' style='max-width:780px;'><img src='"+content.img+"'/></a>");
+                $('#blog-title-ad').show();
+            }
+            
+        }else {
+            $('#blog-title-ad').hide();
+        }
+    }
+    window.addEventListener("load", function() {
+         var url="https://promotion.aliyun.com/promotion/adv/getAliyunAdv.htm?cback=success_jsonpCallback&s=9cd174d9efd443e3982131f97b07e70f&p=page_1470989078421&pin=pos_1475239274174";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            jsonp: "callback",
+            dataType: 'jsonp',
+            jsonpCallback: 'success_jsonpCallback',
+            contentType: "application/json; charset=utf-8",
+            success: function( response ) {
+                // do in callback
+            },
+            error:function(){
+                $('#blog-title-ad').hide();
+            }
+        });
+    }, false);
+</SCRIPT>
+                </DIV></DIV><!-- 广告2.0  -->                     
+<DIV class="blog-wrapper">
+<DIV class="blog-left-ad"></DIV></DIV>
+<DIV class="float-heading">
+<DIV class="blog-wrapper">
+<DIV class="layout-flex">
+<DIV class="flex-grow">
+<DIV class="heading">CppUnit学习笔记</DIV>
+<DIV class="data-info"><A class="link-blue" href="https://my.oschina.net/hevakelcj/home" 
+target="_blank">临峰不畏</A>                            发表于3年前                       
+  </DIV></DIV>
+<DIV>
+<DIV class="opr-btn">
+<DIV class="opr-btn-blog btn-reward-blog "><A href="javascript:void(0)" 
+data-popupbox-model="reward"><I class="icon-svg icon-reward-blog"></I>           
+                      </A>                             </DIV><!-- 点赞 -->         
+                    
+<DIV class="opr-btn-blog btn-like-blog "><A onclick="page.vote(408858);" href="javascript:void(0);"><I 
+class="icon-svg icon-thumbs-o-up-blog"></I>                                 </A> 
+                            </DIV><!-- 收藏 -->                             
+<DIV class="opr-btn-blog btn-favor-blog  hover"><A class=" " href="javascript:void(0);" 
+data-thispage="https://my.oschina.net/hevakelcj/blog/408858" data-userid="" 
+data-blogtype="3" data-blogid="408858"><I class="icon-svg icon-star-blog"></I>   
+                                                                  </A>           
+                                                  </DIV><!-- 分享 -->              
+               
+<DIV class="opr-btn-blog btn-share-blog hover"><A href="javascript:void(0);"><I 
+class="icon-svg icon-share-o-blog"></I>                                 </A>     
+                            
+<DIV class="operate-dropdown share-dropdown"><SPAN 
+class="share-title">分享到：</SPAN>
+<DIV class="bdsharebuttonbox"><A title="分享到一键分享" class="bds_mshare" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="mshare">一键分享</A><A title="分享到QQ空间" class="bds_qzone" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="qzone">QQ空间</A><A title="分享到微信" class="bds_weixin" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="weixin">微信</A><A title="分享到腾讯微博" class="bds_tqq" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="tqq">腾讯微博</A><A title="分享到新浪微博" class="bds_tsina" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="tsina">新浪微博</A><A title="分享到QQ好友" class="bds_sqq" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="sqq">QQ好友</A><A title="分享到有道云笔记" class="bds_youdao" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+data-cmd="youdao">有道云笔记</A></DIV>
+<SCRIPT>window._bd_share_config = {
+                                        "common": {
+                                            "bdSnsKey": {},
+                                            "bdText": "",
+                                            "bdMini": "2",
+                                            "bdMiniList": ["mshare", "qzone", "tsina", "weixin", "tqq", "sqq"],
+                                            "bdPic": "",
+                                            "bdStyle": "0",
+                                            "bdSize": "16"
+                                        }, "share": {"bdSize": 16}
+                                    };
+                                    with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/js/bdshare_api/share.js?t=1466497427000'];</SCRIPT>
+                                 </DIV></DIV></DIV></DIV></DIV></DIV></DIV><!-- 文章内容 --> 
+        
+<DIV class="blog-content"><!-- 标题 -->             
+<DIV class="blog-heading">
+<DIV class="title"><SPAN title="原创博客" class="status-tag original">原</SPAN>       
+                                                                         
+CppUnit学习笔记                 </DIV>
+<DIV class="info-opr layout">
+<DIV class="layout-right"><!-- 收藏 -->                             
+<DIV class="opr-btn-blog btn-favor-blog favor hover"><A class="&#10;                                    btn btn-black-blog " 
+href="javascript:void(0);" data-thispage="https://my.oschina.net/hevakelcj/blog/408858" 
+data-userid="" data-blogtype="3" data-blogid="408858"><I class="icon-svg icon-star-blog"></I> 
+                                    <SPAN class="operate_title">                 
+                                                                   收藏            
+                                                                  </SPAN>        
+                         </A>                                                    
+         </DIV></DIV>
+<DIV class="layout-column">
+<DIV class="user-info">
+<DIV class="name"><A href="https://my.oschina.net/hevakelcj/home" target="_blank">临峰不畏</A> 
+                            </DIV></DIV>
+<DIV class="data-info text-gary">
+<UL>
+  <LI class="time">发表于 <SPAN>3年前</SPAN>                                 </LI>
+  <LI class="read">阅读 <SPAN id="read">517</SPAN></LI>
+  <LI class="favor">收藏 <SPAN>3</SPAN></LI>
+  <LI class="vote">点赞 <SPAN>1</SPAN></LI>
+  <LI class="comment"><A class="link-blue" href="https://my.oschina.net/hevakelcj/blog/408858#comment-list" 
+  data-href="#comment-list">评论 <SPAN id="comment">0</SPAN>                       
+                </A>                                 
+</LI></UL></DIV></DIV></DIV></DIV><!-- 文字链广告 -->             
+<DIV style="margin-top: 20px;">
+<P style="margin: 0px 0px 10px;"><A style="color: rgb(170, 0, 0); font-weight: bold;" 
+href="https://cloud.tencent.com/act/first_purchase?fromSource=gwzcw.743700.743700.743700" 
+target="_blank" data-tracepid="blog_detail_above_text_link" data-traceid="blog_detail_above_text_link_1">【腾讯云】如何购买服务器最划算？&gt;&gt;&gt; 
+</A>&nbsp;&nbsp;<IMG align="absmiddle" style="max-height: 32px; max-width: 32px;" 
+src="CppUnit-note_files/hot3.png"></P></DIV><!-- 摘要 -->                          
+   
+<DIV class="blog-abstract">摘要: 展示了自己做的两个示例测试代码                 </DIV><!-- 正文 --> 
+            
+<DIV class="blog-body" id="blogBody"><val data-value="richtext" data-name="blog_content_type"></val> 
+                
+<DIV class="BlogContent clearfix">
+<P>今天是五一劳动节，为了不为全国人民添堵，本人还是决定宅在家里学点东西。</P>
+<P>C++里的单元测试工具我接触过的有boost_unit，gtest。</P>
+<P>本人深知单元测试的重要性与TDD（测试驱动开发）的思想。所以，测试工具对我而言开发利器。我们必须要掌握其中的一门。</P>
+<P>听说CppUnit的兼容性比较好，于是博主就颇有兴趣地学习了一下CppUnit的使用。</P>
+<P>网上的资料很多，已有很多牛人已做了分享。</P>
+<P><A href="http://www.cnblogs.com/eric_lgf/archive/2009/10/10/1580330.html" 
+target="_blank" rel="nofollow">CppUnit入门</A>，<A href="http://baike.baidu.com/view/4336315.htm" 
+target="_blank" rel="nofollow">CppUnit百科</A>，<A href="http://blog.chinaunix.net/uid-20384806-id-1954332.html" 
+target="_blank" rel="nofollow">CppUnit使用详解</A>，等等。在百度上搜“CppUnit”，有很多资料。</P>
+<P><BR></P>
+<HR>
+
+<P>本人参照上面的示例自己尝试做了一遍。</P><SPAN id="OSC_h2_1"></SPAN> 
+<H2>安装<BR></H2>
+<P>首先是安装cppunit。本人的系统是CentOS，就直接用yum安装使是。</P>
+<PRE class="brush:shell;toolbar: true; auto-links: false;"><CODE>sudo&nbsp;yum&nbsp;install&nbsp;cppunit-devel</CODE></PRE>
+<P>也可以选择下载源码安装。步骤大致都是：解压缩，./configure，make，sudo make install。</P>
+<P>安装完成之后，在 /usr/include 路径下会多一个 cppunit 目录，这就是cppunit的头文件所在处。在 /usr/lib/ 路径下有 
+libcppunit-1.12.so.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+libcppunit-1.12.so.1.0.0&nbsp; libcppunit.so 3个文件。</P>
+<P>我们在链接的时候，一定要记得加 -lcppunit 项。</P>
+<P><BR></P><SPAN id="OSC_h2_2"></SPAN> 
+<H2>Lession-1</H2>
+<P>编辑文件：MathTest.h</P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>#include&nbsp;&lt;cppunit/TestAssert.h&gt;
+#include&nbsp;&lt;cppunit/TestFixture.h&gt;
+
+class&nbsp;MathTest&nbsp;:&nbsp;public&nbsp;CppUnit::TestFixture&nbsp;
+{
+protected:
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;m_value1,&nbsp;m_value2;
+public:
+&nbsp;&nbsp;&nbsp;&nbsp;MathTest()&nbsp;{}
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;setUp&nbsp;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_value1&nbsp;=&nbsp;2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_value2&nbsp;=&nbsp;3;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;testAdd()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;result&nbsp;=&nbsp;m_value1&nbsp;+&nbsp;m_value2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(result&nbsp;==&nbsp;5);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;testSub()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;result&nbsp;=&nbsp;m_value1&nbsp;-&nbsp;m_value2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(result&nbsp;==&nbsp;0);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+};</CODE></PRE>
+<P>编译文件：TestMain.cpp</P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>#include&nbsp;&lt;cppunit/ui/text/TestRunner.h&gt;
+#include&nbsp;&lt;cppunit/TestSuite.h&gt;
+#include&nbsp;&lt;cppunit/TestCaller.h&gt;
+#include&nbsp;"MathTest.h"
+
+int&nbsp;main(int&nbsp;argc,&nbsp;char&nbsp;**argv)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TextUi::TestRunner&nbsp;runner;
+&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestSuite&nbsp;*suite&nbsp;=&nbsp;new&nbsp;CppUnit::TestSuite();
+
+&nbsp;&nbsp;&nbsp;&nbsp;suite-&gt;addTest(new&nbsp;CppUnit::TestCaller&lt;MathTest&gt;\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;("testAdd",&nbsp;&amp;MathTest::testAdd));
+
+&nbsp;&nbsp;&nbsp;&nbsp;suite-&gt;addTest(new&nbsp;CppUnit::TestCaller&lt;MathTest&gt;\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;("testSub",&nbsp;&amp;MathTest::testSub));
+
+&nbsp;&nbsp;&nbsp;&nbsp;runner.addTest(suite);
+
+&nbsp;&nbsp;&nbsp;&nbsp;runner.run("",&nbsp;true);
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;
+}</CODE></PRE>
+<P>编译命令：</P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>$&nbsp;g++&nbsp;-o&nbsp;test&nbsp;TestMain.cpp&nbsp;-lcppunit</CODE></PRE>
+<P>执行结果：</P>
+<PRE class="brush:shell;toolbar: true; auto-links: false;"><CODE>[hevake_lcj@localhost&nbsp;Lession1]$&nbsp;./test&nbsp;
+..F
+
+
+!!!FAILURES!!!
+Test&nbsp;Results:
+Run:&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;Failures:&nbsp;1&nbsp;&nbsp;&nbsp;Errors:&nbsp;0
+
+
+1)&nbsp;test:&nbsp;testSub&nbsp;(F)&nbsp;line:&nbsp;21&nbsp;MathTest.h
+assertion&nbsp;failed
+-&nbsp;Expression:&nbsp;result&nbsp;==&nbsp;0
+
+
+&lt;RETURN&gt;&nbsp;to&nbsp;continue</CODE></PRE>
+<P>总结：</P>
+<P>在这个例程中，我们自定义了 CppUnit::TestFixture 子类 MathTest 。在MathTest可选择性地定义 setUp() 与 
+tearDown() <BR></P>
+<P>还需要手动将其加入到 TestSuite对象中去。将 TestSuite对象加入到TestRunner中才能进行测试。</P>
+<P>要添加一个测试，需要改TestMain.cpp文件。这样的测试框架不易维护。</P>
+<P><BR></P><SPAN id="OSC_h2_3"></SPAN> 
+<H2>Lession-2</H2>
+<P>CppUnit 一定考虑到了Lession-1的问题，并提供了许多宏定义，使我们的测试代码更可读。如下是示例：</P>
+<P>编辑文件：DemoTest.h</P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>#ifndef&nbsp;__DEMO_TEST_H__
+#define&nbsp;__DEMO_TEST_H__
+
+#include&nbsp;&lt;cppunit/extensions/HelperMacros.h&gt;
+
+class&nbsp;DemoTest&nbsp;:&nbsp;public&nbsp;CppUnit::TestFixture
+{
+&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST_SUITE(DemoTest);
+&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST(testFunc);
+&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_TEST_SUITE_END();
+
+public:
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;setUp();
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;tearDown();
+
+&nbsp;&nbsp;&nbsp;&nbsp;void&nbsp;testFunc();
+};
+
+#endif&nbsp;//__DEMO_TEST_H__</CODE></PRE>
+<P>编辑文件：DemoTest.cpp<BR></P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>#include&nbsp;"DemoTest.h"
+#include&nbsp;&lt;iostream&gt;
+#include&nbsp;&lt;cppunit/extensions/HelperMacros.h&gt;
+
+using&nbsp;namespace&nbsp;std;
+
+CPPUNIT_TEST_SUITE_REGISTRATION(DemoTest);
+
+void&nbsp;DemoTest::setUp()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;cout&nbsp;&lt;&lt;&nbsp;"DemoTest::setUp()"&nbsp;&lt;&lt;&nbsp;endl;
+}
+
+void&nbsp;DemoTest::tearDown()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;cout&nbsp;&lt;&lt;&nbsp;"DemoTest::tearDown()"&nbsp;&lt;&lt;&nbsp;endl;
+}
+
+void&nbsp;DemoTest::testFunc()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;cout&nbsp;&lt;&lt;&nbsp;"DemoTest::testFunc()"&nbsp;&lt;&lt;&nbsp;endl;
+&nbsp;&nbsp;&nbsp;&nbsp;CPPUNIT_ASSERT(12&nbsp;==&nbsp;11+1);
+}</CODE></PRE>
+<P>编辑文件：TestMain.cpp</P>
+<PRE class="brush:cpp;toolbar: true; auto-links: false;"><CODE>#include&nbsp;&lt;cppunit/ui/text/TestRunner.h&gt;
+#include&nbsp;&lt;cppunit/extensions/TestFactoryRegistry.h&gt;
+
+int&nbsp;main(int&nbsp;argc,&nbsp;char&nbsp;**argv)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TextUi::TestRunner&nbsp;runner;
+&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestFactoryRegistry&nbsp;&amp;registry&nbsp;=&nbsp;\
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CppUnit::TestFactoryRegistry::getRegistry();
+&nbsp;&nbsp;&nbsp;&nbsp;runner.addTest(registry.makeTest());
+&nbsp;&nbsp;&nbsp;&nbsp;runner.run();
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;0;
+}</CODE></PRE>
+<P>编译命令：</P>
+<PRE class="brush:shell;toolbar: true; auto-links: false;"><CODE>$&nbsp;g++&nbsp;-o&nbsp;test&nbsp;DemoTest.cpp&nbsp;TestMain.cpp&nbsp;-lcppunit</CODE></PRE>
+<P>执行结果：</P>
+<PRE class="brush:shell;toolbar: true; auto-links: false;"><CODE>[hevake_lcj@localhost&nbsp;Lession2]$&nbsp;./test&nbsp;
+.DemoTest::setUp()
+DemoTest::testFunc()
+DemoTest::tearDown()
+
+OK&nbsp;(1&nbsp;tests)</CODE></PRE>
+<P>总结：</P>
+<P>我想，其大概的原理就是在 CPPUNIT_TEST_SUITE_REGISTRATION(TestDemo) 宏中就定义了一个全局的 TestDemo 
+对象，在该 TestDemo 的构造函数中 将自己添加到了 单例 CppUnit::TestFactoryRegistry 中。所以在 main() 函数中调用 
+CppUnit::TestFactoryRegistry::getRegistry() 时就可以获得所有我们自己定义的 CppUnit::TestFixture 
+子类。</P>
+<P><BR></P></DIV></DIV>
+<DIV class="blog-opr"><!-- 版权 -->                 
+<DIV class="blog-copyright"><SPAN title="OSCHINA 博客文章版权属于作者，受法律保护。未经作者同意不得转载。">© 
+著作权归作者所有</SPAN>                                     </DIV><!-- 分类、标签、字数 -->      
+           
+<DIV class="related-info">
+<UL>
+  <LI class="classify">分类：<SPAN id="classify"><A href="https://my.oschina.net/hevakelcj/blog?catalog=315340">C++</A></SPAN> 
+                              </LI>
+  <LI class="Words">字数：<SPAN id="Words">815</SPAN></LI></UL></DIV>
+<DIV class="tags">标签：                                                            
+                                         <SPAN class="tag" id="tag"><A href="https://my.oschina.net/hevakelcj/blog?search=cppunit">cppunit</A></SPAN> 
+                                                                                 
+                   <SPAN class="tag" id="tag"><A href="https://my.oschina.net/hevakelcj/blog?search=C%2B%2B">C++</A></SPAN> 
+                                                            </DIV></DIV><!-- 广告2.0  --> 
+                            
+<DIV class="blog-down-ad">
+<DIV class="blog-wrapper">
+<DIV style="text-align: center;" data-tracepid="blog_down" data-traceid="blog_down_1"><!-- oschina-blog-728x90 --> 
+    <INS class="adsbygoogle" style="width: 728px; height: 90px; display: inline-block;" 
+data-ad-slot="5590362768" data-ad-client="ca-pub-7090564139599510"></INS>     
+<SCRIPT>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </SCRIPT>
+     
+<SCRIPT type="text/javascript">
+        function googleAdJSAtOnload() {
+            var element = document.createElement("script");
+            element.src = "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+            element.async = true;
+            document.body.appendChild(element);
+        }
+        if (window.addEventListener) {
+            window.addEventListener("load", googleAdJSAtOnload, false);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", googleAdJSAtOnload);
+        } else {
+            window.onload = googleAdJSAtOnload;
+        }
+    </SCRIPT>
+ </DIV></DIV></DIV><!-- 赞、收藏、分享 -->             
+<DIV class="operate">
+<UL><val data-value="true" data-name="isAllowBlogDonate"></val>                
+                               <!-- 打賞 -->                         
+  <LI class="opr-btn-blog btn-reward-blog "><A class="btn btn-black-blog" href="javascript:void(0);" 
+  data-violet="reward" data-popupbox-model="reward"><I class="icon-svg icon-reward-blog"></I> 
+                                  <SPAN class="operate_title">打赏                 
+               </SPAN>                             </A></LI><!-- 点赞 -->          
+             
+  <LI class="opr-btn-blog btn-like-blog "><A class="btn btn-black-blog" onclick="page.vote(408858);" 
+  href="javascript:void(0);" data-violet="favor"><I class="icon-svg icon-thumbs-o-up-blog"></I> 
+                              <SPAN class="operate_title">                       
+                                               点赞                                
+                                </SPAN>                         </A></LI><!-- 收藏 --> 
+                      
+  <LI class="opr-btn-blog btn-favor-blog hover"><A class="btn btn-black-blog " 
+  href="javascript:void(0);" data-thispage="https://my.oschina.net/hevakelcj/blog/408858" 
+  data-userid="" data-blogtype="3" data-blogid="408858"><I class="icon-svg icon-star-blog"></I> 
+                              <SPAN class="operate_title">                       
+                                               收藏                                
+                                </SPAN>                         </A></LI><!-- 分享 --> 
+                      
+  <LI class="opr-btn-blog btn-share-blog hover"><A class="btn btn-black-blog" 
+  href="javascript:void(0);"><I class="icon-svg icon-share-o-blog"></I>          
+                    分享                         </A>
+  <DIV class="operate-dropdown share-dropdown"><SPAN 
+  class="share-title">分享到：</SPAN>
+  <DIV class="bdsharebuttonbox"><A title="分享到一键分享" class="bds_mshare" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="mshare">一键分享</A><A title="分享到QQ空间" class="bds_qzone" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="qzone">QQ空间</A><A title="分享到微信" class="bds_weixin" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="weixin">微信</A><A title="分享到腾讯微博" class="bds_tqq" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="tqq">腾讯微博</A><A title="分享到新浪微博" class="bds_tsina" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="tsina">新浪微博</A><A title="分享到QQ好友" class="bds_sqq" 
+  href="https://my.oschina.net/hevakelcj/blog/408858#" data-violet="share" 
+  data-cmd="sqq">QQ好友</A><A title="分享到有道云笔记" class="bds_youdao" href="https://my.oschina.net/hevakelcj/blog/408858#" 
+  data-violet="share" data-cmd="youdao">有道云笔记</A></DIV>
+<SCRIPT>window._bd_share_config = {
+                                "common": {
+                                    "bdSnsKey": {},
+                                    "bdText": "",
+                                    "bdMini": "2",
+                                    "bdMiniList": ["mshare", "qzone", "tsina", "weixin", "tqq", "sqq"],
+                                    "bdPic": "",
+                                    "bdStyle": "0",
+                                    "bdSize": "16"
+                                }, "share": {"bdSize": 16}
+                            };
+                            with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '/js/bdshare_api/share.js?t=1466497427000'];</SCRIPT>
+                           </DIV></LI></UL><!-- 举报 -->                 
+<DIV class="report-box"><A class="icon-report-complaints-flag" onclick="page.report(408858,3,'https://my.oschina.net/hevakelcj/blog/408858')"><SPAN 
+class="icon-svg icon-report"></SPAN>                         <SPAN class="operate_title">举报</SPAN> 
+                    </A></DIV>
+<DIV data-type="tip" data-tip-type="fixed">
+<DIV class="tooltips" id="error_tip"></DIV></DIV></DIV>
+<DIV class="reward-list hide">
+<DIV class="reward-list-title">                        共有 <SPAN 
+id="reward-num"></SPAN> 人打赏支持<SPAN id="donate_money"></SPAN>                     
+</DIV>
+<DIV class="donate-user-list" id="donate_user_list">
+<P></P></DIV></DIV></DIV></DIV><!-- 个人名片 -->     
+<DIV class="user-card">
+<DIV class="blog-wrapper">
+<DIV class="layout-flex">
+<DIV class="flex-grow">
+<DIV class="layout-flex">
+<DIV class="flex-left">
+<DIV class="user-info">
+<DIV class="icon"><A class="article_editor_head_img" href="https://my.oschina.net/hevakelcj/home" 
+target="_blank"><IMG title="临峰不畏" align="absmiddle" class="LargePortrait" alt="临峰不畏" 
+src="CppUnit-note_files/243525_100.jpg"></A>                                 
+</DIV>
+<DIV class="follow-status"><SPAN class="btn btn-green btn-follow " data-fansid="243525" 
+data-follow="btn" data-follow-value="1">+ 关注 </SPAN>                             
+                                        </DIV></DIV></DIV>
+<DIV class="flex-grow">
+<DIV class="opus-info">
+<DIV class="title"><A class="name" href="https://my.oschina.net/hevakelcj/home" 
+target="_blank">临峰不畏                                     </A>                    
+                 
+<DIV class="medal medal-osc"></DIV></DIV>
+<DIV class="card-post-info"><SPAN class="card-post"><I class="icon-svg icon-post-blog"></I> 
+                                           技术主管                                  
+       </SPAN>                                                                   
+                                              <SPAN class="card-address"><I 
+class="icon-svg icon-address-blog"></I>                                          
+  深圳                                         </SPAN>                             
+                                        </DIV>
+<DIV class="opus-opr">
+<DIV class="opus-opr-item">粉丝 <SPAN>204</SPAN></DIV>
+<DIV class="opus-opr-item">博文 <SPAN>183</SPAN></DIV>
+<DIV class="opus-opr-item">码字总数                                         
+<SPAN>96576 </SPAN></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV class="flex-right"><!-- 技能雷达 -->                     
+<DIV class="user-radar hide" data-user="243525">
+<DIV id="radar-skill" style="margin: auto; width: 200px; height: 120px;" 
+data-detail="https://www.oschina.net/radar/hevakelcj"></DIV></DIV></DIV></DIV></DIV></DIV><!-- 相关博客 --> 
+                
+<DIV class="blog-related">
+<DIV class="blog-wrapper">
+<DIV class="panel panel-related" id="blog-related">
+<DIV class="panel-heading">相关博客                     </DIV>
+<DIV class="panel-body">
+<DIV class="related-blogs-list flex-item">
+<DIV class="blog-item">
+<DIV class="layout-flex">
+<DIV class="flex-grow"><A title="在unbuntu下用netbeans,未检测到cunit,cppunit？" class="title" 
+href="https://my.oschina.net/u/782056/blog/79714" target="_self">                
+                                    在unbuntu下用netbeans,未检测到cunit,cppunit？        
+                                         </A>                                    
+             
+<DIV class="author-info"><SPAN class="icon"><IMG src="CppUnit-note_files/782056_50.jpg"> 
+                                                </SPAN>                          
+                          银河星沙                                                 
+</DIV></DIV></DIV>
+<DIV class="relation-data text-right"><SPAN class="view data-item"><I class="icon-svg icon-eye"></I>134</SPAN> 
+                                            <A class="reply data-item" href="http://my.oschina.com:8888/J25/blog/190490#comment-list" 
+target="_blank"><I class="icon-svg icon-reply"></I>0</A>                         
+                </DIV></DIV>
+<DIV class="blog-item">
+<DIV class="layout-flex">
+<DIV class="flex-grow"><A title="Ubuntu13.10下Cppunit1.12.1安装记录" class="title" 
+href="https://my.oschina.net/grassyue/blog/204898" target="_self">               
+                                     Ubuntu13.10下Cppunit1.12.1安装记录               
+                                  </A>                                           
+      
+<DIV class="author-info"><SPAN class="icon"><IMG src="CppUnit-note_files/929903_50.jpg"> 
+                                                </SPAN>                          
+                           stupidgrass                                           
+      </DIV></DIV></DIV>
+<DIV class="relation-data text-right"><SPAN class="view data-item"><I class="icon-svg icon-eye"></I>397</SPAN> 
+                                            <A class="reply data-item" href="http://my.oschina.com:8888/J25/blog/190490#comment-list" 
+target="_blank"><I class="icon-svg icon-reply"></I>0</A>                         
+                </DIV></DIV>
+<DIV class="blog-item">
+<DIV class="layout-flex"><SPAN class="img"><IMG src="CppUnit-note_files/175251_TOvb_203297.jpg"> 
+                                           </SPAN>                               
+                                                          
+<DIV class="flex-grow"><A title="linux下netbeans的安装及cppunit的配置" class="title" 
+href="https://my.oschina.net/baoer1024/blog/50000" target="_self">               
+                                     linux下netbeans的安装及cppunit的配置                
+                                 </A>                                            
+     
+<DIV class="author-info"><SPAN class="icon"><IMG src="CppUnit-note_files/203297_50.jpg"> 
+                                                </SPAN>                          
+                           baoer1024                                             
+    </DIV></DIV></DIV>
+<DIV class="relation-data text-right"><SPAN class="view data-item"><I class="icon-svg icon-eye"></I>352</SPAN> 
+                                            <A class="reply data-item" href="http://my.oschina.com:8888/J25/blog/190490#comment-list" 
+target="_blank"><I class="icon-svg icon-reply"></I>0</A>                         
+                </DIV></DIV></DIV></DIV></DIV></DIV></DIV><!-- 评论 -->     
+<DIV class="blog-comments">
+<DIV class="blog-wrapper">
+<DIV class="panel panel-comments" id="comment-list">
+<DIV class="panel-heading" id="blog-comments-list">评论                     
+<EM>(<SPAN class="reply_count">0</SPAN>)                     </EM>               
+  </DIV>
+<DIV class="panel-body">
+<DIV class="panel-comment-form"><!-- 发表评论表单 -->                                  
+                   <!--  --> <val data-value="/build/www/vendor/emoji/emoji_github.js?t=1471883054000" 
+data-name="emoji_js_url"></val> <val data-value="/build/www/vendor/emoji/emoji.min.css?t=1471883054000" 
+data-name="emoji_css_url"></val> 
+<DIV class="SpaceList"><A name="comments" id="postform"></A>         
+<DIV class="layout BlogCommentForm blog-comment-form comment-emoji">
+<FORM id="form_comment" action="/action/blog/add_comment?blog=408858" method="POST">
+<DIV 
+class="comment_form layout-column"><TEXTAREA name="content" id="wmd-input" placeholder=""></TEXTAREA> 
+                    
+<DIV class="layout">
+<DIV class="layout-right"><SPAN class="text-muted">                              
+  Ctrl+Enter                             </SPAN>                             
+<BUTTON class="btn btn-green blg_submit_btn" type="submit" 
+data-violet="comment">发表评论</BUTTON>                         </DIV>
+<DIV class="layout-column"><A class="blog_emotion" href="javascript:;"><I class="icon-svg icon-emotions-hollow-gray"></I> 
+                                
+<DIV data-emoji="wrapper">
+<UL data-emoji="nav">
+  <LI class="active" data-emoji-nav="People">People</LI>
+  <LI data-emoji-nav="Nature">Nature</LI>
+  <LI data-emoji-nav="Objects">Objects</LI>
+  <LI data-emoji-nav="Places">Places</LI>
+  <LI data-emoji-nav="Symbols">Symbols</LI></UL>
+<DIV data-emoji="panel">
+<DIV class="active" data-emoji-item="People"></DIV>
+<DIV data-emoji-item="Nature"></DIV>
+<DIV data-emoji-item="Objects"></DIV>
+<DIV data-emoji-item="Places"></DIV>
+<DIV data-emoji-item="Symbols"></DIV></DIV></DIV></A>                            
+ <A class="blog_soft" href="javascript:page.insert_projects();"><I class="icon-svg icon-project-hollow-gray"></I> 
+                            </A>                             <SPAN class="NoData" 
+id="cmt_tip"></SPAN>                         
+</DIV></DIV></DIV></FORM></DIV></DIV>
+<DIV id="inline_reply_editor" style="display: none;">
+<DIV class="BlogCommentForm blog-comment-form">
+<FORM id="form_inline_comment" action="/action/blog/add_comment?blog=408858" 
+method="POST"><INPUT name="reply_id" id="inline_reply_id" type="hidden">         
+  <TEXTAREA name="content" id="ccom_content" "=""></TEXTAREA>           
+<DIV class="layout">
+<DIV class="layout-right"><INPUT class="btn btn-text" id="btn_close_inline_reply" type="button" value="关闭"> 
+                
+<INPUT class="btn btn-green" id="btn_comment" type="submit" value="回复">          
+     </DIV>
+<DIV class="layout-column">插入：                     <A class="blog_emotion" href="javascript:;"><I 
+class="icon-svg icon-emotions-hollow-gray"></I>                         
+<DIV data-emoji="wrapper">
+<UL data-emoji="nav">
+  <LI class="active" data-emoji-nav="People">People</LI>
+  <LI data-emoji-nav="Nature">Nature</LI>
+  <LI data-emoji-nav="Objects">Objects</LI>
+  <LI data-emoji-nav="Places">Places</LI>
+  <LI data-emoji-nav="Symbols">Symbols</LI></UL>
+<DIV data-emoji="panel">
+<DIV class="active" data-emoji-item="People"></DIV>
+<DIV data-emoji-item="Nature"></DIV>
+<DIV data-emoji-item="Objects"></DIV>
+<DIV data-emoji-item="Places"></DIV>
+<DIV data-emoji-item="Symbols"></DIV></DIV></DIV></A>                     <A 
+class="blog_soft" href="javascript:page.insert_projects_c();"><I class="icon-svg icon-project-hollow-gray"></I> 
+                    </A>                     <SPAN class="NoData" id="ficmp_msg" 
+style="color: rgb(255, 0, 0);"></SPAN>               
+</DIV></DIV></FORM></DIV></DIV></DIV>
+<DIV class="panel-list" id="BlogComments"></DIV></DIV></DIV></DIV></DIV><!-- 微信分享二维码 --> 
+    <!--  <div class="float-share md-hide">
+         <div class="weixin-share" id="weixin-share">
+         </div>
+         <span>微信分享</span>
+     </div> --> 
+    <!-- 右侧工具条 -->     
+<DIV class="tool-bar blog-tool-bar md-hide">
+<DIV class="item tool-top"><A class="over" href="javascript:void(0)">
+<DIV class="icon"><I class="icon-svg icon-go-top"></I>                 </DIV>
+<DIV class="txt">顶部</DIV></A></DIV></DIV></DIV>
+<DIV class="reward-popups" data-popups-for="reward"><SPAN data-popups-close="true">×</SPAN> 
+    
+<DIV data-popups="body">
+<FORM id="blog_donate_form" action="" method="post">
+<DIV class="form-wapper">
+<DIV class="blogger-info text-center"><SPAN class="icon"><A class="article_editor_head_img" 
+href="https://my.oschina.net/hevakelcj/home" target="_blank"><IMG title="临峰不畏" 
+align="absmiddle" class="LargePortrait" alt="临峰不畏" src="CppUnit-note_files/243525_100.jpg"></A> 
+                    </SPAN>                     
+<DIV class="text">如果觉得我的文章对您有用，请随意打赏。您的支持将鼓励我继续创作！                     
+</DIV></DIV>
+<DIV class="form-item">
+<DIV class="form-label"><SPAN class="font-red">*</SPAN>                         
+金额(元)                     </DIV>
+<DIV class="form-ctrl">
+<DIV><INPUT name="payMoney" type="text" placeholder="请输入金额￥" value="2">          
+                   <INPUT name="money" type="hidden" placeholder="请输入金额￥" value="2"> 
+                        </DIV>
+<DIV class="reward-money-box"><SPAN class="reward-money" 
+data-value="1">￥1</SPAN>                             <SPAN class="reward-money" 
+data-value="5">￥5</SPAN>                             <SPAN class="reward-money" 
+data-value="10">￥10</SPAN>                             <SPAN class="reward-money" 
+data-value="20">￥20</SPAN>                             <SPAN class="reward-money other-money active" 
+data-value="">其他金额</SPAN>                         </DIV></DIV></DIV>
+<DIV class="form-item">
+<DIV class="form-label">                        打赏人                     </DIV>
+<DIV 
+class="form-ctrl"><INPUT name="donaterName" type="text" maxlength="100" placeholder="请输入姓名/昵称/邮箱" value=""> 
+                    </DIV></DIV>
+<DIV class="form-item items-center">
+<DIV class="form-label">留言                     </DIV>
+<DIV class="form-ctrl"><TEXTAREA name="message" maxlength="100" placeholder="你想对TA说" rows="3" cols="30">你想对TA说</TEXTAREA> 
+                    </DIV></DIV>
+<DIV class="form-item items-center">
+<DIV class="form-label"><SPAN class="font-red">*</SPAN>                         
+支付类型                     </DIV>
+<DIV class="form-ctrl">
+<DIV class="reward-way form-radios reward-alipay"><INPUT name="reward-way" id="rewardAliPay" 
+type="radio" value="alipay">                             <LABEL for="rewardAliPay"><SPAN 
+class="hide">支付宝支付</SPAN>                             </LABEL>                   
+      </DIV>
+<DIV class="reward-way form-radios reward-wechat"><INPUT name="reward-way" id="rewardWechat" 
+type="radio" value="wepay">                             <LABEL for="rewardWechat"><I 
+class="icon-svg icon-wechat"></I>                                 
+<SPAN>微信支付</SPAN>                             </LABEL>                         
+</DIV></DIV></DIV>
+<DIV class="hide"><INPUT name="objType" type="hidden" value="16344358">          
+           <INPUT name="objId" type="hidden" value="408858">                     
+<INPUT name="donater" type="hidden" value="0">                     <INPUT name="subject" type="hidden" maxlength="50" value="CppUnit学习笔记"> 
+                    <INPUT name="author" type="hidden" value="243525">           
+          <INPUT name="returnUrl" type="hidden" maxlength="900" value="https://my.oschina.net/hevakelcj/blog/408858"> 
+                    <INPUT name="notifyUrl" type="hidden" maxlength="900" value="https://my.oschina.net/action/blog/paySuccess"> 
+                    <INPUT name="sign" type="hidden">                 </DIV>
+<DIV class="form-button text-right"><INPUT class="btn btn-orange" id="blog_donate_button" type="button" value="打赏"> 
+                </DIV></DIV>
+<DIV class="reward-status reward-wechat-box text-center"><SPAN 
+class="wechat-qr"><I class="icon-svg icon-scan-green"></I>                     
+微信扫码支付                 </SPAN>                 
+<DIV class="wepay-amount">                    打赏金额: <SPAN 
+class="h1 font-green">￥<EM id="wepayAmount"></EM></SPAN>                 
+</DIV><SPAN class="wechat-qr-img" id="result_area"></SPAN>             </DIV>
+<DIV class="reward-status reward-success text-center"><SPAN class="wechat-qr"><I 
+class="icon-svg icon-wechat"></I>                    已支付成功                 
+</SPAN>                 
+<DIV>                    打赏金额: <SPAN class="h1 font-green">￥<EM 
+id="wepayAmount"></EM></SPAN>                 </DIV></DIV></FORM></DIV></DIV>
+<DIV id="v-report"><comp-report :param="{action:'/action/communityManage/reportv2'}"></comp-report> 
+</DIV>
+<DIV data-popups="mask"></DIV>
+<SCRIPT src="CppUnit-note_files/blog.js" defer="defer" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="CppUnit-note_files/space.js" type="text/javascript"></SCRIPT>
+ <val data-value="/dist/www/vendor/radarChart/radarChart.js?t=1491732257000" 
+data-name="radar_chart_js_url"></val> 
+<SCRIPT>
+
+    $(document).ready(function () {
+        $.ajax({
+            type:"POST",
+            url:"/action/itags/pushRead",
+            data: {
+                type:3,
+                key:408858
+            }
+        });
+    });
+
+    window.addEventListener("load", function () {
+        var radarChartJsUrl = $("val[data-name=radar_chart_js_url]").data("value");
+        if (radarChartJsUrl) {
+            require.requireJS(radarChartJsUrl, function () {
+                // 雷达图配置选项
+                function getRadarOption(skills, values, maxLevel) {
+                    var radarChartOptions = {},
+                            skillArr = skills ? skills : [],
+                            valuesArr = values ? values : [],
+                            maxLevelArr = [];
+                    valuesArr.forEach(function (element, index) {
+                        maxLevelArr.push(maxLevel);
+                    });
+
+                    radarChartOptions.data = {
+                        maxValue: maxLevelArr,
+                        value: valuesArr,
+                        description: skillArr
+                    };
+                    radarChartOptions.config = {
+                        scale: 0.9,
+                        dataFill: {
+                            fillStyle: "rgba(24, 236, 111, .4)"
+                        },
+                        bg: {
+                            layer: 4,
+                            evenFillStyle: "#828282",
+                            oddFillStyle: "#828282",
+                            evenStrokeStyle: "#ccc",
+                            oddStrokeStyle: "#ccc"
+                        },
+                        dataCircle: {
+                            r: 1,
+                            strokeStyle: "#18ec6f",
+                            fillStyle: "#18ec6f",
+                            lineWidth: 0.5
+                        },
+                        dataLine: {
+                            strokeStyle: "#18ec6f",
+                            lineWidth: 2
+                        },
+                        font: {
+                            fontColor: "#eee"
+                        }
+                    };
+                    return radarChartOptions;
+                }
+
+                var sendRequest = function () {
+                    var user_id = $("val[data-name='owner_id']").attr("data-value");
+                    $.ajax({
+                        type: "POST",
+                        url: "/action/radar/searchUserRadarMap",
+                        data: {user_id: user_id},
+                        dataType: "json",
+                        success: function (msg) {
+                            if (msg.result) {
+                                // 显示雷达面板
+                                $(".user-radar").show();
+                                radarChart.init(document.querySelector("#radar-skill"), getRadarOption(msg.data.skills, msg.data.skillsLevel, msg.data.maxSkillLevel));
+                                // 打开雷达详情页
+                                var radarDetailLink = $('#radar-skill').data("detail");
+                                if (radarDetailLink) {
+                                    $('#radar-skill').on('click', function (params) {
+                                        window.open(radarDetailLink);
+                                    });
+                                }
+                            }
+                        }
+                    });
+                }
+                sendRequest();
+            });
+        }
+    }, false);
+</SCRIPT>
+             
+<SCRIPT>
+        window.addEventListener("load", function() {
+            (function(){
+                var bp = document.createElement('script');
+                var curProtocol = window.location.protocol.split(':')[0];
+                if (curProtocol === 'https') {
+                    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+                }
+                else {
+                    bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+                }
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(bp, s);
+            })();
+        });
+    </SCRIPT>
+      
+<SCRIPT type="text/javascript">
+     (function (ww, dt) {
+         ww.__gac = {
+             domain: 'www.oschina.net'
+         };
+         if(!(/\/marketing\/ad-slice/.test(location.href))){
+             var script = dt.createElement('script');
+             script.setAttribute('type', 'text/javascript');
+             script.setAttribute('src', '//www.oschina.net/public/javascripts/cjl/ga.js?t=20160926');
+             dt.body.appendChild(script);
+         }
+     } (window, window.document));
+ </SCRIPT>
+            </DIV>
+<SCRIPT src="CppUnit-note_files/common.min.js" type="text/javascript"></SCRIPT>
+             
+<SCRIPT src="CppUnit-note_files/require.js" type="text/javascript"></SCRIPT>
+             
+<SCRIPT src="CppUnit-note_files/blog.min.js" type="text/javascript"></SCRIPT>
+                              
+<STYLE type="text/css">
+    .common-footer .osc-map {
+        font-size: 0;
+        padding: 16px 0 0;
+        background: #FAFAFA;
+    }
+
+    .common-footer .box {
+        overflow: hidden;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0px auto;
+    }
+
+    .common-footer .map-header{
+        font-size: 12px;
+        font-weight: normal;
+        margin: 0 0 10px;
+        height: 18px;
+        color: #4A4A4A;
+    }
+    .common-footer .map-header.bigger{font-weight: bold;}
+
+    .common-footer .map-link{
+        font-size: 12px;
+        display: block;
+        line-height: 20px;
+        color: #4A4A4A;
+        transition:color .2s;
+    }
+
+    .common-footer .map-link:hover{
+        color:#21B351;
+    }
+
+    .common-footer .wechat{margin: 0 auto;}
+
+    .common-footer .osc-footer {
+        background: #444444;
+
+    }
+    .common-footer .content-wrapper{
+        width:1200px;
+        margin:0 auto;
+        height: 36px;
+    }
+    .common-footer .osc-footer *{
+        font-size: 12px;
+        color: #CFCFCF;
+    }
+    .common-footer .dl_mob{
+        transition:All 0.4s ease-in-out;
+        -webkit-transition:All 0.4s ease-in-out;
+        -moz-transition:All 0.4s ease-in-out;
+        -o-transition:All 0.4s ease-in-out;
+        width:120px;
+        height:122px;
+        display:block;
+        margin-bottom: -11px;
+        z-index: -1;
+    }
+    .common-footer .dl_mob:hover {
+        transform:translate(0,-10px);
+        -webkit-transform:translate(0,-10px);
+        -moz-transform:translate(0,-10px);
+        -o-transform:translate(0,-10px);
+        -ms-transform:translate(0,-10px);
+    }
+    .merge{
+        width: auto!important;
+        margin: 0!important;
+    }
+    figure{
+        margin: 0;
+    }
+</STYLE>
+ <FOOTER class="common-footer">
+<DIV class="osc-map">
+<DIV class="box justify sc-container" style="overflow: hidden;">
+<DIV>
+<H2 class="map-header bigger">社区</H2>
+<UL>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/project" target="_blank">开源项目</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/question" target="_blank">技术问答</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/tweets" target="_blank">动弹</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/blog" target="_blank">博客</A></LI></UL></DIV>
+<DIV>
+<H2 class="map-header bigger"></H2>
+<UL>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/news" target="_blank">开源资讯</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/translate" 
+  target="_blank">技术翻译</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/android" target="_blank">专题</A></LI>
+  <LI><A class="map-link cursor" href="https://job.oschina.net/" 
+  target="_blank">招聘</A></LI></UL></DIV>
+<DIV>
+<H2 class="map-header bigger">众包</H2>
+<UL>
+  <LI><A class="map-link cursor" href="https://zb.oschina.net/projects" target="_blank">项目大厅</A></LI>
+  <LI><A class="map-link cursor" href="https://zb.oschina.net/services" target="_blank">软件与服务</A></LI>
+  <LI><A class="map-link cursor" href="https://zb.oschina.net/account/choose-role" 
+  target="_blank">接活赚钱</A></LI></UL></DIV>
+<DIV>
+<H2 class="map-header bigger">码云</H2>
+<UL>
+  <LI><A class="map-link cursor" href="https://gitee.com/?from=osc-index" 
+  target="_blank">Git代码托管</A></LI>
+  <LI><A class="map-link cursor" href="https://team.oschina.net/" target="_blank">Team</A></LI>
+  <LI><A class="map-link cursor" href="https://git.oschina.net/paas_osc" target="_blank">PaaS</A></LI>
+  <LI><A class="map-link cursor" href="http://tool.oschina.net/" 
+  target="_blank">在线工具</A></LI></UL></DIV>
+<DIV>
+<H2 class="map-header bigger">活动</H2>
+<UL>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/event?tab=latest&amp;city=全国&amp;time=all" 
+  target="_blank">线下活动</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/event/create" 
+  target="_blank">发起活动</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/event/ych" 
+  target="_blank">源创会</A></LI></UL></DIV>
+<DIV>
+<H2 class="map-header">关注微信公众号</H2><FIGURE><IMG title="关注微信公众号" class="wechat" 
+src="CppUnit-note_files/wechat.jpg">                 </FIGURE></DIV>
+<DIV>
+<H2 class="map-header">下载手机客户端</H2><A title="下载手机客户端" class="dl_mob" href="https://www.oschina.net/app"><FIGURE><IMG 
+title="下载手机客户端" src="CppUnit-note_files/mob.png">                     
+</FIGURE></A></DIV></DIV></DIV>
+<DIV class="osc-footer">
+<DIV class="box vertical justify content-wrapper add-class">
+<UL class="box vertical merge">
+  <LI style="padding-right: 27px;">©开源中国(OSChina.NET)</LI>
+  <LI style="padding-right: 1em;"><A title="关于我们" href="https://www.oschina.net/home/aboutosc" 
+  target="_blank">关于我们</A></LI>
+  <LI style="padding-right: 1em;"><A title="联系我们" href="https://www.oschina.net/home/aboutosc">联系我们</A></LI>
+  <LI style="padding-right: 1em;"><A title="@新浪微博" href="https://weibo.com/oschina2010" 
+  target="_blank">@新浪微博</A></LI>
+  <LI><A class="map-link cursor" href="https://www.oschina.net/home/aboutosc#partners" 
+  target="_blank">合作单位</A></LI></UL>
+<DIV><SPAN style="padding-right: 1em;">开源中国社区是工信部<A title="开源软件推进联盟" style="padding: 0px 0.5em;" 
+href="http://www.copu.org.cn/" target="_blank">开源软件推进联盟</A>指定的官方社区</SPAN>        
+         <SPAN><A class="text-muted" href="http://www.miitbeian.gov.cn/" target="_blank">粤ICP备12009483号-3</A> 
+ 深圳市奥思网络科技有限公司版权所有</SPAN>             </DIV></DIV></DIV></FOOTER>
+<SCRIPT type="text/javascript">
+            var blogHead = document.getElementById("blog-head");
+            var headroom  = new Headroom(blogHead);
+            headroom.init();
+        </SCRIPT>
+             </BODY></HTML><!-- 个人空间 百度统计代码 --><!-- Generated by OsChina.NET (init:0[ms],page:63[ms],ip:223.104.3.161) -->

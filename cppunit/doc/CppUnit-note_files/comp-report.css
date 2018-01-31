@@ -1,0 +1,63 @@
+.comp-report-bg {
+	background: 0px 0px; left: 0px; top: 0px; width: 100%; height: 100%; right: 0px; bottom: 0px; display: table; position: fixed; z-index: 1000; table-layout: fixed;
+}
+.comp-cell-wrapper {
+	height: 100%; text-align: center; font-size: 0px; vertical-align: middle; display: table-cell;
+}
+.comp-report-wrapper {
+	background: rgb(250, 250, 250); margin: 0px auto; padding: 30px; border-radius: 4px; width: 800px; height: 330px; text-align: left; font-size: 16px; display: block; box-shadow: 0px 0px 24px 0px rgba(0,0,0,0.11), 0px 24px 24px 0px rgba(0,0,0,0.15);
+}
+.comp-report-wrapper .reson-textbox {
+	padding: 5px; border-radius: 2px; border: 1px solid rgb(221, 221, 221); border-image: none; width: 100%; height: 80px; line-height: 22px; font-size: 14px; resize: none;
+}
+.comp-report-title {
+	margin: 0px; color: rgb(74, 74, 74); line-height: 34px; font-size: 24px; font-weight: normal;
+}
+.comp-report-reason-wrapper {
+	margin: 17px 0px 24px; color: rgb(74, 74, 74); font-size: 16px;
+}
+.comp-report-reason-wrapper label {
+	line-height: 22px; padding-left: 25px; margin-right: 16px; display: block; position: relative; cursor: pointer;
+}
+.comp-report-reason-wrapper label::before {
+	border-radius: 50%; transition:0.2s; display: block; position: absolute; content: ""; -webkit-transition: all .2s;
+}
+.comp-report-reason-wrapper label::after {
+	border-radius: 50%; transition:0.2s; display: block; position: absolute; content: ""; -webkit-transition: all .2s;
+}
+.comp-report-reason-wrapper label::before {
+	left: 0px; top: 3px; width: 16px; height: 16px; box-shadow: 0px 0px 1px;
+}
+.comp-report-reason-wrapper label::after {
+	left: 6px; top: 9px;
+}
+.comp-report-reason-wrapper input[type=radio]:checked + label::before {
+	background: rgb(52, 151, 255);
+}
+.comp-report-reason-wrapper input[type=radio]:checked + label::after {
+	background: rgb(255, 255, 255); width: 4px; height: 4px;
+}
+.comp-report-reson-title {
+	margin: 0px 0px 9px; line-height: 22px; font-size: 0px;
+}
+.comp-report-reson-title .main-desc {
+	color: rgb(74, 74, 74); font-size: 16px;
+}
+.comp-report-reson-title .sub-desc {
+	color: rgb(137, 137, 137); padding-left: 10px; font-size: 14px;
+}
+.comp-report-btns {
+	margin: 25px 0px 0px; text-align: right; font-size: 0px; white-space: nowrap;
+}
+.comp-report-btns .comp-report-tips {
+	text-align: right; color: red; line-height: 40px; font-size: 16px;
+}
+.comp-report-btns .bn {
+	margin: 0px; padding: 0px; border-radius: 2px; border: currentColor; border-image: none; width: 100px; line-height: 40px; font-size: 16px; cursor: pointer;
+}
+.comp-report-btns .bn-cancel {
+	background: none; color: rgb(74, 74, 74);
+}
+.comp-report-btns .bn-submit {
+	background: rgb(245, 166, 35); color: rgb(255, 255, 255);
+}
