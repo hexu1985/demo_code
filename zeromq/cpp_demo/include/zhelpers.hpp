@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <unistd.h>
+#include <sys/time.h>
 
 #include "s_version.hpp"
 #include "s_sleep.hpp"
