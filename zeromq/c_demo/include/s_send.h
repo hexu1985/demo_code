@@ -2,6 +2,7 @@
 #define __ZHELPERS_S_SEND_H_INCLUDED__
 
 #include <zmq.h>
+#include <string.h>
 
 //  Convert C string to 0MQ string and send to socket
 static int

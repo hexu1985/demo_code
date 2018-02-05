@@ -9,5 +9,6 @@
 #include "s_sleep.hpp"
 #include "s_send.hpp"
 #include "s_recv.hpp"
+#include "s_sendmore.hpp"
 
 #endif

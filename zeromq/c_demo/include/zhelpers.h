@@ -19,5 +19,6 @@
 #include "s_rand.h"
 #include "s_clock.h"
 #include "s_sleep.h"
+#include "s_sendmore.h"
 
 #endif
