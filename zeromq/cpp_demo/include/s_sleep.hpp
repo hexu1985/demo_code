@@ -1,5 +1,5 @@
-#ifndef __ZHELPERS_S_SLEEP_H_INCLUDED__
-#define __ZHELPERS_S_SLEEP_H_INCLUDED__
+#ifndef __ZHELPERS_S_SLEEP_HPP_INCLUDED__
+#define __ZHELPERS_S_SLEEP_HPP_INCLUDED__
 
 #include <time.h>
 
