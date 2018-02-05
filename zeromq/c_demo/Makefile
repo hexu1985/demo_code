@@ -2,7 +2,7 @@
 RM = rm -f
 CC = g++
 CFLAGS = -Wall -g
-INCLUDES = 
+INCLUDES = -I./include
 LDFLAGS = -lzmq
 LDPATH =
 
