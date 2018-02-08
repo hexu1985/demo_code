@@ -25,7 +25,7 @@
 
 int main(int argc, char *argv[]) 
 {
-    auto remoteControl = std::make_unique<RemoteControl>();
+    RemoteControl remoteControl;
 
     auto livingRoomLight = std::make_shared<Light>("Living Room");
     auto kitchenLight = std::make_shared<Light>("Kitchen");
@@ -34,44 +34,44 @@ int main(int argc, char *argv[])
     auto stereo = std::make_shared<Stereo>("Living Room");
 
     auto livingRoomLightOn = 
-        std::make_unique<LightOnCommand>(livingRoomLight);
+        std::make_shared<LightOnCommand>(livingRoomLight);
     auto livingRoomLightOff = 
-        std::make_unique<LightOffCommand>(livingRoomLight);
+        std::make_shared<LightOffCommand>(livingRoomLight);
     auto kitchenLightOn = 
-        std::make_unique<LightOnCommand>(kitchenLight);
+        std::make_shared<LightOnCommand>(kitchenLight);
     auto kitchenLightOff = 
-        std::make_unique<LightOffCommand>(kitchenLight);
+        std::make_shared<LightOffCommand>(kitchenLight);
 
     auto ceilingFanOn = 
-        std::make_unique<CeilingFanOnCommand>(ceilingFan);
+        std::make_shared<CeilingFanOnCommand>(ceilingFan);
     auto ceilingFanOff = 
-        std::make_unique<CeilingFanOffCommand>(ceilingFan);
+        std::make_shared<CeilingFanOffCommand>(ceilingFan);
 
     auto garageDoorUp =
-        std::make_unique<GarageDoorUpCommand>(garageDoor);
+        std::make_shared<GarageDoorUpCommand>(garageDoor);
     auto garageDoorDown =
-        std::make_unique<GarageDoorDownCommand>(garageDoor);
+        std::make_shared<GarageDoorDownCommand>(garageDoor);
 
     auto stereoOnWithCD =
-        std::make_unique<StereoOnWithCDCommand>(stereo);
+        std::make_shared<StereoOnWithCDCommand>(stereo);
     auto  stereoOff =
-        std::make_unique<StereoOffCommand>(stereo);
+        std::make_shared<StereoOffCommand>(stereo);
 
-    remoteControl->setCommand(0, std::move(livingRoomLightOn), std::move(livingRoomLightOff));
-    remoteControl->setCommand(1, std::move(kitchenLightOn), std::move(kitchenLightOff));
-    remoteControl->setCommand(2, std::move(ceilingFanOn), std::move(ceilingFanOff));
-    remoteControl->setCommand(3, std::move(stereoOnWithCD), std::move(stereoOff));
+    remoteControl.setCommand(0, livingRoomLightOn, livingRoomLightOff);
+    remoteControl.setCommand(1, kitchenLightOn, kitchenLightOff);
+    remoteControl.setCommand(2, ceilingFanOn, ceilingFanOff);
+    remoteControl.setCommand(3, stereoOnWithCD, stereoOff);
 
-    std::cout << *remoteControl << std::endl;
+    std::cout << remoteControl << std::endl;
 
-    remoteControl->onButtonWasPushed(0);
-    remoteControl->offButtonWasPushed(0);
-    remoteControl->onButtonWasPushed(1);
-    remoteControl->offButtonWasPushed(1);
-    remoteControl->onButtonWasPushed(2);
-    remoteControl->offButtonWasPushed(2);
-    remoteControl->onButtonWasPushed(3);
-    remoteControl->offButtonWasPushed(3);
+    remoteControl.onButtonWasPushed(0);
+    remoteControl.offButtonWasPushed(0);
+    remoteControl.onButtonWasPushed(1);
+    remoteControl.offButtonWasPushed(1);
+    remoteControl.onButtonWasPushed(2);
+    remoteControl.offButtonWasPushed(2);
+    remoteControl.onButtonWasPushed(3);
+    remoteControl.offButtonWasPushed(3);
 
     return 0;
 }

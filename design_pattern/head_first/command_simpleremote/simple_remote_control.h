@@ -6,14 +6,14 @@
 
 class SimpleRemoteControl {
 private:
-    std::unique_ptr<Command> slot;
+    std::shared_ptr<Command> slot;
 
 public:
     SimpleRemoteControl() {
     }
 
-    void setCommand(std::unique_ptr<Command> command) {
-        slot = std::move(command);
+    void setCommand(std::shared_ptr<Command> command) {
+        slot = command;
     }
 
     void buttonWasPressed() {

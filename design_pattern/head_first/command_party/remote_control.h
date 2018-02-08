@@ -8,22 +8,22 @@
 #include "command.h"
 
 class RemoteControl {
-public:
-    typedef std::shared_ptr<Command> CommandPtr;
-
 private:
     std::vector<CommandPtr> onCommands;
     std::vector<CommandPtr> offCommands;
+    std::shared_ptr<Command> undoCommand;
  
 public:
     RemoteControl() {
         onCommands.resize(7);
         offCommands.resize(7);
  
+        auto noCommand = std::make_shared<NoCommand>();
         for (int i = 0; i < 7; i++) {
-            onCommands[i] = std::make_shared<NoCommand>();
-            offCommands[i] = std::make_shared<NoCommand>();
+            onCommands[i] = noCommand;
+            offCommands[i] = noCommand;
         }
+        undoCommand = noCommand;
     }
   
     void setCommand(int slot, std::shared_ptr<Command> onCommand, std::shared_ptr<Command> offCommand) {
@@ -33,10 +33,16 @@ public:
  
     void onButtonWasPushed(int slot) {
         onCommands[slot]->execute();
+        undoCommand = onCommands[slot];
     }
  
     void offButtonWasPushed(int slot) {
         offCommands[slot]->execute();
+        undoCommand = onCommands[slot];
+    }
+
+    void undoButtonWasPushed() {
+        undoCommand->undo(); 
     }
   
     friend std::ostream &operator <<(std::ostream &out, const RemoteControl &remote_control) {
@@ -45,6 +51,7 @@ public:
             out << "[slot " << i << "] " << typeid(*remote_control.onCommands[i]).name()
                 << "    " << typeid(*remote_control.offCommands[i]).name() << "\n";
         }
+        out << "[undo] " << typeid(*remote_control.undoCommand).name() << "\n";
         return out;
     }
 };
