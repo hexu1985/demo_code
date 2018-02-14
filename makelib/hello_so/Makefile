@@ -2,7 +2,7 @@
 CREATE_SO = g++ -shared
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g -c #-DNDEBUG
+CXXFLAGS = -Wall -g -c -DNDEBUG
 TARGETS = hello hello2
 LIB_OBJS = hello.o
 LIB_NAME = libhello.so
