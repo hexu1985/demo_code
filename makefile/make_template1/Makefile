@@ -15,8 +15,5 @@ all: $(PROGS)
 clean:
 	$(RM) $(PROGS)
 
-distclean:
-	$(RM) $(PROGS) *.o
-
 %: %.cpp
 	$(CXX) -o $@ $(CXXFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
