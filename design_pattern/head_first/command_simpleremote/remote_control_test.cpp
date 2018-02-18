@@ -10,12 +10,12 @@ int main(int argc, char *argv[]) {
     SimpleRemoteControl remote;
     auto light = std::make_shared<Light>();
     auto garageDoor = std::make_shared<GarageDoor>();
-    auto lightOn = std::make_unique<LightOnCommand>(light);
-    auto garageOpen = std::make_unique<GarageDoorOpenCommand>(garageDoor);
+    auto lightOn = std::make_shared<LightOnCommand>(light);
+    auto garageOpen = std::make_shared<GarageDoorOpenCommand>(garageDoor);
 
-    remote.setCommand(std::move(lightOn));
+    remote.setCommand(lightOn);
     remote.buttonWasPressed();
-    remote.setCommand(std::move(garageOpen));
+    remote.setCommand(garageOpen);
     remote.buttonWasPressed();
 
     return 0;
