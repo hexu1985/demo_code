@@ -1,7 +1,7 @@
-CREATE_SO = i686-w64-mingw32-g++ -m32 -shared -static -Wl,--kill-at
+CREATE_SO = g++ -shared -static -Wl,--kill-at
 RM = rm -f
-CXX = i686-w64-mingw32-g++
-CXXFLAGS = -Wall -m32 -fPIC -O2 -c #-DNDEBUG
+CXX = g++
+CXXFLAGS = -Wall -fPIC -O2 -c #-DNDEBUG
 TARGETS = hello
 LIB_OBJS = hello.o
 DLL_NAME = hello.dll
