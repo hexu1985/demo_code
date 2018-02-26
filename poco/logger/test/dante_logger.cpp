@@ -13,8 +13,8 @@ void Logger_initiation()
     file_channel->setProperty("archive" ,"timestamp");
     file_channel->setProperty("path" ,"dante_route_log.log");
     AutoPtr<PatternFormatter> pattern_formatter (new PatternFormatter("%L%H:%M:%S-code line :%u-%U : %t"));
-    AutoPtr<FormattingChannel> formatter_channle(new FormattingChannel(pattern_formatter , file_channel));
-    Logger::root().setChannel(formatter_channle);           
+    AutoPtr<FormattingChannel> formatter_channel(new FormattingChannel(pattern_formatter , file_channel));
+    Logger::root().setChannel(formatter_channel);           
     ///- finish logger initiation
 }
 
