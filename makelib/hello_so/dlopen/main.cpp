@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-	const char *libso_name = "./libhello.so";
+	const char *libso_name = "../libhello.so";
 
 	// ´ò¿ª¶¯Ì¬¿â
 	void *handle = dlopen(libso_name, RTLD_NOW);
