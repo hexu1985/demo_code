@@ -3,7 +3,7 @@ CREATE_SO = g++ -shared
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g -c -DNDEBUG
-TARGETS = hello hello2
+TARGETS = main 
 LIB_OBJS = hello.o
 LIB_NAME = libhello.so
 
@@ -13,10 +13,6 @@ all: $(TARGETS)
 
 .PHONY: clean
 clean:
-	$(RM) $(TARGETS)
-
-.PHONY: distclean
-distclean:
 	$(RM) $(TARGETS) *.o *.so
 
 $(LIB_NAME): $(LIB_OBJS)
@@ -28,12 +24,6 @@ $(LIB_OBJS):%.o: %.cpp
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $^
 
-hello: main.o $(LIB_NAME)
+main: main.o $(LIB_NAME)
 	$(CXX) -o $@ $^
-
-main2.o: main2.cpp
-	$(CXX) $(CXXFLAGS) $^
-
-hello2: main2.o
-	$(CXX) -o $@ $^ -ldl
 
