@@ -1,0 +1,312 @@
+﻿<!DOCTYPE HTML>
+<!-- saved from url=(0047)https://www.cnblogs.com/ring1992/p/6003248.html -->
+<!DOCTYPE html PUBLIC "" ""><HTML lang="zh-cn"><HEAD><META content="IE=10.0000" 
+http-equiv="X-UA-Compatible">
+ 
+<META charset="utf-8"> 
+<META name="viewport" content="width=device-width, initial-scale=1"> 
+<TITLE>在Visual Studio中使用C++创建和使用DLL - Ring_1992 - 博客园</TITLE> <LINK href="vs_gen_cpp_dll_files/blog-common.css" 
+rel="stylesheet" type="text/css"> <LINK id="MainCss" href="vs_gen_cpp_dll_files/bundle-ThinkInside.css" 
+rel="stylesheet" type="text/css"> <LINK id="mobile-style" href="vs_gen_cpp_dll_files/bundle-ThinkInside-mobile.css" 
+rel="stylesheet" type="text/css" media="only screen and (max-width: 767px)"> 
+<LINK title="RSS" href="http://www.cnblogs.com/ring1992/rss" rel="alternate" 
+type="application/rss+xml"> <LINK title="RSD" href="http://www.cnblogs.com/ring1992/rsd.xml" 
+rel="EditURI" type="application/rsd+xml"> <LINK href="http://www.cnblogs.com/ring1992/wlwmanifest.xml" 
+rel="wlwmanifest" type="application/wlwmanifest+xml"> 
+<SCRIPT src="vs_gen_cpp_dll_files/jquery-2.2.0.min.js"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">var currentBlogApp = 'ring1992', cb_enable_mathjax=false;var isLogined=false;</SCRIPT>
+ 
+<SCRIPT src="vs_gen_cpp_dll_files/blog-common.js" type="text/javascript"></SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.10570.1001"></HEAD> 
+<BODY><A name="top"></A> <!--done--> 
+<DIV id="home">
+<DIV id="header">
+<DIV id="blogTitle"><A id="lnkBlogLogo" 
+href="http://www.cnblogs.com/ring1992/"><IMG id="blogLogo" alt="返回主页" src="vs_gen_cpp_dll_files/logo.gif"></A>			
+		<!--done--> 
+<H1><A class="headermaintitle" id="Header1_HeaderTitle" href="http://www.cnblogs.com/ring1992/">Ring_1992</A></H1>
+<H2></H2></DIV><!--end: blogTitle 博客的标题和副标题 -->	 
+<DIV id="navigator">
+<UL id="navList">
+  <LI><A class="menu" id="blog_nav_sitehome" 
+  href="http://www.cnblogs.com/">博客园</A></LI>
+  <LI><A class="menu" id="blog_nav_myhome" href="http://www.cnblogs.com/ring1992/">首页</A></LI>
+  <LI><A class="menu" id="blog_nav_newpost" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" 
+  rel="nofollow">新随笔</A></LI>
+  <LI><A class="menu" id="blog_nav_contact" href="https://msg.cnblogs.com/send/Ring_1992" 
+  rel="nofollow">联系</A></LI>
+  <LI><A class="menu" id="blog_nav_rss" href="http://www.cnblogs.com/ring1992/rss">订阅</A> <!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/ring1992/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></LI>
+  <LI><A class="menu" id="blog_nav_admin" href="https://i.cnblogs.com/" rel="nofollow">管理</A></LI></UL>
+<DIV class="blogStats">
+<DIV id="blog_stats"><SPAN id="stats_post_count">随笔 - 60&nbsp; </SPAN> <SPAN id="stats_article_count">文章 
+- 0&nbsp; </SPAN> <SPAN id="stats-comment_count">评论 - 6</SPAN> </DIV></DIV><!--end: blogStats -->
+	 </DIV><!--end: navigator 博客导航栏 --> </DIV><!--end: header 头部 --> 
+<DIV id="main">
+<DIV id="mainContent">
+<DIV class="forFlow">
+<DIV id="post_detail"><!--done--> 
+<DIV id="topics">
+<DIV class="post">
+<H1 class="postTitle"><A class="postTitle2" id="cb_post_title_url" href="http://www.cnblogs.com/ring1992/p/6003248.html">在Visual 
+Studio中使用C++创建和使用DLL</A>		 </H1>
+<DIV class="clear"></DIV>
+<DIV class="postBody">
+<DIV class="blogpost-body" id="cnblogs_post_body">
+<H4>【什么是DLL（动态链接库）？】</H4>
+<P>DLL是一个包含可由多个程序同时使用的代码和数据的库。例如：在Windows操作系统中，Comdlg32 
+DLL执行与对话框有关的常见函数。因此，每个程序都可以使用该DLL中包含的功能来实现“打开”对话框。这有助于促进代码重用和内存的有效使用。这篇文章的目的就是让你一次性就能了解和掌握DLL。</P>
+<H4>【为什么要使用DLL（动态链接库）？】</H4>
+<P>代码复用是提高软件开发效率的重要途径。一般而言，只要某部分代码具有通用性，就可以将它构造成相对独立的功能模块并在之后的项目中重复使用。比较常见的例子是各种应用程序框架，它们都以源代码的形式发布。由于这种复用是源代码级别的，源代码完全暴露给了程序员，因而称之为“白盒复用”。白盒复用有以下三个缺点：</P>
+<OL>
+  <LI>暴露源代码，多份拷贝，造成存储浪费；</LI>
+  <LI>容易与程序员的本地代码发生命名冲突；</LI>
+  <LI>更新模块功能比较困难，不利于问题的模块化实现；</LI></OL>
+<P>为了弥补这些不足，就提出了“二进制级别”的代码复用了。使用二进制级别的代码复用一定程度上隐藏了源代码，对于“黑盒复用”的途径不只DLL一种，静态链接库，甚至更高级的COM组件都是。</P>
+<P>使用DLL主要有以下优点：</P>
+<OL>
+  <LI>使用较少的资源；当多个程序使用同一函数库时，DLL可以减少在磁盘和物理内存中加载的代码的重复量。这不仅可以大大影响在前台运行的程序，而且可以大大影响其它在Windows操作系统上运行的程序；</LI>
+  <LI>推广模块式体系结构；</LI>
+  <LI>简化部署与安装。</LI></OL>
+<H4>【创建DLL】</H4>
+<P>打开Visual Studio 2012，创建如下图的工程：</P>
+<P><IMG alt="" src="vs_gen_cpp_dll_files/773362-20171226120141712-1006886448.png"></P>
+<P>&nbsp;<SPAN style="line-height: 1.5;">输入工程名字，单击[OK]；</SPAN></P>
+<P><SPAN style="line-height: 1.5;"><IMG alt="" src="vs_gen_cpp_dll_files/773362-20171226120304228-1014018140.png"></SPAN></P>
+<P><SPAN style="line-height: 1.5;">单击[Finish]，工程创建完毕了。</SPAN></P>
+<P>现在，我们就可以在工程中加入我们的代码了。加入MyCode.h和MyCode.cpp两个文件；在MyCode.h中输入以下代码：</P>
+<DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 0, 0);">#ifndef _MYCODE_H_
+</SPAN><SPAN style="color: rgb(0, 0, 255);">#define</SPAN> _MYCODE_H_<SPAN style="color: rgb(0, 0, 0);">
+#ifdef DLLDEMO1_EXPORTS
+</SPAN><SPAN style="color: rgb(0, 0, 255);">#define</SPAN> EXPORTS_DEMO _declspec( dllexport )
+<SPAN style="color: rgb(0, 0, 255);">#else</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">#define</SPAN> EXPORTS_DEMO _declspec(dllimport)
+<SPAN style="color: rgb(0, 0, 255);">#endif</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">extern</SPAN> <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">C</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> EXPORTS_DEMO <SPAN style="color: rgb(0, 0, 255);">int</SPAN> Add (<SPAN style="color: rgb(0, 0, 255);">int</SPAN> a , <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b);
+</SPAN><SPAN style="color: rgb(0, 0, 255);">#endif</SPAN></PRE></DIV>
+<P>在MyCode.cpp中输入以下代码：</P>
+<DIV class="cnblogs_code">
+<PRE>#include <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">stdafx.h</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">MyCode.h</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">int</SPAN> Add ( <SPAN style="color: rgb(0, 0, 255);">int</SPAN> a , <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b )
+{
+       </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN> ( a +<SPAN style="color: rgb(0, 0, 0);"> b );
+}</SPAN></PRE></DIV>
+<P>编译工程，就会生成DLLDemo1.dll文件。在代码中，很多细节的地方，我稍后进行详细的讲解（<A href="https://pan.baidu.com/s/1c2DnUhi" 
+target="_blank">工程下载</A>）。</P>
+<H4>【使用DLL】</H4>
+<P>当我们的程序需要使用DLL时，就需要去加载DLL，在程序中加载DLL有两种方法，分别为加载时动态链接和运行时动态链接。</P>
+<OL>
+  <LI>在加载时动态链接中，应用程序像调用本地函数一样对导出的DLL函数进行显示调用。要使用加载时动态链接，需要在编译和链接应用程序时提供头文件和导入库文件(.lib)。当这样做的时候，链接器将向系统提供加载DLL所需的信息，并在加载时解析导出的DLL函数的位置；</LI>
+  <LI>在运行时动态链接中，应用程序调用LoadLibrary函数或LoadLibraryEx函数以在运行时加载DLL。成功加载DLL后，可以使用GetProcAddress函数获得要调用的导出的DLL函数的地址。在使用运行时动态链接时，不需要使用导入库文件。</LI></OL>
+<P>在实际编程时有两种使用DLL的方法，那么到底应该使用那一种呢？在实际开发时，是基于以下几点进行考虑的：</P>
+<OL>
+  <LI>启动性能如果应用程序的初始启动性能很重要，则应使用运行时动态链接；</LI>
+  <LI>易用性在加载时动态链接中，导出的DLL函数类似于本地函数，我们可以方便地进行这些函数的调用；</LI>
+  <LI>应用程序逻辑在运行时动态链接中，应用程序可以分支，以便按照需要加载不同的模块。</LI></OL>
+<P>下面，我将分别使用两种方法调用DLL动态链接库。</P>
+<P>加载时动态链接：</P>
+<DIV class="cnblogs_code">
+<PRE>#include &lt;windows.h&gt;<SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN>&lt;iostream&gt;
+<SPAN style="color: rgb(0, 128, 0);">//</SPAN><SPAN style="color: rgb(0, 128, 0);">#include "..\\DLLDemo1\\MyCode.h"</SPAN>
+<SPAN style="color: rgb(0, 0, 255);">using</SPAN> <SPAN style="color: rgb(0, 0, 255);">namespace</SPAN><SPAN style="color: rgb(0, 0, 0);"> std;
+</SPAN><SPAN style="color: rgb(0, 0, 255);">#pragma</SPAN> comment(lib, "..\\debug\\DLLDemo1.lib")
+<SPAN style="color: rgb(0, 0, 255);">extern</SPAN> <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">C</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN> _declspec(dllimport) <SPAN style="color: rgb(0, 0, 255);">int</SPAN> Add(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> a, <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b);
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> main(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> argc, <SPAN style="color: rgb(0, 0, 255);">char</SPAN> *<SPAN style="color: rgb(0, 0, 0);">argv[])
+{
+      cout</SPAN>&lt;&lt;Add(<SPAN style="color: rgb(128, 0, 128);">2</SPAN>, <SPAN style="color: rgb(128, 0, 128);">3</SPAN>)&lt;&lt;<SPAN style="color: rgb(0, 0, 0);">endl;
+      </SPAN><SPAN style="color: rgb(0, 0, 255);">return</SPAN> <SPAN style="color: rgb(128, 0, 128);">0</SPAN><SPAN style="color: rgb(0, 0, 0);">;
+}</SPAN></PRE></DIV>
+<P>运行时动态链接：</P>
+<DIV class="cnblogs_code">
+<PRE>#include &lt;windows.h&gt;<SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN>&lt;iostream&gt;
+<SPAN style="color: rgb(0, 0, 255);">using</SPAN> <SPAN style="color: rgb(0, 0, 255);">namespace</SPAN><SPAN style="color: rgb(0, 0, 0);"> std;
+typedef </SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> (*AddFunc)(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> a, <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b);
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> main(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> argc, <SPAN style="color: rgb(0, 0, 255);">char</SPAN> *<SPAN style="color: rgb(0, 0, 0);">argv[])
+{
+      HMODULE hDll </SPAN>= LoadLibrary(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">DLLDemo1.dll</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">);
+      </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (hDll !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+      {
+            AddFunc add </SPAN>= (AddFunc)GetProcAddress(hDll, <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">Add</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">);
+            </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (add !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+            {
+                  cout</SPAN>&lt;&lt;add(<SPAN style="color: rgb(128, 0, 128);">2</SPAN>, <SPAN style="color: rgb(128, 0, 128);">3</SPAN>)&lt;&lt;<SPAN style="color: rgb(0, 0, 0);">endl;
+            }
+            FreeLibrary(hDll);
+      }
+}</SPAN></PRE></DIV>
+<P>上述代码都在DLLDemo1工程中。（<A href="https://pan.baidu.com/s/1c2DnUhi" 
+target="_blank">工程下载</A>）。</P>
+<H4>【DllMain函数】</H4>
+<P>Windows在加载DLL时，需要一个入口函数，就像控制台程序需要main函数一样。有的时候，DLL并没有提供DllMain函数，应用程序也能成功引用DLL，这是因为Windows在找不到DllMain的时候，系统会从其它运行库中引入一个不做任何操作的默认DllMain函数版本，并不意味着DLL可以抛弃DllMain函数。</P>
+<P>根据编写规范，Windows必须查找并执行DLL里的DllMain函数作为加载DLL的依据，它使得DLL得以保留在内存里。这个函数并不属于导出函数，而是DLL的内部函数，这就说明不能在客户端直接调用DllMain函数，DllMain函数是自动被调用的。</P>
+<P>DllMain函数在DLL被加载和卸载时被调用，在单个线程启动和终止时，DllMain函数也被调用。参数ul_reason_for_call指明了调用DllMain的原因，有以下四种情况：</P>
+<P>DLL_PROCESS_ATTACH:当一个DLL被首次载入进程地址空间时，系统会调用该DLL的DllMain函数，传递的ul_reason_for_call参数值为DLL_PROCESS_ATTACH。这种情况只有首次映射DLL时才发生；</P>
+<P>DLL_THREAD_ATTACH:该通知告诉所有的DLL执行线程的初始化。当进程创建一个新的线程时，系统会查看进程地址空间中所有的DLL文件映射，之后用DLL_THREAD_ATTACH来调用DLL中的DllMain函数。要注意的是，系统不会为进程的主线程使用值DLL_THREAD_ATTACH来调用DLL中的DllMain函数；</P>
+<P>DLL_PROCESS_DETACH:当DLL从进程的地址空间解除映射时，参数ul_reason_for_call参数值为DLL_PROCESS_DETACH。当DLL处理DLL_PROCESS_DETACH时，DLL应该处理与进程相关的清理操作。如果进程的终结是因为系统中有某个线程调用了TerminateProcess来终结的，那么系统就不会用DLL_PROCESS_DETACH来调用DLL中的DllMain函数来执行进程的清理工作。这样就会造成数据丢失；</P>
+<P>DLL_THREAD_DETACH:该通知告诉所有的DLL执行线程的清理工作。注意的是如果线程的终结是使用TerminateThread来完成的，那么系统将不会使用值DLL_THREAD_DETACH来执行线程的清理工作，这也就是说可能会造成数据丢失，所以不要使用TerminateThread来终结线程。以上所有讲解在工程DLLMainDemo（<A 
+href="https://pan.baidu.com/s/1dEB9Hmx" target="_blank">工程下载</A>）都有体现。</P>
+<H4>函数导出方式</H4>
+<P>在DLL的创建过程中，我使用的是_declspec( dllexport 
+)方式导出函数的，其实还有另一种导出函数的方式，那就是使用导出文件(.def)。你可以在DLL工程中，添加一个Module-Definition 
+File(.def)文件。.def文件为链接器提供了有关被链接器程序的导出、属性及其它方面的信息。</P>
+<P>对于上面的例子，.def可以是这样的：</P>
+<DIV class="cnblogs_code">
+<PRE>LIBRARY     <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">DLLDemo2</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">
+EXPORTS
+Add @ </SPAN><SPAN style="color: rgb(128, 0, 128);">1</SPAN> ;Export the Add function</PRE></DIV>
+<P>Module-Definition File(.def)文件的格式如下：</P>
+<OL>
+  <LI>LIBRARY语句说明.def文件对应的DLL；</LI>
+  <LI>EXPORTS语句后列出要导出函数的名称。可以在.def文件中的导出函数名后加@n，表示要导出函数的序号为n（在进行函数调用时，这个序号有一定的作用）。</LI></OL>
+<P>使用def文件，生成了DLL，客户端调用代码如下：</P>
+<DIV class="cnblogs_code">
+<PRE>#include &lt;windows.h&gt;<SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN>&lt;iostream&gt;
+<SPAN style="color: rgb(0, 0, 255);">using</SPAN> <SPAN style="color: rgb(0, 0, 255);">namespace</SPAN><SPAN style="color: rgb(0, 0, 0);"> std;
+typedef </SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> (*AddFunc)(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> a, <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b);
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> main(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> argc, <SPAN style="color: rgb(0, 0, 255);">char</SPAN> *<SPAN style="color: rgb(0, 0, 0);">argv[])
+{
+      HMODULE hDll </SPAN>= LoadLibrary(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">DLLDemo2.dll</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">);
+      </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (hDll !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+      {
+            AddFunc add </SPAN>= (AddFunc)GetProcAddress(hDll, MAKEINTRESOURCE(<SPAN style="color: rgb(128, 0, 128);">1</SPAN><SPAN style="color: rgb(0, 0, 0);">));
+            </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (add !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+            {
+                  cout</SPAN>&lt;&lt;add(<SPAN style="color: rgb(128, 0, 128);">2</SPAN>, <SPAN style="color: rgb(128, 0, 128);">3</SPAN>)&lt;&lt;<SPAN style="color: rgb(0, 0, 0);">endl;
+            }
+            FreeLibrary(hDll);
+      }
+}</SPAN></PRE></DIV>
+<P>可以看到，在调用GetProcAddress函数时，传入的第二个参数是MAKEINTRESOURCE(1)，这里面的1就是def文件中对应函数的序号。（<A 
+href="https://pan.baidu.com/s/1hr5xZaW" target="_blank">工程下载</A>）</P>
+<H4>【extern “C”】</H4>
+<P>为什么要使用extern 
+“C”呢？C++之父在设计C++时，考虑到当时已经存在了大量的C代码，为了支持原来的C代码和已经写好的C库，需要在C++中尽可能的支持C，而extern 
+“C”就是其中的一个策略。在声明函数时，注意到我也使用了extern “C”，这里要详细的说说extern “C”。</P>
+<P>extern 
+“C”包含两层含义，首先是它修饰的目标是”extern”的；其次，被它修饰的目标才是”C”的。先来说说extern；在C/C++中，extern用来表明函数和变量作用范围（可见性）的关键字，这个关键字告诉编译器，它申明的函数和变量可以在本模块或其它模块中使用。extern的作用总结起来就是以下几点：</P>
+<OL>
+  <LI>在一个文件内，如果外部变量不在文件的开头定义，其有效范围只限定在从定义开始到文件的结束处。如果在定义前需要引用该变量，则要在引用之前用关键字”extern”对该变量做”外部变量声明”，表示该变量是一个已经定义的外部变量。有了这个声明，就可以从声明处起合理地使用该变量了，例如： 
+  <DIV class="cnblogs_code">
+<PRE><SPAN style="color: rgb(0, 128, 0);">/*</SPAN><SPAN style="color: rgb(0, 128, 0);">
+** FileName     : Extern Demo
+** Author       : Jelly Young
+** Date         : 2013/11/18
+** Description  : More information, please go to </SPAN><SPAN style="color: rgb(0, 128, 0); text-decoration: underline;">http://www.jellythink.com</SPAN>
+<SPAN style="color: rgb(0, 128, 0);">*/</SPAN><SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN>&lt;iostream&gt;
+<SPAN style="color: rgb(0, 0, 255);">using</SPAN> <SPAN style="color: rgb(0, 0, 255);">namespace</SPAN><SPAN style="color: rgb(0, 0, 0);"> std;
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> main(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> argc, <SPAN style="color: rgb(0, 0, 255);">char</SPAN> *<SPAN style="color: rgb(0, 0, 0);">argv[])
+{
+      </SPAN><SPAN style="color: rgb(0, 0, 255);">extern</SPAN> <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> a;
+      cout</SPAN>&lt;&lt;a&lt;&lt;<SPAN style="color: rgb(0, 0, 0);">endl;
+}
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> a = <SPAN style="color: rgb(128, 0, 128);">100</SPAN>;</PRE></DIV></LI>
+  <LI>在多文件的程序中，如果多个文件都要使用同一个外部变量，不能在各个文件中各定义一个外部变量，否则会出现“重复定义”的错误。正确的做法是在任意一个文件中定义外部变量，其它文件用extern对变量做“外部变量声明”。在编译和链接时，系统会知道该变量是一个已经在别处定义的外部变量，并把另一文件中外部变量的作用域扩展到本文件，这样在本文件就可以合法地使用该外部变量了。写过MFC程序的人都知道，在在CXXXApp类的头文件中，就使用extern声明了一个该类的变量，而该变量的实际定义是在CXXXApp类的实现文件中完成的；</LI>
+  <LI>外部函数，在定义函数时，如果在最左端加关键字extern，表示此函数是外部函数。C语言规定，如果在定义时省略extern，则隐含为外部函数。而内部函数必须在前面加static关键字。在需要调用此函数的文件中，用extern对函数作声明，表明该函数是在其它文件中定义的外部函数。</LI></OL>
+<P>接着说”C”的含义。我们都知道C++通过函数参数的不同类型支持重载机制，编译器根据参数为每个重载函数产生不同的内部标识符；但是，如果遇到了C++程序要调用已经被编译后的C函数，那该怎么办呢？比如上面的int 
+Add ( int a , int b 
+)函数。该函数被C编译器后在库中的名字为_Add，而C++编译器则会生成像_Add_int_int之类的名字用来支持函数重载和类型安全。由于编译后的名字不同，C++程序不能直接调用C函数，所以C++提供了一个C连接交换指定符号extern 
+“C”来解决这个问题；所以，在上面的DLL中，Add函数的声明格式为：extern “C” EXPORTS_DEMO int Add (int a , int 
+b)。这样就告诉了C++编译器，函数Add是个C连接的函数，应该到库中找名字_Add，而不是找_Add_int_int。当我们将上面DLL中的”C”去掉，编译生成新的DLL，使用Dependency 
+Walker工具查看该DLL，如图：</P>
+<P><IMG alt="" src="vs_gen_cpp_dll_files/773362-20171226134740057-1289301950.png"></P>
+<P><SPAN 
+style="line-height: 1.5;">请注意导出方式为C++，而且导出的Add函数的名字添加了很多的东西，当使用这种方式导出时，客户端调用时，代码就是下面这样：</SPAN></P>
+<DIV class="cnblogs_code">
+<PRE>#include &lt;windows.h&gt;<SPAN style="color: rgb(0, 0, 0);">
+#include </SPAN>&lt;iostream&gt;
+<SPAN style="color: rgb(0, 0, 255);">using</SPAN> <SPAN style="color: rgb(0, 0, 255);">namespace</SPAN><SPAN style="color: rgb(0, 0, 0);"> std;
+typedef </SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> (*AddFunc)(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> a, <SPAN style="color: rgb(0, 0, 255);">int</SPAN><SPAN style="color: rgb(0, 0, 0);"> b);
+</SPAN><SPAN style="color: rgb(0, 0, 255);">int</SPAN> main(<SPAN style="color: rgb(0, 0, 255);">int</SPAN> argc, <SPAN style="color: rgb(0, 0, 255);">char</SPAN> *<SPAN style="color: rgb(0, 0, 0);">argv[])
+{
+     HMODULE hDll </SPAN>= LoadLibrary(<SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">DLLDemo1.dll</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">);
+     </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (hDll !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+     {
+          AddFunc add </SPAN>= (AddFunc)GetProcAddress(hDll, <SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(128, 0, 0);">?Add@@YAHHH@Z</SPAN><SPAN style="color: rgb(128, 0, 0);">"</SPAN><SPAN style="color: rgb(0, 0, 0);">);
+          </SPAN><SPAN style="color: rgb(0, 0, 255);">if</SPAN> (add !=<SPAN style="color: rgb(0, 0, 0);"> NULL)
+          {
+               cout</SPAN>&lt;&lt;add(<SPAN style="color: rgb(128, 0, 128);">2</SPAN>, <SPAN style="color: rgb(128, 0, 128);">3</SPAN>)&lt;&lt;<SPAN style="color: rgb(0, 0, 0);">endl;
+          }
+          FreeLibrary(hDll);
+     }
+}</SPAN></PRE></DIV>
+<P>请注意GetProcAddress函数的第二个参数，该参数名就是导出的函数名，在编码时，写这样一个名字是不是很奇怪啊。当我们使用extern 
+“C”方式导出时，截图如下：</P>
+<P><IMG alt="" src="vs_gen_cpp_dll_files/773362-20171226134828291-1835207968.png"></P>
+<P><SPAN 
+style="line-height: 1.5;">注意导出方式为C，而且函数名现在就是普通的Add了。我们再使用GetProcAddress时，就可以直接指定Add了，而不用再加那一长串奇怪的名字了。</SPAN></P>
+<H4>【DLL导出变量】</H4>
+<P>DLL定义的全局变量可以被调用进程访问；DLL也可以访问调用进程的全局数据。（<A href="https://pan.baidu.com/s/1bpKb9xl" 
+target="_blank">工程下载</A>）</P>
+<H4>【DLL导出类】</H4>
+<P>DLL中定义的类，也可以被导出。详细工程代码，请参见（<A href="https://pan.baidu.com/s/1eS7enjO" target="_blank">工程下载</A>）</P></DIV>
+<DIV id="MySignature"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="blog_post_info_block">
+<DIV id="BlogPostCategory"></DIV>
+<DIV id="EntryTag"></DIV>
+<DIV id="blog_post_info"></DIV>
+<DIV class="clear"></DIV>
+<DIV id="post_next_prev"></DIV></DIV></DIV>
+<DIV class="postDesc">posted @ <SPAN id="post-date">2016-11-07 09:41</SPAN> <A 
+href="http://www.cnblogs.com/ring1992/">Ring_1992</A> 阅读(<SPAN id="post_view_count">...</SPAN>) 
+评论(<SPAN id="post_comment_count">...</SPAN>)  <A href="https://i.cnblogs.com/EditPosts.aspx?postid=6003248" 
+rel="nofollow">编辑</A> <A onclick="AddToWz(6003248);return false;" href="https://www.cnblogs.com/ring1992/p/6003248.html#">收藏</A></DIV></DIV>
+<SCRIPT type="text/javascript">var allowComments=true,cb_blogId=287012,cb_entryId=6003248,cb_blogApp=currentBlogApp,cb_blogUserGuid='a4ed489d-e90f-e511-b908-9dcfd8948a71',cb_entryCreatedDate='2016/11/7 9:41:00';loadViewCount(cb_entryId);var cb_postType=1;</SCRIPT>
+	 </DIV><!--end: topics 文章、评论容器--> </DIV><A name="!comments"></A>
+<DIV id="blog-comments-placeholder"></DIV>
+<SCRIPT type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</SCRIPT>
+ 
+<DIV class="commentform" id="comment_form"><A name="commentform"></A> 
+<DIV id="divCommentShow"></DIV>
+<DIV id="comment_nav"><SPAN id="span_refresh_tips"></SPAN><A id="lnk_RefreshComments" 
+onclick="return RefreshCommentList();" href="javascript:void(0);" clientidmode="Static" 
+runat="server">刷新评论</A><A onclick="return RefreshPage();" href="https://www.cnblogs.com/ring1992/p/6003248.html#">刷新页面</A><A 
+href="https://www.cnblogs.com/ring1992/p/6003248.html#top">返回顶部</A></DIV>
+<DIV id="comment_form_container"></DIV>
+<DIV class="ad_text_commentbox" id="ad_text_under_commentbox"></DIV>
+<DIV id="ad_t2"></DIV>
+<DIV id="opt_under_post"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c1"></DIV>
+<DIV id="under_post_news"></DIV>
+<DIV class="c_ad_block" id="cnblogs_c2"></DIV>
+<DIV id="under_post_kb"></DIV>
+<DIV class="c_ad_block" id="HistoryToday"></DIV>
+<SCRIPT type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</SCRIPT>
+ </DIV></DIV><!--end: forFlow -->	 </DIV><!--end: mainContent 主体内容容器-->	 
+<DIV id="sideBar">
+<DIV id="sideBarMain"><!--done--> 
+<DIV class="newsItem">
+<H3 class="catListTitle">公告</H3>
+<DIV id="blog-news"></DIV>
+<SCRIPT type="text/javascript">loadBlogNews();</SCRIPT>
+ </DIV>
+<DIV id="blog-calendar" style="display: none;"></DIV>
+<SCRIPT type="text/javascript">loadBlogDefaultCalendar();</SCRIPT>
+						 
+<DIV id="leftcontentcontainer">
+<DIV id="blog-sidecolumn"></DIV>
+<SCRIPT type="text/javascript">loadBlogSideColumn();</SCRIPT>
+			 </DIV></DIV><!--end: sideBarMain -->	 </DIV><!--end: sideBar 侧边栏容器 -->	 
+<DIV class="clear"></DIV></DIV><!--end: main -->	 
+<DIV class="clear"></DIV>
+<DIV id="footer"><!--done--> Copyright ©2018 Ring_1992	 </DIV><!--end: footer --> 
+</DIV><!--end: home 自定义的最大容器 --> </BODY></HTML>

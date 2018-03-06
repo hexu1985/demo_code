@@ -1,0 +1,459 @@
+#___plusone_0 {
+	left: 555px; top: 8px; color: red; overflow: visible; position: fixed; z-index: 999999;
+}
+#EntryTag {
+	color: gray; font-size: 9pt; margin-top: 20px;
+}
+.topicListFooter {
+	text-align: right; margin-top: 10px; margin-right: 10px;
+}
+#divRefreshComments {
+	text-align: right; font-size: 9pt; margin-right: 10px; margin-bottom: 5px;
+}
+* {
+	margin: 0px; padding: 0px;
+}
+html {
+	height: 100%;
+}
+body {
+	margin: 0px; color: rgb(64, 64, 64); line-height: 18px; padding-top: 60px; padding-bottom: 40px; font-family: "Helvetica Neue",Helvetica,Arial,sans-serif; font-size: 13px; font-weight: normal; min-height: 101%; background-color: rgb(255, 255, 255);
+}
+table {
+	border-collapse: collapse; border-spacing: 0;
+}
+fieldset {
+	border: 0px currentColor;
+}
+img {
+	border: 0px currentColor;
+}
+ul {
+	-ms-word-break: break-all;
+}
+li {
+	list-style: none;
+}
+h1 {
+	font-size: 100%; font-weight: normal;
+}
+h2 {
+	font-size: 100%; font-weight: normal;
+}
+h3 {
+	font-size: 100%; font-weight: normal;
+}
+h4 {
+	font-size: 100%; font-weight: normal;
+}
+h5 {
+	font-size: 100%; font-weight: normal;
+}
+h6 {
+	font-size: 100%; font-weight: normal;
+}
+a {
+	color: rgb(0, 105, 214); line-height: inherit; font-weight: inherit; text-decoration: none;
+}
+.clear {
+	clear: both;
+}
+#home {
+	margin: 0px auto; min-width: 930px;
+}
+#header {
+	left: 0px; top: 0px; right: 0px; overflow: visible; padding-right: 5px; clear: both; margin-bottom: 18px; position: fixed; z-index: 1030; content: ""; box-shadow: 0px 1px 3px rgba(0,0,0,0.25), inset 0px -1px 0px rgba(0,0,0,0.1); background-color: rgb(44, 44, 44);
+}
+#blogTitle {
+	float: left;
+}
+#blogTitle h1 {
+	padding: 8px 12px; color: rgb(255, 255, 255); line-height: 1; font-size: 20px; font-weight: 200; float: left; display: block;
+}
+#blogTitle h1 a {
+	color: rgb(255, 255, 255); display: block;
+}
+#lnkBlogLogo {
+	display: none;
+}
+#blogTitle h2 {
+	padding: 8px 0px; line-height: 1.5; margin-right: 10px; margin-left: 10px; float: left;
+}
+#blogLogo {
+	
+}
+#navigator {
+	margin: 0px; left: 0px; right: 0px; position: relative;
+}
+#navList {
+	list-style: none; margin: 0px 10px 0px 0px; left: 0px; right: 0px; float: left; display: block; position: relative;
+}
+#navList li {
+	line-height: 18px; float: left;
+}
+#navList a {
+	padding: 8px 10px; color: rgb(153, 153, 153); line-height: 19px; text-decoration: none; float: none; display: block; text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
+}
+#navList a:link {
+	color: rgb(204, 204, 204);
+}
+#navList a:visited {
+	color: rgb(204, 204, 204);
+}
+#navList a:active {
+	color: rgb(204, 204, 204);
+}
+#navList a:hover {
+	color: white;
+}
+.blogStats {
+	padding: 0px; text-align: right; color: rgb(0, 136, 204); margin-top: 8px; margin-right: 2px; float: right;
+}
+#main {
+	text-align: left; padding-right: 20px; padding-left: 20px; min-width: 950px;
+}
+#mainContent .forFlow {
+	width: auto; margin-left: 290px; float: none;
+}
+#mainContent {
+	padding: 0px 0px 10px; width: 100%; overflow: hidden; margin-left: -290px; float: right; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 200px; -o-text-overflow: ellipsis;
+}
+.day {
+	padding-bottom: 5px; margin-bottom: 20px; min-height: 10px; _height: 10px;
+}
+.dayTitle {
+	text-align: right; font-size: 14px; margin-bottom: 17px; border-bottom-color: rgb(221, 221, 221); border-bottom-width: 1px; border-bottom-style: solid; box-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+}
+.postTitle {
+	width: 100%; color: rgb(68, 68, 68); line-height: 1.5; clear: both; font-size: 110%; font-weight: bold; float: right;
+}
+.entrylistPosttitle {
+	width: 100%; color: rgb(68, 68, 68); line-height: 1.5; clear: both; font-size: 110%; font-weight: bold; float: right;
+}
+.entrylistItemTitle {
+	width: 100%; color: rgb(68, 68, 68); line-height: 1.5; clear: both; font-size: 110%; font-weight: bold; float: right;
+}
+.postTitle a:link {
+	color: rgb(68, 68, 68);
+}
+.postTitle a:visited {
+	color: rgb(68, 68, 68);
+}
+.postTitle a:active {
+	color: rgb(68, 68, 68);
+}
+.postTitle a:hover {
+	color: rgb(255, 102, 0);
+}
+.entrylistPosttitle a:hover {
+	color: rgb(255, 102, 0);
+}
+.postCon {
+	padding: 10px 0px; width: 100%; line-height: 1.5; clear: both; float: right;
+}
+.postDesc {
+	width: 100%; text-align: right; color: rgb(102, 102, 102); padding-right: 5px; clear: both; margin-top: 5px; float: right;
+}
+.postDesc a:link {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.postDesc a:visited {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.postDesc a:active {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.entrylistItemPostDesc a:link {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.entrylistItemPostDesc a:visited {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.entrylistItemPostDesc a:active {
+	padding: 1px 3px 2px; border-radius: 3px; color: rgb(255, 255, 255); font-size: 9.75px; font-weight: bold; text-shadow: none; background-color: rgb(98, 207, 252);
+}
+.postDesc a:hover {
+	background-color: rgb(70, 165, 70);
+}
+.entrylistItemPostDesc a:hover {
+	background-color: rgb(70, 165, 70);
+}
+.postSeparator {
+	margin: 0px auto 15px; width: 100%; height: 15px; clear: both; float: right;
+}
+#sideBar {
+	padding: 9px 9px 9px 5px; border-radius: 4px; border: 1px solid rgba(0, 0, 0, 0.05); width: 250px; overflow: hidden; margin-bottom: 20px; float: left; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 20px; box-shadow: inset 0px 1px 1px rgba(0,0,0,0.05); background-color: rgb(245, 245, 245); -o-text-overflow: ellipsis;
+}
+.newsItem .catListTitle {
+	display: none;
+}
+.newsItem {
+	padding: 15px 0px 5px; margin-bottom: 8px;
+}
+#calendar {
+	width: 220px;
+}
+#calendar .Cal {
+	width: 100%; line-height: 1.5;
+}
+.Cal {
+	border: currentColor; color: rgb(102, 102, 102);
+}
+#calendar table a:link {
+	font-weight: bold;
+}
+#calendar table a:visited {
+	font-weight: bold;
+}
+#calendar table a:active {
+	font-weight: bold;
+}
+#calendar table a:hover {
+	color: white; text-decoration: none; background-color: rgb(255, 102, 0);
+}
+.CalTodayDay {
+	color: rgb(255, 102, 0);
+}
+#calendar .CalNextPrev a:link {
+	font-weight: bold; background-color: white;
+}
+#calendar .CalNextPrev a:visited {
+	font-weight: bold; background-color: white;
+}
+#calendar .CalNextPrev a:active {
+	font-weight: bold; background-color: white;
+}
+.CalDayHeader {
+	border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.CalTitle {
+	width: 100%; color: black; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.catListTitle {
+	border: 0px currentColor; color: rgb(64, 64, 64); line-height: 36px; font-family: inherit; font-size: 14px; font-weight: bold; text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+}
+#leftcontentcontainer > div > ul > li > a {
+	padding: 3px 15px; color: rgb(0, 136, 204); margin-right: -15px; margin-left: -15px; text-shadow: 0px 1px 0px rgba(255,255,255,0.5);
+}
+.catListPostCategory > a {
+	color: rgb(0, 105, 214); line-height: inherit; font-weight: inherit;
+}
+.catListComment {
+	line-height: 1.5;
+}
+.divRecentComment {
+	color: rgb(102, 102, 102); text-indent: 2em;
+}
+#sideBarMain ul {
+	margin: 0px 0px 1px 15px;
+}
+#topics {
+	padding: 0px 0px 10px; width: 100%; overflow: hidden; float: left; -ms-word-break: break-all; -ms-text-overflow: ellipsis; min-height: 200px; -o-text-overflow: ellipsis;
+}
+#topics .postTitle .entrylistPosttitle {
+	width: 100%; line-height: 1.5; padding-left: 5px; font-size: 130%; font-weight: bold; border-bottom-color: rgb(153, 153, 153); border-bottom-width: 1px; border-bottom-style: solid; float: left;
+}
+.postBody {
+	padding: 5px 2px 5px 5px; color: rgb(0, 0, 0); line-height: 1.5; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+#EntryTag {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a {
+	margin-left: 5px;
+}
+#EntryTag a:link {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:visited {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:active {
+	color: rgb(102, 102, 102);
+}
+#EntryTag a:hover {
+	color: rgb(255, 102, 0);
+}
+#topics .postDesc {
+	width: 100%; text-align: right; color: rgb(102, 102, 102); padding-right: 5px; margin-top: 5px; float: right;
+}
+.feedback_area_title {
+	padding-left: 8px; font-weight: bold; margin-top: 20px; margin-bottom: 10px; border-bottom-color: rgb(51, 51, 51); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.louzhu {
+	background: url("images/icoLouZhu.gif") no-repeat right top; padding-right: 16px;
+}
+.feedbackListSubtitle {
+	color: rgb(102, 102, 102);
+}
+.feedbackListSubtitle a:link {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:visited {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:active {
+	color: rgb(102, 102, 102); font-weight: normal;
+}
+.feedbackListSubtitle a:hover {
+	color: rgb(255, 102, 0);
+}
+.feedbackManage {
+	width: 200px; text-align: right; float: right;
+}
+.feedbackCon {
+	background: url("images/comment.gif") no-repeat 5px 0px; padding: 15px 18px 10px 40px; line-height: 1.5; margin-bottom: 1em; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; min-height: 35px; _height: 35px;
+}
+#divRefreshComments {
+	text-align: right; margin-bottom: 10px;
+}
+.commenttb {
+	width: 320px;
+}
+.post {
+	padding: 20px; border-radius: 6px; background-color: rgb(245, 245, 245);
+}
+.entrylistTitle {
+	text-align: right; padding-right: 10px; padding-bottom: 3px; font-size: 110%; font-weight: bold; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+.PostListTitle {
+	text-align: right; padding-right: 10px; padding-bottom: 3px; font-size: 110%; font-weight: bold; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+.thumbTitle {
+	text-align: right; padding-right: 10px; padding-bottom: 3px; font-size: 110%; font-weight: bold; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+.entrylistDescription {
+	text-align: right; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+.entrylistItem {
+	width: 100%; padding-bottom: 5px; margin-bottom: 30px; min-height: 20px; _height: 20px;
+}
+.entrylistPosttitle a:hover {
+	
+}
+.entrylistPostSummary {
+	padding-left: 5px; margin-top: 5px; margin-bottom: 5px;
+}
+.entrylistItemPostDesc {
+	text-align: right; color: rgb(102, 102, 102);
+}
+.entrylist .postSeparator {
+	margin: 0px; padding: 0px; border: currentColor; width: 100%; height: 0px; line-height: 0; clear: both; font-size: 0px;
+}
+.pager {
+	text-align: right; margin-right: 10px;
+}
+.PostList {
+	padding-top: 10px; padding-right: 5px; padding-left: 5px; clear: both; margin-bottom: 5px; border-bottom-color: rgb(204, 204, 204); border-bottom-width: 1px; border-bottom-style: solid; _height: 1.5;
+}
+.postTitl2 {
+	float: left;
+}
+.postDesc2 {
+	color: rgb(102, 102, 102); float: right;
+}
+.postText2 {
+	color: rgb(102, 102, 102); clear: both;
+}
+.pfl_feedback_area_title {
+	text-align: right; line-height: 1.5; font-weight: bold; margin-bottom: 10px; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbackItem {
+	margin-bottom: 20px; border-bottom-color: black; border-bottom-width: 1px; border-bottom-style: solid;
+}
+.pfl_feedbacksubtitle {
+	width: 100%; border-bottom-color: rgb(102, 102, 102); border-bottom-width: 1px; border-bottom-style: dotted;
+}
+.pfl_feedbackname {
+	float: left;
+}
+.pfl_feedbackManage {
+	float: right;
+}
+.pfl_feedbackCon {
+	color: black; padding-top: 5px; padding-bottom: 5px;
+}
+.pfl_feedbackAnswer {
+	color: rgb(255, 68, 0); text-indent: 2em;
+}
+.tdSentMessage {
+	text-align: right;
+}
+.errorMessage {
+	width: 300px; float: left;
+}
+.divPhoto {
+	padding: 2px; border: 1px solid rgb(204, 204, 204); margin-right: 10px;
+}
+.thumbDescription {
+	text-align: right; color: rgb(102, 102, 102); padding-top: 5px; padding-right: 10px; padding-bottom: 5px; margin-bottom: 10px;
+}
+#footer {
+	text-align: center; padding-top: 10px; margin-top: 10px; margin-bottom: 10px; border-top-color: black; border-top-width: 1px; border-top-style: solid; min-height: 15px; _height: 15px;
+}
+.personInfo {
+	margin-bottom: 20px;
+}
+.pages {
+	text-align: right;
+}
+.postBody {
+	line-height: 1.5;
+}
+.postBody p {
+	margin: 0px auto 1em; text-indent: 2em;
+}
+.postCon p {
+	margin: 0px auto 1em; text-indent: 2em;
+}
+.postBody h2 {
+	margin: 15px auto 2px; font-size: 150%; font-weight: bold;
+}
+.postBody h3 {
+	margin: 15px auto 2px; font-size: 120%; font-weight: bold;
+}
+.postBody h4 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 110%; font-weight: bold;
+}
+.postBody h5 {
+	margin: 15px auto 2px; color: rgb(51, 51, 51); font-size: 100%; font-weight: bold;
+}
+.postBody a:link {
+	text-decoration: underline;
+}
+.postBody a:visited {
+	text-decoration: underline;
+}
+.postBody a:active {
+	text-decoration: underline;
+}
+.postCon a:link {
+	text-decoration: underline;
+}
+.postCon a:visited {
+	text-decoration: underline;
+}
+.postCon a:active {
+	text-decoration: underline;
+}
+.postBody ul {
+	margin-left: 2em;
+}
+.postCon ul {
+	margin-left: 2em;
+}
+.postBody li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postCon li {
+	margin-bottom: 1em; list-style-type: disc;
+}
+.postBody blockquote {
+	padding: 10px 60px 5px; color: rgb(51, 51, 51); line-height: 1.6em; min-height: 35px; _height: 35px;
+}
+.c_b_p_desc {
+	overflow: visible;
+}
+#MySignature {
+	clear: both;
+}
