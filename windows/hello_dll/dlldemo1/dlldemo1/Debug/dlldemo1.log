@@ -1,6 +1,0 @@
-﻿  stdafx.cpp
-  my_code.cpp
-c:\users\78399\documents\source\git\demo\windows\hello_dll\dlldemo1\dlldemo1\my_code.cpp(7): warning C4273: “Add”: dll 链接不一致
-  c:\users\78399\documents\source\git\demo\windows\hello_dll\dlldemo1\dlldemo1\my_code.h(10): note: 参见“Add”的前一个定义
-    正在创建库 C:\Users\78399\Documents\source\git\demo\windows\hello_dll\dlldemo1\Debug\dlldemo1.lib 和对象 C:\Users\78399\Documents\source\git\demo\windows\hello_dll\dlldemo1\Debug\dlldemo1.exp
-  dlldemo1.vcxproj -> C:\Users\78399\Documents\source\git\demo\windows\hello_dll\dlldemo1\Debug\dlldemo1.dll
