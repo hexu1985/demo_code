@@ -1,0 +1,8 @@
+<config>
+<prop1>value1</prop1>
+<prop2>123</prop2>
+<prop3>
+<prop4 attr="value3" />
+<prop4 attr="value4" />
+</prop3>
+</config>
