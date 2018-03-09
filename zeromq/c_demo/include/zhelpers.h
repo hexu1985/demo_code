@@ -20,5 +20,7 @@
 #include "s_clock.h"
 #include "s_sleep.h"
 #include "s_sendmore.h"
+#include "s_dump.h"
+#include "s_set_id.h"
 
 #endif
