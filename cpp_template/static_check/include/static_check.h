@@ -12,17 +12,34 @@
 //     suitability of this software for any purpose. It is provided "as is" 
 //     without express or implied warranty.
 ////////////////////////////////////////////////////////////////////////////////
-#ifndef NULLTYPE_INC_
-#define NULLTYPE_INC_
+#ifndef LOKI_STATIC_CHECK_INC_
+#define LOKI_STATIC_CHECK_INC_
 
-// $Id: NullType.h 751 2006-10-17 19:50:37Z syntheticpp $
+// $Id: static_check.h 752 2006-10-17 19:52:18Z syntheticpp $
+
+
+namespace Loki
+{
+////////////////////////////////////////////////////////////////////////////////
+// Helper structure for the STATIC_CHECK macro
+////////////////////////////////////////////////////////////////////////////////
+
+    template<int> struct CompileTimeError;
+    template<> struct CompileTimeError<true> {};
+}
 
 ////////////////////////////////////////////////////////////////////////////////
-// class NullType
-// Used as a placeholder for "no type here"
-// Useful as an end marker in typelists 
+// macro STATIC_CHECK
+// Invocation: STATIC_CHECK(expr, id)
+// where:
+// expr is a compile-time integral or pointer expression
+// id is a C++ identifier that does not need to be defined
+// If expr is zero, id will appear in a compile-time error message.
 ////////////////////////////////////////////////////////////////////////////////
 
-class NullType {};
+#define LOKI_STATIC_CHECK(expr, msg) \
+    { Loki::CompileTimeError<((expr) != 0)> ERROR_##msg; (void)ERROR_##msg; } 
+
 
 #endif // end file guardian
+
