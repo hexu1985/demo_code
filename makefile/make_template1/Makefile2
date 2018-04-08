@@ -19,7 +19,7 @@ distclean:
 	$(RM) $(PROGS) *.o
 
 %.o:%.cpp
-	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
+	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDES)
 
 $(PROGS): %: %.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
