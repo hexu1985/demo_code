@@ -4,7 +4,8 @@
 #include <iosfwd>
 #include <string>
 #include <vector>
-#include <boost/program_options.hpp>
+#include <map>
+#include "boost/program_options.hpp"
 
 class ConfigParser {
 private:
@@ -19,9 +20,10 @@ public:
     ConfigParser &add_string_option(const std::string &name, const std::string &description = "");
 
     void parse_command_line(int argc, const char* const argv[]);
+    void parse_environment(const std::map<std::string, std::string> &name_map);
     void parse_config_file(const std::string &filename);
 
-    bool has_variables(const std::string &option);
+    bool has_parsed_option(const std::string &option);
 
     int get_int_variables(const std::string &option);
     int get_int_variables(const std::string &option, int default_value);

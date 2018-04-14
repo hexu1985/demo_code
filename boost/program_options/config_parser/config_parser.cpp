@@ -1,5 +1,7 @@
 #include "config_parser.h"
+#include <map>
 #include <fstream>
+#include "boost/ref.hpp"
 
 ConfigParser::ConfigParser(const std::string &caption): desc_(caption)
 {
@@ -34,14 +36,35 @@ void ConfigParser::parse_command_line(int argc, const char* const argv[])
             boost::program_options::parse_command_line(argc, argv, desc_), vm_);
 }
 
+void ConfigParser::parse_environment(const std::map<std::string, std::string> &name_map)
+{
+    struct NameMapper {
+        typedef const std::map<std::string, std::string> map_type;
+        boost::reference_wrapper<map_type> name_map_;
+        NameMapper(const std::map<std::string, std::string> &name_map): name_map_(boost::cref(name_map)) {}
+        std::string operator ()(const std::string &name) const {
+            const std::map<std::string, std::string> &name_map = name_map_.get();
+            try {
+                return name_map.at(name);
+            } catch (const std::out_of_range &) {
+                return "";
+            }
+        }
+    };
+
+    NameMapper name_mapper(name_map);
+    boost::program_options::store(
+            boost::program_options::parse_environment(desc_, name_mapper), vm_);
+}
+
 void ConfigParser::parse_config_file(const std::string &filename)
 {
-    std::ifstream ifs(filename.c_str());
+    std::ifstream ifs(filename);
     boost::program_options::store(
             boost::program_options::parse_config_file(ifs, desc_, true), vm_);
 }
 
-bool ConfigParser::has_variables(const std::string &option)
+bool ConfigParser::has_parsed_option(const std::string &option)
 {
     return vm_.count(option);
 }
@@ -53,7 +76,7 @@ int ConfigParser::get_int_variables(const std::string &option)
 
 int ConfigParser::get_int_variables(const std::string &option, int default_value)
 {
-    if (!has_variables(option))
+    if (!has_parsed_option(option))
         return default_value;
     return get_int_variables(option);
 }
@@ -66,7 +89,7 @@ std::string ConfigParser::get_string_variables(const std::string &option)
 std::string ConfigParser::get_string_variables(const std::string &option, 
         const std::string &default_value)
 {
-    if (!has_variables(option))
+    if (!has_parsed_option(option))
         return default_value;
     return get_string_variables(option);
 }
