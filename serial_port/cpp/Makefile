@@ -8,7 +8,7 @@ LDFLAGS =
 LDPATH = 
 
 OBJS = error.o wraptermios.o
-PROGS =	open open_for_read open_for_write set_speed
+PROGS =	open open_for_read open_for_write set_speed set_parity
 
 .PHONY: all
 all: $(PROGS)
@@ -31,5 +31,8 @@ open_for_write: open_for_write.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 set_speed: set_speed.o $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+set_parity: set_parity.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
