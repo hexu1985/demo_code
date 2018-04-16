@@ -7,9 +7,9 @@ INCLUDE =
 LDFLAGS = 
 LDPATH = 
 
-OBJS = error.o wraptermios.o wrapunix.o
+OBJS = error.o wraptermios.o wrapunix.o wrapsock.o
 PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity tty_set_timeout \
-		tty_read tty_write tty_read_select
+		tty_read tty_write tty_read_select tty_read_poll
 
 .PHONY: all
 all: $(PROGS)
@@ -40,9 +40,12 @@ tty_set_timeout: tty_set_timeout.o $(OBJS)
 tty_read: tty_read.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
+tty_write: tty_write.o $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
 tty_read_select: tty_read_select.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-tty_write: tty_write.o $(OBJS)
+tty_read_poll: tty_read_poll.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 

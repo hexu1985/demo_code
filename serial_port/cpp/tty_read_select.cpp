@@ -49,19 +49,36 @@ int main(int argc, char **argv)
         timeout.tv_sec = 0;
         timeout.tv_usec = 100 * 1000;
 
-        int nready = Select(maxfd+1, &rset, NULL, NULL, &timeout);
+        int nready = Select(maxfd+1, &rset, NULL, NULL, NULL /* &timeout */);
         if (nready == 0) {  // timeout
             cerr << ".";
         }
 
         for (int i = 0; i < tty_fds.size(); i++) {
+            if (tty_fds[i] < 0)
+                continue;
+
             if (FD_ISSET(tty_fds[i], &rset)) {
                 nread = read(tty_fds[i], buff, BUFSIZE);
                 if (nread > 0) {
                     data.assign(buff, nread);
                     cout << "\nread from '" << tty_map[tty_fds[i]] << "' " << data.size() << " bytes: " << data << endl;
+                } else if (nread < 0) {
+                    cout << "read error of '" << tty_map[tty_fds[i]] << "' " 
+                        ": " << strerror(errno) << endl;
+                    FD_CLR(tty_fds[i], &allset);
+                    tty_fds[i] = -1;
+                } else {
+                    cout << "no data of '" << tty_map[tty_fds[i]] << "' " << endl;
+                    FD_CLR(tty_fds[i], &allset);
+                    tty_fds[i] = -1;
                 }
             }
+        }
+
+        if (*std::max_element(tty_fds.begin(), tty_fds.end()) < 0) {
+            cout << "all tty closed!" << endl;
+            break;
         }
     }
 
