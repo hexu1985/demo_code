@@ -13,14 +13,9 @@ int Tty_open(const char *dev, int oflag)
     return fd;
 }
 
-int Tty_open_for_read(const char *dev)
+int Tty_open_easy(const char *dev)
 {
-    return Tty_open(dev, O_RDONLY | O_NOCTTY);
-}
-
-int open_tty_for_write(const char *dev)
-{
-    return Tty_open(dev, O_WRONLY | O_NOCTTY);
+    return Tty_open(dev, O_RDWR | O_NOCTTY);
 }
 
 namespace {

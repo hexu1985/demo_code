@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    int fd = Tty_open_for_read(argv[1]);
+    int fd = Tty_open_easy(argv[1]);
     cout << "Open tty: " << argv[1] << " ok, " << "fd: " << fd << endl;
 
     return 0;

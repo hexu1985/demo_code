@@ -8,7 +8,7 @@ LDFLAGS =
 LDPATH = 
 
 OBJS = error.o wraptermios.o
-PROGS =	open open_for_read open_for_write set_speed set_parity
+PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity
 
 .PHONY: all
 all: $(PROGS)
@@ -21,18 +21,15 @@ clean:
 %.o:%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
-open: open.o $(OBJS)
+tty_open: tty_open.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-open_for_read: open_for_read.o $(OBJS)
+tty_open_easy: tty_open_easy.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-open_for_write: open_for_write.o $(OBJS)
+tty_set_speed: tty_set_speed.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-set_speed: set_speed.o $(OBJS)
-	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
-
-set_parity: set_parity.o $(OBJS)
+tty_set_parity: tty_set_parity.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
