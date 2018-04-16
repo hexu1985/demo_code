@@ -108,6 +108,12 @@ void Tty_set_parity(int fd, int databits, int stopbits, int parity)
     term.c_cflag &= ~CSIZE;
     switch (databits) /*设置数据位数*/
     {
+    case 5:
+       term.c_cflag |= CS5;
+       break;
+    case 6:
+       term.c_cflag |= CS6;
+       break;
     case 7:
        term.c_cflag |= CS7;
        break;
@@ -161,6 +167,29 @@ void Tty_set_parity(int fd, int databits, int stopbits, int parity)
     /* Set input parity option */
     if (parity != 'n')
        term.c_iflag |= INPCK;
+
+    Tcsetattr(fd, TCSANOW, &term);
+
+    Tcflush(fd,TCIOFLUSH);  //设置后flush
+}
+
+void Tty_set_icanon(int fd, int echo, int icanon)
+{
+    struct termios term;
+
+    Tcgetattr(fd, &term);
+
+    if (echo) {
+        term.c_lflag |= ECHO;
+    } else {
+        term.c_lflag &= ~ECHO;
+    }
+
+    if (icanon) {
+        term.c_lflag |= ICANON;
+    } else {
+        term.c_lflag &= ~ICANON;
+    }
 
     Tcsetattr(fd, TCSANOW, &term);
 
