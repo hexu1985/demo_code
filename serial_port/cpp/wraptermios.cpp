@@ -169,14 +169,12 @@ void Tty_set_parity(int fd, int databits, int stopbits, int parity)
        term.c_iflag |= INPCK;
 
     Tcsetattr(fd, TCSANOW, &term);
-
     Tcflush(fd,TCIOFLUSH);  //设置后flush
 }
 
 void Tty_set_icanon(int fd, int echo, int icanon)
 {
     struct termios term;
-
     Tcgetattr(fd, &term);
 
     if (echo) {
@@ -192,6 +190,17 @@ void Tty_set_icanon(int fd, int echo, int icanon)
     }
 
     Tcsetattr(fd, TCSANOW, &term);
+    Tcflush(fd,TCIOFLUSH);  //设置后flush
+}
 
+void Tty_set_timeout(int fd, int min, int sec, int millisec)
+{
+    struct termios term;
+    Tcgetattr(fd, &term);
+
+    term.c_cc[VMIN] = min;
+    term.c_cc[VTIME] = sec*10+millisec/100;
+
+    Tcsetattr(fd, TCSANOW, &term);
     Tcflush(fd,TCIOFLUSH);  //设置后flush
 }

@@ -8,7 +8,7 @@ LDFLAGS =
 LDPATH = 
 
 OBJS = error.o wraptermios.o
-PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity \
+PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity tty_set_timeout \
 		tty_read tty_write
 
 .PHONY: all
@@ -32,6 +32,9 @@ tty_set_speed: tty_set_speed.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 tty_set_parity: tty_set_parity.o $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+tty_set_timeout: tty_set_timeout.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 tty_read: tty_read.o $(OBJS)

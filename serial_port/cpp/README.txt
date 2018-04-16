@@ -25,5 +25,7 @@ stop = ^S; susp = ^Z; rprnt = ^R; werase = ^W; lnext = ^V; discard = ^O; min = 1
 # ./tty_open_easy /dev/pts/2
 # ./tty_set_speed /dev/pts/2 9600
 # ./tty_set_parity /dev/pts/2 8 1 N
-
+# ./tty_set_timeout /dev/pts/2 0 0 0
+# ./tty_read /dev/pts/2 
+# ./tty_write /dev/pts/2 
 
