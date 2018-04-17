@@ -5,6 +5,17 @@
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
+#include <stdexcept>
+#include <string>
+
+class SystemError: public std::runtime_error {
+private:
+    int error_code_;
+
+public:
+    SystemError(const std::string &what_arg, int error_code);
+    int code() const;
+};
 
 void	 err_dump(const char *, ...);
 void	 err_msg(const char *, ...);
