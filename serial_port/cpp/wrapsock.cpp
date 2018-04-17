@@ -220,7 +220,6 @@ Recvmsg(int fd, struct msghdr *msg, int flags)
 	return(n);
 }
 
-#if 0
 int
 Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
        struct timeval *timeout)
@@ -231,7 +230,6 @@ Select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
 		err_sys("select error");
 	return(n);		/* can return 0 on timeout */
 }
-#endif
 
 void
 Send(int fd, const void *ptr, size_t nbytes, int flags)

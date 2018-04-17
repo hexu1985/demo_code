@@ -4,7 +4,7 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include "wrapunix.h"
+#include "wrapsock.h"
 #include "wraptermios.h"
 
 using namespace std;
