@@ -2,17 +2,13 @@
 #define __tty_reader_h
 
 #include <vector>
+#include <poll.h>
 
 class TtyReader {
 private:
     int tty_fd_;
-    bool can_read_;
-    bool has_error_;
 
 private:
-    void reset_flag();
-    void set_can_read(bool can_read);
-    void set_has_error(bool has_error);
     void check_open() const;
 
 public:
@@ -32,8 +28,19 @@ public:
 
     int fileno() const;
     bool is_open() const;
-    bool canRead() const;
-    bool hasError() const;
+
+public:
+    class Poller {
+    private:
+        std::vector<struct pollfd> events_;
+        std::vector<TtyReader *> readers_;
+
+    public:
+        Poller(const std::vector<TtyReader *>readers);
+        int poll(int timeout);
+        const std::vector<struct pollfd> &getEvents() const;
+        const std::vector<TtyReader *> &getReaders() const;
+    };
 };
 
 #endif

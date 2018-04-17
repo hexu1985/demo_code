@@ -3,9 +3,9 @@
 #include <assert.h>
 #include "tty_reader.h"
 #include "wraptermios.h"
+#include "wrapsock.h"
 
-TtyReader::TtyReader():
-    tty_fd_(-1), can_read_(false), has_error_(false)
+TtyReader::TtyReader(): tty_fd_(-1)
 {
 }
 
@@ -13,22 +13,6 @@ TtyReader::~TtyReader()
 {
     if (is_open())
         close();
-}
-
-void TtyReader::reset_flag()
-{
-    can_read_ = false;
-    has_error_ = false;
-}
-
-void TtyReader::set_can_read(bool can_read)
-{
-    can_read_ = can_read;
-}
-
-void TtyReader::set_has_error(bool has_error)
-{
-    has_error_ = has_error;
 }
 
 void TtyReader::check_open() const
@@ -96,13 +80,28 @@ bool TtyReader::is_open() const
     return tty_fd_ >= 0;
 }
 
-bool TtyReader::canRead() const
+TtyReader::Poller::Poller(const std::vector<TtyReader *>readers) : readers_(readers)
 {
-    return can_read_;
+    int n = readers_.size();
+    events_.resize(n);
+    for (int i = 0;  i < n; i++) {
+        events_[i].fd = readers[i]->fileno();
+        events_[i].events = POLLIN;
+        events_[i].revents = 0;
+    }
 }
 
-bool TtyReader::hasError() const
+int TtyReader::Poller::poll(int timeout)
 {
-    return has_error_;
+    return Poll(&events_[0], events_.size(), timeout);
 }
 
+const std::vector<struct pollfd> &TtyReader::Poller::getEvents() const
+{
+    return events_;
+}
+
+const std::vector<TtyReader *> &TtyReader::Poller::getReaders() const
+{
+    return readers_;
+}
