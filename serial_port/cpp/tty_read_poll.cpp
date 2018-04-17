@@ -51,12 +51,13 @@ int main(int argc, char **argv)
         }
 
         for (int i = 0; i < client.size(); i++) {
-            if (client[i].fd < 0) 
+            int tty_fd = client[i].fd;
+            if (tty_fd < 0) 
                 continue;
 
             printf(" fd=%d; tty=%s, events: %s%s%s%s%s\n", 
-                    client[i].fd,
-                    tty_map[client[i].fd].c_str(),
+                    tty_fd,
+                    tty_map[tty_fd].c_str(),
                     (client[i].revents & POLLIN) ? "POLLIN " : "",
                     (client[i].revents & POLLOUT) ? "POLLOUT " : "",
                     (client[i].revents & POLLRDHUP) ? "POLLRDHUP " : "",
@@ -64,28 +65,28 @@ int main(int argc, char **argv)
                     (client[i].revents & POLLERR) ? "POLLERR " : "");
 
             if (client[i].revents & POLLERR) {
-                cout << "event error of '" << tty_map[client[i].fd] << "' " << endl;
-                tty_map.erase(client[i].fd);
-                close(client[i].fd);
+                cout << "event error of '" << tty_map[tty_fd] << "' " << endl;
+                tty_map.erase(tty_fd);
+                close(tty_fd);
                 client[i].fd = -1;
                 continue;
             }
 
             if (client[i].revents & POLLIN) {
-                nread = read(client[i].fd, buff, BUFSIZE);
+                nread = read(tty_fd, buff, BUFSIZE);
                 if (nread > 0) {
                     data.assign(buff, nread);
-                    cout << "\nread from '" << tty_map[client[i].fd] << "' " << data.size() << " bytes: " << data << endl;
+                    cout << "\nread from '" << tty_map[tty_fd] << "' " << data.size() << " bytes: " << data << endl;
                 } else if (nread == 0) {
-                    cout << "no data of '" << tty_map[client[i].fd] << "' " << endl;
-                    tty_map.erase(client[i].fd);
-                    close(client[i].fd);
+                    cout << "no data of '" << tty_map[tty_fd] << "' " << endl;
+                    tty_map.erase(tty_fd);
+                    close(tty_fd);
                     client[i].fd = -1;
                 } else {
-                    cout << "read error of '" << tty_map[client[i].fd] << "' " 
+                    cout << "read error of '" << tty_map[tty_fd] << "' " 
                         ": " << strerror(errno) << endl;
-                    tty_map.erase(client[i].fd);
-                    close(client[i].fd);
+                    tty_map.erase(tty_fd);
+                    close(tty_fd);
                     client[i].fd = -1;
                 }
             } 

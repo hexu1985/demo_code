@@ -53,9 +53,11 @@ int main(int argc, char **argv)
         }
 
         for (int i = 0; i < nready; i++) {
+            int tty_fd = evlist[i].data.fd;
+
             printf(" fd=%d; tty=%s, events: %s%s%s%s%s\n", 
-                    evlist[i].data.fd,
-                    tty_map[evlist[i].data.fd].c_str(),
+                    tty_fd,
+                    tty_map[tty_fd].c_str(),
                     (evlist[i].events & EPOLLIN) ? "EPOLLIN " : "",
                     (evlist[i].events & EPOLLOUT) ? "EPOLLOUT " : "",
                     (evlist[i].events & EPOLLRDHUP) ? "EPOLLRDHUP " : "",
@@ -63,29 +65,29 @@ int main(int argc, char **argv)
                     (evlist[i].events & EPOLLERR) ? "EPOLLERR " : "");
 
             if (evlist[i].events & POLLERR) {
-                cout << "event error of '" << tty_map[evlist[i].data.fd] << "' " << endl;
-                tty_map.erase(evlist[i].data.fd);
-                Epoll_ctl(epfd, EPOLL_CTL_DEL, evlist[i].data.fd, NULL);
-                close(evlist[i].data.fd);
+                cout << "event error of '" << tty_map[tty_fd] << "' " << endl;
+                tty_map.erase(tty_fd);
+                Epoll_ctl(epfd, EPOLL_CTL_DEL, tty_fd, NULL);
+                close(tty_fd);
                 continue;
             }
 
             if (evlist[i].events & POLLIN) {
-                nread = read(evlist[i].data.fd, buff, BUFSIZE);
+                nread = read(tty_fd, buff, BUFSIZE);
                 if (nread > 0) {
                     data.assign(buff, nread);
-                    cout << "\nread from '" << tty_map[evlist[i].data.fd] << "' " << data.size() << " bytes: " << data << endl;
+                    cout << "\nread from '" << tty_map[tty_fd] << "' " << data.size() << " bytes: " << data << endl;
                 } else if (nread == 0) {
-                    cout << "no data of '" << tty_map[evlist[i].data.fd] << "' " << endl;
-                    tty_map.erase(evlist[i].data.fd);
-                    Epoll_ctl(epfd, EPOLL_CTL_DEL, evlist[i].data.fd, NULL);
-                    close(evlist[i].data.fd);
+                    cout << "no data of '" << tty_map[tty_fd] << "' " << endl;
+                    tty_map.erase(tty_fd);
+                    Epoll_ctl(epfd, EPOLL_CTL_DEL, tty_fd, NULL);
+                    close(tty_fd);
                 } else {
-                    cout << "read error of '" << tty_map[evlist[i].data.fd] << "' " 
+                    cout << "read error of '" << tty_map[tty_fd] << "' " 
                         ": " << strerror(errno) << endl;
-                    tty_map.erase(evlist[i].data.fd);
-                    Epoll_ctl(epfd, EPOLL_CTL_DEL, evlist[i].data.fd, NULL);
-                    close(evlist[i].data.fd);
+                    tty_map.erase(tty_fd);
+                    Epoll_ctl(epfd, EPOLL_CTL_DEL, tty_fd, NULL);
+                    close(tty_fd);
                 }
             } 
         }
