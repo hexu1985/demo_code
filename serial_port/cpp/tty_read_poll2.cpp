@@ -34,10 +34,12 @@ int main(int argc, char **argv)
         tty_map.insert(std::make_pair(tty->fileno(), std::string(argv[i])));
     }
 
-    TtyReader::Poller poller(readers);
+    TtyReader::Poller poller;
     int nread;
     const int BUFSIZE = 2048;
     char buff[BUFSIZE];
+
+    poller.watch(readers);
 
     string data;
     for ( ; ; ) {
@@ -48,13 +50,15 @@ int main(int argc, char **argv)
         }
 
         const std::vector<struct pollfd> &client = poller.getEvents();
+        const std::vector<TtyReader *> &ttys = poller.getReaders();
 
         for (int i = 0; i < client.size(); i++) {
-            TtyReader *tty = readers[i];
             int tty_fd = client[i].fd;
-            assert(tty_fd == tty->fileno());
-            if (tty_fd < 0) 
+            if (tty_fd < 0)
                 continue;
+
+            TtyReader *tty = ttys[i];
+            assert(tty_fd == tty->fileno());
 
             printf(" fd=%d; tty=%s, events: %s%s%s%s%s\n", 
                     tty_fd,
@@ -68,6 +72,7 @@ int main(int argc, char **argv)
             if (client[i].revents & POLLERR) {
                 cout << "event error of '" << tty_map[tty_fd] << "' " << endl;
                 tty_map.erase(tty_fd);
+                poller.unwatch(tty);
                 tty->close();
                 continue;
             }
@@ -80,11 +85,13 @@ int main(int argc, char **argv)
                 } else if (nread == 0) {
                     cout << "no data of '" << tty_map[tty_fd] << "' " << endl;
                     tty_map.erase(tty_fd);
+                    poller.unwatch(tty);
                     tty->close();
                 } else {
                     cout << "read error of '" << tty_map[tty_fd] << "' " 
                         ": " << strerror(errno) << endl;
                     tty_map.erase(tty_fd);
+                    poller.unwatch(tty);
                     tty->close();
                 }
             } 

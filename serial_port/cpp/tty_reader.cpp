@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <assert.h>
+#include <algorithm>
 #include "tty_reader.h"
 #include "wraptermios.h"
 #include "wrapsock.h"
@@ -80,14 +81,35 @@ bool TtyReader::is_open() const
     return tty_fd_ >= 0;
 }
 
-TtyReader::Poller::Poller(const std::vector<TtyReader *>readers) : readers_(readers)
+TtyReader::Poller::Poller()
 {
+}
+
+void TtyReader::Poller::watch(const std::vector<TtyReader *>readers)
+{
+    readers_.clear();
+    events_.clear();
+
+    readers_ = readers;
     int n = readers_.size();
     events_.resize(n);
+
     for (int i = 0;  i < n; i++) {
         events_[i].fd = readers[i]->fileno();
         events_[i].events = POLLIN;
         events_[i].revents = 0;
+    }
+}
+
+void TtyReader::Poller::unwatch(TtyReader *reader)
+{
+    std::vector<TtyReader *>::iterator iter = std::find(readers_.begin(), readers_.end(), reader);
+    if (iter != readers_.end()) {
+        int i = iter-readers_.begin();
+        events_[i].fd = -1;
+        events_[i].events = 0;
+        events_[i].revents = 0;
+        readers_[i] = NULL;
     }
 }
 

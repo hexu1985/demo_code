@@ -36,7 +36,9 @@ public:
         std::vector<TtyReader *> readers_;
 
     public:
-        Poller(const std::vector<TtyReader *>readers);
+        Poller();
+        void watch(const std::vector<TtyReader *>readers);
+        void unwatch(TtyReader *readers);
         int poll(int timeout);
         const std::vector<struct pollfd> &getEvents() const;
         const std::vector<TtyReader *> &getReaders() const;
