@@ -67,10 +67,12 @@ int main(int argc, char **argv)
                     cout << "read error of '" << tty_map[tty_fds[i]] << "' " 
                         ": " << strerror(errno) << endl;
                     FD_CLR(tty_fds[i], &allset);
+                    close(tty_fds[i]); 
                     tty_fds[i] = -1;
                 } else {
                     cout << "no data of '" << tty_map[tty_fds[i]] << "' " << endl;
                     FD_CLR(tty_fds[i], &allset);
+                    close(tty_fds[i]); 
                     tty_fds[i] = -1;
                 }
             }
@@ -80,10 +82,6 @@ int main(int argc, char **argv)
             cout << "all tty closed!" << endl;
             break;
         }
-    }
-
-    for (int i = 0; i < tty_fds.size(); i++) {
-        close(tty_fds[i]); 
     }
 
     return 0;

@@ -54,6 +54,23 @@ int main(int argc, char **argv)
             if (client[i].fd < 0) 
                 continue;
 
+            printf(" fd=%d; tty=%s, events: %s%s%s%s%s\n", 
+                    client[i].fd,
+                    tty_map[client[i].fd].c_str(),
+                    (client[i].revents & POLLIN) ? "POLLIN " : "",
+                    (client[i].revents & POLLOUT) ? "POLLOUT " : "",
+                    (client[i].revents & POLLRDHUP) ? "POLLRDHUP " : "",
+                    (client[i].revents & POLLHUP) ? "POLLHUP " : "",
+                    (client[i].revents & POLLERR) ? "POLLERR " : "");
+
+            if (client[i].revents & POLLERR) {
+                cout << "event error of '" << tty_map[client[i].fd] << "' " << endl;
+                tty_map.erase(client[i].fd);
+                close(client[i].fd);
+                client[i].fd = -1;
+                continue;
+            }
+
             if (client[i].revents & POLLIN) {
                 nread = read(client[i].fd, buff, BUFSIZE);
                 if (nread > 0) {
@@ -62,28 +79,22 @@ int main(int argc, char **argv)
                 } else if (nread == 0) {
                     cout << "no data of '" << tty_map[client[i].fd] << "' " << endl;
                     tty_map.erase(client[i].fd);
+                    close(client[i].fd);
                     client[i].fd = -1;
                 } else {
                     cout << "read error of '" << tty_map[client[i].fd] << "' " 
                         ": " << strerror(errno) << endl;
                     tty_map.erase(client[i].fd);
+                    close(client[i].fd);
                     client[i].fd = -1;
                 }
-            } else if (client[i].revents & POLLERR) {
-                cout << "event error of '" << tty_map[client[i].fd] << "' " << endl;
-                tty_map.erase(client[i].fd);
-                client[i].fd = -1;
-            }
+            } 
         }
 
         if (tty_map.empty()) {
             cout << "all tty closed!" << endl;
             break;
         }
-    }
-
-    for (int i = 0; i < client.size(); i++) {
-        close(client[i].fd); 
     }
 
     return 0;

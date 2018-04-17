@@ -19,6 +19,7 @@
 #endif
 
 /* #define HAVE_EPOLL 1 */
+#define HAVE_EPOLL 1
 
 #ifdef HAVE_EPOLL
 #include <sys/epoll.h>
