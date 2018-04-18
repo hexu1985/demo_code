@@ -222,7 +222,7 @@ Ioctl(int fd, int request, void *arg)
 
 int Tty_get_modem_status(int fd)
 {
-	int serial;
+	unsigned long serial;
 
     Ioctl(fd, TIOCMGET, &serial);
     return serial;
