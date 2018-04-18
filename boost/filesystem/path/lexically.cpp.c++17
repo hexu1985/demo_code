@@ -1,0 +1,18 @@
+#include <iostream>
+#include "boost/filesystem.hpp"
+#include <cassert>
+
+namespace fs = boost::filesystem;
+
+int main()
+{
+    assert(fs::path("foo/./bar/..").lexically_normal() == "foo/");
+    assert(fs::path("foo/.///bar/../").lexically_normal() == "foo/");
+
+    assert(fs::path("/a/d").lexically_relative("/a/b/c") == "../../d");
+    assert(fs::path("/a/b/c").lexically_relative("/a/d") == "../b/c");
+    assert(fs::path("a/b/c").lexically_relative("a") == "b/c");
+    assert(fs::path("a/b/c").lexically_relative("a/b/c/x/y") == "../..");
+    assert(fs::path("a/b/c").lexically_relative("a/b/c") == ".");
+    assert(fs::path("a/b").lexically_relative("c/d") == "../../a/b");
+}
