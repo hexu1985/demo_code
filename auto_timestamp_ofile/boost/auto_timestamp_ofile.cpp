@@ -38,6 +38,11 @@ void AutoTimestampOFile::write(const char *s, int n)
     ofile_.write(s, n);
 }
 
+void AutoTimestampOFile::flush()
+{
+    ofile_.flush();
+}
+
 size_t AutoTimestampOFile::size()
 {
     return ofile_.tellp();

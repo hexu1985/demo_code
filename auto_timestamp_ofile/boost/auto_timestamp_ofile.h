@@ -16,6 +16,7 @@ public:
     ~AutoTimestampOFile();
 
     void write(const char *s, int n);
+    void flush();
     size_t size();
 };
 
