@@ -228,27 +228,37 @@ int Tty_get_modem_status(int fd)
     return serial;
 }
 
-bool is_modem_status_dsr(int serial)
+void Tty_set_modem_status(int fd, int serial) 
+{
+    Ioctl(fd, TIOCMSET, &serial);
+}
+
+bool TTY_MODEM_STATUS_CTS(int serial)
+{
+    return (serial & TIOCM_CTS);
+}
+
+bool TTY_MODEM_STATUS_DCD(int serial)
+{
+    return (serial & TIOCM_CD);
+}
+
+bool TTY_MODEM_STATUS_RI(int serial)
+{
+    return (serial & TIOCM_RI);
+}
+
+bool TTY_MODEM_STATUS_DSR(int serial)
 {
     return (serial & TIOCM_DSR);
 }
 
-void set_modem_status_dsr(int &serial, bool is_set)
+void TTY_MODEM_STATUS_DSR(int &serial, bool on)
 {
-    if (is_set) {
+    if (on) {
         serial = serial | TIOCM_DSR;
     } else {
         serial = serial & ~TIOCM_DSR;
     }
-}
-
-void unset_modem_status_dsr(int &serial)
-{
-    set_modem_status_dsr(serial, false);
-}
-
-void Tty_set_modem_status(int fd, int serial) 
-{
-    Ioctl(fd, TIOCMSET, &serial);
 }
 

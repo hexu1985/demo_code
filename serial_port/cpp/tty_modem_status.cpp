@@ -17,10 +17,28 @@ int main(int argc, char *argv[])
     int serial = 0;
 
     serial = Tty_get_modem_status(fd);
-    if (is_modem_status_dsr(serial)) {
+    if (TTY_MODEM_STATUS_CTS(serial)) {
+        cout << "CTS is on" << endl;
+    } else {
+        cout << "CTS is off" << endl;
+    }
+
+    if (TTY_MODEM_STATUS_DSR(serial)) {
         cout << "DSR is on" << endl;
     } else {
         cout << "DSR is off" << endl;
+    }
+
+    if (TTY_MODEM_STATUS_DCD(serial)) {
+        cout << "DCD is on" << endl;
+    } else {
+        cout << "DCD is off" << endl;
+    }
+
+    if (TTY_MODEM_STATUS_RI(serial)) {
+        cout << "RI is on" << endl;
+    } else {
+        cout << "RI is off" << endl;
     }
 
     return 0;

@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     int serial = 0;
 
     serial = Tty_get_modem_status(fd);
-    if (is_modem_status_dsr(serial)) {
+    if (TTY_MODEM_STATUS_DSR(serial)) {
         cout << "DSR is on" << endl;
     } else {
         cout << "DSR is off" << endl;
@@ -25,16 +25,16 @@ int main(int argc, char *argv[])
 
     if (argv[2] == std::string("on")) {
         cout << "Now set DSR flag" << endl;
-        set_modem_status_dsr(serial);
+        TTY_MODEM_STATUS_DSR(serial, true);
     } else {
         cout << "Now unset DSR flag" << endl;
-        unset_modem_status_dsr(serial);
+        TTY_MODEM_STATUS_DSR(serial, false);
     }
 
     Tty_set_modem_status(fd, serial);
 
     serial = Tty_get_modem_status(fd);
-    if (is_modem_status_dsr(serial)) {
+    if (TTY_MODEM_STATUS_DSR(serial)) {
         cout << "DSR is on" << endl;
     } else {
         cout << "DSR is off" << endl;
