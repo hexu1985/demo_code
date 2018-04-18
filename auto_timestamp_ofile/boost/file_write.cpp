@@ -17,5 +17,7 @@ int main(int argc, char *argv[])
         ofile.write(str.c_str(), str.length());
     }
 
+    cout << "file size: " << ofile.size() << endl;
+
     return 0;
 }
