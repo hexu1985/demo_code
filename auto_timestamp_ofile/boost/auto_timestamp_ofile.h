@@ -7,17 +7,17 @@
 class AutoTimestampOFile {
 private:
     std::string prefix_;
-    std::string extension_;
+    std::string suffix_;
     std::string start_timestamp_;
     std::ofstream ofile_;
 
 public:
-    AutoTimestampOFile(const std::string &prefix, const std::string &extension = "");
+    AutoTimestampOFile(const std::string &prefix, const std::string &suffix = "");
     ~AutoTimestampOFile();
 
     void write(const char *s, int n);
     void flush();
-    size_t size();
+    int size();
 };
 
 #endif
