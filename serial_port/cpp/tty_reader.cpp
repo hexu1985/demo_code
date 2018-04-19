@@ -42,6 +42,12 @@ void TtyReader::close()
     ::close(tty_fd_);
 }
 
+void TtyReader::setRawMode()
+{
+    check_open();
+    Tty_raw(tty_fd_);
+}
+
 void TtyReader::setSpeed(int speed)
 {
     check_open();
@@ -69,6 +75,11 @@ void TtyReader::setTimeout(int min, int sec, int millisec)
 int TtyReader::read(char *buff, int size)
 {
     return ::read(tty_fd_, buff, size);
+}
+
+int TtyReader::getModemStatus()
+{
+    return Tty_get_modem_status(tty_fd_);
 }
 
 int TtyReader::fileno() const

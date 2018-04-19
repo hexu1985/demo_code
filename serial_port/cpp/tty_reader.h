@@ -19,12 +19,14 @@ public:
     void open(const char *dev, int oflag);
     void close();
 
+    void setRawMode();
     void setSpeed(int speed);
     void setParity(int databits, int stopbits, int parity);
     void setIcanon(int echo, int icanon);
     void setTimeout(int min, int sec, int millisec);
 
     int read(char *buffer, int size);
+    int getModemStatus();
 
     int fileno() const;
     bool is_open() const;

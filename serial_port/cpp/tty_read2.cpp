@@ -17,6 +17,7 @@ int main(int argc, char **argv)
     tty.open(argv[1]);
     cout << "Open tty: " << argv[1] << " ok, " << "fd: " << tty.fileno() << endl;
 
+    tty.setRawMode();
     tty.setSpeed(9600);
     tty.setParity(8, 1, 'N');
     tty.setIcanon(0, 0);

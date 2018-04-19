@@ -23,6 +23,7 @@ int main(int argc, char **argv)
         int fd = Tty_open_easy(argv[i]);
         cout << "Open tty: " << argv[i] << " ok, " << "fd: " << fd << endl;
 
+        Tty_raw(fd);
         Tty_set_speed(fd, 9600);
         Tty_set_parity(fd, 8, 1, 'N');
         Tty_set_icanon(fd, 0, 0);
