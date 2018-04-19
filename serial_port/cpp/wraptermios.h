@@ -38,4 +38,6 @@ bool TTY_MODEM_STATUS_DSR(int serial);
 // void TTY_MODEM_STATUS_RI(int &serial, bool on);
 void TTY_MODEM_STATUS_DSR(int &serial, bool on);
 
+void Tty_raw(int fd);
+
 #endif
