@@ -7,6 +7,8 @@
 #include <poll.h>
 #include <assert.h>
 #include <string.h>
+#include <stdio.h>
+#include <errno.h>
 #include "tty_reader.h"
 
 using namespace std;
