@@ -7,10 +7,11 @@ INCLUDE =
 LDFLAGS = 
 LDPATH = 
 
-OBJS = error.o wraptermios.o wrapsock.o
+OBJS = error.o wraptermios.o wrapsock.o dump_data.o
 PROGS =	tty_open tty_open_easy tty_set_speed tty_set_parity tty_set_timeout \
 		tty_read tty_write tty_read_select tty_read_poll tty_read_epoll \
-		tty_read2 tty_read_poll2 tty_set_dsr tty_modem_status tty_raw 
+		tty_read2 tty_read_poll2 tty_set_dsr tty_modem_status tty_raw \
+		tty_dump
 
 .PHONY: all
 all: $(PROGS)
@@ -66,5 +67,8 @@ tty_modem_status: tty_modem_status.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 tty_raw: tty_raw.o $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+tty_dump: tty_dump.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
