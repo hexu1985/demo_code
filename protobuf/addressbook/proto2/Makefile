@@ -12,7 +12,7 @@ LDPATH = -L/usr/local/lib
 
 OBJS = addressbook.pb.o
 
-PROGS = write read
+PROGS = add_person list_people
 
 .PHONY: all
 all: $(PROGS)
@@ -20,12 +20,12 @@ all: $(PROGS)
 
 .PHONY: clean
 clean:
-	$(RM) $(PROGS) *.o *.obj *.exe
+	$(RM) $(PROGS) *.o *.obj *.exe *.pyc
 	@echo "clean OK!"
 
 .PHONY: proto
 proto: addressbook.proto
-	protoc --cpp_out=. $<
+	protoc --cpp_out=. --python_out=. $<
 
 .PHONY: distclean
 distclean: proto-clean clean 
@@ -37,10 +37,10 @@ proto-clean:
 %.o:%.cc
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
-write: write.o $(OBJS)
+add_person: add_person.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
-read: read.o $(OBJS)
+list_people: list_people.o $(OBJS)
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 
