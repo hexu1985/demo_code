@@ -12,7 +12,7 @@ LDPATH = -L/usr/local/lib
 
 OBJS = addressbook.pb.o
 
-PROGS = add_person list_people
+PROGS = add_person list_people test
 
 .PHONY: all
 all: $(PROGS)
@@ -41,6 +41,9 @@ add_person: add_person.o $(OBJS)
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 list_people: list_people.o $(OBJS)
+	@$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+test: test.o $(OBJS)
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 
