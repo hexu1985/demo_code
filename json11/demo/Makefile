@@ -7,7 +7,7 @@ INCLUDE = -I../json11
 LDFLAGS = 
 LDPATH = 
 
-PROGS =	read read_from_file array
+PROGS =	read read_from_file array write
 VPATH = ../json11
 
 .PHONY: all
@@ -28,6 +28,9 @@ read_from_file: read_from_file.o json11.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 array: array.o json11.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+write: write.o json11.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 
