@@ -4,8 +4,9 @@ $ make
 
 2) 调用hello_ext
 $ python
-> import hello_ext
-> hello_ext.greet()
+>>> import hello_ext
+>>> hello_ext.greet()
+'hello, world'
 
 3) 通过脚本调用hello_ext
-$ python test_hello_ext
+$ python test_hello.py
