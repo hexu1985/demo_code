@@ -8,6 +8,7 @@
 
 char const* greet()
 {
+   throw std::runtime_error("xxx");
    return "hello, world";
 }
 

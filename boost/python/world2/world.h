@@ -1,5 +1,5 @@
-#ifndef __word_h
-#define __word_h
+#ifndef __world_h
+#define __world_h
 
 #include <string>
 
