@@ -14,7 +14,9 @@ void d(Derived *derived) { cout << derived->getName() << endl; };
 
 Base *factory() { return new Derived; }
 
-// shared_ptr<Base> factory2() { return shared_ptr<Base>(new Derived); }
+shared_ptr<Base> factory2() { return shared_ptr<Base>(new Derived); }
+
+void b2(std::shared_ptr<Base> base) { cout << base->getName() << endl; };
 
 BOOST_PYTHON_MODULE(hello)
 {
@@ -27,6 +29,8 @@ BOOST_PYTHON_MODULE(hello)
         .def("getName", &Derived::getName)
         .def_readwrite("str", &Derived::str);
 
+    class_<std::shared_ptr<Base>>("BasePtr");
+
 
     def("b", b);
     def("d", d);
@@ -34,5 +38,6 @@ BOOST_PYTHON_MODULE(hello)
     def("factory", factory, 
             return_value_policy<manage_new_object>());
 
-//    def("factory2", factory2); 
+    def("b2", b2);
+    def("factory2", factory2); 
 }

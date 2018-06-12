@@ -12,6 +12,8 @@ void d(Derived *derived);
 
 Base *factory();
 
-// std::shared_ptr<Base> factory2();
+std::shared_ptr<Base> factory2();
+
+void b2(std::shared_ptr<Base> base);
 
 #endif

@@ -11,5 +11,9 @@ Derived
 >>> hello.b(x)
 Derived
 
+>>> y = hello.factory2()
+>>> hello.b2(x)
+Derived
+
 3) 通过脚本调用hello.factory
 $ python test_hello.py
