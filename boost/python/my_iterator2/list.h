@@ -9,6 +9,8 @@
 #include "dclist.h"
 #include "dclist_iterator.h"
 
+namespace Hx {
+
 template <typename T> 
 using list_iterator = DCList_iterator<T>;
 
@@ -314,5 +316,7 @@ public:
         list_unique(this, p);
     }
 };
+
+}   // namespace Hx
 
 #endif
