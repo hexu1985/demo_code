@@ -11,7 +11,8 @@ struct DCList_iterator {
     typedef T *pointer;
     typedef T &reference;
     typedef ptrdiff_t difference_type;
-    typedef std::bidirectional_iterator_tag iterator_category;
+//    typedef std::bidirectional_iterator_tag iterator_category;
+    typedef std::input_iterator_tag iterator_category;
 
     typedef DCList_iterator<T> this_type;
 
@@ -37,9 +38,10 @@ struct DCList_iterator {
 
     this_type operator ++(int)
     {
-        this_type tmp(*this);
+    //    this_type tmp(*this);
         node = list_next(node);
-        return tmp;
+        return *this;
+//        return tmp;
     }
 
     this_type &operator --()
