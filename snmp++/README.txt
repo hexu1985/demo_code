@@ -5,3 +5,9 @@
 # make
 # ln -s src/.libs lib
 # ln -s libsnmp.h include/libsnmp.h
+
+snmpwalk v3
+# snmpwalk -v 3 -u public -a SHA -A 12345678 -x AES -X 12345678 -l authNoPriv localhost
+
+snmp参考:
+https://wiki.archlinux.org/index.php/snmpd
