@@ -6,3 +6,8 @@
     # cd build
     # cmake ..
     # make
+3) msys2下构建
+    # mkdir build
+    # cd build
+    # cmake -G"Unix Makefiles" ..
+    # make

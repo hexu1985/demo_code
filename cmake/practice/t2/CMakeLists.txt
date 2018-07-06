@@ -1,4 +1,8 @@
 project(HELLO)
+if(WIN32)
+    message(STATUS "this is windows platform")
+endif()
+
 message(STATUS "PROJECT_BINARY_DIR: " ${PROJECT_BINARY_DIR})
 message(STATUS "PROJECT_SOURCE_DIR: "${PROJECT_SOURCE_DIR})
 add_subdirectory(src bin)

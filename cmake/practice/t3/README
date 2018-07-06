@@ -10,3 +10,8 @@
     # cmake -DCMAKE_INSTALL_PREFIX=/tmp/t3/usr ..
     # make
     # make install
+4) msys2下构建
+    # mkdir build
+    # cd build
+    # cmake -G"Unix Makefiles" ..
+    # make
