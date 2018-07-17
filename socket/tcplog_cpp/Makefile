@@ -8,7 +8,7 @@ LDFLAGS = -lpthread
 LDPATH = 
 VPATH = ..
 
-PROGS =	tcplog_server
+PROGS =	tcplog_server tcplog_client
 
 .PHONY: all
 all: $(PROGS)
@@ -22,5 +22,8 @@ clean:
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
 tcplog_server: tcplog_server.o tcp_listen.o sock_get_port.o sock_ntop_host.o sock_ntop.o wrapsock.o error.o utc_to_string.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+tcplog_client: tcplog_client.o tcp_connect.o writen.o error.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
