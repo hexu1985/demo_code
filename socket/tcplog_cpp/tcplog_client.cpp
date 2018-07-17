@@ -12,6 +12,7 @@ void str_cli(istream &in, int sockfd)		/* do it all */
 {
     string str;
     while (getline(in, str)) {
+        str += "\n";
         Writen(sockfd, str.data(), str.size());
     }
 }
