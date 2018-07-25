@@ -10,7 +10,11 @@
     # cmake -DCMAKE_INSTALL_PREFIX=/tmp/t3/usr ..
     # make
     # make install
-4) msys2下构建
+4) 通过修改CMakeLists.txt中的CMAKE_INSTALL_PREFIX变量, 指定安装路径前缀
+    # cmake
+    # make
+    # make install
+6) msys2下构建
     # mkdir build
     # cd build
     # cmake -G"Unix Makefiles" ..
