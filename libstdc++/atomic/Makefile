@@ -1,9 +1,9 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g
+CXXFLAGS = -Wall -g -std=c++11
 INCLUDES = 
-LDFLAGS = -pthread
+LDFLAGS = -pthread -latomic
 LDPATH =
 
 SOURCES = $(shell ls *.cpp)
