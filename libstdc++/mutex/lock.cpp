@@ -1,39 +1,42 @@
-// mutex::lock/unlock
+// std::lock example
 #include <iostream>       // std::cout
 #include <thread>         // std::thread
-#include <mutex>          // std::mutex
+#include <mutex>          // std::mutex, std::lock
 
-std::mutex mtx;           // mutex for critical section
+std::mutex foo,bar;
 
-void print_thread_id (int id) {
-  // critical section (exclusive access to std::cout signaled by locking mtx):
-  mtx.lock();
-  std::cout << "thread #" << id << '\n';
-  mtx.unlock();
+void task_a () {
+  // foo.lock(); bar.lock(); // replaced by:
+  std::lock (foo,bar);
+  std::cout << "task a\n";
+  foo.unlock();
+  bar.unlock();
+}
+
+void task_b () {
+  // bar.lock(); foo.lock(); // replaced by:
+  std::lock (bar,foo);
+  std::cout << "task b\n";
+  bar.unlock();
+  foo.unlock();
 }
 
 int main ()
 {
-  std::thread threads[10];
-  // spawn 10 threads:
-  for (int i=0; i<10; ++i)
-    threads[i] = std::thread(print_thread_id,i+1);
+  std::thread th1 (task_a);
+  std::thread th2 (task_b);
 
-  for (auto& th : threads) th.join();
+  th1.join();
+  th2.join();
 
   return 0;
 }
 
 /*
-Possible output (order of lines may vary, but they are never intermingled):
-thread #1
-thread #2
-thread #3
-thread #4
-thread #5
-thread #6
-thread #7
-thread #8
-thread #9
-thread #10
+Note that before replacing the individual locks by the call to std::lock, if task_a locked foo while task_b locked bar, neither could ever get the second lock, causing a deadlock.
+
+Possible output (order of lines may vary):
+
+task a
+task b
 */
