@@ -1,10 +1,16 @@
 
+OS ?= $(shell uname -s)
+
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
 INCLUDES = 
 LDFLAGS = -lboost_thread -lboost_system -lpthread
 LDPATH =
+
+ifeq ($(OS), Windows_NT)
+	LDFLAGS = -lboost_thread-mt -lboost_system-mt -lpthread -lwsock32 -lws2_32
+endif
 
 SOURCES = $(shell ls *.cpp)
 PROGS = $(SOURCES:%.cpp=%)
@@ -13,6 +19,7 @@ all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
 
 clean:
+	@echo "OS: $(OS)"
 	$(RM) $(PROGS)
 
 %: %.cpp
