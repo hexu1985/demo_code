@@ -1,14 +1,14 @@
 
 RM = rm -f
 CXX = g++
-CXXFLAGS = -Wall -g -DNDEBUG `libnet-config --defines`
+CXXFLAGS = -Wall -g -DNDEBUG -std=c++11
 INCLUDES = -I../../include
-LDFLAGS = -lpcap `libnet-config --libs` #-lnet 
+LDFLAGS = -lpthread
 LDPATH =
 VPATH = 
 
 SOURCES = $(shell ls *.cpp)
-PROGS = httpredirect
+PROGS = thread_test
 
 all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
