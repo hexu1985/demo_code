@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="shortcut icon" type="image/png" href="https://holtstrom.com/michael/img/icon.png" />
+ <link rel="apple-touch-icon-precomposed" sizes="57x57"   href="https://lh6.googleusercontent.com/PX2k-gLxrb9T-cqgEJnqM5Kh6EK2SIkkBGbFCVv8CVGH=s57"  />
+ <link rel="apple-touch-icon-precomposed" sizes="120x120" href="https://lh6.googleusercontent.com/PX2k-gLxrb9T-cqgEJnqM5Kh6EK2SIkkBGbFCVv8CVGH=s120" />
+ <link rel="apple-touch-icon-precomposed" sizes="152x152" href="https://lh6.googleusercontent.com/PX2k-gLxrb9T-cqgEJnqM5Kh6EK2SIkkBGbFCVv8CVGH=s152" /> 
+ <link rel="apple-touch-icon-precomposed" sizes="180x180" href="https://lh6.googleusercontent.com/PX2k-gLxrb9T-cqgEJnqM5Kh6EK2SIkkBGbFCVv8CVGH=s180" />
+ <link rel="StyleSheet" href="https://holtstrom.com/michael/base/stylesglobal.css" type="text/css" />
+ <link rel="StyleSheet" href="https://holtstrom.com/michael/blog/styles.css" type="text/css" />
+ <script type="text/javascript">
+  var user = {};
+  user.page = "/michael/blog/post/437/Shared-Library-Symbol-Conflicts-%28on-Linux%29.html";
+  user.loggedin = false;
+  var site = {};
+  site.tmdbUrl = "http://www.themoviedb.org/";
+  site.tmdbPoster = "http://image.tmdb.org/t/p/w342";
+  site.url = "https://holtstrom.com/michael/";
+  site.base = "/michael";
+  site.domain  = "holtstrom.com";
+ </script>
+ <script src="https://holtstrom.com/michael/base/util.js" type="text/javascript"></script>
+ <script src="https://holtstrom.com/michael/base/topbar.js" type="text/javascript"></script>
+ <script src="https://holtstrom.com/michael/base/feedback.js" type="text/javascript"></script>
+ <title>Shared Library Symbol Conflicts (on Linux)</title>
+</head>
+<body>
+<form name="navigate" id="navigate" method="post"><div id="navigateElements"><input type="hidden" name="TransactionToken"/></div></form>
+ <div id="topbar" class="topbar"
+  ><a href="https://holtstrom.com/michael/sites.php">Sites</a
+  ><a href="https://holtstrom.com/michael/links">Links</a
+  ><a href="https://holtstrom.com/michael/ottawa.php?x=3">Ottawa</a
+  ><a href="https://holtstrom.com/michael/media">Life</a
+  ><a href="https://holtstrom.com/michael/photos">Photos</a
+  ><a href="https://holtstrom.com/michael/blog/post/293/Travel.html">Travel</a
+  ><a href="https://holtstrom.com/michael/tools">Tools</a
+  ><a href="https://holtstrom.com/michael/journal">Journal</a
+  ><a class="lit" href="https://holtstrom.com/michael/blog">Blog</a
+  ><div class="ctrlblock"
+  ><a id="topMoreField" href="javascript:topbar.moreMenu('on');">See More Stuff</a
+  ><span class="tbar1"><span class="tbar2"></span></span
+  ><a id="topOptionsField1" class="tgear1" href="javascript:topbar.optionsMenu('on');"><span id="topOptionsField2" class="tgear2"></span></a
+  ><div id="topMoreMenu" class="gone">
+   <ol class="pop"
+   ><li><a href="javascript:topbar.login();">Sign in with Google</a></li
+   ><li><a href="https://holtstrom.com/michael/base/about.php">How This Works</a></li
+   ></ol>
+  </div
+  ><div id="topOptionsMenu" class="gone">
+   <ol class="pop"
+   ><li><a href="javascript:feedback.show();">Feedback</a></li
+   ><li><a href="https://holtstrom.com/michael/base/about.php">How This Works</a></li
+   ><li><a href="https://holtstrom.com/michael/base/about.php#copyright">Copyright</a></li
+   ></ol>
+  </div
+  ></div
+  ><div style="clear: both;"></div
+  ></div><!--topbar-->
+ <div id="feedbackWidget"></div>
+ <div id="layout" class="lwide">
+  <div id="main">
+ <div class="outer-title">Thursday, August 8, 2013</div>
+ <div class="content">
+  <h1 class="inner-title">Shared Library Symbol Conflicts (on Linux)
+   <div style="float: right;">
+     <input type="button" value="Feedback" class="smallBtn" style="vertical-align: top;" onclick="feedback.show();"/>
+     <div class="g-plusone" data-size="medium" style="min-width: 93px;"></div>
+   </div>
+    <div style="clear: both;"></div>
+  </h1>
+<div class="body"><div><p>
+I don't work with shared libraries very often, but I came across a shocking problem in a legacy product. Basically because the application and the shared library both defined the same symbol (i.e. function) and because no effort was made to control what the .so exported, the wrong symbol was used at runtime. This turns out to be consistently reproducible and avoidable by setting up a symbol barrier when creating the shared object file. The tools you need are described on <a href="http://www.gnu.org/software/gnulib/manual/html_node/LD-Version-Scripts.html">gnu.org</a>. An in depth explanation is available on <a href="http://www.akkadia.org/drepper/dsohowto.pdf">akkadia.org</a>. See also the <a href="http://holtstrom.com/michael/blog/post/446/Shared-Library-Symbol-Conflicts.html">Solaris Solution</a>.
+</p>
+
+<img class="centered" src="https://lh5.googleusercontent.com/-L4KaC4_SaTs/UjhsJ8ZJEBI/AAAAAAAEEno/U9ytWIUKOao/s0/symbolconflict.png" alt="Symbol Conflicts"/>
+
+<p><strong>Summary of Switches</strong></p>
+<pre>
+g++
+    -c &lt;file>  Compile the source file, but do not link. Output is in the form of an
+               object file.
+    -o &lt;file>  Specify the name of the output file.
+    -s         Remove all symbol table and relocation information from the executable.
+    -L&lt;dir>    Add to the list of directories to be searched for libraries.
+    -l&lt;lib>    Search the named library when linking. The linker searches and 
+               processes libraries and object files in the order they are specified. 
+               The linker searches for a file named lib&lt;lib>.a in system directories
+               plus any that you specify with -L.
+    -shared    Produce a shared object. For predictable results you must speicy the 
+               same set of options that were used to generate code (-fpic, -fPIC, or 
+               model suboptions).
+</pre>
+<p><strong>The Problem</strong></p>
+<p>
+Define a simple worker.
+</p>
+<p>
+work.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing()
+{
+  printf("work \n");
+}
+</pre>
+<p>
+Define a simple application.
+</p>
+<p>
+main.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing();
+
+int main()
+{
+  printf("start \n");
+  DoThing();
+  printf("finished \n");
+  return 0;
+}
+</pre>
+<p>
+Compile the worker into an object file and wrap it as a static lib.
+</p>
+<pre>
+g++ -c work.cxx -o work.o
+ar rc libwork.a work.o
+</pre>
+<p>
+Compile the application into an object file and wrap it as a static lib.
+</p>
+<pre>
+g++ -c main.cxx -o main.o
+ar rc libmain.a main.o
+</pre>
+<p>
+Link the static libs into an executable. Note that the linker only looks further down the line when looking for symbols used by but not defined in the current lib. Thus the lowest level libs should go right-most and the left most symbol will be used when conflicts occur.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lwork -lmain
+
+./libmain.a(main.o): In function `main':
+main.cxx:(.text+0x90): undefined reference to `DoThing()'
+collect2: ld returned 1 exit status
+</pre>
+<p>
+Link successfully. 
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lwork
+
+./main.exe
+
+start
+work
+finished
+</pre>
+<p>
+Define a simple conflict.
+</p>
+<p>
+conflict.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing()
+{
+  printf("conflict \n");
+}
+</pre>
+<p>
+Compile the conflict into an object file and wrap it as a static lib.
+</p>
+<pre>
+g++ -c conflict.cxx -o conflict.o
+ar rc libconflict.a conflict.o
+</pre>
+<p>
+Link (without warning) with priority given to work. 
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lwork -lconflict
+
+./main.exe
+
+start
+work
+finished
+</pre>
+<p>
+Link (without warning) with priority given to conflict. 
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lconflict -lwork
+
+./main.exe
+
+start
+conflict
+finished
+</pre>
+<p>
+Instead of a static library, package conflict as a shared library.
+</p>
+<pre>
+rm libconflict.a
+g++ -shared conflict.o -o libconflict.so
+</pre>
+<p>
+Link for simple use of the shared library. In this case -lconflict refers to libconflict.so instead of libconflict.a
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lconflict
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+conflict
+finished
+</pre>
+<p>
+Now, introduce a new layer to call the conflict within the shared library.
+</p>
+<p>
+layer.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing();
+
+void DoLayer()
+{
+  printf("layer \n");
+  DoThing();
+}
+
+g++ -c layer.cxx -o layer.o
+</pre>
+<p>
+Link the shared library.
+</p>
+<pre>
+g++ -shared layer.o conflict.o -o libconflict.so
+</pre>
+<p>
+And update the application to call they layer instead of calling the conflict directly.
+</p>
+<p>
+main.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoLayer();
+
+int main()
+{
+  printf("start \n");
+  DoLayer();
+  printf("finished \n");
+  return 0;
+}
+</pre>
+<p>
+Compile, link, execute.
+</p>
+<pre>
+g++ -c main.cxx -o main.o
+ar rc libmain.a main.o
+g++ -s -L. -o main.exe -lmain -lconflict
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+layer
+conflict
+finished
+</pre>
+<p>
+Now re-introduce the worker to observe the conflict.
+</p>
+<p>
+main.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing();
+void DoLayer();
+
+int main()
+{
+  printf("start \n");
+  DoThing();
+  DoLayer();
+  printf("finished \n");
+  return 0;
+}
+</pre>
+<p>
+Compile, link, execute.
+</p>
+<pre>
+g++ -c main.cxx -o main.o
+g++ -c work.cxx -o work.o
+ar rc libmain.a main.o work.o
+g++ -s -L. -o main.exe -lmain -lconflict
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+work
+finished
+</pre>
+<p>
+Because work.o exists in libmain.a the DoThing() call from main() correctly executes from work.o, but surprisingly the DoThing() call from layer.o also executes from work.o instead of from conflict.o as might have been expected.
+</p>
+
+
+
+<p><strong>The Solution</strong></p>
+<p>
+How might we prevent code within our shared library from calling symbols within our application? Changing the link order reverses the problem.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lconflict -lmain
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+conflict
+layer
+conflict
+finished
+</pre>
+<p>
+Note the difference between linking with static and shared libraries. Had conflict been a static library then because it didn't come after main in the link line, linking would have failed with "undefined reference to DoLayer()".
+</p>
+<pre>
+rm libconflict.so
+ar rc libconflict.a layer.o conflict.o
+g++ -s -L. -o main.exe -lconflict -lmain
+
+./libmain.a(main.o): In function `main':
+main.cxx:(.text+0x95): undefined reference to `DoLayer()'
+collect2: ld returned 1 exit status
+</pre>
+<p>
+And as expected, the reverse order for static libraries means the left-most symbol is used by all parties.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lconflict
+
+./main.exe
+
+start
+work
+layer
+work
+finished
+</pre>
+<p>
+But this difference presents a solution. If we use the shared library link order that gives preference to symbols from the shared library and we hide those symbols from the application then we get the desired behaviour.
+</p>
+<pre>
+rm libconflict.a
+g++ -shared layer.o conflict.o -o libconflict.so
+</pre>
+<p>
+Command Usage:
+</p>
+<pre>
+nm
+
+ -C  Decode (demangle) low-level symbol names into user-level names.
+ -D  Display the dynamic symbols rather than the normal symbols, which is 
+     only meaningful for shared libraries.
+ -g  Display only external symbols.
+ -a  Display all symbols, even debugger-only symbols.
+ 
+Symbol Types
+
+ t  - symbol is in the text (code) section              - local
+ T  - symbol is in the text (code) section              - global/external
+ U  - symbol is undefined                               - global/external
+ b  - symbol is in the uninitialized data (BSS) section - local
+ w  - symbol is a weak symbol that has not been specifically tagged as a weak symbol
+ A  - symbol value wont be changed by further linking   - global/external
+</pre>
+<p>
+Looking at the results.
+</p>
+<pre>
+nm -C layer.o
+
+00000046 t global constructors keyed to _Z7DoLayerv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoLayer()
+         U DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+         U puts
+
+nm -C conflict.o
+
+00000046 t global constructors keyed to _Z7DoThingv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+         U puts
+
+nm -CD libconflict.so
+
+         w _Jv_RegisterClasses
+0000068e T DoLayer()
+0000071a T DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00001a00 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+00001a00 A _edata
+00001a10 A _end
+00000764 T _fini
+000004e0 T _init
+         U puts
+</pre>
+<p>
+Thus both DoThing() and DoLayer() are exported by our shared library, but we don't want DoThing() exported.
+</p>
+<p>
+Using -fvisibility=hidden during the packaging of the .so has no effect.
+</p>
+<pre>
+g++ -shared -fvisibility=hidden layer.o conflict.o -o libconflict.so
+
+nm -CD libconflict.so
+
+         w _Jv_RegisterClasses
+0000068e T DoLayer()
+0000071a T DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00001a00 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+00001a00 A _edata
+00001a10 A _end
+00000764 T _fini
+000004e0 T _init
+         U puts
+</pre>
+<p>
+It's not immedately obvious, but using -fvisibility=hidden during compile will effect the final .so
+</p>
+<pre>
+g++ -fvisibility=hidden -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -c conflict.cxx -o conflict.o 
+g++ -shared layer.o conflict.o -o libconflict.so
+
+nm -C layer.o
+
+00000046 t global constructors keyed to _Z7DoLayerv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoLayer()
+         U DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+         U puts
+
+nm -C conflict.o
+
+00000046 t global constructors keyed to _Z7DoThingv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+         U puts
+</pre>
+<p>
+As far as we can tell the -fvisibility=hidden switch did not effect the produced .o files, but it has changed the resulting .so, specifically it has omitted the DoLayer and DoThing symbols.
+</p>
+<pre>
+nm -CD libconflict.so
+
+         w _Jv_RegisterClasses
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+000019b0 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+000019b0 A _edata
+000019c0 A _end
+00000714 T _fini
+00000490 T _init
+         U puts
+</pre>
+<p>
+The result is that our application can't compile because we have excluded all symbols.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lconflict -lmain
+
+./libmain.a(main.o): In function `main':
+main.cxx:(.text+0x95): undefined reference to `DoLayer()'
+collect2: ld returned 1 exit status
+</pre>
+<p>
+We must explicitly allow the subset of symbols that we want to export.
+</p>
+<p>
+layer.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing();
+
+__attribute__ ((visibility ("default"))) void DoLayer()
+{
+  printf("layer \n");
+  DoThing();
+}
+</pre>
+<p>
+Compile and link.
+</p>
+<pre>
+g++ -fvisibility=hidden -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -c conflict.cxx -o conflict.o 
+g++ -shared layer.o conflict.o -o libconflict.so
+
+nm -CD libconflict.so
+
+         w _Jv_RegisterClasses
+0000065e T DoLayer()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+000019d0 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+000019d0 A _edata
+000019e0 A _end
+00000734 T _fini
+000004b8 T _init
+         U puts
+
+g++ -s -L. -o main.exe -lconflict -lmain
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+conflict
+finished
+</pre>
+<p>
+That's good, but we can do better. Consider the details on <a href="http://gcc.gnu.org/wiki/Visibility">gcc.gnu.org</a> and <a href="http://stackoverflow.com/questions/2088409/stripping-linux-shared-libraries">stackoverflow</a>.
+</p>
+<p>
+We might use -s to exclude the debugging symbols, but they already don't appear in our shared library, so it apears to make no difference.
+</p>
+<pre>
+nm -CDa libconflict.so
+
+         w _Jv_RegisterClasses
+0000065e T DoLayer()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+000019d0 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+000019d0 A _edata
+000019e0 A _end
+00000734 T _fini
+000004b8 T _init
+         U puts
+
+nm -Ca layer.o
+
+00000000 b .bss
+00000000 n .comment
+00000000 d .ctors
+00000000 d .data
+00000000 r .eh_frame
+00000000 n .note.GNU-stack
+00000000 r .rodata
+00000000 t .text
+00000046 t global constructors keyed to _Z7DoLayerv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoLayer()
+         U DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+00000000 a layer.cxx
+         U puts
+</pre>
+<p>
+Adding the -a switch didn't show any new symbols and compiling with the -s switch doesn't reduce the symbol count.
+</p>
+<pre>
+g++ -s -fvisibility=hidden -c layer.cxx -o layer.o
+
+nm -Ca layer.o
+
+00000000 b .bss
+00000000 n .comment
+00000000 d .ctors
+00000000 d .data
+00000000 r .eh_frame
+00000000 n .note.GNU-stack
+00000000 r .rodata
+00000000 t .text
+00000046 t global constructors keyed to _Z7DoLayerv
+00000000 t __static_initialization_and_destruction_0(int, int)
+00000072 T DoLayer()
+         U DoThing()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+00000000 b std::__ioinit
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+0000005e t __tcf_0
+00000000 a layer.cxx
+         U puts
+</pre>
+<p>
+Certainly it doesn't harm to us -s and as suggested we probably want to also use -fvisibility-inlines-hidden
+</p>
+<pre>
+g++ -fvisibility=hidden -fvisibility-inlines-hidden -s -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -fvisibility-inlines-hidden -s -c conflict.cxx -o conflict.o 
+g++ -fvisibility=hidden -fvisibility-inlines-hidden -s -shared layer.o conflict.o -o libconflict.so
+
+nm -CDa libconflict.so
+
+         w _Jv_RegisterClasses
+0000065e T DoLayer()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+000019d0 A __bss_start
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+000019d0 A _edata
+000019e0 A _end
+00000734 T _fini
+000004b8 T _init
+         U puts
+
+g++ -s -L. -o main.exe -lconflict -lmain
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+conflict
+finished
+</pre>
+<p>
+Note that this solution seems to eliminiate the earlier dependency on the link line order.
+<p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lconflict
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+conflict
+finished
+</pre>
+<p>
+That's all well and good, but it might be a burden to add the __attribute__ decorations to a large ancient codebase that suddenly needs to be used with another codebase but can't due to collisions problems.
+</p>
+<p>
+<a href="http://stackoverflow.com/questions/8129782/version-script-and-hidden-visibility">stackoverflow</a> describes how --version-script can be used instead of the __attribute__ decorations, but it only works in certain scenarios.
+</p>
+<p>
+test.c
+</p>
+<pre>
+int foo() { return 1; }
+int bar() { return 2; }
+
+test.export
+
+{
+ global: bar;
+ local: *;
+};
+</pre>
+<p>
+Compile and link and inspect symbols.
+</p>
+<pre>
+gcc -c test.c -o test.o
+gcc -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+         w __cxa_finalize
+         w __gmon_start__
+00000316 T bar
+</pre>
+<p>
+That fails if g++ is used instead of gcc.
+</p>
+<pre>
+g++ -c test.c -o test.o
+g++ -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+</pre>
+<p>
+It also fails if the file is named .cxx instead of .c
+</p>
+<pre>
+cp test.c test.cxx
+
+gcc -c test.cxx -o test.o
+gcc -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+</pre>
+<p>
+<a href="http://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_25.html">ftp.gnu.org</a> only talks about c. <a href="http://sourceware.org/binutils/docs/ld/VERSION.html">sourceware.org</a> talks about c++ but it's not clear what linker they're using. <a href="http://www.cygwin.com/ml/binutils/2007-07/msg00402.html">cygwin.com</a> shows a more complicated syntax.
+</p>
+<pre>
+{
+    global:
+        extern "C++" {
+           this_plugin*;
+           *BaseLayer::*;
+           *DPlugin;
+           *BasePlugin;
+           *MyPlugin::*;
+           *MyLayer::*;
+        };
+    local:
+        *;
+};
+</pre>
+<p>
+Using * on both sides works, so the issue must be name mangling.
+</p>
+<pre>
+test.export
+
+{
+ global: *bar*;
+ local: *;
+};
+</pre>
+<p>
+Now we have success.
+</p>
+<pre>
+gcc -c test.cxx -o test.o
+gcc -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+00000336 T bar()
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+
+nm -D test.so
+
+         w _Jv_RegisterClasses
+00000336 T _Z3barv
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+</pre>
+<p>
+You don't have to use ** if you provide the full mangled name.
+</p>
+<p>
+test.export
+</p>
+<pre>
+{
+ global: _Z3barv;
+ local: *;
+};
+</pre>
+<p>
+Compile and link.
+</p>
+<pre>
+gcc -c test.cxx -o test.o
+gcc -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+00000336 T bar()
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+
+nm -D test.so
+
+         w _Jv_RegisterClasses
+00000336 T _Z3barv
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+</pre>
+<p>
+In this way it also works with g++.
+</p>
+<pre>
+g++ -c test.cxx -o test.o
+g++ -Wl,--version-script=test.export -shared test.o -o test.so
+nm -CDa test.so
+
+         w _Jv_RegisterClasses
+00000386 T bar()
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+</pre>
+<p>
+Returning to the original problem, you can compile without visibility flags and without source code decorations.
+</p>
+<pre>
+g++ -s -c layer.cxx -o layer.o
+g++ -s -c conflict.cxx -o conflict.o 
+</pre>
+<p>
+Then find the mangled symbols.
+</p>
+<pre>
+nm -g layer.o
+
+00000072 T _Z7DoLayerv
+         U _Z7DoThingv
+         U _ZNSt8ios_base4InitC1Ev
+         U _ZNSt8ios_base4InitD1Ev
+         U __cxa_atexit
+         U __dso_handle
+         U __gxx_personality_v0
+         U puts
+</pre>
+<p>
+Then produce an export script.
+</p>
+<p>
+export.txt
+</p>
+<pre>
+{
+ global: _Z7DoLayerv;
+ local: *;
+};
+</pre>
+<p>
+Then construct a shared library that exports only the required API.
+</p>
+<pre>
+g++ -Wl,--version-script=export.txt -s -shared layer.o conflict.o -o libconflict.so
+nm -CDa libconflict.so
+
+         w _Jv_RegisterClasses
+000005ce T DoLayer()
+         U std::ios_base::Init::Init()
+         U std::ios_base::Init::~Init()
+         U __cxa_atexit
+         w __cxa_finalize
+         w __gmon_start__
+         U __gxx_personality_v0
+         U puts
+</pre>
+<p>
+Then compile your application.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lconflict -lmain
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+conflict
+finished
+</pre>
+<p>
+And you don't have to worry about order on the link line.
+</p>
+<pre>
+g++ -s -L. -o main.exe -lmain -lconflict
+
+export LD_LIBRARY_PATH=.
+./main.exe
+
+start
+work
+layer
+conflict
+finished
+</pre>
+<p>
+Finally, if your exported symbols are sufficiently unique, instead of looking up the mangled names, you could use double asterix.
+</p>
+<pre>
+export.txt
+
+{
+ global: *DoLayer*;
+ local: *;
+};
+</pre>
+
+<p><strong>With Classes</strong></p>
+<p>
+As described by <a href="http://www.akkadia.org/drepper/dsohowto.pdf">akkadia.org</a> and discovered during the <a href="http://holtstrom.com/michael/blog/post/446/Shared-Library-Symbol-Conflicts.html">Solaris Solution</a>, the best practice is to use -fvisibility=hidden during compile from .cxx to .o with  __attribute__ ((visibility ("default"))) in the source to indictate just those functions that outsiders will be allowed to call.
+</p>
+<p>
+The problem with that is you might have to update hundreds of source files. If you're lucky and somone already did this for windows __declspec and you're extra luck and they did it wit a macro, then you might get away with a minor tweak like this. Unfortunately it's a bit more complicated on <a href="http://holtstrom.com/michael/blog/post/446/Shared-Library-Symbol-Conflicts.html">Solaris</a>.
+</p>
+<pre>
+#ifndef MYDLLEXPORT
+ #if defined(WIN32)
+  #define MYDLLEXPORT __declspec(dllexport)
+ #elif defined(linux)
+  #define MYDLLEXPORT __attribute__ ((visibility ("default")))
+ #else
+  #define MYDLLEXPORT
+ #endif
+#endif
+</pre>
+<p>
+Let's start with a simple demo.
+</p>
+<p>
+main.cxx
+</p>
+<pre>
+#include &lt;iostream>
+#include "layer.h"
+void DoThing();
+int main()
+{
+  printf("start \n");
+  DoThing();
+  MyClass m;
+  m.DoLayer();
+  printf("finished \n");
+  return 0;
+}
+</pre>
+<p>
+work.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing()
+{
+  printf("work \n");
+}
+</pre>
+<p>
+layer.h
+</p>
+<pre>
+class MyClass
+{
+public:
+  void DoLayer();
+};
+</pre>
+<p>
+layer.cxx
+</p>
+<pre>
+#include &lt;iostream>
+#include "layer.h"
+void DoThing();
+void MyClass::DoLayer()
+{
+  printf("layer \n");
+  DoThing();
+}
+</pre>
+<p>
+conflict.cxx
+</p>
+<pre>
+#include &lt;iostream>
+void DoThing()
+{
+  printf("conflict \n");
+}
+</pre>
+<p>
+This demo shows the symbol conflict problem where they layer is implemented as a class.
+</p>
+<pre>
+g++ -c layer.cxx -o layer.o
+g++ -c conflict.cxx -o conflict.o
+g++ -shared layer.o conflict.o -o libconflict.so
+
+g++ -c main.cxx -o main.o
+g++ -c work.cxx -o work.o
+ar rc libmain.a main.o work.o
+
+g++ -s -L. -o main.exe -lmain -lconflict
+export LD_LIBRARY_PATH=.
+./main.exe
+</pre>
+<pre>
+start
+work
+layer
+work
+finished
+</pre>
+<p>
+Now lets solve the problem with the -fvisibility=hidden and source __attribute__ method.
+</p>
+<p>
+layer.cxx
+</p>
+<pre>
+include &lt;iostream>
+#include "layer.h"
+void DoThing();
+__attribute__ ((visibility ("default"))) void MyClass::DoLayer()
+{
+  printf("layer \n");
+  DoThing();
+}
+</pre>
+<pre>
+g++ -fvisibility=hidden -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -c conflict.cxx -o conflict.o
+g++ -shared layer.o conflict.o -o libconflict.so
+g++ -s -L. -o main.exe -lmain -lconflict
+./main.exe
+</pre>
+<pre>
+start
+work
+layer
+conflict
+finished
+</pre>
+<pre>
+nm -C libconflict.so | grep Layer
+</pre>
+<pre>
+00000642 t global constructors keyed to _ZN7MyClass7DoLayerEv
+0000066e T MyClass::DoLayer()
+</pre>
+<p>
+The above demonstrates that putting the default attribute on a class function implementation solves the symbol conflict.
+</p>
+<p>
+But can we do the same from the header?
+</p>
+<p>
+layer.cxx
+</p>
+<pre>
+include &lt;iostream>
+#include "layer.h"
+void DoThing();
+void MyClass::DoLayer()
+{
+  printf("layer \n");
+  DoThing();
+}
+</pre>
+<p>
+layer.h
+</p>
+<pre>
+class MyClass
+{
+public:
+  __attribute__ ((visibility ("default"))) void DoLayer();
+};
+</pre>
+<pre>
+g++ -fvisibility=hidden -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -c conflict.cxx -o conflict.o
+g++ -shared layer.o conflict.o -o libconflict.so
+g++ -s -L. -o main.exe -lmain -lconflict
+./main.exe
+</pre>
+<pre>
+start
+work
+layer
+conflict
+finished
+</pre>
+<pre>
+nm -C libconflict.so | grep Layer
+</pre>
+<pre>
+00000642 t global constructors keyed to _ZN7MyClass7DoLayerEv
+0000066e T MyClass::DoLayer()
+</pre>
+<p>
+The above demonstrates that putting the default attribute on a class function declaration also solves the symbol conflict.
+</p>
+<p>
+But can we do the same from the entire class?
+</p>
+<p>
+layer.h
+</p>
+<pre>
+class __attribute__ ((visibility ("default"))) MyClass
+{
+public:
+  void DoLayer();
+};
+</pre>
+<pre>
+g++ -fvisibility=hidden -c layer.cxx -o layer.o
+g++ -fvisibility=hidden -c conflict.cxx -o conflict.o
+g++ -shared layer.o conflict.o -o libconflict.so
+g++ -s -L. -o main.exe -lmain -lconflict
+./main.exe
+</pre>
+<pre>
+start
+work
+layer
+conflict
+finished
+</pre>
+<pre>
+nm -C libconflict.so | grep Layer
+</pre>
+<pre>
+00000642 t global constructors keyed to _ZN7MyClass7DoLayerEv
+0000066e T MyClass::DoLayer()
+</pre>
+<p>
+Super. It looks like a simple fix. Just add the __attribute__ to a few hundred classes and you're good to go. And if your classes already look like the following, then you're just looking at a one file change
+</p>
+<pre>
+class MYDLLEXPORT MyClass
+{
+public:
+  void MyFunc();
+};
+</pre></div><div class="sandbag"></div></div>
+  <div class="labels" style="text-align: right;">
+     <a href="https://holtstrom.com/michael/blog/show.php?l=c%2B%2B">c++</a>,
+     <a href="https://holtstrom.com/michael/blog/show.php?l=linux">linux</a>
+  </div>
+ </div><!-- content -->
+   <div id="gallery_hover" onclick="gallery.act(event)"><span id="gallery_helper"></span><img id="gallery_img"/></div>
+   <script type="text/javascript" src="https://holtstrom.com/michael/blog/gallery.js"></script>
+   <script type="text/javascript">
+     // google+
+     (function() {
+       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+       po.src = 'https://apis.google.com/js/plusone.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+     })();
+   </script>
+  </div><!-- main -->
+  <div id="sidebar">   <div class="widget">
+    <form name="googleSearch" method="get" action="https://www.google.ca/search">
+     <input type="hidden" name="as_sitesearch" value="holtstrom.com/michael"/>
+     <div class="searcher udr">
+      <table><tr><td><input type="text" class="box" name="q" onclick="util.cancel(event);"/></td><td class="btn" title="Google Search" style="background-image: url(https://holtstrom.com/michael/img/google.png)" onclick="document.forms['googleSearch'].submit();"></td></tr></table>
+     </div>
+    </form> 
+    <form name="mySearch" method="get" action="https://holtstrom.com/michael/blog/show.php">
+     <div class="searcher">
+      <table><tr><td><input type="text" class="box" name="q" onclick="util.cancel(event);"/></td><td class="btn" title="Local Search" onclick="document.forms['mySearch'].submit();"></td></tr></table>
+     </div>
+    </form> 
+   </div>
+   <div class="widget cloud-label">
+       <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=aws">aws</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=blogger">blogger</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=broadcast">broadcast</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=c%23">c#</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=c%2B%2B">c++</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=camping">camping</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=characters">characters</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=code">code</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=conversation">conversation</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=cottage">cottage</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=d%26d">d&amp;d</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=database">database</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=delphi">delphi</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=des">des</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=drivel">drivel</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=essay">essay</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=game">game</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=hardware">hardware</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=invest">invest</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=ios">ios</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=java">java</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=linux">linux</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=lookup">lookup</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=mac">mac</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=micro">micro</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=money">money</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=music">music</a></span>
+    <span class="label-size label-size-4"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=origin">origin</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=ottawa">ottawa</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=philosophy">philosophy</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=poetry">poetry</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=puzzle">puzzle</a></span>
+    <span class="label-size label-size-4"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=reprint">reprint</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=server">server</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=software">software</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=solaris">solaris</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=story">story</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=stratford">stratford</a></span>
+    <span class="label-size label-size-5"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=travel">travel</a></span>
+    <span class="label-size label-size-1"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=trip">trip</a></span>
+    <span class="label-size label-size-3"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=web">web</a></span>
+    <span class="label-size label-size-2"><a dir="ltr" href="https://holtstrom.com/michael/blog/show.php?l=windows">windows</a></span>
+   </div>
+   <div class="widget thin">
+    <div class="unit"><a  class="bubble" href="https://holtstrom.com/michael/blog/post.php">Home</a></div>
+    <div class="unit"><a  class="bubble" href="https://holtstrom.com/michael/blog/everything.php">Everything</a></div>
+   </div>
+   <div class='widget' id='sswidget' style="text-align: center; padding: 11px 9px 9px 9px;">
+    <a id="slideref" href="https://holtstrom.com/michael/photos.php"><img id='slideshow' src="https://holtstrom.com/michael/img/ghost.gif"/></a>
+   </div>
+   <script type='text/javascript'>
+    var silderef = document.getElementById('slideref');
+    var slideShowSource = new Array();
+    var slideShowHref = new Array();
+    var slideShowPos = 0;
+    var slideShow = document.getElementById('slideshow');
+    var loadSlideshow = function(blob)
+    {
+      var data = JSON.parse(blob);
+      for (var i=0; i<data.pics.length; i++)
+      {
+        var url = data.pics[i].url;
+        var pos = url.lastIndexOf('/');
+        url = url.substr(0,pos)+'/w206'+url.substr(pos);        
+        slideShowSource.push(url);
+        if ( data.blog == "" )
+        {
+          if ( data.photosUrl == "" )
+          { slideShowHref.push('https://plus.google.com/photos/100556766641917789750/albums/'+data.albumid+'/'+data.pics[i].gphotoid); }
+          else
+          { slideShowHref.push(data.photosUrl); }
+        }
+        else
+        { slideShowHref.push(data.blog); }
+      }
+      if (data.pics.length > 0)
+      { nextSlide(); }
+    }
+    function nextSlide()
+    {
+      slideref.href = slideShowHref[slideShowPos];
+      slideShow.src = slideShowSource[slideShowPos];
+      slideShowPos = (slideShowPos + 1) % slideShowSource.length;
+      setTimeout("nextSlide()",13000);
+    }
+    if (util.os() != 'phone')
+    { util.ajax("Load Slideshow",loadSlideshow,"GET","https://holtstrom.com/michael/blog/cmd_slideshow.php"); }
+    else
+    { document.getElementById('sswidget').style.display = 'none'; }
+   </script>
+   <script src="https://holtstrom.com/michael/base/sidebar.js" type="text/javascript"></script>
+  </div><!-- sidebar -->
+ </div><!-- layout --></body>
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-36983794-1', 'auto');
+  ga('send', 'pageview');
+</script>
+</html>
