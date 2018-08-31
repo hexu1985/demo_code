@@ -1,0 +1,1 @@
+从SmallObj.h中裁剪出SmallObjAllocator
