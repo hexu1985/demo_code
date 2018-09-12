@@ -2,9 +2,9 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
-INCLUDES = 
-LDFLAGS = -lgtest
-LDPATH =
+INCLUDES = -I../include
+LDFLAGS = -lgtest -lpthread
+LDPATH = -L../libs
 VPATH = 
 
 SOURCES = $(shell ls *.cpp)
