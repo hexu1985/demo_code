@@ -2,7 +2,7 @@
 RM = rm -f
 CXX = /opt/android-ndk-r14b/android-aarch64/bin/clang++
 # CXXFLAGS = -Wall -g -static # all lib link into executable file
-CXXFLAGS = -Wall -g -pie -fPIE 
+CXXFLAGS = -Wall -g -fPIE -pie 
 INCLUDES = 
 LDFLAGS =
 LDPATH = 
