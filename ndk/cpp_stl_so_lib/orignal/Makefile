@@ -1,8 +1,8 @@
 # Makefile
 
 RM = rm -f
-CXX = /opt/android-ndk-r14b/android-aarch64/bin/clang++
-CXXFLAGS = -std=c++11 -fPIC -Wall -g -DNDEBUG -fPIE
+CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
+CXXFLAGS = -std=c++11 -fPIC -Wall -g -DNDEBUG -fPIE #-DTEST_CRASH
 INCLUDE = -I./hello
 LDFLAGS = -pie -lhello 
 LDPATH = -L./hello

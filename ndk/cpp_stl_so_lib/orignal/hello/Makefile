@@ -1,7 +1,9 @@
 
 RM = rm -f
-CREATE_SO = /opt/android-ndk-r14b/android-aarch64/bin/clang++ -shared 
-CXX = /opt/android-ndk-r14b/android-aarch64/bin/clang++
+CREATE_SO = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++ -shared 
+CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
+#CREATE_SO = /opt/android-ndk-r14b/android-aarch64/bin/g++ -shared 
+#CXX = /opt/android-ndk-r14b/android-aarch64/bin/g++
 CXXFLAGS = -std=c++11 -fPIC -Wall -g -DNDEBUG #-fPIE
 INCLUDES = 
 LDFLAGS = 
