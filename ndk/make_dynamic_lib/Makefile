@@ -1,0 +1,30 @@
+# Makefile
+
+RM = rm -f
+CXX = /opt/android-ndk-r14b/android-aarch64/bin/clang++
+CXXFLAGS = -fPIC -Wall -g -DNDEBUG -fPIE
+INCLUDE = -I./hello
+LDFLAGS = -pie -lhello 
+LDPATH = -L./hello
+
+PROGS =	test1 test2
+
+.PHONY: all
+all: $(PROGS)
+	@echo "build OK!"
+
+clean:
+	@$(RM) $(PROGS) *.o
+	@echo "clean OK!"
+
+%.o:%.cpp
+	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
+
+test1: test1.o
+#	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+#	$(CXX) -o $@ $^ -Wl,-R./hello $(LDFLAGS) $(LDPATH)
+	$(CXX) -o $@ $^ -Wl,-R./hello -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
+
+test2: test2.o
+	$(CXX) -o $@ $^ -pie -ldl
+
