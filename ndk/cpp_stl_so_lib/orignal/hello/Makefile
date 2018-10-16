@@ -4,7 +4,7 @@ CREATE_SO = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clan
 CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
 CXXFLAGS = -std=c++11 -fPIC -Wall -g -DNDEBUG #-fPIE
 INCLUDES = 
-LDFLAGS = 
+LDFLAGS =
 LDPATH =
 VPATH = 
 
@@ -26,5 +26,5 @@ $(OBJECTS): %.o: %.cpp
 	$(CXX) -o $@ -c $(CXXFLAGS) $(INCLUDES) $<
 
 $(DYNAMICLIB): $(OBJECTS)
-	$(CREATE_SO) -o $(DYNAMICLIB) $(OBJECTS)
+	$(CREATE_SO) $(LDFLAGS) -o $(DYNAMICLIB) $(OBJECTS)
 
