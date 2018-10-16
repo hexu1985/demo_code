@@ -1,7 +1,7 @@
 # Makefile
 
 RM = rm -f
-CXX = /opt/android-ndk-r14b/android-aarch64/bin/clang++
+CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
 CXXFLAGS = -fPIC -Wall -g -DNDEBUG -fPIE
 INCLUDE = -I./hello
 LDFLAGS = -pie -lhello 
