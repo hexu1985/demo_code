@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TARGET_DIR=/opt/android-ndk-r14b
+TARGET_DIR=$PWD/build/android-ndk-r14b
 ./android-ndk-r14b/build/tools/make-standalone-toolchain.sh \
 	--platform=android-21 --install-dir=$TARGET_DIR/android-aarch64 \
 	--arch=arm64
