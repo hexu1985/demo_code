@@ -11,8 +11,6 @@ INCLUDE =
 LDFLAGS = -lfl
 LDPATH = 
 
-OBJS = echo_constants.o echo_types.o EchoTest.o
-
 PROGS = example1
 
 .PHONY: all
