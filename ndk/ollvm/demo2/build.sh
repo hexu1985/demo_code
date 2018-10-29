@@ -24,3 +24,6 @@
 /opt/android-ndk-r14b-ollvm/android-aarch64/bin/aarch64-linux-android-clang++ -Wall -fPIE -pie -o main_func_sub.exe main_func_sub.cpp
 /opt/android-ndk-r14b-ollvm/android-aarch64/bin/aarch64-linux-android-objdump -D main_func_sub.exe > main_func_sub.dump
 
+/opt/android-ndk-r14b-ollvm/android-aarch64/bin/aarch64-linux-android-clang++ -Wall -fPIE -pie -o main_func_fla_bcf.exe main_func_fla_bcf.cpp
+/opt/android-ndk-r14b-ollvm/android-aarch64/bin/aarch64-linux-android-objdump -D main_func_fla_bcf.exe > main_func_fla_bcf.dump
+
