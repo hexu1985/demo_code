@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-./example1 <<EOF
+./ch102.exe <<EOF
 did I have fun?
 EOF
