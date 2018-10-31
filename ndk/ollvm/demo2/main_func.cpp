@@ -1,6 +1,16 @@
 #include <stdlib.h>
 
+#ifdef USE_BCF_OPT
+unsigned int target_function(unsigned int n) __attribute((__annotate__(("bcf"))));
+#endif
+
+#ifdef USE_FLA_OPT
+unsigned int target_function(unsigned int n) __attribute((__annotate__(("fla"))));
+#endif
+
+#ifdef USE_SUB_OPT
 unsigned int target_function(unsigned int n) __attribute((__annotate__(("sub"))));
+#endif
 
 unsigned int target_function(unsigned int n) 
 {
