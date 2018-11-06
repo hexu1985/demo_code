@@ -93,3 +93,9 @@
     -> Build Settings: 选择All和Combined,
         -> Preprocessor Macros
             -> Debug(Release): +自定义宏
+3) 修改C++标准库
+点击项目图标:
+    -> Build Settings: 选择All和Combined,
+        -> Apple Clang - Language - C++
+            -> C++ Standard Library
+
