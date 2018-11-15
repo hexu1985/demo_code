@@ -57,3 +57,7 @@ set_target_properties(your-target PROPERTIES XCODE_ATTRIBUTE_CXX "${YOUR_CXX}")
 参考:
 https://stackoverflow.com/questions/39327952/how-can-i-force-xcode-to-use-a-custom-compiler
 
+9) 替换xcode默认clang为ollvm-clang
+$ cd /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
+$ mv clang clang.backup
+$ ln -s /path/to/obfuscator_bin/clang clang
