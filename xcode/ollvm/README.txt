@@ -49,7 +49,7 @@ $ ln -s /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoo
 		-> Add Build Setting
 			-> Add User-Defined Setting
 	将NEW_SETTING改成CC, value里填/path/to/obfuscator_bin/clang
-可以同样方式增加CXX来指定c++编译起
+可以同样方式增加CXX来指定c++编译器
 
 8) 在CMake里自动设置编译器
 set_target_properties(your-target PROPERTIES XCODE_ATTRIBUTE_CC "${YOUR_CC}")
