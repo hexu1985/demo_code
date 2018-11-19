@@ -61,3 +61,6 @@ https://stackoverflow.com/questions/39327952/how-can-i-force-xcode-to-use-a-cust
 $ cd /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
 $ mv clang clang.backup
 $ ln -s /path/to/obfuscator_bin/clang clang
+
+10) 在CMake里自动设置编译器选项
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mllvm -fla")
