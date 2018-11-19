@@ -19,7 +19,7 @@ with open(sys.argv[1], 'r') as f:
     for line in f.readlines():
         t = get_time(line)
         if t is not None:
-            time_list.append(float(get_time(line)))
+            time_list.append(float(t))
 
 total_time = sum(time_list)
 average_time = total_time / len(time_list)
