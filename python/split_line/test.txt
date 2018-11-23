@@ -1,0 +1,1 @@
+Objects of a class type can be value initialized only if the class has a default constructor. Used to initialize a container’s elements when a size, but not an element initializer, is specified.  Elements are initialized as a copy of this compiler-generated value.
