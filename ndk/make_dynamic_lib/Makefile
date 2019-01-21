@@ -1,13 +1,13 @@
 # Makefile
 
 RM = rm -f
-CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
+CXX = /opt/android-ndk-r16b-clang/android-aarch64/bin/aarch64-linux-android-clang++
 CXXFLAGS = -fPIC -Wall -g -DNDEBUG -fPIE
 INCLUDE = -I./hello
-LDFLAGS = -pie -lhello 
+LDFLAGS = -pie -lhello
 LDPATH = -L./hello
 
-PROGS =	test1 test2
+PROGS =	test1 test2 test1_with_cxx_lib
 
 .PHONY: all
 all: $(PROGS)
@@ -27,4 +27,7 @@ test1: test1.o
 
 test2: test2.o
 	$(CXX) -o $@ $^ -pie -ldl
+
+test1_with_cxx_lib: test1.o
+	$(CXX) -o $@ $^ -Wl,-R./hello -Wl,--enable-new-dtags -pie -lhello_with_cxx_lib -L./hello -static-libstdc++ 
 
