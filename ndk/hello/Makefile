@@ -1,20 +1,28 @@
+# Makefile
 
 RM = rm -f
-CXX = /opt/android-ndk-r14b/android-aarch64/bin/aarch64-linux-android-clang++
-# CXXFLAGS = -Wall -g -static # all lib link into executable file
-CXXFLAGS = -Wall -g -fPIE -pie 
-INCLUDES = 
-LDFLAGS =
+CXX = /opt/android-ndk-r16b-clang/android-aarch64/bin/clang++
+CXXFLAGS = -Wall -g -fPIE -pie
+INCLUDE = 
+LDFLAGS = 
 LDPATH = 
 
-SOURCES = $(shell ls *.cpp)
-PROGS = $(SOURCES:%.cpp=%)
+PROGS =	hello hello_static
 
+.PHONY: all
 all: $(PROGS)
-	@echo "PROGS = $(PROGS)" 
+	@echo "build OK!"
 
 clean:
-	$(RM) $(PROGS)
+	@$(RM) $(PROGS) *.o
+	@echo "clean OK!"
 
-%: %.cpp
-	$(CXX) -o $@ $(CXXFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
+%.o:%.cpp
+	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
+
+hello: hello.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+hello_static: hello.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH) -static-libstdc++
+
