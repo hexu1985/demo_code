@@ -14,8 +14,21 @@
     # cmake
     # make
     # make install
-6) msys2下构建
+5) msys2下构建
     # mkdir build
     # cd build
     # cmake -G"Unix Makefiles" ..
     # make
+6) VERBOSE模式
+    # make VERBOSE=1
+7) 指定目标的链接选项
+  i)要指定目标的链接选项，需要通过目标的属性来设置。例如，指定“静态库”目标的“链接时代码生成”的链接选项：
+	set_target_properties(<library_name>
+			PROPERTIES
+			STATIC_LIBRARY_FLAGS /LTCG:incremental
+			)
+  ii)指定“可执行程序”目标的“链接时代码生成”的链接选项：
+	set_target_properties(<executable_name>
+			PROPERTIES
+			LINK_FLAGS /LTCG:incremental
+			)
