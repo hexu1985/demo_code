@@ -1,0 +1,380 @@
+
+0
+ HASP_STATUS_OK 
+ 请求成功完成
+ 
+1
+ HASP_MEM_RANGE 
+ 请求超过 Sentinel 保护锁内存范围
+ 
+2
+ HASP_INV_PROGNUM_OPT 
+ 旧有 HASP HL Run-time API： 未知/无效功能 ID 选项
+ 
+3
+ HASP_INSUF_MEM 
+ 系统内存不足
+ 
+4
+ HASP_TMOF 
+ 打开的会话过多
+ 
+5
+ HASP_ACCESS_DENIED 
+ 访问功能的权限被拒绝
+ 
+6
+ HASP_INCOMPAT_FEATURE 
+ 旧有解密 函数 不适用于功能
+ 
+7
+ HASP_HASP_NOT_FOUND 
+ Sentinel 保护锁不再可用
+ 
+8
+ HASP_TOO_SHORT 
+ 加密/解密数据长度太短而无法执行 函数 调用
+ 
+9
+ HASP_INV_HND 
+ 传递给 函数 的句柄无效
+ 
+10
+ HASP_INV_FILEID 
+ API 无法识别指定的文件 ID
+ 
+11
+ HASP_OLD_DRIVER 
+ 已安装的驱动程序太旧而无法执行 函数
+ 
+12
+ HASP_NO_TIME 
+ 实时时钟 (RTC) 不可用
+ 
+13
+ HASP_SYS_ERROR 
+ 主机系统调用的一般错误
+ 
+14
+ HASP_NO_DRIVER 
+ 未安装所需的驱动程序
+ 
+15
+ HASP_INV_FORMAT 
+ 无法识别的更新文件格式
+ 
+16
+ HASP_REQ_NOT_SUPP 
+ 无法在该环境下执行 函数
+ 
+17
+ HASP_INV_UPDATE_OBJ 
+ 传递给 函数 的二进制数据未包含更新
+ 
+18
+ HASP_KEYID_NOT_FOUND 
+ 未找到 Sentinel 保护锁
+ 
+19
+ HASP_INV_UPDATE_DATA 
+ 找不到所需的 XML 标记，
+或者
+二进制数据内容丢失或无效
+ 
+20
+ HASP_INV_UPDATE_NOTSUPP 
+ Sentinel 保护锁不支持更新请求
+ 
+21
+ HASP_INV_UPDATE_CNTR 
+ 更新计数器未正确设置
+ 
+22
+ HASP_INV_VCODE    
+ 传递的供应商代码无效
+ 
+23
+ HASP_ENC_NOT_SUPP 
+ Sentinel 保护锁不支持加密类型
+ 
+24
+ HASP_INV_TIME 
+ 传递的时间值超出所支持的值范围
+ 
+25
+ HASP_NO_BATTERY_POWER 
+ 实时时钟电池电量不足
+ 
+26
+ HASP_NO_ACK_SPACE 
+ 更新要求的确认数据 ack_data 参数为 NULL
+ 
+27
+ HASP_TS_DETECTED 
+ 程序在终端服务器上运行
+ 
+28
+ HASP_FEATURE_TYPE_NOT_IMPL 
+ 所需的功能类型未实现
+ 
+29
+ HASP_UNKNOWN_ALG 
+ V2C 文件中使用了未知算法
+ 
+30
+ HASP_INV_SIG 
+ 签名验证操作失败
+ 
+31 
+ HASP_FEATURE_NOT_FOUND 
+ 找不到所需功能
+ 
+32
+ HASP_NO_LOG 
+ 未启用访问日志
+ 
+33
+ HASP_LOCAL_COMM_ERR 
+ API 与本地 Sentinel License Manager 之间通信出错
+ 
+34
+ HASP_UNKNOWN_VCODE 
+ API 无法识别供应商代码
+ 
+35
+ HASP_INVSPEC 
+ 无效的 XML 规范
+ 
+36
+ HASP_INV_SCOPE 
+ XML 范围无效
+ 
+37
+ HASP_TOO_MANY_KEYS 
+ 当前连接的 Sentinel 保护锁过多
+ 
+38
+ HASP_TOO_MANY_USERS 
+ 当前连接的用户过多
+ 
+39
+ HASP_BROKEN_SESSION 
+ 会话已中断。
+
+在有活动会话的情况下更新授权可能会发生这种情况。 例如：
+
+会话需要的功能已删除。 
+授权被取消。 
+必需功能的网络（远程授权）支持设置已发生变化。 （在这种情况下，所有会话将中断，包括本地会话。） 
+ 
+40
+ HASP_REMOTE_COMM_ERR 
+ 本地与远程 Sentinel License Manager 之间的通信错误
+ 
+41
+ HASP_FEATURE_EXPIRED 
+ 功能已过期
+ 
+42
+ HASP_OLD_LM 
+ Sentinel License Manager 版本太旧
+ 
+43
+ HASP_DEVICE_ERR 
+ Sentinel SL 锁的安全存储区域出现输入/输出错误，
+或者
+在使用 Sentinel HL 锁时出现 USB 通信错误
+ 
+44
+ HASP_UPDATE_BLOCKED 
+ 不允许更新安装
+ 
+45
+ HASP_TIME_ERR 
+ 系统时间已被篡改
+ 
+46
+ HASP_SCHAN_ERR 
+ 安全通道中发生了通信错误
+ 
+47
+ HASP_STORAGE_CORRUPT 
+ Sentinel 保护锁的安全存储区域存在损坏数据
+ 
+48
+ HASP_NO_VLIB 
+ 找不到供应商库
+ 
+49
+ HASP_INV_VLIB 
+ 无法加载供应商库
+ 
+50
+ HASP_SCOPE_RESULTS_EMPTY 
+ 找不到任何与范围匹配的功能
+ 
+51
+ HASP_VM_DETECTED 
+ 受保护的应用程序在虚拟机上运行，但未为虚拟机启用一项或多项功能。
+或
+用户已尝试将物理机上的保护锁重新迁移到虚拟机。 但是未为虚拟机启用保护锁中包含的任意功能。
+ 
+52
+ HASP_HARDWARE_MODIFIED 
+ Sentinel SL 锁与机器硬件不兼容。 Sentinel SL 锁已锁定到不同的硬件。
+或者
+采用 V2C 文件时，Sentinel SL 锁数据和机器硬件数据之间存在冲突。 Sentinel SL 锁已锁定到不同的硬件。
+ 
+53
+ HASP_USER_DENIED 
+ 因为用户限制，拒绝登录
+ 
+54
+ HASP_UPDATE_TOO_OLD 
+ 尝试安装的 V2C 文件的更新计数器与 Sentinel 保护锁的更新计数器序列范围不一致。 文件中更新计数器的值小于 Sentinel 保护锁中更新计数器的值。
+ 
+55
+ HASP_UPDATE_TOO_NEW 
+ 尝试安装的 V2C 文件的更新计数器与 Sentinel 保护锁的更新计数器序列范围不一致。 文件中的第一个值比 Sentinel 保护锁中的值不止大 1。
+ 
+56
+ HASP_OLD_VLIB 
+ 开发商库太旧
+ 
+57
+ HASP_UPLOAD_ERROR 
+ 使用管理控制中心录入文件（如 V2C、H2R）失败，原因可能是格式非法
+ 
+58
+ HASP_INV_RECIPIENT 
+ 无效的 XML RECIPIENT 参数
+ 
+59
+ HASP_INV_ACTION 
+ XML 操作参数无效
+ 
+60
+ HASP_TOO_MANY_PRODUCTS 
+ Transfer 函数 中指定的范围未指定唯一的产品
+ 
+61
+ HASP_INV_PRODUCT 
+ 无效的产品信息
+ 
+62
+ HASP_UNKNOWN_RECIPIENT 
+ 更新只适用于 Detach 函数 中指定的接收方机器，并非这台机器
+ 
+63
+ HASP_INVALID_DURATION 
+ 指定的分离授权持续期无效。 持续期必须小于或等于授权允许的最大持续期。
+或者
+授权宽限日期要早于当前分离授权的有效期。
+ 
+64
+ HASP_CLONE_DETECTED 
+ 检测到克隆的 Sentinel SL 存储 功能不可用。
+ 
+65
+ HASP_UPDATE_ALREADY_ADDED 
+ 的 V2C 更新已经安装到 License Manager 服务中
+ 
+66
+ HASP_HASP_INACTIVE 
+ 指定的锁 ID 处于未激活状态
+ 
+67
+ HASP_NO_DETACHABLE_FEATURE 
+ 请求已分离许可证的指定锁中不存在可分离的功能
+ 
+68
+ HASP_TOO_MANY_HOSTS 
+ 指定的范围未指定唯一的主机
+ 
+69
+ HASP_REHOST_NOT_ALLOWED 
+ 指定的 HASP ID不允许进行 Rehost 操作
+ 
+70
+ HASP_LICENSE_REHOSTED 
+ 原始许可证已传输到另一台机器。 因此，许可证无法返回至源机器。
+ 
+71
+ HASP_REHOST_ALREADY_APPLIED 
+ 旧的 Rehost 许可证不能应用。 发生 Rehost 计数器不匹配 
+ 
+72
+ HASP_CANNOT_READ_FILE 
+ 找不到 V2C 文件或禁止访问
+ 
+73
+ HASP_EXTENSION_NOT_ALLOWED 
+ 许可证无法延期，因为已分离许可证的数量大于允许的并发许可证数量
+ 
+74
+ HASP_DETACH_DISABLED 
+ 用户已尝试从虚拟机上托管的网络授权分离一个产品。 但是未为虚拟机启用产品中包含的任意功能。
+ 
+75
+ HASP_REHOST_DISABLED 
+ 用户尝试重新迁移虚拟机上的保护锁。 但是未为虚拟机启用保护锁中包含的任意功能。
+ 
+76 
+ HASP_DETACHED_LICENSE_FOUND  
+ 用户试图格式化 SL-AdminMode 锁或将 SL-Legacy 锁迁移到 SL-AdminMode 锁。 但是，产品当前已与锁分离。 
+
+77 
+ HASP_RECIPIENT_OLD_LM  
+ 对于更换主机操作： 目标机器的指纹是使用工具（RUS 工具或 Licensing API）早于 Sentinel LDK v.7.0 收集。 
+
+78 
+ HASP_SECURE_STORE_ID_MISMATCH  
+ 安全存储 ID 不匹配。 
+
+79 
+ HASP_DUPLICATE_HOSTNAME  
+ 授权指纹与具体主机名绑定；但是网络中发现有两台甚至更多使用此主机名的机器。 因此，无法使用授权。
+ 
+80 
+ HASP_MISSING_LM  
+ 一个受保护的应用程序尝试登录支持 Sentinel HL（无驱配置）锁上并发的功能。 锁所在计算机上未激活 Sentinel LDK License Manager 服务。 
+
+400
+ HASP_NO_API_DYLIB 
+ 找不到 API 的动态库
+ 
+401
+ HASP_INVALID_API_DYLIB 
+ API 动态库无效
+ 
+500
+ HASP_INVALID_OBJECT 
+ 对象初始化不正确
+ 
+501
+ HASP_INVALID_PARAMETER 
+ 范围字符串太长（最长为 32 KB）
+ 
+502
+ HASP_ALREADY_LOGGED_IN 
+ 两次登录到同一对象
+ 
+503
+ HASP_ALREADY_LOGGED_OUT 
+ 从同一对象注销两次
+ 
+525
+ HASP_OPERATION_FAILED 
+ 未正确使用系统或平台
+ 
+698
+ HASP_NOT_IMPL 
+ 请求的函数未执行
+或者
+对于 API 调度器，API DLL 太旧
+ 
+699
+ HASP_INT_ERR 
+ API 出现内部错误
+ 
+
