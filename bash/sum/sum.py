@@ -13,7 +13,7 @@ if len(sys.argv) != 2:
     sys.exit(1)
 
 money_list = []
-with open(sys.argv[1], 'r') as f:
+with open(sys.argv[1], 'r', encoding='UTF-8') as f:
     for line in f.readlines():
         m = get_money(line)
         if m is not None:
