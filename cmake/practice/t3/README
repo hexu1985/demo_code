@@ -30,5 +30,5 @@
   ii)指定“可执行程序”目标的“链接时代码生成”的链接选项：
 	set_target_properties(<executable_name>
 			PROPERTIES
-			LINK_FLAGS /LTCG:incremental
+			LINK_FLAGS "${LINK_FLAGS} -static-libstdc++"
 			)
