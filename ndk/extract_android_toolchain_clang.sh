@@ -6,7 +6,7 @@ TARGET_DIR=$PWD/build/android-ndk-r14b-clang
 	--arch=arm64 --toolchain=aarch64-linux-androideabi-clang --stl=libc++
 
 ./android-ndk-r14b/build/tools/make-standalone-toolchain.sh \
-	--platform=android-21 --install-dir=$TARGET_DIR/android-armv7_16 \
+	--platform=android-21 --install-dir=$TARGET_DIR/android-armv7 \
 	--arch=arm --toolchain=arm-linux-androideabi-clang --stl=libc++
 
 ./android-ndk-r14b/build/tools/make-standalone-toolchain.sh \
