@@ -1,4 +1,4 @@
-1) lupdate -verbose -pro hello.pro -ts hello.ts
+1) lupdate -verbose hello.pro -ts hello.ts
 2) 修改hello.ts(参考已经修改好的hello.ts)
-3) lrelease -verbose -ts hello.ts -qm hello.qm
+3) lrelease -verbose hello.ts -qm hello.qm
 4) cp hello.qm到可执行程序的同一个路径下
