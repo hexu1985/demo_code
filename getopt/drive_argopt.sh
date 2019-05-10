@@ -1,1 +1,1 @@
-./argopt -i -lr 'hi there' -f fred.c -q
+./argopt -i -lr -f fred.c -q 'hi there'
