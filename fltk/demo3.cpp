@@ -4,7 +4,7 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Button.H>
-#include <FL/Fl_ask.H>
+#include <FL/fl_ask.H>
 void Btn01_cb(Fl_Widget *w, void *data)
 {
     ((Fl_Button *)w)->label((char *)data);
