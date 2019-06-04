@@ -1,0 +1,27 @@
+# Makefile
+
+RM = rm -f
+CXX = g++
+CXXFLAGS = -Wall -g
+INCLUDE = -I./libmynew
+LDFLAGS = -lmynew
+LDPATH = -L./libmynew
+
+PROGS =	demo
+
+.PHONY: all
+all: $(PROGS)
+	@echo "build OK!"
+
+clean:
+	@$(RM) $(PROGS) *.o
+	@echo "clean OK!"
+
+%.o:%.cpp
+	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
+
+demo: demo.o
+#	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+#	$(CXX) -o $@ $^ -Wl,-R./mynew $(LDFLAGS) $(LDPATH)
+	$(CXX) -o $@ $^ -Wl,-R./libmynew -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
+
