@@ -1,5 +1,5 @@
-include_directories(/tmp/t3/usr/include/hello)
-link_directories(/tmp/t3/usr/lib)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
 
 add_executable(main main.c)
 target_link_libraries(main hello)

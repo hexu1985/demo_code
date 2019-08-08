@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html class="js" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="pingback" href="https://cmake.org/xmlrpc.php">
+
+	<script type="text/javascript" async="" src="CMake%20Tutorial%20%20%20CMake_files/recaptcha__zh_cn.js"></script><script type="text/javascript">
+		document.documentElement.className = 'js';
+	</script>
+
+	<script>var et_site_url='https://cmake.org';var et_post_id='173';function et_core_page_resource_fallback(a,b){"undefined"===typeof b&&(b=a.sheet.cssRules&&0===a.sheet.cssRules.length);b&&(a.onerror=null,a.onload=null,a.href?a.href=et_site_url+"/?et_core_page_resource="+a.id+et_post_id:a.src&&(a.src=et_site_url+"/?et_core_page_resource="+a.id+et_post_id))}
+</script><title>CMake Tutorial | CMake</title>
+<link rel="dns-prefetch" href="https://www.google.com/">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="https://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="CMake » Feed" href="https://cmake.org/feed/">
+<link rel="alternate" type="application/rss+xml" title="CMake » Comments Feed" href="https://cmake.org/comments/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/12.0.0-1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/cmake.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=5.2.2"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="CMake%20Tutorial%20%20%20CMake_files/wp-emoji-release.js" type="text/javascript" defer="defer"></script>
+		<meta content="Divi Child v.1.0.0" name="generator"><style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel="stylesheet" id="wp-block-library-css" href="CMake%20Tutorial%20%20%20CMake_files/style_002.css" type="text/css" media="all">
+<link rel="stylesheet" id="style-css" href="CMake%20Tutorial%20%20%20CMake_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="contact-form-7-css" href="CMake%20Tutorial%20%20%20CMake_files/styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="jeherve_post_embed-css" href="CMake%20Tutorial%20%20%20CMake_files/style_003.css" type="text/css" media="all">
+<link rel="stylesheet" id="divi-fonts-css" href="CMake%20Tutorial%20%20%20CMake_files/css.css" type="text/css" media="all">
+<link rel="stylesheet" id="divi-style-css" href="CMake%20Tutorial%20%20%20CMake_files/style_004.css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="CMake%20Tutorial%20%20%20CMake_files/dashicons.css" type="text/css" media="all">
+<link rel="stylesheet" id="flex_gallery_css-css" href="CMake%20Tutorial%20%20%20CMake_files/gallery-styles.css" type="text/css" media="all">
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/jquery.js"></script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/jquery-migrate.js"></script>
+<link rel="https://api.w.org/" href="https://cmake.org/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cmake.org/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://cmake.org/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 5.2.2">
+<link rel="canonical" href="https://cmake.org/cmake-tutorial/">
+<link rel="shortlink" href="https://cmake.org/?p=173">
+<link rel="alternate" type="application/json+oembed" href="https://cmake.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcmake.org%2Fcmake-tutorial%2F">
+<link rel="alternate" type="text/xml+oembed" href="https://cmake.org/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fcmake.org%2Fcmake-tutorial%2F&amp;format=xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"><link rel="icon" href="https://cmake.org/wp-content/uploads/2019/05/cropped-cmake_512-32x32.png" sizes="32x32">
+<link rel="icon" href="https://cmake.org/wp-content/uploads/2019/05/cropped-cmake_512-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="https://cmake.org/wp-content/uploads/2019/05/cropped-cmake_512-180x180.png">
+<meta name="msapplication-TileImage" content="https://cmake.org/wp-content/uploads/2019/05/cropped-cmake_512-270x270.png">
+<style id="et-divi-customizer-global-cached-inline-styles">.woocommerce #respond input#submit,.woocommerce-page #respond input#submit,.woocommerce #content input.button,.woocommerce-page #content input.button,.woocommerce-message,.woocommerce-error,.woocommerce-info{background:#2EA3F2!important}#et_search_icon:hover,.mobile_menu_bar:before,.mobile_menu_bar:after,.et_toggle_slide_menu:after,.et-social-icon a:hover,.et_pb_sum,.et_pb_pricing li a,.et_pb_pricing_table_button,.et_overlay:before,.entry-summary p.price ins,.woocommerce div.product span.price,.woocommerce-page div.product span.price,.woocommerce #content div.product span.price,.woocommerce-page #content div.product span.price,.woocommerce div.product p.price,.woocommerce-page div.product p.price,.woocommerce #content div.product p.price,.woocommerce-page #content div.product p.price,.et_pb_member_social_links a:hover,.woocommerce .star-rating span:before,.woocommerce-page .star-rating span:before,.et_pb_widget li a:hover,.et_pb_filterable_portfolio .et_pb_portfolio_filters li a.active,.et_pb_filterable_portfolio .et_pb_portofolio_pagination ul li a.active,.et_pb_gallery .et_pb_gallery_pagination ul li a.active,.wp-pagenavi span.current,.wp-pagenavi a:hover,.nav-single a,.posted_in a{color:#2EA3F2}.et_pb_contact_submit,.et_password_protected_form .et_submit_button,.et_pb_bg_layout_light .et_pb_newsletter_button,.comment-reply-link,.form-submit .et_pb_button,.et_pb_bg_layout_light .et_pb_promo_button,.et_pb_bg_layout_light .et_pb_more_button,.woocommerce a.button.alt,.woocommerce-page a.button.alt,.woocommerce button.button.alt,.woocommerce-page button.button.alt,.woocommerce input.button.alt,.woocommerce-page input.button.alt,.woocommerce #respond input#submit.alt,.woocommerce-page #respond input#submit.alt,.woocommerce #content input.button.alt,.woocommerce-page #content input.button.alt,.woocommerce a.button,.woocommerce-page a.button,.woocommerce button.button,.woocommerce-page button.button,.woocommerce input.button,.woocommerce-page input.button,.et_pb_contact p input[type="checkbox"]:checked+label i:before,.et_pb_bg_layout_light.et_pb_module.et_pb_button{color:#2EA3F2}.footer-widget h4{color:#2EA3F2}.et-search-form,.nav li ul,.et_mobile_menu,.footer-widget li:before,.et_pb_pricing li:before,blockquote{border-color:#2EA3F2}.et_pb_counter_amount,.et_pb_featured_table .et_pb_pricing_heading,.et_quote_content,.et_link_content,.et_audio_content,.et_pb_post_slider.et_pb_bg_layout_dark,.et_slide_in_menu_container,.et_pb_contact p input[type="radio"]:checked+label i:before{background-color:#2EA3F2}a{color:#2763bc}.nav li ul{border-color:#2ea3f2}#top-header,#top-header a{color:rgba(0,0,0,0.7)}.et_header_style_centered .mobile_nav .select_page,.et_header_style_split .mobile_nav .select_page,.et_nav_text_color_light #top-menu>li>a,.et_nav_text_color_dark #top-menu>li>a,#top-menu a,.et_mobile_menu li a,.et_nav_text_color_light .et_mobile_menu li a,.et_nav_text_color_dark .et_mobile_menu li a,#et_search_icon:before,.et_search_form_container input,span.et_close_search_field:after,#et-top-navigation .et-cart-info{color:#666666}.et_search_form_container input::-moz-placeholder{color:#666666}.et_search_form_container input::-webkit-input-placeholder{color:#666666}.et_search_form_container input:-ms-input-placeholder{color:#666666}#footer-widgets .footer-widget a,#footer-widgets .footer-widget li a,#footer-widgets .footer-widget li a:hover{color:#ffffff}.footer-widget{color:#ffffff}#main-footer .footer-widget h4{color:#2EA3F2}.footer-widget li:before{border-color:#2EA3F2}#et-footer-nav .bottom-nav li.current-menu-item a{color:#2ea3f2}body #page-container .et_slide_in_menu_container{background:#2ea3f2}.et_slide_in_menu_container,.et_slide_in_menu_container .et-search-field{letter-spacing:px}.et_slide_in_menu_container .et-search-field::-moz-placeholder{letter-spacing:px}.et_slide_in_menu_container .et-search-field::-webkit-input-placeholder{letter-spacing:px}.et_slide_in_menu_container .et-search-field:-ms-input-placeholder{letter-spacing:px}@media only screen and (min-width:981px){.et-fixed-header #top-menu a,.et-fixed-header #et_search_icon:before,.et-fixed-header #et_top_search .et-search-form input,.et-fixed-header .et_search_form_container input,.et-fixed-header .et_close_search_field:after,.et-fixed-header #et-top-navigation .et-cart-info{color:#666666!important}.et-fixed-header .et_search_form_container input::-moz-placeholder{color:#666666!important}.et-fixed-header .et_search_form_container input::-webkit-input-placeholder{color:#666666!important}.et-fixed-header .et_search_form_container input:-ms-input-placeholder{color:#666666!important}.et-fixed-header#top-header a{color:rgba(0,0,0,0.7)}}@media only screen and (min-width:1350px){.et_pb_row{padding:27px 0}.et_pb_section{padding:54px 0}.single.et_pb_pagebuilder_layout.et_full_width_page .et_post_meta_wrapper{padding-top:81px}.et_pb_fullwidth_section{padding:0}}.et_pb_media_alignment_center .et_pb_slide_image{top:40%!important}.et_pb_slider_fullwidth_off .et_pb_slide_with_image .et_pb_slide_description{padding-top:100px}.et_pb_slider .et_pb_slide{height:375px}.et_pb_media_alignment_center .et_pb_slide_image{top:45%}.textboxstyle{font-family:Verdana,Arial,Helvetica,sans-serif;font-size:11px;line-height:130%;color:#000000;background-color:#EEEEEE;padding:3px 5px;border-style:solid;border-width:1px;border-color:#777777}.et_pb_slide_description{padding:95px 100px}.et_pb_section{padding:0;position:relative}.wpcf7-text,.wpcf7-textarea,.wpcf7-captchar{background-color:#eee!important;border:none!important;width:100%!important;-moz-border-radius:0!important;-webkit-border-radius:0!important;border-radius:0!important;font-size:14px;color:#999!important;padding:16px!important;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.wpcf7-submit{color:#2EA3F2!important;margin:8px auto 0;cursor:pointer;font-size:20px;font-weight:500;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;padding:6px 20px;line-height:1.7em;background:transparent;border:2px solid;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-moz-transition:all 0.2s;-webkit-transition:all 0.2s;transition:all 0.2s}.wpcf7-submit:hover{background-color:#eee;border-color:#eee;padding:6px 20px!important}#top-menu>li.jobs-link{position:absolute;right:-110px;top:0;background:#00529b;color:white;padding:0;width:78px;z-index:999}#top-menu>li.jobs-link a{color:white!important;text-transform:uppercase;text-align:center;padding:10px!important;font-size:12px}#top-menu>li.jobs-link a:before{background:url(/wp-content/uploads/2018/09/jobs_icon.png) no-repeat;content:"";display:block;width:32px;height:32px;background-size:100%;margin:0 auto}#mobile_menu>li.jobs-link{background:#00529b}#mobile_menu>li.jobs-link a{color:white}#mobile_menu>li.jobs-link a:before{display:none}.grecaptcha-badge{visibility:hidden}</style><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><style>[data-columns]::before{visibility:hidden;position:absolute;font-size:1px;}</style><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style></head>
+<body class="page-template-default page page-id-173 et_pb_button_helper_class et_fixed_nav et_show_nav et_cover_background et_pb_gutter linux et_pb_gutters3 et_primary_nav_dropdown_animation_fade et_secondary_nav_dropdown_animation_fade et_pb_footer_columns4 et_header_style_left et_pb_pagebuilder_layout et_right_sidebar et_divi_theme et-db et_minified_js et_minified_css gecko">
+	<div id="page-container" style="padding-top: 80px; margin-top: -1px;" class="et-animated-content">
+
+	
+	
+			<header id="main-header" data-height-onload="80" data-height-loaded="true" data-fixed-height-onload="80" style="top: 0px;" class="">
+			<div class="container clearfix et_menu_container">
+							<div class="logo_container">
+					<span class="logo_helper"></span>
+					<a href="https://cmake.org/">
+						<img src="CMake%20Tutorial%20%20%20CMake_files/Cmake-logo-header.png" alt="CMake" id="logo" data-height-percentage="54" data-actual-width="109" data-actual-height="43">
+					</a>
+				</div>
+							<div id="et-top-navigation" data-height="66" data-fixed-height="40" style="padding-left: 139px;">
+											<nav id="top-menu-nav">
+						<ul id="top-menu" class="nav"><li id="menu-item-1726" class="jobs-link menu-item menu-item-type-custom menu-item-object-custom menu-item-1726"><a target="_blank" rel="noopener noreferrer" href="https://jobs.kitware.com/">Kitware is hiring</a></li>
+<li id="menu-item-121" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-121"><a href="https://cmake.org/about/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-120" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-120"><a href="https://cmake.org/overview/">Overview</a></li>
+	<li id="menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-118"><a href="https://cmake.org/participants/">Participants</a></li>
+	<li id="menu-item-119" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-119"><a href="https://cmake.org/licensing/">Licensing</a></li>
+	<li id="menu-item-200" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-200"><a href="https://cmake.org/publications/">Publications</a></li>
+	<li id="menu-item-349" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-349"><a href="https://cmake.org/success/">Success</a></li>
+	<li id="menu-item-350" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-350"><a href="https://blog.kitware.com/tag/cmake/">News</a></li>
+</ul>
+</li>
+<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-128"><a href="https://cmake.org/resources/">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="https://cmake.org/documentation/">Documentation</a></li>
+	<li id="menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-255"><a href="https://cmake.org/mailing-lists/">Mailing Lists</a></li>
+	<li id="menu-item-132" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-132"><a href="https://www.kitware.com/what-we-offer/#books">Mastering CMake</a></li>
+	<li id="menu-item-226" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-226"><a href="https://cmake.org/webinars/">Webinars</a></li>
+	<li id="menu-item-139" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139"><a href="https://cmake.org/services/">Services</a></li>
+</ul>
+</li>
+<li id="menu-item-127" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-127"><a href="https://cmake.org/developer-resources/">Developer Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-413" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-413"><a href="https://cmake.org/get-involved/">Get Involved</a></li>
+	<li id="menu-item-122" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-122"><a href="https://gitlab.kitware.com/cmake/cmake/issues">Issue Tracker</a></li>
+	<li id="menu-item-1176" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1176"><a href="https://gitlab.kitware.com/cmake/cmake">Code Repository</a></li>
+	<li id="menu-item-117" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-117"><a href="https://open.cdash.org/index.php?project=CMake">Dashboard</a></li>
+	<li id="menu-item-256" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-256"><a href="https://gitlab.kitware.com/cmake/community/wikis/home">Wiki</a></li>
+	<li id="menu-item-247" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-247"><a href="https://cmake.org/related-software/">Related Software</a></li>
+</ul>
+</li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a href="https://cmake.org/download/">Download</a></li>
+</ul>						</nav>
+					
+					
+					
+										<div id="et_top_search">
+						<span id="et_search_icon"></span>
+					</div>
+					
+					<div id="et_mobile_nav_menu">
+				<div class="mobile_nav closed">
+					<span class="select_page">Select Page</span>
+					<span class="mobile_menu_bar mobile_menu_bar_toggle"></span>
+				<ul id="mobile_menu" class="et_mobile_menu"><li id="menu-item-1726" class="jobs-link menu-item menu-item-type-custom menu-item-object-custom menu-item-1726 et_first_mobile_item"><a target="_blank" rel="noopener noreferrer" href="https://jobs.kitware.com/">Kitware is hiring</a></li>
+<li id="menu-item-121" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-121"><a href="https://cmake.org/about/">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-120" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-120"><a href="https://cmake.org/overview/">Overview</a></li>
+	<li id="menu-item-118" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-118"><a href="https://cmake.org/participants/">Participants</a></li>
+	<li id="menu-item-119" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-119"><a href="https://cmake.org/licensing/">Licensing</a></li>
+	<li id="menu-item-200" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-200"><a href="https://cmake.org/publications/">Publications</a></li>
+	<li id="menu-item-349" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-349"><a href="https://cmake.org/success/">Success</a></li>
+	<li id="menu-item-350" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-350"><a href="https://blog.kitware.com/tag/cmake/">News</a></li>
+</ul>
+</li>
+<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-128"><a href="https://cmake.org/resources/">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-222" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-222"><a href="https://cmake.org/documentation/">Documentation</a></li>
+	<li id="menu-item-255" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-255"><a href="https://cmake.org/mailing-lists/">Mailing Lists</a></li>
+	<li id="menu-item-132" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-132"><a href="https://www.kitware.com/what-we-offer/#books">Mastering CMake</a></li>
+	<li id="menu-item-226" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-226"><a href="https://cmake.org/webinars/">Webinars</a></li>
+	<li id="menu-item-139" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-139"><a href="https://cmake.org/services/">Services</a></li>
+</ul>
+</li>
+<li id="menu-item-127" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-127"><a href="https://cmake.org/developer-resources/">Developer Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-413" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-413"><a href="https://cmake.org/get-involved/">Get Involved</a></li>
+	<li id="menu-item-122" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-122"><a href="https://gitlab.kitware.com/cmake/cmake/issues">Issue Tracker</a></li>
+	<li id="menu-item-1176" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-1176"><a href="https://gitlab.kitware.com/cmake/cmake">Code Repository</a></li>
+	<li id="menu-item-117" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-117"><a href="https://open.cdash.org/index.php?project=CMake">Dashboard</a></li>
+	<li id="menu-item-256" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-256"><a href="https://gitlab.kitware.com/cmake/community/wikis/home">Wiki</a></li>
+	<li id="menu-item-247" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-247"><a href="https://cmake.org/related-software/">Related Software</a></li>
+</ul>
+</li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a href="https://cmake.org/download/">Download</a></li>
+</ul></div>
+			</div>				</div> <!-- #et-top-navigation -->
+			</div> <!-- .container -->
+			<div class="et_search_outer">
+				<div class="container et_search_form_container">
+					<form role="search" method="get" class="et-search-form" action="https://cmake.org/">
+					<input type="search" class="et-search-field" placeholder="Search …" name="s" title="Search for:">					</form>
+					<span class="et_close_search_field"></span>
+				</div>
+			</div>
+		</header> <!-- #main-header -->
+			<div id="et-main-area">
+	
+<div id="main-content">
+
+
+			
+				<article id="post-173" class="post-173 page type-page status-publish hentry">
+
+				
+					<div class="entry-content">
+					<div id="et-boc" class="et-boc">
+			
+			<div class="et_builder_inner_content et_pb_gutters3"><div class="et_pb_section et_pb_section_0 et_section_regular">
+				
+				
+				
+				
+					<div class="et_pb_row et_pb_row_0">
+				<div class="et_pb_column et_pb_column_4_4 et_pb_column_0  et_pb_css_mix_blend_mode_passthrough et-last-child">
+				
+				
+				<div class="et_pb_module et_pb_text et_pb_text_0 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a href="#s1">Step 1</a> | <a href="#s2">Step 2</a> | <a href="#s3">Step 3</a> | <a href="#s4">Step 4</a> | <a href="#s5">Step 5</a> | <a href="#s6">Step 6</a> | <a href="#s7">Step 7</a>
+				</div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_1 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					Below is a step-by-step tutorial covering common build system use 
+cases that CMake helps to address. Many of these topics have been 
+introduced in <a href="http://www.kitware.com/products/books/CMakeBook.html"><em>Mastering CMake</em></a>
+ as separate issues but seeing how they all work together in an example 
+project can be very helpful. This tutorial can be found in the <a href="https://gitlab.kitware.com/cmake/cmake/tree/master/Tests/Tutorial">Tests/Tutorial</a>
+ directory of the CMake source code tree. Each step has its own 
+subdirectory containing a complete copy of the tutorial for that step.<p></p>
+<p>See also the introductory sections of the <a href="https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#introduction">cmake-buildsystem(7)</a> and <a href="https://cmake.org/cmake/help/latest/manual/cmake-language.7.html#organization">cmake-language(7)</a> manual pages for an overview of CMake concepts and source tree organization.
+				</p></div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_2 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s1" name="s1"></a><p></p>
+<p>&nbsp;</p>
+<h2>A Basic Starting Point (Step1)</h2>
+<p>The most basic project is an executable built from source code files.
+ For simple projects a two line CMakeLists.txt file is all that is 
+required. This will be the starting point for our tutorial. The 
+CMakeLists.txt file looks like:</p>
+<div class="textboxstyle">
+<pre>cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+add_executable(Tutorial tutorial.cxx)</pre>
+</div>
+<p>&nbsp;</p>
+<p>Note that this example uses lower case commands in the CMakeLists.txt
+ file. Upper, lower, and mixed case commands are supported by CMake. The
+ source code for tutorial.cxx will compute the square root of a number 
+and the first version of it is very simple, as follows:</p>
+<div class="textboxstyle">
+<pre>// A simple program that computes the square root of a number
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+int main (int argc, char *argv[])
+{
+  if (argc &lt; 2)
+    {
+    fprintf(stdout,"Usage: %s number\n",argv[0]);
+    return 1;
+    }
+  double inputValue = atof(argv[1]);
+  double outputValue = sqrt(inputValue);
+  fprintf(stdout,"The square root of %g is %g\n",
+          inputValue, outputValue);
+  return 0;
+}
+</pre>
+</div>
+<h3></h3>
+<h3>Adding a Version Number and Configured Header File</h3>
+<p>The first feature we will add is to provide our executable and 
+project with a version number. While you can do this exclusively in the 
+source code, doing it in the CMakeLists.txt file provides more 
+flexibility. To add a version number we modify the CMakeLists.txt file 
+as follows:</p>
+<div class="textboxstyle">
+<pre>cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+# The version number.
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
+ 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/TutorialConfig.h.in"
+  "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+  )
+ 
+# add the binary tree to the search path for include files
+# so that we will find TutorialConfig.h
+include_directories("${PROJECT_BINARY_DIR}")
+ 
+# add the executable
+add_executable(Tutorial tutorial.cxx)
+</pre>
+</div>
+<p>&nbsp;</p>
+<p>Since the configured file will be written into the binary tree we 
+must add that directory to the list of paths to search for include 
+files. We then create a TutorialConfig.h.in file in the source tree with
+ the following contents:</p>
+<div class="textboxstyle">
+<pre>// the configured options and settings for Tutorial
+#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+</pre>
+</div>
+<p>&nbsp;</p>
+<p>When CMake configures this header file the values for 
+@Tutorial_VERSION_MAJOR@ and @Tutorial_VERSION_MINOR@ will be replaced 
+by the values from the CMakeLists.txt file. Next we modify tutorial.cxx 
+to include the configured header file and to make use of the version 
+numbers. The resulting source code is listed below.</p>
+<div class="textboxstyle">
+<pre>// A simple program that computes the square root of a number
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include "TutorialConfig.h"
+ 
+int main (int argc, char *argv[])
+{
+  if (argc &lt; 2)
+    {
+    fprintf(stdout,"%s Version %d.%d\n",
+            argv[0],
+            Tutorial_VERSION_MAJOR,
+            Tutorial_VERSION_MINOR);
+    fprintf(stdout,"Usage: %s number\n",argv[0]);
+    return 1;
+    }
+  double inputValue = atof(argv[1]);
+  double outputValue = sqrt(inputValue);
+  fprintf(stdout,"The square root of %g is %g\n",
+          inputValue, outputValue);
+  return 0;
+}
+</pre>
+</div>
+<p>The main changes are the inclusion of the TutorialConfig.h header 
+file and printing out a version number as part of the usage message.
+				</p></div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_3 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s2" name="s2"></a><p></p>
+<h2>Adding a Library (Step 2)</h2>
+<p>Now we will add a library to our project. This library will contain 
+our own implementation for computing the square root of a number. The 
+executable can then use this library instead of the standard square root
+ function provided by the compiler. For this tutorial we will put the 
+library into a subdirectory called MathFunctions. It will have the 
+following one line CMakeLists.txt file:</p>
+<div class="textboxstyle">
+<pre>add_library(MathFunctions mysqrt.cxx)</pre>
+</div>
+<p>The source file mysqrt.cxx has one function called mysqrt that 
+provides similar functionality to the compiler’s sqrt function. To make 
+use of the new library we add an add_subdirectory call in the top level 
+CMakeLists.txt file so that the library will get built. We also add 
+another include directory so that the MathFunctions/MathFunctions.h 
+header file can be found for the function prototype. The last change is 
+to add the new library to the executable. The last few lines of the top 
+level CMakeLists.txt file now look like:</p>
+<div class="textboxstyle">
+<pre>include_directories ("${PROJECT_SOURCE_DIR}/MathFunctions")
+add_subdirectory (MathFunctions) 
+ 
+# add the executable
+add_executable (Tutorial tutorial.cxx)
+target_link_libraries (Tutorial MathFunctions)
+</pre>
+</div>
+<p>Now let us consider making the MathFunctions library optional. In 
+this tutorial there really isn’t any reason to do so, but with larger 
+libraries or libraries that rely on third party code you might want to. 
+The first step is to add an option to the top level CMakeLists.txt file.</p>
+<div class="textboxstyle">
+<pre># should we use our own math functions?
+option (USE_MYMATH 
+        "Use tutorial provided math implementation" ON) 
+</pre>
+</div>
+<p>This will show up in the CMake GUI with a default value of ON that 
+the user can change as desired. This setting will be stored in the cache
+ so that the user does not need to keep setting it each time they run 
+CMake on this project. The next change is to make the build and linking 
+of the MathFunctions library conditional. To do this we change the end 
+of the top level CMakeLists.txt file to look like the following:</p>
+<div class="textboxstyle">
+<pre># add the MathFunctions library?
+#
+if (USE_MYMATH)
+  include_directories ("${PROJECT_SOURCE_DIR}/MathFunctions")
+  add_subdirectory (MathFunctions)
+  set (EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
+endif (USE_MYMATH)
+ 
+# add the executable
+add_executable (Tutorial tutorial.cxx)
+target_link_libraries (Tutorial  ${EXTRA_LIBS})
+</pre>
+</div>
+<p>This uses the setting of USE_MYMATH to determine if the MathFunctions
+ should be compiled and used. Note the use of a variable (EXTRA_LIBS in 
+this case) to collect up any optional libraries to later be linked into 
+the executable. This is a common approach used to keep larger projects 
+with many optional components clean. The corresponding changes to the 
+source code are fairly straight forward and leave us with:</p>
+<div class="textboxstyle">
+<pre>// A simple program that computes the square root of a number
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+#include "TutorialConfig.h"
+#ifdef USE_MYMATH
+#include "MathFunctions.h"
+#endif
+ 
+int main (int argc, char *argv[])
+{
+  if (argc &lt; 2)
+    {
+    fprintf(stdout,"%s Version %d.%d\n", argv[0],
+            Tutorial_VERSION_MAJOR,
+            Tutorial_VERSION_MINOR);
+    fprintf(stdout,"Usage: %s number\n",argv[0]);
+    return 1;
+    }
+ 
+  double inputValue = atof(argv[1]);
+ 
+#ifdef USE_MYMATH
+  double outputValue = mysqrt(inputValue);
+#else
+  double outputValue = sqrt(inputValue);
+#endif
+ 
+  fprintf(stdout,"The square root of %g is %g\n",
+          inputValue, outputValue);
+  return 0;
+}
+
+</pre>
+</div>
+<p>In the source code we make use of USE_MYMATH as well. This is 
+provided from CMake to the source code through the TutorialConfig.h.in 
+configured file by adding the following line to it:</p>
+<div class="textboxstyle">
+<pre>#cmakedefine USE_MYMATH
+</pre>
+</div>
+				</div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_4 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s3" name="s3"></a><p></p>
+<h2>Installing and Testing (Step 3)</h2>
+<p>For the next step we will add install rules and testing support to 
+our project. The install rules are fairly straight forward. For the 
+MathFunctions library we setup the library and the header file to be 
+installed by adding the following two lines to MathFunctions’ 
+CMakeLists.txt file:</p>
+<div class="textboxstyle">
+<pre>install (TARGETS MathFunctions DESTINATION bin)
+install (FILES MathFunctions.h DESTINATION include)
+</pre>
+</div>
+<p>For the application the following lines are added to the top level 
+CMakeLists.txt file to install the executable and the configured header 
+file:</p>
+<div class="textboxstyle">
+<pre># add the install targets
+install (TARGETS Tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"        
+         DESTINATION include)
+</pre>
+</div>
+<p>That is all there is to it. At this point you should be able to build
+ the tutorial, then type make install (or build the INSTALL target from 
+an IDE) and it will install the appropriate header files, libraries, and
+ executables. The CMake variable CMAKE_INSTALL_PREFIX is used to 
+determine the root of where the files will be installed. Adding testing 
+is also a fairly straight forward process. At the end of the top level 
+CMakeLists.txt file we can add a number of basic tests to verify that 
+the application is working correctly.</p>
+<div class="textboxstyle">
+<pre>include(CTest)
+
+# does the application run
+add_test (TutorialRuns Tutorial 25)
+# does it sqrt of 25
+add_test (TutorialComp25 Tutorial 25)
+set_tests_properties (TutorialComp25 PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
+# does it handle negative numbers
+add_test (TutorialNegative Tutorial -25)
+set_tests_properties (TutorialNegative PROPERTIES PASS_REGULAR_EXPRESSION "-25 is 0")
+# does it handle small numbers
+add_test (TutorialSmall Tutorial 0.0001)
+set_tests_properties (TutorialSmall PROPERTIES PASS_REGULAR_EXPRESSION "0.0001 is 0.01")
+# does the usage message work?
+add_test (TutorialUsage Tutorial)
+set_tests_properties (TutorialUsage PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*number")
+
+</pre>
+</div>
+<p>After building one may run the “ctest” command line tool to run the 
+tests. The first test simply verifies that the application runs, does 
+not segfault or otherwise crash, and has a zero return value. This is 
+the basic form of a CTest test. The next few tests all make use of the 
+PASS_REGULAR_EXPRESSION test property to verify that the output of the 
+test contains certain strings. In this case verifying that the computed 
+square root is what it should be and that the usage message is printed 
+when an incorrect number of arguments are provided. If you wanted to add
+ a lot of tests to test different input values you might consider 
+creating a macro like the following:</p>
+<div class="textboxstyle">
+<pre>#define a macro to simplify adding tests, then use it
+macro (do_test arg result)
+  add_test (TutorialComp${arg} Tutorial ${arg})
+  set_tests_properties (TutorialComp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endmacro (do_test)
+ 
+# do a bunch of result based tests
+do_test (25 "25 is 5")
+do_test (-25 "-25 is 0")
+</pre>
+</div>
+<p>For each invocation of do_test, another test is added to the project 
+with a name, input, and results based on the passed arguments.
+				</p></div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_5 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s4" name="s4"></a><p></p>
+<h2>Adding System Introspection (Step 4)</h2>
+<p>Next let us consider adding some code to our project that depends on 
+features the target platform may not have. For this example we will add 
+some code that depends on whether or not the target platform has the log
+ and exp functions. Of course almost every platform has these functions 
+but for this tutorial assume that they are less common. If the platform 
+has log then we will use that to compute the square root in the mysqrt 
+function. We first test for the availability of these functions using 
+the CheckFunctionExists.cmake macro in the top level CMakeLists.txt file
+ as follows:</p>
+<div class="textboxstyle">
+<pre># does this system provide the log and exp functions?
+include (CheckFunctionExists)
+check_function_exists (log HAVE_LOG)
+check_function_exists (exp HAVE_EXP)
+</pre>
+</div>
+<p>Next we modify the TutorialConfig.h.in to define those values if CMake found them on the platform as follows:</p>
+<div class="textboxstyle">
+<pre>// does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP
+</pre>
+</div>
+<p>It is important that the tests for log and exp are done before the 
+configure_file command for TutorialConfig.h. The configure_file command 
+immediately configures the file using the current settings in CMake. 
+Finally in the mysqrt function we can provide an alternate 
+implementation based on log and exp if they are available on the system 
+using the following code:</p>
+<div class="textboxstyle">
+<pre>// if we have both log and exp then use them
+#if defined (HAVE_LOG) &amp;&amp; defined (HAVE_EXP)
+  result = exp(log(x)*0.5);
+#else // otherwise use an iterative approach
+  . . .
+
+</pre>
+</div>
+				</div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_6 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s5" name="s5"></a><p></p>
+<h2>Adding a Generated File and Generator (Step 5)</h2>
+<p>In this section we will show how you can add a generated source file 
+into the build process of an application. For this example we will 
+create a table of precomputed square roots as part of the build process,
+ and then compile that table into our application. To accomplish this we
+ first need a program that will generate the table. In the MathFunctions
+ subdirectory a new source file named MakeTable.cxx will do just that.</p>
+<div class="textboxstyle">
+<pre>// A simple program that builds a sqrt table 
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+ 
+int main (int argc, char *argv[])
+{
+  int i;
+  double result;
+ 
+  // make sure we have enough arguments
+  if (argc &lt; 2)
+    {
+    return 1;
+    }
+  
+  // open the output file
+  FILE *fout = fopen(argv[1],"w");
+  if (!fout)
+    {
+    return 1;
+    }
+  
+  // create a source file with a table of square roots
+  fprintf(fout,"double sqrtTable[] = {\n");
+  for (i = 0; i &lt; 10; ++i)
+    {
+    result = sqrt(static_cast&lt;double&gt;(i));
+    fprintf(fout,"%g,\n",result);
+    }
+ 
+  // close the table with a zero
+  fprintf(fout,"0};\n");
+  fclose(fout);
+  return 0;
+}
+
+</pre>
+</div>
+<p>Note that the table is produced as valid C++ code and that the name 
+of the file to write the output to is passed in as an argument. The next
+ step is to add the appropriate commands to MathFunctions’ 
+CMakeLists.txt file to build the MakeTable executable, and then run it 
+as part of the build process. A few commands are needed to accomplish 
+this, as shown below.</p>
+<div class="textboxstyle">
+<pre># first we add the executable that generates the table
+add_executable(MakeTable MakeTable.cxx)
+ 
+# add the command to generate the source code
+add_custom_command (
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  COMMAND MakeTable ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  DEPENDS MakeTable
+  )
+ 
+# add the binary tree directory to the search path for 
+# include files
+include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+ 
+# add the main library
+add_library(MathFunctions mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h  )
+
+</pre>
+</div>
+<p>First the executable for MakeTable is added as any other executable 
+would be added. Then we add a custom command that specifies how to 
+produce Table.h by running MakeTable. Next we have to let CMake know 
+that mysqrt.cxx depends on the generated file Table.h. This is done by 
+adding the generated Table.h to the list of sources for the library 
+MathFunctions. We also have to add the current binary directory to the 
+list of include directories so that Table.h can be found and included by
+ mysqrt.cxx. When this project is built it will first build the 
+MakeTable executable. It will then run MakeTable to produce Table.h. 
+Finally, it will compile mysqrt.cxx which includes Table.h to produce 
+the MathFunctions library. At this point the top level CMakeLists.txt 
+file with all the features we have added looks like the following:</p>
+<div class="textboxstyle">
+<pre>cmake_minimum_required (VERSION 2.6)
+project (Tutorial)
+include(CTest)
+ 
+# The version number.
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
+ 
+# does this system provide the log and exp functions?
+include (${CMAKE_ROOT}/Modules/CheckFunctionExists.cmake)
+ 
+check_function_exists (log HAVE_LOG)
+check_function_exists (exp HAVE_EXP)
+ 
+# should we use our own math functions
+option(USE_MYMATH 
+  "Use tutorial provided math implementation" ON)
+ 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/TutorialConfig.h.in"
+  "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+  )
+ 
+# add the binary tree to the search path for include files
+# so that we will find TutorialConfig.h
+include_directories ("${PROJECT_BINARY_DIR}")
+ 
+# add the MathFunctions library?
+if (USE_MYMATH)
+  include_directories ("${PROJECT_SOURCE_DIR}/MathFunctions")
+  add_subdirectory (MathFunctions)
+  set (EXTRA_LIBS ${EXTRA_LIBS} MathFunctions)
+endif (USE_MYMATH)
+ 
+# add the executable
+add_executable (Tutorial tutorial.cxx)
+target_link_libraries (Tutorial  ${EXTRA_LIBS})
+ 
+# add the install targets
+install (TARGETS Tutorial DESTINATION bin)
+install (FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"        
+         DESTINATION include)
+ 
+# does the application run
+add_test (TutorialRuns Tutorial 25)
+ 
+# does the usage message work?
+add_test (TutorialUsage Tutorial)
+set_tests_properties (TutorialUsage
+  PROPERTIES 
+  PASS_REGULAR_EXPRESSION "Usage:.*number"
+  )
+ 
+ 
+#define a macro to simplify adding tests
+macro (do_test arg result)
+  add_test (TutorialComp${arg} Tutorial ${arg})
+  set_tests_properties (TutorialComp${arg}
+    PROPERTIES PASS_REGULAR_EXPRESSION ${result}
+    )
+endmacro (do_test)
+ 
+# do a bunch of result based tests
+do_test (4 "4 is 2")
+do_test (9 "9 is 3")
+do_test (5 "5 is 2.236")
+do_test (7 "7 is 2.645")
+do_test (25 "25 is 5")
+do_test (-25 "-25 is 0")
+do_test (0.0001 "0.0001 is 0.01")
+
+</pre>
+</div>
+<p>TutorialConfig.h.in looks like:</p>
+<div class="textboxstyle">
+<pre>// the configured options and settings for Tutorial
+#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
+#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+#cmakedefine USE_MYMATH
+ 
+// does the platform provide exp and log functions?
+#cmakedefine HAVE_LOG
+#cmakedefine HAVE_EXP
+
+</pre>
+</div>
+<p>And the CMakeLists.txt file for MathFunctions looks like:</p>
+<div class="textboxstyle">
+<pre># first we add the executable that generates the table
+add_executable(MakeTable MakeTable.cxx)
+# add the command to generate the source code
+add_custom_command (
+  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  DEPENDS MakeTable
+  COMMAND MakeTable ${CMAKE_CURRENT_BINARY_DIR}/Table.h
+  )
+# add the binary tree directory to the search path 
+# for include files
+include_directories( ${CMAKE_CURRENT_BINARY_DIR} )
+ 
+# add the main library
+add_library(MathFunctions mysqrt.cxx ${CMAKE_CURRENT_BINARY_DIR}/Table.h)
+ 
+install (TARGETS MathFunctions DESTINATION bin)
+install (FILES MathFunctions.h DESTINATION include)
+
+</pre>
+</div>
+				</div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_7 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s6" name="s6"></a><p></p>
+<p>&nbsp;</p>
+<h2>Building an Installer (Step 6)</h2>
+<p>Next suppose that we want to distribute our project to other people 
+so that they can use it. We want to provide both binary and source 
+distributions on a variety of platforms. This is a little different from
+ the install we did previously in section Installing and Testing (Step 
+3), where we were installing the binaries that we had built from the 
+source code. In this example we will be building installation packages 
+that support binary installations and package management features as 
+found in cygwin, debian, RPMs etc. To accomplish this we will use CPack 
+to create platform specific installers as described in Chapter Packaging
+ with CPack. Specifically we need to add a few lines to the bottom of 
+our toplevel CMakeLists.txt file.</p>
+<div class="textboxstyle">
+<pre># build a CPack driven installer package
+include (InstallRequiredSystemLibraries)
+set (CPACK_RESOURCE_FILE_LICENSE  
+     "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+set (CPACK_PACKAGE_VERSION_MAJOR "${Tutorial_VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${Tutorial_VERSION_MINOR}")
+include (CPack)
+</pre>
+</div>
+<p>That is all there is to it. We start by including 
+InstallRequiredSystemLibraries. This module will include any runtime 
+libraries that are needed by the project for the current platform. Next 
+we set some CPack variables to where we have stored the license and 
+version information for this project. The version information makes use 
+of the variables we set earlier in this tutorial. Finally we include the
+ CPack module which will use these variables and some other properties 
+of the system you are on to setup an installer.</p>
+<p>The next step is to build the project in the usual manner and then 
+run CPack on it. To build a binary distribution you would run:</p>
+<div class="textboxstyle">
+<pre>cpack --config CPackConfig.cmake
+</pre>
+</div>
+<p>To create a source distribution you would type</p>
+<div class="textboxstyle">
+<pre>cpack --config CPackSourceConfig.cmake
+</pre>
+</div>
+				</div>
+			</div> <!-- .et_pb_text --><div class="et_pb_module et_pb_text et_pb_text_8 et_pb_bg_layout_light  et_pb_text_align_left">
+				
+				
+				<div class="et_pb_text_inner">
+					<a id="s7" name="s7"></a><p></p>
+<h2>Adding Support for a Dashboard (Step 7)</h2>
+<p>Adding support for submitting our test results to a dashboard is very
+ easy. We already defined a number of tests for our project in the 
+earlier steps of this tutorial. We just have to run those tests and 
+submit them to a dashboard. To include support for dashboards we include
+ the CTest module in our toplevel CMakeLists.txt file.</p>
+<div class="textboxstyle">
+<pre># enable dashboard scripting
+include (CTest)
+</pre>
+</div>
+<p>We also create a CTestConfig.cmake file where we can specify the name of this project for the dashboard.</p>
+<div class="textboxstyle">
+<pre>set (CTEST_PROJECT_NAME "Tutorial")
+</pre>
+</div>
+<p>CTest will read in this file when it runs. To create a simple 
+dashboard you can run CMake on your project, change directory to the 
+binary tree, and then run ctest –D Experimental. The results of your 
+dashboard will be uploaded to Kitware’s public dashboard <a href="http://www.cdash.org/CDash/index.php?project=PublicDashboard">here</a>.
+				</p></div>
+			</div> <!-- .et_pb_text -->
+			</div> <!-- .et_pb_column -->
+				
+				
+			</div> <!-- .et_pb_row -->
+				
+				
+			</div> <!-- .et_pb_section -->			</div>
+			
+		</div>					</div> <!-- .entry-content -->
+
+				
+				</article> <!-- .et_pb_post -->
+
+			
+
+</div> <!-- #main-content -->
+
+
+			<footer id="main-footer">
+				
+
+		
+				<div id="footer-bottom">
+					<div class="container clearfix">
+				<ul class="et-social-icons">
+
+	<li class="et-social-icon et-social-facebook">
+		<a href="https://www.facebook.com/kitware" class="icon">
+			<span>Facebook</span>
+		</a>
+	</li>
+	<li class="et-social-icon et-social-twitter">
+		<a href="https://twitter.com/Kitware" class="icon">
+			<span>Twitter</span>
+		</a>
+	</li>
+	<li class="et-social-icon et-social-google-plus">
+		<a href="https://plus.google.com/111200425937199925962/posts" class="icon">
+			<span>Google</span>
+		</a>
+	</li>
+	<li class="et-social-icon et-social-rss">
+		<a href="https://cmake.org/feed/" class="icon">
+			<span>RSS</span>
+		</a>
+	</li>
+
+</ul>
+						<p id="footer-info"><a style="color: #666" href="https://www.kitware.com/">Kitware</a> | <a style="color: #666" href="https://www.kitware.com/what-we-offer/">What We Do</a> | <a style="color: #666" href="https://www.kitware.com/platforms/">Open Source</a> | <a style="color: #666" href="https://www.kitware.com/privacy/#privacy-policy">Privacy Notice</a> | <a style="color: #666" href="https://www.kitware.com/contact-us/">Contact</a>
+				</p>
+					</div>	<!-- .container -->
+				</div>
+			</footer> <!-- #main-footer -->
+		</div> <!-- #et-main-area -->
+
+
+	</div> <!-- #page-container -->
+
+		<script type="text/javascript">
+			</script>
+	<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="CMake%20Tutorial%20%20%20CMake_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-6042509-4");
+pageTracker._trackPageview();
+</script><script type="text/javascript">
+/* <![CDATA[ */
+var wpcf7 = {"apiSettings":{"root":"https:\/\/cmake.org\/wp-json\/contact-form-7\/v1","namespace":"contact-form-7\/v1"},"cached":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/scripts.js"></script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/api.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var DIVI = {"item_count":"%d Item","items_count":"%d Items"};
+var et_shortcodes_strings = {"previous":"Previous","next":"Next"};
+var et_pb_custom = {"ajaxurl":"https:\/\/cmake.org\/wp-admin\/admin-ajax.php","images_uri":"https:\/\/cmake.org\/wp-content\/themes\/Divi\/images","builder_images_uri":"https:\/\/cmake.org\/wp-content\/themes\/Divi\/includes\/builder\/images","et_frontend_nonce":"e3b16ba90c","subscription_failed":"Please, check the fields below to make sure you entered the correct information.","et_ab_log_nonce":"863d3657c8","fill_message":"Please, fill in the following fields:","contact_error_message":"Please, fix the following errors:","invalid":"Invalid email","captcha":"Captcha","prev":"Prev","previous":"Previous","next":"Next","wrong_captcha":"You entered the wrong number in captcha.","ignore_waypoints":"no","is_divi_theme_used":"1","widget_search_selector":".widget_search","is_ab_testing_active":"","page_id":"173","unique_test_id":"","ab_bounce_rate":"5","is_cache_plugin_active":"yes","is_shortcode_tracking":"","tinymce_uri":""};
+var et_pb_box_shadow_elements = [];
+/* ]]> */
+</script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/custom.js"></script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/common.js"></script>
+<script type="text/javascript" src="CMake%20Tutorial%20%20%20CMake_files/wp-embed.js"></script>
+<style id="et-builder-module-design-cached-inline-styles">.et_pb_row_0.et_pb_row{margin-right:103px!important;margin-left:auto!important}.et_pb_column_0{z-index:9;position:relative}</style><script type="text/javascript">
+( function( grecaptcha, sitekey, actions ) {
+
+	var wpcf7recaptcha = {
+
+		execute: function( action ) {
+			grecaptcha.execute(
+				sitekey,
+				{ action: action }
+			).then( function( token ) {
+				var forms = document.getElementsByTagName( 'form' );
+
+				for ( var i = 0; i < forms.length; i++ ) {
+					var fields = forms[ i ].getElementsByTagName( 'input' );
+
+					for ( var j = 0; j < fields.length; j++ ) {
+						var field = fields[ j ];
+
+						if ( 'g-recaptcha-response' === field.getAttribute( 'name' ) ) {
+							field.setAttribute( 'value', token );
+							break;
+						}
+					}
+				}
+			} );
+		},
+
+		executeOnHomepage: function() {
+			wpcf7recaptcha.execute( actions[ 'homepage' ] );
+		},
+
+		executeOnContactform: function() {
+			wpcf7recaptcha.execute( actions[ 'contactform' ] );
+		},
+
+	};
+
+	grecaptcha.ready(
+		wpcf7recaptcha.executeOnHomepage
+	);
+
+	document.addEventListener( 'change',
+		wpcf7recaptcha.executeOnContactform, false
+	);
+
+	document.addEventListener( 'wpcf7submit',
+		wpcf7recaptcha.executeOnHomepage, false
+	);
+
+} )(
+	grecaptcha,
+	'6Le7WI4UAAAAADqIvi8fT1Th9CcSetoK1Ol0Fudh',
+	{"homepage":"homepage","contactform":"contactform"}
+);
+</script>
+
+
+<div><div class="grecaptcha-badge" data-style="bottomright" style="width: 256px; height: 60px; display: block; transition: right 0.3s ease 0s; position: fixed; bottom: 14px; right: -186px; box-shadow: gray 0px 0px 5px;"><div class="grecaptcha-logo"><iframe src="CMake%20Tutorial%20%20%20CMake_files/anchor.htm" role="presentation" name="a-hzsar9mxdbb0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" width="256" height="60" frameborder="0"></iframe></div><div class="grecaptcha-error"></div><textarea id="g-recaptcha-response-100000" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;">03AOLTBLTHw9GMfarC0fxymj9AwltFSnE_W5iX7ij5OOwWX_iO6i488RP-oRgYLNXLb68IiEMY72Bm4GrFW7rK0Tedls9cu1TwvVQSG5MFCMdrReVRh_y2068odNWdELNvMC3xxRJAem5cipIXUVoNAomRpvEg8SwCZlBiPsDiK7vSfjkOvD0cWLg6mtHJSJyLbQxii4cCCcGWkEag3qY93h8jNOJ6-qE4r9af8TNegsI_LYw36kEC7um4ZoguE-vJWOjeUWd-KwEa1Sx_9O2cB3IayV40XQ1fiTh2jVkB02JmQbC4BnCy587PaMIB6Tgpkpl3RFeTFg7b</textarea></div></div></body></html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me - Debug: cached@1565222837 -->
