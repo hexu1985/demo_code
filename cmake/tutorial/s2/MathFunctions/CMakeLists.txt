@@ -1,1 +1,1 @@
-add_library(MathFunctions mysqrt.cxx)
+add_library(MathFunctions SHARED mysqrt.cxx)

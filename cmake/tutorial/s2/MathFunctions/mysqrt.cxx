@@ -4,6 +4,6 @@
 
 double mysqrt (double x)
 {
-    cout << "mysqrt(" << x << ") called" << endl;;
+	std::cout << "mysqrt(" << x << ") called" << std::endl;
     return std::sqrt(x);
 }
