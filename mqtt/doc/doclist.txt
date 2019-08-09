@@ -1,0 +1,16 @@
+=============================================================================
+mqtt introduction
+https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
+https://github.com/mcxiaoke/mqtt
+
+=============================================================================
+Mosquitto mqtt broker
+https://www.imooc.com/article/40138
+https://blog.csdn.net/shagoo/article/details/7910598
+
+=============================================================================
+paho mqtt c/c++ client
+https://www.eclipse.org/paho/clients/c/
+https://www.eclipse.org/paho/clients/cpp/
+https://github.com/eclipse/paho.mqtt.cpp/tree/master/src/samples
+https://github.com/eclipse/paho.mqtt.cpp

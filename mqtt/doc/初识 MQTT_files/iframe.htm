@@ -1,0 +1,109 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=GBK"></head><body>
+<script type="text/javascript">
+try {
+   /**/
+(function() {
+    metric = function(url, wait)
+    {
+        setTimeout(function() {
+                var e = document.createElement("img");
+                e.src = url;
+            }, wait);
+    }
+    var intervals = [0, 10];
+    var inlen = intervals.length;
+    for (var k = 0; k < inlen; ++k)
+        this.metric("https://pixel.mathtag.com/misc/img?mm_bnc&bcdv="+k, intervals[k] * 1000);
+})();
+(function() {
+    try {
+	var sync_4815162342 = function() {
+this.urls = [
+[0, "https://pixel.mathtag.com/misc/img?mop_seq=0:20&mt_cb=452556&mop_top="],
+[4, "https://cm.g.doubleclick.net/pixel?google_nid=mediamath&google_cm&google_hm=yS5biJPQSgCSaAa5af_YHw"],
+[9, "https://pixel.rubiconproject.com/tap.php?v=4222&nid=1512&put=c92e5b88-93d0-4a00-9268-06b969ffd81f&expires=28"],
+[13, "https://ib.adnxs.com/getuid?https://sync.mathtag.com/sync/img?mt_exid=13&mt_mminit=1&mt_exuid=$UID"],
+[3, "https://simage2.pubmatic.com/AdServer/Pug?vcode=bz0yJnR5cGU9MSZjb2RlPTM2MiZ0bD00MzIwMA==&piggybackCookie=uid:c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[21, "https://pixel.advertising.com/ups/55938/sync?uid=c92e5b88-93d0-4a00-9268-06b969ffd81f&_origin=1"],
+[45, "https://cs.gssprt.jp/yie/ld/cs?dspid=tone&uid=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[5, "https://jp-u.openx.net/w/1.0/sd?id=536872786&val=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[10010, "https://stags.bluekai.com/site/4448?id=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[15, "https://dsum-sec.casalemedia.com/rum?cm_dsp_id=3&external_user_id=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[10090, "https://mediamath.digitru.st/sync/img?mt_exid=10090&mt_exuid=c92e5b88-93d0-4a00-9268-06b969ffd81f&foreign_sync&mt_van&mm_bct"],
+[0, "https://pixel.mathtag.com/misc/img?mop_seq=10:20&mt_cb=828552&mop_top=4:1565070784|9:1565070784|13:1565070784|3:1565070784|21:1565070784|45:1565070784|5:1565070784|10010:1565070784|15:1565070784|10090:1565070784|"],
+[10017, "https://idsync.rlcdn.com/361087.gif?partner_uid=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[10074, "https://cm.g.doubleclick.net/pixel?google_nid=mediamath_dmp&google_cm"],
+[46, "https://x.bidswitch.net/sync?dsp_id=80&user_id=c92e5b88-93d0-4a00-9268-06b969ffd81f&expires=30"],
+[40, "https://cs.adingo.jp/sync/?from=mediamath&id=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[16, "https://ad.360yield.com/match?publisher_dsp_id=263&external_user_id=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[10041, "https://uipglob.semasio.net/mediamath/1/info?sType=sync&sExtCookieId=c92e5b88-93d0-4a00-9268-06b969ffd81f&sInitiator=external"],
+[10008, "https://loadm.exelator.com/load/?p=204&g=101&buid=c92e5b88-93d0-4a00-9268-06b969ffd81f&j=0"],
+[10004, "https://dpm.demdex.net/ibs:dpid=269&dpuuid=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[36, "https://i.liadm.com/s/37464?bidder_id=7156&bidder_uuid=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[10040, "https://sync.crwdcntrl.net/map/c=4735/tp=MDMA/tpid=c92e5b88-93d0-4a00-9268-06b969ffd81f"],
+[0, "https://pixel.mathtag.com/misc/img?mop_seq=20:20&mt_cb=971228&check=c92e5b88-93d0-4a00-9268-06b969ffd81f&mop_top=4:1565070784|9:1565070784|13:1565070784|3:1565070784|21:1565070784|45:1565070784|5:1565070784|10010:1565070784|15:1565070784|10090:1565070784|10017:1565070784|10074:1565070784|46:1565070784|40:1565070784|16:1565070784|10041:1565070784|10008:1565070784|10004:1565070784|36:1565070784|10040:1565070784|"]
+]
+	    this.progress = 0;
+	    var self = this;
+	    var tims = "";
+	    var errs = "";
+	    this.sync = function(i)
+	    {
+		var e = document.createElement("img");
+		var now = new Date();
+		if (e.addEventListener)
+		{
+		    e.addEventListener('load', function() {
+			var temp = new Date().getTime() - now.getTime(); tims += self.urls[i][0]+':'+temp+"|";
+		    });
+		    e.addEventListener('error', function() {
+			var temp = new Date().getTime() - now.getTime(); errs += self.urls[i][0]+':'+temp+"|";
+		    });
+		}
+		e.src = self.urls[i][1];
+	    }
+	    this.batch = function()
+	    {
+		for (var i = self.progress; i < self.urls.length; ++i)
+		{
+		    self.sync(i);
+		}
+	    }
+	    this.final = function()
+	    {
+		var e = document.createElement("img");
+		e.src = self.urls[self.urls.length-1][1]+"&final&timings="+tims+"&errors="+errs;
+	    }
+	    this.some = function(howmany)
+	    {
+		var count = 0;
+		for (var i = self.progress; i < self.urls.length && count < howmany; ++i)
+		{
+		    self.sync(i);
+		    self.progress++;
+		    count++;
+		}
+	    }
+	}
+	var s_4815162342 = new sync_4815162342();
+	s_4815162342.some(1);
+	setTimeout(function(){s_4815162342.some(2);}, 1000);
+	setTimeout(s_4815162342.batch, 3000);
+	setTimeout(s_4815162342.final, 10000);
+    }
+    catch(ex)
+    {
+	document.createElement("img").src="//pixel.mathtag.com/error/img?error_domain=syncjs&what="+encodeURIComponent(ex.message);
+    }
+})();
+
+}
+catch(ex)
+{
+   document.createElement("img").src="//pixel.mathtag.com/error/img?error_domain=wrap_iframe&what="+encodeURIComponent(ex.message);
+}
+</script>
+
+
+</body></html>
