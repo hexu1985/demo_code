@@ -14,3 +14,6 @@ https://www.eclipse.org/paho/clients/c/
 https://www.eclipse.org/paho/clients/cpp/
 https://github.com/eclipse/paho.mqtt.cpp/tree/master/src/samples
 https://github.com/eclipse/paho.mqtt.cpp
+https://github.com/eclipse/paho.mqtt.c
+
+https://www.cnblogs.com/XiaoGuanYu/p/8168714.html
