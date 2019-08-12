@@ -17,3 +17,10 @@ https://github.com/eclipse/paho.mqtt.cpp
 https://github.com/eclipse/paho.mqtt.c
 
 https://www.cnblogs.com/XiaoGuanYu/p/8168714.html
+https://blog.csdn.net/qingdujun/article/details/71055759
+
+=============================================================================
+paho-mqtt3a ： 一般实际开发中就是使用这个，a表示的是异步消息推送（asynchronous）。
+paho-mqtt3as ： as表示的是 异步+加密（asynchronous+OpenSSL）。
+paho-mqtt3c ： c 表示的应该是同步（Synchronize），一般性能较差，是发送+等待模式。
+paho-mqtt3cs ： 同上，增加了一个OpenSSL而已。

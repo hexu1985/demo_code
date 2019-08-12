@@ -36,7 +36,7 @@ elseif(UNIX)
 	set(LIBS_SYSTEM c stdc++)
 endif()
 
-set(PAHO_CPP_LIB paho-mqttpp3 paho-mqtt3as)
+set(PAHO_CPP_LIB paho-mqttpp3 paho-mqtt3a)
 
 set (THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
