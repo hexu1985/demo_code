@@ -40,7 +40,7 @@
 #include "mqtt/async_client.h"
 
 const std::string SERVER_ADDRESS("tcp://localhost:1883");
-const std::string CLIENT_ID("async_subcribe_cpp");
+std::string CLIENT_ID("async_subcribe_cpp");
 const std::string TOPIC("hello");
 
 const int	QOS = 1;
@@ -168,6 +168,11 @@ public:
 
 int main(int argc, char* argv[])
 {
+
+	if (argc == 2) {
+		CLIENT_ID += argv[1];
+	}
+
 	mqtt::connect_options connOpts;
 	connOpts.set_keep_alive_interval(20);
 	connOpts.set_clean_session(true);
