@@ -228,6 +228,10 @@ int main(int argc, char *argv[])
 	mqtt::message willmsg(TOPIC, LWT_PAYLOAD, 1, true);
 	mqtt::will_options will(willmsg);
 	pub_conopts.set_will(will);
+#ifdef USE_MQTTVERSION_5
+	pub_conopts.set_mqtt_version(MQTTVERSION_5);
+	pub_conopts.set_clean_start(true);
+#endif
 
 	cout << "  ...OK" << endl;
 
@@ -240,7 +244,12 @@ int main(int argc, char *argv[])
 	// sub client connect
 	mqtt::connect_options sub_connopts;
 	sub_connopts.set_keep_alive_interval(20);
+#ifdef USE_MQTTVERSION_5
+	sub_connopts.set_mqtt_version(MQTTVERSION_5);
+	sub_connopts.set_clean_start(true);
+#else
 	sub_connopts.set_clean_session(true);
+#endif
 
 	mqtt::async_client sub_client(address, clientID+".sub");
 
