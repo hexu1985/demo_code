@@ -2,6 +2,7 @@
 mqtt introduction
 https://www.ibm.com/developerworks/cn/iot/iot-mqtt-why-good-for-iot/index.html
 https://github.com/mcxiaoke/mqtt
+https://www.zybuluo.com/khan-lau/note/1325300
 
 =============================================================================
 Mosquitto mqtt broker
