@@ -14,12 +14,12 @@ const std::string DFLT_SERVER_ADDRESS	{ "tcp://localhost:1883" };
 const std::string DFLT_CLIENT_ID		{ "mqttpp_ping" };
 
 const std::string TOPIC("hello");
-const int	QOS = 1;
+const int	QOS = 0;
 const char* LWT_PAYLOAD = "Last will and testament.";
 
 const int	N_RETRY_ATTEMPTS = 5;
 
-const int MAX_PING_PKG_NUM = 6;
+const int MAX_PING_PKG_NUM = 50;
 using Clock = chrono::high_resolution_clock;
 using TimePoint = Clock::time_point;
 TimePoint g_pub_time;

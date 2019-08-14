@@ -1,0 +1,322 @@
+Initializing for server 'tcp://10.10.40.150:1883'...
+  ...OK
+
+PubConnecting...
+PubWaiting for the connection...
+  ...OK
+Connecting to the MQTT server...
+SubConnection success
+
+Subscribing to topic 'hello'
+	for client mqttpp_ping.sub using QoS0
+
+Press Q<Enter> to quit
+
+Subscription success for token: [1]
+	token topic: 'hello', ...
+
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'A'
+
+	time=40.906 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'B'
+
+	time=1.88 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'C'
+
+	time=1.935 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'D'
+
+	time=1.822 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'E'
+
+	time=6.759 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'F'
+
+	time=2.136 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'G'
+
+	time=1.895 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'H'
+
+	time=1.92 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'I'
+
+	time=1.951 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'J'
+
+	time=1.952 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'K'
+
+	time=1.88 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'L'
+
+	time=1.897 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'M'
+
+	time=1.864 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'N'
+
+	time=1.913 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'O'
+
+	time=1.927 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'P'
+
+	time=1.926 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'Q'
+
+	time=1.908 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'R'
+
+	time=1.811 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'S'
+
+	time=1.868 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'T'
+
+	time=1.898 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'U'
+
+	time=1.85 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'V'
+
+	time=1.836 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'W'
+
+	time=1.916 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'X'
+
+	time=1.909 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'Y'
+
+	time=1.885 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'Z'
+
+	time=1.964 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: '['
+
+	time=1.903 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: '\'
+
+	time=1.869 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: ']'
+
+	time=1.871 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: '^'
+
+	time=1.957 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: '_'
+
+	time=1.944 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: '`'
+
+	time=1.894 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'a'
+
+	time=1.923 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'b'
+
+	time=1.888 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'c'
+
+	time=1.901 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'd'
+
+	time=1.771 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'e'
+
+	time=1.796 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'f'
+
+	time=1.825 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'g'
+
+	time=1.868 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'h'
+
+	time=1.828 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'i'
+
+	time=1.795 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'j'
+
+	time=1.736 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'k'
+
+	time=1.747 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'l'
+
+	time=1.775 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'm'
+
+	time=1.869 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'n'
+
+	time=1.797 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'o'
+
+	time=1.832 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'p'
+
+	time=1.872 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'q'
+
+	time=1.751 ms
+	PubListener success for token: 0
+SubMessage arrived
+	topic: 'hello'
+	payload: 'r'
+
+	time=1.851 ms
+
+Disconnecting...
+  ...OK
+
+Disconnecting from the MQTT server...OK
