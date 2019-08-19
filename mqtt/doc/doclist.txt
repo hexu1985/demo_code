@@ -10,6 +10,10 @@ https://www.imooc.com/article/40138
 https://blog.csdn.net/shagoo/article/details/7910598
 
 =============================================================================
+Mosquitto ssl/tls
+https://blog.csdn.net/espressif/article/details/78541435
+
+=============================================================================
 paho mqtt c/c++ client
 https://www.eclipse.org/paho/clients/c/
 https://www.eclipse.org/paho/clients/cpp/
@@ -25,3 +29,4 @@ paho-mqtt3a ： 一般实际开发中就是使用这个，a表示的是异步消
 paho-mqtt3as ： as表示的是 异步+加密（asynchronous+OpenSSL）。
 paho-mqtt3c ： c 表示的应该是同步（Synchronize），一般性能较差，是发送+等待模式。
 paho-mqtt3cs ： 同上，增加了一个OpenSSL而已。
+
