@@ -46,9 +46,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 ## binary files
 add_executable(mqttpp_ping mqttpp_ping.cpp)
+add_executable(async_publish async_publish.cpp)
 
 ## link binaries
 target_link_libraries(mqttpp_ping ${PAHO_CPP_LIB})
+target_link_libraries(async_publish ${PAHO_CPP_LIB})
 
 set(INSTALL_TARGETS
 	mqttpp_ping 
