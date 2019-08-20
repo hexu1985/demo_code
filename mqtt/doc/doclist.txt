@@ -12,6 +12,11 @@ https://blog.csdn.net/shagoo/article/details/7910598
 =============================================================================
 Mosquitto ssl/tls
 https://blog.csdn.net/espressif/article/details/78541435
+https://blog.csdn.net/u012377333/article/details/69397124
+
+=============================================================================
+Mosquitto auth
+https://blog.csdn.net/yuhaiyang457288/article/details/73822942
 
 =============================================================================
 paho mqtt c/c++ client
