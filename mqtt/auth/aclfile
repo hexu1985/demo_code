@@ -1,0 +1,13 @@
+# This affects access control for clients with no username.
+#topic read $SYS/#
+
+# This only affects clients with username "roger".
+#user roger
+#topic foo/bar
+user testuser
+topic write hello/#
+
+# This affects all clients.
+#pattern write $SYS/broker/connection/%c/state
+user testuser
+topic read hello/#
