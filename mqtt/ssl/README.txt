@@ -12,6 +12,8 @@ Error: Unknown configuration variable "cafile ..."
 而且小心文件路径后不要有多余的空格.
 3) 启动mosquitto
 $ mosquitto -c ./mosquitto.conf -v
+或
+$ mosquitto -c /etc/mosquitto/mosquitto.conf -d
 4) 启动mosquitto_sub
 $ mosquitto_sub -h 10.4.98.74 -p 8883 -t "/plant/peanut/UpdateTemperature" --cafile /home/hexu/TLSDir/ca/ca.crt --cert /home/hexu/TLSDir/client/client.crt --key /home/hexu/TLSDir/client/client.key
 # --cert和--key对应的参数可以省略, 即
