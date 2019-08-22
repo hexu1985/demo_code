@@ -25,6 +25,18 @@
 ## --- Library dependencies ---
 # commit id 0874b245be971d7d034d23e4cebf0a8d9f688f2e
 
+# Version 2.4 might work, but it won't find static libraries with odd names
+cmake_minimum_required(VERSION 2.6)
+ 
+# CMake used to complain without this
+#if(COMMAND cmake_policy)
+#  cmake_policy(SET CMP0003 NEW)
+#endif(COMMAND cmake_policy)
+ 
+SET(CMAKE_BUILD_TYPE "Debug")
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -36,7 +48,7 @@ elseif(UNIX)
 	set(LIBS_SYSTEM c stdc++)
 endif()
 
-set(PAHO_CPP_LIB paho-mqttpp3 paho-mqtt3a)
+set(PAHO_CPP_LIB paho-mqttpp3 paho-mqtt3as)
 
 set (THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -55,6 +67,7 @@ add_executable(rpc_math_cli rpc_math_cli.cpp)
 add_executable(rpc_math_srvr rpc_math_srvr.cpp)
 add_executable(pub_speed_test pub_speed_test.cpp)
 add_executable(mqttpp_chat mqttpp_chat.cpp)
+add_executable(async_echo_client async_echo_client.cpp)
 
 ## link binaries
 target_link_libraries(async_publish ${PAHO_CPP_LIB})
@@ -66,6 +79,7 @@ target_link_libraries(data_publish ${PAHO_CPP_LIB})
 target_link_libraries(rpc_math_cli ${PAHO_CPP_LIB})
 target_link_libraries(rpc_math_srvr ${PAHO_CPP_LIB})
 target_link_libraries(mqttpp_chat ${PAHO_CPP_LIB})
+target_link_libraries(async_echo_client ${PAHO_CPP_LIB})
 
 target_link_libraries(pub_speed_test ${PAHO_CPP_LIB}
     Threads::Threads)

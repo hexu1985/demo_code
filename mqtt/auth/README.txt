@@ -10,7 +10,7 @@ topic write hello/#
 
 user testuser
 topic read hello/#
-4) 用户认证测试:
+4) 启动mosquitto
 $ mosquitto -c /etc/mosquitto/mosquitto.conf -v
 或
 $ mosquitto -c /etc/mosquitto/mosquitto.conf -d
