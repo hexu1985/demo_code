@@ -68,6 +68,7 @@ add_executable(rpc_math_srvr rpc_math_srvr.cpp)
 add_executable(pub_speed_test pub_speed_test.cpp)
 add_executable(mqttpp_chat mqttpp_chat.cpp)
 add_executable(async_echo_client async_echo_client.cpp)
+add_executable(async_echo_server async_echo_server.cpp)
 
 ## link binaries
 target_link_libraries(async_publish ${PAHO_CPP_LIB})
@@ -80,6 +81,7 @@ target_link_libraries(rpc_math_cli ${PAHO_CPP_LIB})
 target_link_libraries(rpc_math_srvr ${PAHO_CPP_LIB})
 target_link_libraries(mqttpp_chat ${PAHO_CPP_LIB})
 target_link_libraries(async_echo_client ${PAHO_CPP_LIB})
+target_link_libraries(async_echo_server ${PAHO_CPP_LIB})
 
 target_link_libraries(pub_speed_test ${PAHO_CPP_LIB}
     Threads::Threads)
@@ -95,6 +97,8 @@ set(INSTALL_TARGETS
     rpc_math_srvr
 	  mqttpp_chat
     pub_speed_test
+	async_echo_client 
+	async_echo_server 
 )
 
 if(PAHO_WITH_SSL)

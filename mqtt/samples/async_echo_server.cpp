@@ -11,7 +11,7 @@
 using namespace std;
 
 const std::string DFLT_SERVER_ADDRESS	{ "tcp://localhost:1883" };
-const std::string DFLT_CLIENT_ID		{ "async_echo_client" };
+const std::string DFLT_CLIENT_ID		{ "async_echo_server" };
 
 const std::string SERVER_TOPIC("/req/echo");
 const std::string CLIENT_TOPIC("/resp/echo");
@@ -87,6 +87,8 @@ class Callback : public virtual mqtt::callback,
 	
 	string clientID_;
 
+	PubActionListener pubActionListener_;
+
 	// This deomonstrates manually reconnecting to the broker by calling
 	// connect() again. This is a possibility for an application that keeps
 	// a copy of it's original connect_options, or if the app wants to
@@ -119,12 +121,12 @@ class Callback : public virtual mqtt::callback,
 	// (Re)connection success
 	void connected(const std::string& cause) override {
 		std::cout << "\nConnection success" << std::endl;
-		std::cout << "\nSubscribing to topic '" << CLIENT_TOPIC << "'\n"
+		std::cout << "\nSubscribing to topic '" << SERVER_TOPIC << "'\n"
 			<< "\tfor client " << clientID_
 			<< " using QoS" << QOS << "\n"
-			<< std::endl;
+			<< "\nPress Q<Enter> to quit\n" << std::endl;
 
-		cli_.subscribe(CLIENT_TOPIC, QOS, nullptr, subListener_);
+		cli_.subscribe(SERVER_TOPIC, QOS, nullptr, subListener_);
 	}
 
 	// Callback for when the connection is lost.
@@ -144,6 +146,10 @@ class Callback : public virtual mqtt::callback,
 		std::cout << "Message arrived" << std::endl;
 		std::cout << "\ttopic: '" << msg->get_topic() << "'" << std::endl;
 		std::cout << "\tpayload: '" << msg->to_string() << "'\n" << std::endl;
+
+		// echo
+		mqtt::message_ptr echo_msg = mqtt::make_message(CLIENT_TOPIC, msg->get_payload_ref(), QOS, false);
+		cli_.publish(echo_msg, nullptr, pubActionListener_);
 	}
 
 	void delivery_complete(mqtt::delivery_token_ptr token) override {
@@ -164,37 +170,30 @@ int main(int argc, char *argv[])
 
 	// pub client connect
 	cout << "Initializing for server '" << address << "'..." << endl;
-	mqtt::async_client echo_client(address, clientID);
+	mqtt::async_client echo_server(address, clientID);
 
 	mqtt::connect_options connOpts;
 	connOpts.set_keep_alive_interval(20);
 	connOpts.set_clean_session(true);
 
-	Callback cb(echo_client, connOpts, clientID);
-	echo_client.set_callback(cb);
+	Callback cb(echo_server, connOpts, clientID);
+	echo_server.set_callback(cb);
 
 	cout << "  ...OK" << endl;
 
 	cout << "\nConnecting..." << endl;
-	mqtt::token_ptr conntok = echo_client.connect(connOpts);
+	mqtt::token_ptr conntok = echo_server.connect(connOpts);
 	cout << "Waiting for the connection..." << endl;
 	conntok->wait();
 	cout << "  ...OK" << endl;
 
-	PubActionListener pubActionListener;
-
-	std::string str;
-	while (std::getline(std::cin, str)) {
-		if (str.empty())
-		   break;	
-
-		// pub
-		mqtt::message_ptr msg = mqtt::make_message(SERVER_TOPIC, str.data(), str.size(), QOS, false);
-		echo_client.publish(msg, nullptr, pubActionListener);
-	}
+	// wait for quit
+	while (std::tolower(std::cin.get()) != 'q')
+		;
 
 	// Double check that there are no pending tokens
-	auto toks = echo_client.get_pending_delivery_tokens();
+
+	auto toks = echo_server.get_pending_delivery_tokens();
 	if (!toks.empty())
 		cout << "Error: There are pending delivery tokens!" << endl;
 
@@ -202,7 +201,7 @@ int main(int argc, char *argv[])
 
 	try {
 		std::cout << "\nDisconnecting from the MQTT server..." << std::flush;
-		echo_client.disconnect()->wait();
+		echo_server.disconnect()->wait();
 		std::cout << "OK" << std::endl;
 	}
 	catch (const mqtt::exception& exc) {
