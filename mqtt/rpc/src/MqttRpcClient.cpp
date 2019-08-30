@@ -15,11 +15,12 @@ const static std::string RPC_CLIENT_PUBLISH_TOPIC = "MqttRpcClient.publish_topic
 
 }	// namespace
 
-MqttRpcClient::MqttRpcClient(const MqttClientSettings &settings): MqttClientBase(settings)
+MqttRpcClient::MqttRpcClient(const MqttClientSettings &settings): 
+	MqttClientBase(settings),
+	pack_(settings.getClientID())
 {
 	subscribe_topic_ = get_subscribe_topic(settings);
 	publish_topic_ = get_publish_topic(settings);
-	last_message_id_ = 0;
 }
 
 MqttRpcClient::~MqttRpcClient()
@@ -68,6 +69,14 @@ MqttError MqttRpcClient::close()
 	}
 
 	return MqttError::no_error();
+}
+
+MqttError MqttRpcClient::notify(const std::string &method, const void *payload, size_t len)
+{
+	std::vector<uint8_t> buffer;
+	pack_.packNotifyPacket(buffer, method, payload, len);
+	auto ret = MqttClientBase::publish(publish_topic_, buffer.data(), buffer.size());
+	return ret.first;
 }
 
 void MqttRpcClient::set_subscribe_topic(MqttClientSettings &settings, const std::string &topic)

@@ -15,6 +15,7 @@ class async_client;
 class connect_options;
 class message;
 class delivery_token;
+class iaction_listener;
 }	// namespace mqtt
 
 namespace mqtt_rpc {
@@ -39,6 +40,7 @@ public:
 
 	typedef std::pair<MqttError, std::shared_ptr<mqtt::delivery_token>> PubRetType;
 	PubRetType publish(const std::string &topic, const void *payload, size_t len);
+	PubRetType publish(const std::string &topic, const void *payload, size_t len, std::shared_ptr<mqtt::iaction_listener> cb);
 	void wait(std::shared_ptr<mqtt::delivery_token> token);
 	bool wait(std::shared_ptr<mqtt::delivery_token> token, int nsecs);
 
@@ -55,7 +57,9 @@ protected:
 
 	void onConnectionLost();
 	virtual void onMessageArrived(std::shared_ptr<const mqtt::message> msg);
-	virtual std::shared_ptr<mqtt::delivery_token> publishMessage(std::shared_ptr<const mqtt::message> msg);
+	virtual std::shared_ptr<mqtt::delivery_token> publishMessage(
+			std::shared_ptr<const mqtt::message> msg, 
+			std::shared_ptr<mqtt::iaction_listener> cb);
 	virtual void onDeliveryComplete(std::shared_ptr<mqtt::delivery_token> token);
 
 	// do_ functions will run on worker thread
@@ -64,7 +68,9 @@ protected:
 	void do_disconnect(std::promise<MqttError> &prom);
 	void do_subscribe(SubscribeListener &cb);
 	void do_publish(std::promise<PubRetType> &prom, 
-			std::shared_ptr<const mqtt::message> msg);
+			std::shared_ptr<const mqtt::message> msg,
+			std::shared_ptr<mqtt::iaction_listener> cb
+			);
 	void do_setStatus(MqttClientStatus status);
 	void do_getStatus();
 	void do_reconnect();

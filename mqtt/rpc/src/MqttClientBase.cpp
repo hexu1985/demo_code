@@ -209,11 +209,18 @@ MqttError MqttClientBase::subscribe(const std::string &topic)
 MqttClientBase::PubRetType MqttClientBase::publish(const std::string &topic, 
 		const void *payload, size_t len)
 {
+	return publish(topic, payload, len, nullptr);
+}
+
+MqttClientBase::PubRetType MqttClientBase::publish(const std::string &topic, 
+		const void *payload, size_t len, 
+		std::shared_ptr<mqtt::iaction_listener> cb)
+{
 	std::promise<PubRetType> prom;
 	std::future<PubRetType> fut = prom.get_future();
 	auto task_queue = getTaskQueue();
 	mqtt::message_ptr pubmsg = mqtt::make_message(topic, payload, len, getQos(), false);
-	task_queue->pushTask(&MqttClientBase::do_publish, this, std::ref(prom), pubmsg);
+	task_queue->pushTask(&MqttClientBase::do_publish, this, std::ref(prom), pubmsg, cb);
 	PubRetType ret = fut.get();
 	return ret;
 }
@@ -239,7 +246,9 @@ void MqttClientBase::onMessageArrived(std::shared_ptr<const mqtt::message> msg)
 {
 }
 
-std::shared_ptr<mqtt::delivery_token> MqttClientBase::publishMessage(std::shared_ptr<const mqtt::message> msg)
+std::shared_ptr<mqtt::delivery_token> MqttClientBase::publishMessage(
+		std::shared_ptr<const mqtt::message> msg,
+		std::shared_ptr<mqtt::iaction_listener> cb)
 {
 	return client_handle_->publish(msg);
 }
@@ -298,7 +307,8 @@ void MqttClientBase::do_subscribe(SubscribeListener &cb)
 }
 
 void MqttClientBase::do_publish(std::promise<PubRetType> &prom, 
-		std::shared_ptr<const mqtt::message> msg)
+		std::shared_ptr<const mqtt::message> msg,
+		std::shared_ptr<mqtt::iaction_listener> cb)
 {
 	PubRetType ret;
 	if (client_status_ != MqttClientStatus::connected) {
@@ -308,7 +318,7 @@ void MqttClientBase::do_publish(std::promise<PubRetType> &prom,
 	}
 
 	try {
-		ret.second = publishMessage(msg);
+		ret.second = publishMessage(msg, cb);
 		ret.first = MqttError::no_error();
 	} catch (const mqtt::exception& e) {
 #ifdef DEBUG

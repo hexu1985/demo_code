@@ -1,9 +1,9 @@
 #ifndef MQTT_RPC_MQTT_RPC_CLIENT_INC
 #define MQTT_RPC_MQTT_RPC_CLIENT_INC
 
-#include <atomic>
 #include <string>
 #include "MqttClientBase.hpp"
+#include "MqttRpcClientPack.hpp"
 
 namespace mqtt_rpc {
 
@@ -26,9 +26,9 @@ public:
 	static const std::string &get_publish_topic(const MqttClientSettings &settings);
 
 private:
-	std::atomic<uint32_t> last_message_id_;
 	std::string subscribe_topic_;
 	std::string publish_topic_;
+	MqttRpcClientPack pack_;
 };
 
 }	// namespace mqtt_rpc
