@@ -1,5 +1,5 @@
-#ifndef MQTT_RPC_MQTT_RPC_CLIENT_PACK_INC
-#define MQTT_RPC_MQTT_RPC_CLIENT_PACK_INC
+#ifndef MQTT_RPC_MQTT_RPC_SERVER_PACK_INC
+#define MQTT_RPC_MQTT_RPC_SERVER_PACK_INC
 
 #include <string>
 #include <vector>
@@ -8,45 +8,24 @@
 
 namespace mqtt_rpc {
 
-class MqttRpcClientPack {
+class MqttRpcServerPack {
 public:
-	MqttRpcClientPack(const std::string &client_id): client_id_(client_id)
+	MqttRpcServerPack()
 	{
 		memset(&fix_header_, 0x00, sizeof(fix_header_));
 		set_uint16_to_bigend(fix_header_.gw_proto_ver, DEFAULT_PRODUCT_PROTO_VER);
 		set_uint16_to_bigend(fix_header_.product_id, DEFAULT_PRODUCT_ID);
 		set_uint16_to_bigend(fix_header_.product_proto_ver, DEFAULT_PRODUCT_PROTO_VER);
-
-		// TODO:
-		last_message_id_ = 0;
-	}
-
-	void set_message_id_begin(uint32_t message_id)
-	{
-		last_message_id_ = message_id;
 	}
 
 	typedef uint32_t message_id_type;
 
-	message_id_type packQueryPacket(std::vector<uint8_t> &buffer, 
-		const std::string &method, const void *payload, size_t len)
-	{
-		return packClientImpl(buffer, method, payload, len, MESSAGE_TYPE_QUERY);
-	}
-
-	message_id_type packNotifyPacket(std::vector<uint8_t> &buffer, 
-		const std::string &method, const void *payload, size_t len)
-	{
-		return packClientImpl(buffer, method, payload, len, MESSAGE_TYPE_NOTIFY);
-	}
-
-private:
-	message_id_type packClientImpl(std::vector<uint8_t> &buffer, 
-		const std::string &method, const void *payload, size_t len, 
-		uint16_t message_type)
+	message_id_type packReplyPacket(std::vector<uint8_t> &buffer, 
+		const std::string &client_id, uint32_t message_id, uint16_t return_code, 
+		const void *payload, size_t len)
 	{
 		buffer.clear();
-		size_t packet_length = header_length(method) + len;
+		size_t packet_length = header_length(client_id) + len;
 		buffer.resize(packet_length);
 
 		int offset = 0;
@@ -56,21 +35,20 @@ private:
 		offset += SIZE_FIX_HEADER;
 
 		// packet message type
-		pack_message_type(get_offset_ptr(buffer, offset), message_type);
+		pack_message_type(get_offset_ptr(buffer, offset), MESSAGE_TYPE_REPLY);
 		offset += SIZE_MESSAGE_TYPE_ITEM;
 
 		// packet message id
-		uint32_t message_id = generate_message_id();
 		pack_message_id(get_offset_ptr(buffer, offset), message_id);
 		offset += SIZE_MESSAGE_ID_ITEM;
 
 		// packet client id
-		pack_client_id(get_offset_ptr(buffer, offset), client_id_);
-		offset += SIZE_CLIENT_ID_ITEM + client_id_.length();
+		pack_client_id(get_offset_ptr(buffer, offset), client_id);
+		offset += SIZE_CLIENT_ID_ITEM + client_id.length();
 
-		// packet method
-		pack_method(get_offset_ptr(buffer, offset), method);
-		offset += SIZE_METHOD_ITEM + method.length();
+		// packet return code
+		pack_return_code(get_offset_ptr(buffer, offset), return_code);
+		offset += SIZE_RETURN_CODE_ITEM;
 
 		// pack payload start
 		pack_payload_start(get_offset_ptr(buffer, offset));
@@ -83,7 +61,7 @@ private:
 		return message_id;
 	}
 
-	size_t header_length(const std::string &method) const
+	size_t header_length(const std::string &client_id) const
 	{
 		static const size_t fix_length = SIZE_FIX_HEADER 
 								+ SIZE_MESSAGE_TYPE_ITEM
@@ -91,17 +69,12 @@ private:
 								+ SIZE_CLIENT_ID_ITEM 
 								+ SIZE_METHOD_ITEM 
 								+ SIZE_PAYLOAD_START_ITEM; 
-		return fix_length + method.length() + client_id_.length();
+		return fix_length + client_id.length();
 	}
 
 	static uint8_t *get_offset_ptr(std::vector<uint8_t> &buffer, int offset)
 	{
 		return buffer.data() + offset;
-	}
-
-	uint32_t generate_message_id()
-	{
-		return last_message_id_++;
 	}
 
 	void pack_message_type(uint8_t *ptr, uint16_t message_type)
@@ -132,6 +105,13 @@ private:
 		set_str_to_bigend(item->length, item->data, method);
 	}
 
+	void pack_return_code(uint8_t *ptr, uint16_t return_code)
+	{
+		MqttRpcReturnCodeItem *item = reinterpret_cast<MqttRpcReturnCodeItem *>(ptr);
+		set_uint16_to_bigend(item->type, TYPE_RETURN_CODE); 
+		set_uint16_to_bigend(item->data, return_code);
+	}
+
 	void pack_payload_start(uint8_t *ptr)
 	{
 		MqttRpcPayloadStartItem *item = reinterpret_cast<MqttRpcPayloadStartItem *>(ptr);
@@ -146,8 +126,6 @@ private:
 
 private:
 	MqttRpcFixHeader fix_header_;
-	std::string client_id_;
-	std::atomic<uint32_t> last_message_id_;
 };
 
 }	// namespace mqtt_rpc

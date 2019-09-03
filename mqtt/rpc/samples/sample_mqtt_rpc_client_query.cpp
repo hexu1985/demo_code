@@ -6,9 +6,9 @@ using namespace std;
 using namespace mqtt_rpc;
 
 const std::string DFLT_SERVER_ADDRESS	{ "tcp://localhost:1883" };
-const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_client_notify" };
+const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_client_query" };
 const std::string TOPIC					{ "hello" };
-const std::string METHOD				{ "notify|test" };
+const std::string METHOD				{ "query|test" };
 
 int main(int argc, char *argv[])
 {
@@ -35,15 +35,17 @@ int main(int argc, char *argv[])
 	std::cout << "open success!" << std::endl; 
 
 	std::string payload = "hello world!";
-	ret = client.notify(METHOD, payload.data(), payload.length());
+	std::string answer;
+	ret = client.query(answer, METHOD, payload.data(), payload.length());
 	if (!ret) {
-		std::cout << "notify error: "
+		std::cout << "query error: "
 				<< ret.getType() << ", " << ret.getCode()
 				<< std::endl;
 		exit(1);
 	}
 	
-	std::cout << "notify success" << std::endl;
+	std::cout << "query success" << std::endl;
+	std::cout << "answer is: " << answer << std::endl;
 
 	ret = client.close();
 

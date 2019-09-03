@@ -53,7 +53,6 @@ public:
 protected:
 	class ConnectListener;
 	class SubscribeListener;
-	class PublishListener;
 
 	void onConnectionLost();
 	virtual void onMessageArrived(std::shared_ptr<const mqtt::message> msg);

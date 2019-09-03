@@ -5,6 +5,7 @@
 
 #ifdef DEBUG
 #include <iostream>
+#include "dump_functions.hpp"
 #endif
 
 using mini_utils::TaskQueue;
@@ -54,7 +55,9 @@ private:
 #ifdef DEBUG
 		std::cout << "Message arrived" << std::endl;
 		std::cout << "\ttopic: '" << msg->get_topic() << "'" << std::endl;
-		std::cout << "\tpayload: '" << msg->to_string() << "'\n" << std::endl;
+		std::cout << "\tpayload: " << std::endl;
+		auto payload = msg->to_string();
+		mini_utils::dump((const uint8_t *) payload.data(), payload.size(), nullptr);
 #endif
 		client_.onMessageArrived(msg);
 	}
@@ -311,13 +314,13 @@ void MqttClientBase::do_publish(std::promise<PubRetType> &prom,
 		std::shared_ptr<mqtt::iaction_listener> cb)
 {
 	PubRetType ret;
-	if (client_status_ != MqttClientStatus::connected) {
+	if (client_status_ != MqttClientStatus::connected) {	// check status
 		ret.first = make_client_status_error(client_status_);
 		prom.set_value(ret);
 		return;
 	}
 
-	try {
+	try {	// call mqtt lib to publish message
 		ret.second = publishMessage(msg, cb);
 		ret.first = MqttError::no_error();
 	} catch (const mqtt::exception& e) {

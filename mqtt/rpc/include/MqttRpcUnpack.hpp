@@ -127,6 +127,16 @@ public:
 		return get_str_from_bigend(method_item_->length, method_item_->data);
 	}
 
+	bool hasReturnCode() const
+	{
+		return return_code_item_ != nullptr;
+	}
+
+	uint16_t getReturnCode() const
+	{
+		return get_uint16_from_bigend(return_code_item_->data); 
+	}
+
 	bool hasPayload() const
 	{
 		return payload_ != nullptr && payload_length_ != 0;

@@ -9,7 +9,7 @@ using namespace mqtt_rpc;
 using namespace mini_utils;
 
 const std::string DFLT_SERVER_ADDRESS	{ "tcp://localhost:1883" };
-const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_server_stub" };
+const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_server_notify_stub" };
 const std::string TOPIC					{ "hello" };
 
 class MqttSubClient: public MqttClientBase {

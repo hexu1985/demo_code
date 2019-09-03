@@ -5,6 +5,11 @@
 #include "MqttClientBase.hpp"
 #include "MqttRpcClientPack.hpp"
 
+// forward declare
+namespace mqtt {
+class delivery_token;
+}	// namespace mqtt
+
 namespace mqtt_rpc {
 
 class MqttRpcClient: protected MqttClientBase {
@@ -25,10 +30,22 @@ public:
 	static const std::string &get_subscribe_topic(const MqttClientSettings &settings);
 	static const std::string &get_publish_topic(const MqttClientSettings &settings);
 
+	class AutoRemoveQueryContext;
+	friend class AutoRemoveQueryContext; 
+	class QueryContext;
+	typedef uint32_t message_id_type;
+
+private:
+	void removeQueryContext(message_id_type message_id);
+	void onMessageArrived(std::shared_ptr<const mqtt::message> msg) override;
+	void do_removeQueryContext(message_id_type message_id);
+	void do_onMessageArrived(std::shared_ptr<const mqtt::message> msg);
+
 private:
 	std::string subscribe_topic_;
 	std::string publish_topic_;
 	MqttRpcClientPack pack_;
+	std::unordered_map<message_id_type, std::shared_ptr<QueryContext>> query_context_map_;
 };
 
 }	// namespace mqtt_rpc
