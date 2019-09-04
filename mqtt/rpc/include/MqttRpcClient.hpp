@@ -21,7 +21,7 @@ public:
 	MqttError close();
 
 	MqttError query(std::string &answer, const std::string &method, const void *payload, size_t len);
-	MqttError query(std::string &answer, const std::string &method, const void *payload, size_t len, int time_out_secs);
+	MqttError query(std::string &answer, const std::string &method, const void *payload, size_t len, size_t time_out_secs);
 	MqttError notify(const std::string &method, const void *payload, size_t len);
 
 	static void set_subscribe_topic(MqttClientSettings &settings, const std::string &topic);
@@ -40,6 +40,7 @@ private:
 	void onMessageArrived(std::shared_ptr<const mqtt::message> msg) override;
 	void do_removeQueryContext(message_id_type message_id);
 	void do_onMessageArrived(std::shared_ptr<const mqtt::message> msg);
+	void do_query(std::shared_ptr<QueryContext> query_context);
 
 private:
 	std::string subscribe_topic_;

@@ -1,3 +1,4 @@
+#include <chrono>
 #include "MqttRpcClient.hpp"
 #include "MqttRpcErrorEnum.hpp"
 #include "MqttRpcUnpack.hpp"
@@ -104,16 +105,20 @@ const std::string &MqttRpcClient::get_publish_topic(const MqttClientSettings &se
 
 class MqttRpcClient::QueryContext {
 public:
-	QueryContext() {} 
-
-	std::future<MqttError> getFuture()
+	QueryContext(uint32_t message_id, 
+			std::shared_ptr<std::vector<uint8_t>> query_packet):
+		message_id_(message_id), query_packet_(query_packet) 
 	{
-		return prom_.get_future();
+	} 
+
+	uint32_t getMessageID() const
+	{
+		return message_id_;
 	}
 
-	void setValue(MqttError error)
+	std::shared_ptr<std::vector<uint8_t>> getQueryPacket()
 	{
-		prom_.set_value(error);
+		return query_packet_;
 	}
 
 	void setReplyPacket(std::shared_ptr<std::vector<uint8_t>> reply_packet)
@@ -136,10 +141,22 @@ public:
 		return unpack_;
 	}
 
+	std::future<MqttError> getFuture()
+	{
+		return prom_.get_future();
+	}
+
+	void setValue(MqttError error)
+	{
+		prom_.set_value(error);
+	}
+
 private:
-	std::promise<MqttError> prom_;
+	uint32_t message_id_;
+	std::shared_ptr<std::vector<uint8_t>> query_packet_;
 	std::shared_ptr<std::vector<uint8_t>> reply_packet_;
 	std::shared_ptr<MqttRpcUnpack> unpack_;
+	std::promise<MqttError> prom_;
 };
 
 void MqttRpcClient::onMessageArrived(std::shared_ptr<const mqtt::message> msg)
@@ -202,6 +219,14 @@ void MqttRpcClient::do_onMessageArrived(std::shared_ptr<const mqtt::message> msg
 
 	// set reply message
 	auto query_context = iter->second;
+	if (query_context->getReplyPacket() != nullptr) {
+#ifdef DEBUG
+		std::cout << "duplicate reply packet of " 
+			<< message_id << "!" << std::endl;
+#endif
+		return;	
+	}
+
 	query_context->setReplyPacket(reply_packet); 
 	query_context->setUnpack(unpack);
 	query_context->setValue(MqttError::no_error());
@@ -229,33 +254,65 @@ private:
 	uint32_t message_id_;
 };
 
-MqttError MqttRpcClient::query(std::string &answer, const std::string &method, const void *payload, size_t len)
+void MqttRpcClient::do_query(std::shared_ptr<QueryContext> query_context)
 {
+	auto message_id = query_context->getMessageID();
+	query_context_map_[message_id] = query_context; 
+
+	auto query_packet = query_context->getQueryPacket();
+	mqtt::message_ptr msg = mqtt::make_message(publish_topic_, 
+			query_packet->data(), query_packet->size(), 
+			MqttClientBase::getQos(), false);
+
+	auto pub_ret = MqttClientBase::do_publish_aux(msg, nullptr);
+	if (!pub_ret.first) {
+#ifdef DEBUG
+		std::cout << "MqttRpcClient::do_query error: fail publish message_id(" 
+			<< message_id << "), error("
+			<< pub_ret.first.getType() << ", " << pub_ret.first.getCode() 
+			<< std::endl;
+#endif
+		query_context->setValue(pub_ret.first);
+		return;
+	}
+}
+
+MqttError MqttRpcClient::query(std::string &answer, const std::string &method, const void *payload, size_t len, size_t time_out_secs)
+{
+	auto abs_time = std::chrono::system_clock::now();
+	if (time_out_secs > 0) {
+		abs_time += std::chrono::seconds(time_out_secs);
+	}
+
 	// create packet
-	std::vector<uint8_t> buffer;
-	auto message_id = pack_.packQueryPacket(buffer, method, payload, len);
+	auto query_packet = std::make_shared<std::vector<uint8_t>>();
+	auto message_id = pack_.packQueryPacket(*query_packet, method, payload, len);
 
 	// create query context
-	auto query_context = std::make_shared<QueryContext>();
-	query_context_map_[message_id] = query_context; 
+	auto query_context = std::make_shared<QueryContext>(message_id, query_packet);
 	AutoRemoveQueryContext auto_remove_query_context(this, message_id);
 
 	// pulish query packet
-	auto ret = MqttClientBase::publish(publish_topic_, buffer.data(), buffer.size());
-	if (!ret.first) {
-#ifdef DEBUG
-		std::cout << "MqttRpcClient::query error: fail publish message_id(" 
-			<< message_id << "), error("
-			<< ret.first.getType() << ", " << ret.first.getCode() 
-			<< std::endl;
-#endif
-		return ret.first;
-	}
-	MqttClientBase::wait(ret.second);
+	auto task_queue = MqttClientBase::getTaskQueue();
+	task_queue->pushTask(&MqttRpcClient::do_query, this, query_context);
 
 	// waiting for reply packet
 	auto fut = query_context->getFuture();
-	fut.get();
+	auto fut_status = fut.wait_until(abs_time);
+	if (fut_status != std::future_status::ready) {
+		return make_rpc_lib_error(MQTT_RPC_CLIENT_QUERY_TIMEOUT);
+	}
+
+	auto ret = fut.get();
+	if (!ret) {
+#ifdef DEBUG
+		std::cout << "MqttRpcClient::query error: fail publish message_id(" 
+			<< message_id << "), error("
+			<< ret.getType() << ", " << ret.getCode() 
+			<< std::endl;
+#endif
+		return ret;
+	}
 
 	auto unpack = query_context->getUnpack();
 
@@ -296,10 +353,10 @@ MqttError MqttRpcClient::query(std::string &answer, const std::string &method, c
 	return MqttError::no_error();
 }
 
-MqttError MqttRpcClient::query(std::string &answer, const std::string &method, const void *payload, size_t len, int time_out_secs)
+MqttError MqttRpcClient::query(std::string &answer, const std::string &method, const void *payload, size_t len)
 {
-	// todo
-	return MqttError::no_error();
+	static const size_t default_query_timeout_secs = 60;
+	return query(answer, method, payload, len, default_query_timeout_secs);
 }
 
 void MqttRpcClient::removeQueryContext(message_id_type message_id)

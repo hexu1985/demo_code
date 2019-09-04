@@ -21,20 +21,25 @@ private:
 	// Re-connection failure
 	void on_failure(const mqtt::token& tok) override 
 	{
-		// todo:
+#ifdef DEBUG
+		std::cout << "\nReconnect failure" << std::endl;
+#endif
+		client_.onReconnectFailure();
 	}
 
 	// (Re)connection success
 	// Either this or connected() can be used for callbacks.
 	void on_success(const mqtt::token& tok) override 
 	{
-		// todo:
+#ifdef DEBUG
+		std::cout << "\nReconnect success" << std::endl;
+#endif
+		client_.onReconnectSuccess();
 	}
 
 	// (Re)connection success
 	void connected(const std::string& cause) override 
 	{
-		// todo:
 	}
 
 	// Callback for when the connection is lost.
@@ -95,7 +100,7 @@ private:
 			<< tok.get_message_id() << std::endl;
 #endif
 		task_queue_->pushTask(&MqttClientBase::do_connect_complete, &client_, 
-				std::ref(prom_), make_paho_lib_error(tok.get_reason_code()));
+				std::ref(prom_), make_paho_lib_error(tok.get_return_code()));
 	}
 
 	void on_success(const mqtt::token& tok) override 
@@ -142,7 +147,7 @@ private:
 		std::cout << "\t SubscribeListener failure for token: "
 			<< tok.get_message_id() << std::endl;
 #endif
-		prom_.set_value(make_paho_lib_error(tok.get_reason_code()));
+		prom_.set_value(make_paho_lib_error(tok.get_return_code()));
 	}
 
 	void on_success(const mqtt::token& tok) override 
@@ -174,6 +179,7 @@ MqttClientBase::MqttClientBase(const MqttClientSettings &settings):
 MqttClientBase::~MqttClientBase()
 {
 	disconnect();
+	client_handle_->disable_callbacks();
 	worker_thread_.stop();
 }
 
@@ -190,6 +196,7 @@ MqttError MqttClientBase::connect()
 
 MqttError MqttClientBase::disconnect()
 {
+	timer_.stop();
 	std::promise<MqttError> prom;
 	std::future<MqttError> fut = prom.get_future();
 	auto task_queue = getTaskQueue();
@@ -239,10 +246,23 @@ bool wait(std::shared_ptr<mqtt::delivery_token> token, int nsecs)
 	return token->wait_for(timeout);
 }
 
+void MqttClientBase::onReconnectFailure()
+{
+	onConnectionLost();
+}
+
+void MqttClientBase::onReconnectSuccess()
+{
+	auto task_queue = getTaskQueue();
+	task_queue->pushTask(&MqttClientBase::do_setStatus, this, MqttClientStatus::connected);
+	task_queue->pushTask(&MqttClientBase::do_resubscribe, this); 
+}
+
 void MqttClientBase::onConnectionLost()
 {
 	auto task_queue = getTaskQueue();
 	task_queue->pushTask(&MqttClientBase::do_setStatus, this, MqttClientStatus::disconnected);
+	task_queue->pushTask(&MqttClientBase::do_reconnect_step1, this);
 }
 
 void MqttClientBase::onMessageArrived(std::shared_ptr<const mqtt::message> msg)
@@ -266,37 +286,37 @@ void MqttClientBase::do_connect(ConnectListener &cb)
 		cb.getPromise().set_value(make_client_status_error(client_status_));
 		return;
 	}
-	client_status_ = MqttClientStatus::connecting;
+	do_setStatus(MqttClientStatus::connecting);
 	client_handle_->connect(*connect_options_, nullptr, cb);
 }
 
 void MqttClientBase::do_connect_complete(std::promise<MqttError> &prom, MqttError error)
 {
 	if (error.isNoError()) {
-		client_status_ = MqttClientStatus::connected;
+		do_setStatus(MqttClientStatus::connected);
 	} else {
-		client_status_ = MqttClientStatus::disconnected;
+		do_setStatus(MqttClientStatus::disconnected);
 	}
 	prom.set_value(error);
 }
 
 void MqttClientBase::do_disconnect(std::promise<MqttError> &prom)
 {
-	if (client_status_ != MqttClientStatus::connected) {
+	if (client_status_ == MqttClientStatus::disconnected) {
 		prom.set_value(make_client_status_error(client_status_));
 		return;
 	}
 
 	try {
 		client_handle_->disconnect()->wait();
-		client_status_ = MqttClientStatus::disconnected;
+		do_setStatus(MqttClientStatus::disconnected);
 		prom.set_value(MqttError::no_error());
 	} catch (const mqtt::exception& e) {
 #ifdef DEBUG
 		std::cout << "MqttClientBase::do_disconnect error: "
 				<< e.what() << std::endl;
 #endif
-		prom.set_value(make_paho_lib_error(e.get_reason_code()));
+		prom.set_value(make_paho_lib_error(e.get_return_code()));
 	}
 }
 
@@ -306,6 +326,7 @@ void MqttClientBase::do_subscribe(SubscribeListener &cb)
 		cb.getPromise().set_value(make_client_status_error(client_status_));
 		return;
 	}
+	subscribe_topics_.insert(cb.getTopic());
 	client_handle_->subscribe(cb.getTopic(), cb.getQos(), nullptr, cb);
 }
 
@@ -313,11 +334,17 @@ void MqttClientBase::do_publish(std::promise<PubRetType> &prom,
 		std::shared_ptr<const mqtt::message> msg,
 		std::shared_ptr<mqtt::iaction_listener> cb)
 {
+	PubRetType ret = do_publish_aux(msg, cb);
+	prom.set_value(ret);
+}
+
+MqttClientBase::PubRetType MqttClientBase::do_publish_aux(std::shared_ptr<const mqtt::message> msg,
+		std::shared_ptr<mqtt::iaction_listener> cb)
+{
 	PubRetType ret;
 	if (client_status_ != MqttClientStatus::connected) {	// check status
 		ret.first = make_client_status_error(client_status_);
-		prom.set_value(ret);
-		return;
+		return ret;
 	}
 
 	try {	// call mqtt lib to publish message
@@ -328,14 +355,89 @@ void MqttClientBase::do_publish(std::promise<PubRetType> &prom,
 		std::cout << "MqttClientBase::do_publish error: "
 				<< e.what() << std::endl;
 #endif
-		ret.first = make_paho_lib_error(e.get_reason_code());
+		ret.first = make_paho_lib_error(e.get_return_code());
 	}
-	prom.set_value(ret);
+	return ret;
 }
 
 void MqttClientBase::do_setStatus(MqttClientStatus status)
 {
 	client_status_ = status;
+	if (client_status_ == MqttClientStatus::connected) {
+		reconnect_try_count_ = 0;
+	}	
+}
+
+void MqttClientBase::do_reconnect_step1()
+{
+	if (client_status_ != MqttClientStatus::disconnected) {	// check status
+#ifdef DEBUG
+		std::cout << "MqttClientBase::do_reconnect_step1 error: "
+				<< "invalid MqttClientStatus: "
+				<< (int) client_status_ << std::endl;
+#endif
+		return;
+	}
+
+	auto reconnect_try_max_times = client_settings_.getReconnectTryMaxTimes();
+	if (reconnect_try_max_times >= 0 && reconnect_try_count_ >= reconnect_try_max_times) {
+#ifdef DEBUG
+		std::cout << "MqttClientBase::do_reconnect_step1: "
+				<< "needn't retry connect: reconnect_try_max_times is "
+				<< reconnect_try_max_times 
+				<< ", reconnect_try_count_ is "
+				<< reconnect_try_count_ << std::endl;
+#endif
+		return;
+	}	
+	reconnect_try_count_++; 
+
+	auto seconds_wait_before_reconnect = client_settings_.getSecondsWaitBeforeReconnect();
+	timer_.setTimeoutFor([=]() {
+			auto task_queue = this->getTaskQueue();
+			task_queue->pushTask(&MqttClientBase::do_reconnect_step2, this);
+			},
+			std::chrono::seconds(seconds_wait_before_reconnect)); 
+	return;
+}
+
+void MqttClientBase::do_reconnect_step2()
+{
+	if (client_status_ != MqttClientStatus::disconnected) {
+#ifdef DEBUG
+		std::cout << "MqttClientBase::do_reconnect_step2 error: "
+				<< "invalid MqttClientStatus: "
+				<< (int) client_status_ << std::endl;
+#endif
+		return;
+	}
+
+	do_setStatus(MqttClientStatus::connecting);
+	client_handle_->connect(*connect_options_, nullptr, *callback_);
+}
+
+void MqttClientBase::do_resubscribe()
+{
+	if (client_status_ != MqttClientStatus::connected) {
+#ifdef DEBUG
+		std::cout << "MqttClientBase::do_resubscribe error: "
+				<< "invalid MqttClientStatus: "
+				<< (int) client_status_ << std::endl;
+#endif
+		return;
+	}
+
+	for (auto &topic: subscribe_topics_) {
+		try {
+			client_handle_->subscribe(topic, getQos())->wait();
+		} catch (const mqtt::exception& e) {
+#ifdef DEBUG
+			std::cout << "MqttClientBase::do_subscribe "
+				<< topic << " error: "
+				<< e.what() << std::endl;
+#endif
+		}
+	}
 }
 
 std::shared_ptr<TaskQueue> MqttClientBase::getTaskQueue()

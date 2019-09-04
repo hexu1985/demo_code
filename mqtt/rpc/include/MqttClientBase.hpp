@@ -5,6 +5,8 @@
 #include <string>
 #include <future>
 #include <chrono>
+#include <set>
+#include "Timer.hpp"
 #include "WorkerThread.hpp" 
 #include "MqttError.hpp"
 #include "MqttClientSettings.hpp"
@@ -46,15 +48,14 @@ public:
 
 	MqttClientStatus getStatus();
 
-	// this function will run on worker thread
-	void onConnectFailure();
-	void onConnectSuccess();
-
 protected:
 	class ConnectListener;
 	class SubscribeListener;
 
+	void onReconnectFailure();
+	void onReconnectSuccess();
 	void onConnectionLost();
+
 	virtual void onMessageArrived(std::shared_ptr<const mqtt::message> msg);
 	virtual std::shared_ptr<mqtt::delivery_token> publishMessage(
 			std::shared_ptr<const mqtt::message> msg, 
@@ -70,9 +71,13 @@ protected:
 			std::shared_ptr<const mqtt::message> msg,
 			std::shared_ptr<mqtt::iaction_listener> cb
 			);
+	PubRetType do_publish_aux(std::shared_ptr<const mqtt::message> msg,
+			std::shared_ptr<mqtt::iaction_listener> cb);
 	void do_setStatus(MqttClientStatus status);
 	void do_getStatus();
-	void do_reconnect();
+	void do_reconnect_step1();
+	void do_reconnect_step2();
+	void do_resubscribe();
 
 	std::shared_ptr<mini_utils::TaskQueue> getTaskQueue();
 	int getQos() const;
@@ -96,6 +101,9 @@ private:
 	std::shared_ptr<mqtt::async_client> client_handle_;
 	std::shared_ptr<Callback> callback_;
 	std::shared_ptr<mqtt::connect_options> connect_options_;
+	std::set<std::string> subscribe_topics_;
+	int reconnect_try_count_ = 0;
+	mini_utils::Timer timer_;
 };
 
 }	// namespace mqtt_rpc

@@ -1,14 +1,32 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <thread>
+#include <functional>
 #include "MqttRpcClient.hpp"
 
 using namespace std;
 using namespace mqtt_rpc;
 
 const std::string DFLT_SERVER_ADDRESS	{ "tcp://localhost:1883" };
-const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_client_query" };
+const std::string DFLT_CLIENT_ID		{ "sample_mqtt_rpc_client_notify" };
 const std::string TOPIC					{ "hello" };
-const std::string METHOD				{ "query|test" };
+const std::string METHOD				{ "notify|test" };
+
+void send_notify(MqttRpcClient &client)
+{
+	std::string payload = "hello world!";
+	MqttError ret;
+	for (int i = 0; i < 100; i++) {
+		ret = client.notify(METHOD, payload.data(), payload.length());
+		if (!ret) {
+			std::cout << "notify error: "
+				<< ret.getType() << ", " << ret.getCode()
+				<< std::endl;
+			continue;
+		}
+	}
+}
 
 int main(int argc, char *argv[])
 {
@@ -34,27 +52,16 @@ int main(int argc, char *argv[])
 
 	std::cout << "open success!" << std::endl; 
 
-	std::string payload = "hello world!";
-	std::string answer;
-	ret = client.query(answer, METHOD, payload.data(), payload.length(), 3);
-	if (!ret) {
-		std::cout << "query error: "
-				<< ret.getType() << ", " << ret.getCode()
-				<< std::endl;
-	} else {
-		std::cout << "query success" << std::endl;
-		std::cout << "answer is: " << answer << std::endl;
+	std::vector<std::thread> thread_list;
+	for (int i = 0; i < 3; i++) {
+		thread_list.push_back(std::thread(send_notify, std::ref(client)));
 	}
 	
-	ret = client.query(answer, METHOD, payload.data(), payload.length());
-	if (!ret) {
-		std::cout << "query error: "
-				<< ret.getType() << ", " << ret.getCode()
-				<< std::endl;
-	} else {
-		std::cout << "query success" << std::endl;
-		std::cout << "answer is: " << answer << std::endl;
+	for (auto &thr: thread_list) {
+		thr.join();
 	}
+	
+	std::cout << "notify complete" << std::endl;
 
 	ret = client.close();
 

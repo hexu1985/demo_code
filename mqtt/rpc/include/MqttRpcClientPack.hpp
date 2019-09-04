@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <atomic>
+#include <ctime>
 #include "MqttRpcHeader.hpp"
+#include "RandomNumber.hpp"
 
 namespace mqtt_rpc {
 
@@ -17,8 +19,8 @@ public:
 		set_uint16_to_bigend(fix_header_.product_id, DEFAULT_PRODUCT_ID);
 		set_uint16_to_bigend(fix_header_.product_proto_ver, DEFAULT_PRODUCT_PROTO_VER);
 
-		// TODO:
-		last_message_id_ = 0;
+		mini_utils::RandomNumber random(time(0));
+		last_message_id_ = static_cast<uint32_t>(random.randInt(0, 40000)) * 100000;
 	}
 
 	void set_message_id_begin(uint32_t message_id)

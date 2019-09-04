@@ -50,6 +50,16 @@ void MqttClientSettings::setCACertificatePath(const string &path)
 	ca_certificate_path_ = path;
 }
 
+void MqttClientSettings::setReconnectTryMaxTimes(int times)
+{
+	reconnect_try_max_times_ = times;
+}
+
+void MqttClientSettings::setSecondsWaitBeforeReconnect(int seconds)
+{
+	seconds_wait_before_reconnect_ = seconds;
+}
+
 const string &MqttClientSettings::getBrokerAddress() const
 {
 	return broker_address_;
@@ -93,6 +103,16 @@ const string &MqttClientSettings::getPassword() const
 const string &MqttClientSettings::getCACertificatePath() const
 {
 	return ca_certificate_path_;
+}
+
+int MqttClientSettings::getReconnectTryMaxTimes() const
+{
+	return reconnect_try_max_times_;
+}
+
+int MqttClientSettings::getSecondsWaitBeforeReconnect() const
+{
+	return seconds_wait_before_reconnect_;
 }
 
 mqtt::connect_options &MqttClientSettings::toConnectOptions(mqtt::connect_options &conn_opts)

@@ -19,6 +19,8 @@ public:
 		DEFAULT_KEEP_ALIVE_INTERVAL = 30,	// 30 second
 		DEFAULT_QOS = 1,
 		DEFAULT_CONNECT_TIMEOUT = 30,
+		DEFAULT_RECONNTECT_TRY_MAX_TIMES = -1,
+		SECONDS_WAIT_BEFORE_RECONNECT = 3,
 	};
 
 private:
@@ -31,6 +33,8 @@ private:
 	std::string user_name_;				// mqtt client user name 
 	std::string password_;				// mqtt client password
 	std::string ca_certificate_path_;	// the ca certificate file to prove broker
+	int			reconnect_try_max_times_ = DEFAULT_RECONNTECT_TRY_MAX_TIMES; 
+	int			seconds_wait_before_reconnect_ = SECONDS_WAIT_BEFORE_RECONNECT; 
 
 	typedef std::unordered_map<std::string, std::string> CustomSettings;
 	CustomSettings custom_settings_;
@@ -55,6 +59,8 @@ public:
 	void setUserName(const std::string &user_name);
 	void setPassword(const std::string &password);
 	void setCACertificatePath(const std::string &path);
+	void setReconnectTryMaxTimes(int times);
+	void setSecondsWaitBeforeReconnect(int seconds);
 
 	// get settings parameter values
 	const std::string &getBrokerAddress() const;
@@ -66,6 +72,8 @@ public:
 	const std::string &getUserName() const;
 	const std::string &getPassword() const;
 	const std::string &getCACertificatePath() const;
+	int getReconnectTryMaxTimes() const;
+	int getSecondsWaitBeforeReconnect() const;
 
 	// convert functions
 	mqtt::connect_options &toConnectOptions(mqtt::connect_options &conn_opts);
