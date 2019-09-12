@@ -126,11 +126,13 @@ mqtt::connect_options &MqttClientSettings::toConnectOptions(mqtt::connect_option
 	conn_opts.set_connect_timeout(connect_timeout_);
 	conn_opts.set_clean_session(clean_session_flag_);
 
+#ifdef OPENSSL
 	if (!ca_certificate_path_.empty()) {
 		mqtt::ssl_options ssl_opts;
 		ssl_opts.set_trust_store(ca_certificate_path_);
 		conn_opts.set_ssl(ssl_opts);
 	}
+#endif
 
 	return conn_opts;
 }

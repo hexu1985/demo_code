@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "MqttClientBase.hpp"
 
 using namespace std;

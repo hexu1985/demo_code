@@ -1,7 +1,7 @@
 ## include directories
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
-set(MQTT_RPC_LIB ${PROJECT_BINARY_DIR}/src/libmqtt_rpc.so)
+set(MQTT_RPC_LIB mqtt_rpc_client)
 
 ## binary files
 add_executable(sample_mqtt_client_pub sample_mqtt_client_pub.cpp)
@@ -17,20 +17,13 @@ add_executable(sample_mqtt_rpc_server_query_stub sample_mqtt_rpc_server_query_st
 add_executable(sample_mqtt_rpc_server_query_delay_stub sample_mqtt_rpc_server_query_delay_stub.cpp)
 
 ## link binaries
-target_link_libraries(sample_mqtt_client_pub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB})
-target_link_libraries(sample_mqtt_client_sub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB})
-target_link_libraries(sample_mqtt_rpc_client_notify ${MQTT_RPC_LIB} ${PAHO_CPP_LIB})
-target_link_libraries(sample_mqtt_rpc_client_notify_threads ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} pthread)
-target_link_libraries(sample_mqtt_rpc_server_notify_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB})
-target_link_libraries(sample_mqtt_rpc_client_query ${MQTT_RPC_LIB} ${PAHO_CPP_LIB})
-target_link_libraries(sample_mqtt_rpc_client_query_threads ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} pthread)
-target_link_libraries(sample_mqtt_rpc_server_query_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} pthread)
-target_link_libraries(sample_mqtt_rpc_server_query_delay_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} pthread)
-
-if(PAHO_WITH_SSL)
-    ## link SSL binaries
-	#    target_link_libraries(sample_mqtt_client_pub ${PAHO_CPP_LIB})
-
-    add_definitions(-DOPENSSL)
-endif()
+target_link_libraries(sample_mqtt_client_pub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_client_sub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_client_notify ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_client_notify_threads ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_server_notify_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_client_query ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_client_query_threads ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_server_query_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
+target_link_libraries(sample_mqtt_rpc_server_query_delay_stub ${MQTT_RPC_LIB} ${PAHO_CPP_LIB} ${LIBS_SYSTEM})
 

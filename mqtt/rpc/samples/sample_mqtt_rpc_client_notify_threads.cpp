@@ -3,6 +3,7 @@
 #include <vector>
 #include <thread>
 #include <functional>
+#include <cstdlib>
 #include "MqttRpcClient.hpp"
 
 using namespace std;

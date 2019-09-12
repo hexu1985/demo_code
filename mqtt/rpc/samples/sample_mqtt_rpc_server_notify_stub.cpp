@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 #include "MqttClientBase.hpp"
 #include "MqttRpcUnpack.hpp"
 #include "dump_functions.hpp"
@@ -97,7 +98,7 @@ int main(int argc, char *argv[])
 
 	std::cout << "\nPress Q<Enter> to quit\n" << std::endl;
 	// wait for quit
-	while (std::tolower(std::cin.get()) != 'q')
+	while (tolower(std::cin.get()) != 'q')
 		;
 
 	ret = client.disconnect();
