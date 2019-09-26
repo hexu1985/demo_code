@@ -32,3 +32,5 @@
 			PROPERTIES
 			LINK_FLAGS "${LINK_FLAGS} -static-libstdc++"
 			)
+8) 指定vs2013编译器: -G "Visual Studio 12 Win64"
+9) 指定vs2015编译器: -G "Visual Studio 14 Win64"
