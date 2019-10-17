@@ -1,0 +1,5 @@
+digraph A{
+	A -> B;
+	A[orientation = 15, regular = true, shape = polygon, sides = 8, peripheries = 4, color = red style = filled];
+	B[shape = polygon, sides = 4, skew = 0.5, color = blue];
+}
