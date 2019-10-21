@@ -1,0 +1,187 @@
+    document.write('<link href="//csstools.chinaz.com/myuser/max-templates/passport/styles/topbar.css" type="text/css" rel="Stylesheet" /><link href="//csstools.chinaz.com/myuser/max-templates/default/styles/dialog.css" type="text/css" rel="Stylesheet" />');
+    var barurl = location.href.replace(/<script[\S\s]*?\1>|<\/?(a|img)[^>]*>/gi, "").replace('"', "").replace(">", "").replace("#", "").replace("<", "");
+    var username = "";
+    var userurl = "";
+    var isTool = 0;
+    if (barurl.indexOf("sc.chinaz.com") > 0) {
+        username = "素材会员中心";
+        userurl = "//user.sc.chinaz.com/";
+
+    } else if (barurl.indexOf("font.chinaz.com") > 0) {
+        username = "素材会员中心";
+        userurl = "//user.sc.chinaz.com/";
+
+    } else if (barurl.indexOf("desk.chinaz.com") > 0) {
+        username = "素材会员中心";
+        userurl = "//user.sc.chinaz.com/";
+
+    } else if (barurl.indexOf("ciku.chinaz.com") > 0||barurl.indexOf("del.chinaz.com") > 0||barurl.indexOf("whois.chinaz.com") > 0||barurl.indexOf("rank.chinaz.com") > 0) {
+       isTool = 1;
+       username = "用户中心";
+       userurl = "//my.chinaz.com/Accounts/User";
+    }
+     else if (barurl.indexOf("font.chinaz.com") > 0) {
+        username = "素材会员中心";
+        userurl = "//user.sc.chinaz.com/";
+
+    } else if (barurl.indexOf("aq.chinaz.com") > 0) {
+        username = "SSL订单管理";
+        userurl = "//aq.chinaz.com/SSL/List";
+
+    }else if(barurl.indexOf("top.chinaz.com")>0){
+    username="排行榜中心";
+    userurl="http://search.top.chinaz.com/usercenter";
+    }
+    else if(barurl.indexOf("tool.chinaz.com")>0 || barurl.indexOf("seo.chinaz.com")>0 || barurl.indexOf("pr.chinaz.com")>0 || barurl.indexOf("s.tool.chinaz.com")>0 || barurl.indexOf("icp.chinaz.com")>0 || barurl.indexOf("link.chinaz.com")>0)
+    {
+       isTool = 1;
+       username = "用户中心";
+       userurl = "//my.chinaz.com/Accounts/User";
+    }else if(barurl.indexOf("outlink.chinaz.com")>0 || barurl.indexOf("ping.chinaz.com")>0 || barurl.indexOf("ip.chinaz.com")>0 || barurl.indexOf("ip.tool.chinaz.com")>0 || barurl.indexOf("xzh.chinaz.com")>0 || barurl.indexOf("index.chinaz.com")>0 || barurl.indexOf("mobile.chinaz.com")>0)
+    {
+       isTool = 1;
+       username = "用户中心";
+       userurl = "//my.chinaz.com/Accounts/User";
+    }
+    else {
+        username = "用户中心";
+        userurl = "//my.chinaz.com/Accounts/User";
+    }
+
+    var userid = '';
+    var strVar = "";
+    barurl=encodeURI(barurl);
+    barurl=barurl.replace(/\+/g, "%2B");
+    barurl=barurl.replace(/\&/g, "%26");
+    barurl=barurl.replace(/\#/g, "%23");
+    if (userid == "") {
+        strVar += "<div class=\"userbar\">\n";
+        strVar += "	<a href=\"//my.chinaz.com/Login/Index?returnurl=" + barurl + "\" target=\"_top\">立即登录<\/a>\n";
+        strVar += "        <a href=\"//my.chinaz.com/Register/Index\">注册新帐号<\/a>\n";
+        strVar += "<\/div>\n";
+    } else {
+        strVar += "<div class=\"userbar\">\n";
+        strVar += "	<a class=\"username item-expand\" href="+userurl+" id=\"top_link_center\" target=\"_blank\"><span><\/span><\/a>\n";
+        strVar += "<a href=\"//my.chinaz.com/Login/OutLogin?returnurl="+ barurl+"\">退出<\/a>\n";
+        strVar += "<\/div>\n";
+    }
+    if (document.getElementById('chinaz_topbar')) {
+        document.getElementById('chinaz_topbar').innerHTML = strVar;
+    }
+    var subdiv = document.createElement('div');
+    subdiv.setAttribute('class', 'dropdownmenu-wrap menu-setting');
+    subdiv.setAttribute('id', 'settingpopup');
+    subdiv.style.display = 'none';
+
+    var strVar2 = "";
+    if (isTool===0) {
+
+        strVar2 += "<div class=\"dropdownmenu\">\n";
+        strVar2 += "	<div class=\"clearfix dropdownmenu-inner\">\n";
+        strVar2 += "		<div class=\"clearfix menu-setting-account\">\n";
+        strVar2 += "			<div class=\"accountavatar\">\n";
+        strVar2 += "				<a class=\"avatar\" href=\"//my.chinaz.com/Accounts/User\" target=\"_blank\"><img src=\"\" height=\"120\" width=\"120\" onerror=\"javascript:this.src='//my.chinaz.com/avatar/user.png';\"><\/a>\n";
+        strVar2 += "			<\/div>\n";
+        strVar2 += "		<\/div>\n";
+        strVar2 += "		<ul class=\"clearfix menu-setting-list\">\n";
+        strVar2 += "			<li><a href=\"" + userurl + "\" target=\"_blank\">" + username + "<\/a><\/li>\n";
+        strVar2 += "			<li><a href=\"//my.chinaz.com/Accounts/User\" target=\"_blank\">设置<\/a><\/li>\n";
+        strVar2 += "		<\/ul>\n";
+        strVar2 += "	<\/div>\n";
+        strVar2 += "<\/div>\n";
+    } else {
+        document.write('<link href="//my.chinaz.com/Content/style/top.css" type="text/css" rel="Stylesheet" />');
+        strVar2 += "<div class=\"dropdownmenu\">\n";
+        strVar2 += "	<div class=\"clearfix dropdownmenu-inner\">\n";
+        strVar2 += "		<div class=\"clearfix menu-setting-account\">\n";
+        strVar2 += "			<div class=\"accountavatar\">\n";
+        strVar2 += "				<a class=\"avatar\" href=\"//my.chinaz.com/Accounts/User\" target=\"_blank\"><img src=\"\" height=\"120\" width=\"120\" onerror=\"javascript:this.src='//my.chinaz.com/avatar/user.png';\"><\/a>\n";
+        if (0==1) {
+            strVar2 += "				<div class=\"avatit\">\n";
+            strVar2 += "					等级：VIP\n";
+            strVar2 += "					<span style=\"color:orange\">(V<span style=\"color:orange\">0</span>)<\/span>\n";
+            strVar2 += "				<\/div>\n";
+        } else {
+            strVar2 += "<div class=\"avatit\">等级：免费会员<a href=\"//my.chinaz.com/ToolMember/Member/Account\" target=\"_blank\" style=\"color:orange\">(升级VIP)</a></div>";
+        }
+        strVar2 += "				<div class=\"avatit\">\n";
+        strVar2 += "					余额：0\n";
+        strVar2 += "					<a style=\"color:dodgerblue\" href=\"//my.chinaz.com/ToolMember/Member/Account?code=cz\" target=\"_blank\">充值<\/a>\n";
+        strVar2 += "				<\/div>\n";
+        strVar2 += "			<\/div>\n";
+        strVar2 += "		<\/div>\n";
+        strVar2 += "		<ul class=\"clearfix menu-setting-list\">\n";
+        strVar2 += "			<li><a href=\"//my.chinaz.com/ToolMember/Member/Account\" target=\"_blank\">工具用户中心<\/a><\/li>\n";
+        strVar2 += "			<li><a href=\"//my.chinaz.com/ToolMember/Member/Download\" target=\"_blank\">我的下载<\/a><\/li>\n";
+        strVar2 += "		<\/ul>\n";
+        strVar2 += "	<\/div>\n";
+        strVar2 += "<\/div>\n";
+
+    }
+    subdiv.innerHTML = strVar2;
+    document.getElementsByTagName('body')[0].appendChild(subdiv);
+    var dialogProxyUrl = 'ajax.php';
+    //动态载入指定的脚本，并在载入完成后调用callback
+    function loadScript(src, charset, callback) {
+        var h = document.getElementsByTagName('head')[0];
+        var ss = h.getElementsByTagName('script');
+        if (ss && ss.length > 0) {
+            for (var i = 0; i < ss.length; i++) {
+                if (ss[i]._src && ss[i]._src == src) {
+                    callback && callback();
+                    return;
+                }
+            }
+        }
+
+        var s = document.createElement("script");
+        s.type = 'text/javascript';
+        s._src = src;
+        s.src = src;
+        if (charset) {
+            s.charset = charset;
+        }
+
+        if (callback) {
+            var isie = navigator.userAgent.toLowerCase().indexOf('msie') > -1;
+            if (isie) {
+                s.onreadystatechange = function () {
+                    if ('complete' == s.readyState || s.readyState == "loaded") {
+                        callback && callback();
+                    }
+                };
+            }
+            else s.onload = function () {
+                callback && callback();
+            };
+        }
+        h.appendChild(s);
+    }
+
+    loadScript("//csstools.chinaz.com/myuser/chinaz_top.js", "utf-8", function () {
+        if (userid!= "")
+        {
+            var cpopup = new popup("settingpopup", "top_link_center", true, "hover");
+            cpopup.offsetLeft = -1;
+            cpopup.offsetTop = -2;
+        }
+        //cpopup = new popup("chinaz_customMenu", "top_link_custom", true, "hover");
+        //cpopup.offsetLeft = -1;
+        //cpopup.offsetTop = -2;
+        dialogProxyUrl = "ajax.php";
+    });
+    barurl=decodeURIComponent(barurl)
+    if(barurl.indexOf("?Promoter=")>0 || barurl.indexOf("&Promoter=")>0)
+    {
+         var exp = new Date();
+         exp.setDate(exp.getDate()+7);
+         var name="Promoter";
+         var value=getQueryString("Promoter");
+         document.cookie = name + "=" + value + ";expires=" + exp.toGMTString() + ";path=/;domain=chinaz.com";
+    }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }

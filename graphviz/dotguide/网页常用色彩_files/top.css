@@ -1,0 +1,15 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+.menu-setting .menu-setting-account{ padding: 0;}
+	.menu-setting .menu-setting-account .accountavatar{ margin-left: 0; width: 100%;}
+	.menu-setting .menu-setting-account .accountavatar a.avatar{ width: 124px; height: 124px; margin-left: auto; margin-right: auto;}
+	.menu-setting .menu-setting-account .accountavatar .avatit { padding-top: 10px; color: #444;}
+	.menu-setting .menu-setting-account .accountavatar .avatit:last-child{ padding-bottom: 10px;}
+	.menu-setting .menu-setting-account .accountavatar .avatit span{ color: #999;}
+	.menu-setting .menu-setting-account .accountavatar .avatit a{ display: inline-block; color: #ff4500; padding-left: 5px;}
+	.c-org{ color: #ff4500 !important;}
+	.c-blue{ color: #0078d7 !important;}
+	.menu-setting-list>li{ width: 50%; text-align: center;}
+
+  

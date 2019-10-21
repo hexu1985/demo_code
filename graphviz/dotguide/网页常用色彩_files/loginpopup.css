@@ -1,0 +1,21 @@
+﻿@charset "UTF-8";
+
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+.btnlogin{ padding: 10px 0; text-align: center;}
+.btnlogin .btn{ display:inline-block; padding:5px 15px;margin-right: 20px;}
+.btnlogin .btn:last-child{ margin-right: 0;}
+.btnlogin .btn i{ display:inline-block; float: left; width: 30px; height: 30px; background: url("//csstools.chinaz.com/tools/images/public/login-third.png") no-repeat;}
+.btnlogin .btn span{ display: inline-block; float: left; padding-top: 5px;}
+.btnlogin .btn.wxl{ background-color: #00C800;color: #fff;}
+.btnlogin .btn.wxl i{ background-position: 0 -58px;}
+.btnlogin .btn.qql{ background-color: #5DA4E6; color: #fff;}
+.btnlogin .btn.qql i{ background-position: 3px -30px; }
+
+.p-cont{ text-align: center;}
+.p-state1{ font-size: 22px; color: #ff0000; padding-top: 20px;}
+.p-state2{ font-size: 16px; padding-top: 20px;}
+.p-hint1,.p-hint2{  text-align:center; color: #999; padding-top: 15px;}
+.p-hint1{margin-bottom: 10px;}
+.p-hint2{margin-bottom: 20px;}

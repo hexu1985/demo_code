@@ -1,0 +1,53 @@
+// JavaScript Document
+$(document).ready(function () {
+
+    $(".js-FilterItem li").click(function () {
+
+        if (!$(this).hasClass("selected")) {
+            $(this).addClass("selected");
+        } else {
+            $(this).removeClass("selected");
+        }
+    });
+
+    $(".CorCYnavShow").click(function () {
+
+        if (!$(".CorCYnavbar").hasClass("autohide")) {
+            $(".CorCYnavbar").addClass("autohide");
+            $(this).removeClass("autohide");
+        } else {
+            $(".CorCYnavbar").removeClass("autohide");
+            $(this).addClass("autohide");
+        }
+    });
+    $(".CorCYclose").click(function () {
+
+        if (!$(".CorCYnavShow").hasClass("autohide")) {
+            $(".CorCYnavShow").addClass("autohide");
+            $(".CorCYnavbar").removeClass("autohide");
+        } else {
+            $(".CorCYnavShow").removeClass("autohide");
+            $(".CorCYnavbar").addClass("autohide");
+        }
+    });
+
+    //WebSafeColor
+    _select({
+        select: $(".SafeCorChoese"),
+        options: $("ul.SafeCorChoese-show"),
+        option: $("ul.SafeCorChoese-show li a"),
+        t: "slide", //效果（可选参数））
+        callback: function (obj) {
+            var selected = $(obj).attr("val");
+            jQuery(".swatches").hide();
+            jQuery('#' + selected).show();
+        }
+    });
+    $(".SafeCorCent-down li a").click(function () {
+        var selected = $(this).attr("val");
+        $(this).parent().css("background", "#f5f5f5").siblings().css("background", "none");
+        jQuery(".swatches").hide();
+        jQuery('#' + selected).show();
+    });
+
+});
