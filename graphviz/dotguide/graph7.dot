@@ -1,0 +1,13 @@
+graph A{
+	label = "I love you"; //给这幅图设置，名字
+	labelloc = b; //图名字的位置在bottom，也可以是t
+	labeljust = l; //图名字的位置在left，也可以是r
+	edge[decorate = true];
+	C -- D[label = "s1"];
+	C -- E[label = "s2"];
+	C -- F[label = "s3"];
+	D -- E[label = "s4"];
+	D -- F[label = "s5"];
+	edge[decorate = false, labelfontcolor = blue, fontcolor = red];
+	C1 -- D1[headlabel = "c1", taillabel = "d1", label = "c1 - d1"];
+}

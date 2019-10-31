@@ -1,0 +1,15 @@
+digraph html {
+	abc [shape=none, margin=0, label=<
+		<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="4">
+		<TR><TD>0</TD><TD>1</TD><TD>2</TD><TD>3</TD><TD>4</TD>
+		</TR>
+		<TR><TD>1</TD><TD></TD><TD></TD><TD></TD><TD></TD>
+		</TR>
+		<TR><TD>2</TD><TD></TD><TD></TD><TD></TD><TD></TD>
+		</TR>
+		<TR><TD>3</TD><TD></TD><TD></TD><TD></TD><TD></TD>
+		</TR>
+		<TR><TD>4</TD><TD></TD><TD></TD><TD></TD><TD></TD>
+		</TR>
+		</TABLE>>];
+}

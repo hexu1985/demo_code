@@ -1,5 +1,6 @@
-dot graph1.dot -T png -o graph1.png
-dot graph2.dot -T png -o graph2.png
-dot graph3.dot -T png -o graph3.png
-dot graph4.dot -T png -o graph4.png
-dot graph5.dot -T png -o graph5.png
+ls -1 *.dot | while read file
+do
+	echo "process $file"
+	file_name=${file%.dot}
+	dot $file -T png -o ${file_name}.png
+done
