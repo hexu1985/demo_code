@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!-->
+<html class="js video maskImage placeholder" lang="en"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="Gflags-learn-think_files/cbgapi.loaded_1" async=""></script><script src="Gflags-learn-think_files/cbgapi.loaded_0" async=""></script>
+  <meta charset="utf-8">
+  <title>Gflags 简明使用 - (learn&amp;think)</title>
+  <meta name="author" content="DreamRunner">
+
+
+<meta name="description" content="programming, algorithm, C++, linux">
+<meta name="keywords" content="programming, coding, algorithm, C++, linux, python">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1">
+
+  
+  <link rel="canonical" href="http://dreamrunner.org/blog/2014/03/09/gflags-jian-ming-shi-yong">
+  <link href="http://dreamrunner.org/favicon.png" rel="icon">
+  <link href="Gflags-learn-think_files/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://dreamrunner.org/atom.xml" rel="alternate" title="(learn&amp;think)" type="application/atom+xml">
+  <script type="text/javascript" src="Gflags-learn-think_files/jXHR.js"></script><script type="text/javascript" async="" src="Gflags-learn-think_files/plusone.js" gapi_processed="true"></script><script type="text/javascript" async="" src="Gflags-learn-think_files/ga.js"></script><script src="Gflags-learn-think_files/modernizr-2.js"></script>
+  <script src="Gflags-learn-think_files/jquery.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="Gflags-learn-think_files/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="Gflags-learn-think_files/css_002.css" rel="stylesheet" type="text/css">
+<link href="Gflags-learn-think_files/css.css" rel="stylesheet" type="text/css">
+
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config;executed=true">
+MathJax.Hub.Config({
+  jax: ["input/TeX", "output/HTML-CSS"],
+  tex2jax: {
+    inlineMath: [ ['$', '$'] ],
+    displayMath: [ ['$$', '$$']],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  messageStyle: "none",
+  "HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"] },
+  TeX: { extensions: ["color.js"] }
+});
+</script>
+<script src="Gflags-learn-think_files/MathJax.js" id=""></script>
+
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-32977383-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+<script type="text/javascript" async="" src="Gflags-learn-think_files/embed.js"></script><script type="text/javascript" async="" src="Gflags-learn-think_files/widgets.js"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><script charset="utf-8" src="Gflags-learn-think_files/button.js"></script><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+
+<body><div id="MathJax_Message" style="display: none;"></div>
+  <header role="banner"><hgroup>
+  <h1><a href="http://dreamrunner.org/">(learn&amp;think)</a></h1>
+  
+    <h2>不浮躁，不自傲，学习，思考，总结</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://dreamrunner.org/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:dreamrunner.org">
+    <input class="search" type="text" name="q" results="0" placeholder="Search">
+  </fieldset>
+</form>
+  
+<fieldset class="mobile-nav"><select><option value="" selected="selected">Navigate…</option><option value="http://dreamrunner.org/">» Blog</option><option value="http://dreamrunner.org/blog/archives">» Archives</option><option value="http://dreamrunner.org/tag-cloud">» Tag Cloud</option><option value="http://dreamrunner.org/my-wiki">» My Wiki</option><option value="http://dreamrunner.org/friends-links">» Friends' Links</option><option value="http://dreamrunner.org/about">» About</option><option value="http://dreamrunner.org/atom.xml">» RSS</option></select></fieldset><ul class="main-navigation">
+  <li><a href="http://dreamrunner.org/">Blog</a></li>
+  <li><a href="http://dreamrunner.org/blog/archives">Archives</a></li>
+  <li><a href="http://dreamrunner.org/tag-cloud">Tag Cloud</a></li>
+  <li><a href="http://dreamrunner.org/my-wiki">My Wiki</a></li>
+  <li><a href="http://dreamrunner.org/friends-links">Friends' Links</a></li>
+  <li><a href="http://dreamrunner.org/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Gflags 简明使用</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+
+
+
+<time datetime="2014-03-09T11:53:54+08:00" class="updated">Mar 9<span>th</span>, 2014</time>
+        
+           | <a href="#disqus_thread" data-disqus-identifier="http://dreamrunner.org">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2 id="section">简介</h2>
+<p>Google 的 gflags 是一套命令行参数处理的开源库。比 getopt 更方便，更功能强大，从 C++的库更好的支持 C++（如 C++的 string 类型）。包括 <a href="https://code.google.com/p/gflags/">C++的版本</a>和 <a href="https://code.google.com/p/python-gflags/">python 的版本</a>。 这里只针对 C++版本，python 版本的使用类似。主要内容参考与翻译自官方文档：http://gflags.googlecode.com/svn/trunk/doc/gflags.html</p>
+
+<p>你能从<a href="http://dreamrunner.org/downloads/code/2014/cmake_gflags_example.zip">这里下载</a>本文章的源代码工程。</p>
+
+<!-- more -->
+
+<h2 id="example--example-">example 源代码先看 example 源代码，然后逐步介绍。</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>example.cc</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="cp">#include &lt;gflags/gflags.h&gt;</span>
+</span><span class="line">
+</span><span class="line"><span class="n">DEFINE_bool</span><span class="p">(</span><span class="n">big_menu</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="s">"Include 'advanced' options in the menu listing"</span><span class="p">);</span>
+</span><span class="line"><span class="n">DEFINE_string</span><span class="p">(</span><span class="n">languages</span><span class="p">,</span> <span class="s">"english,french,german"</span><span class="p">,</span> <span class="s">"comma-separated list of languages to offer in the 'lang' menu"</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line"><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">  <span class="n">google</span><span class="o">::</span><span class="n">ParseCommandLineFlags</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"argc="</span> <span class="o">&lt;&lt;</span> <span class="n">argc</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="k">if</span> <span class="p">(</span><span class="n">FLAGS_big_menu</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"big menu is ture"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class="line">    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"big menu is flase"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"languages="</span> <span class="o">&lt;&lt;</span> <span class="n">FLAGS_languages</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class="line">  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+
+<h3 id="section-1">运行程序</h3>
+<ul>
+  <li>直接运行</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>run</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">  ➜  bin  ./sample
+</span><span class="line">  <span class="nv">argc</span><span class="o">=</span>1
+</span><span class="line">  big menu is ture
+</span><span class="line">  <span class="nv">languages</span><span class="o">=</span>english,french,german
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+<ul>
+  <li>help 命令</li>
+</ul>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>run</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">  ➜  bin  ./sample --help
+</span><span class="line">  sample: Warning: SetUsageMessage<span class="o">()</span> never called
+</span><span class="line">
+</span><span class="line">  Flags from /home/shougang/workspace/drive/Google/cmake_cpp_gflags/src/sample.cc:
+</span><span class="line">    -big_menu <span class="o">(</span>Include <span class="s1">'advanced'</span> options in the menu listing<span class="o">)</span> <span class="nb">type</span>: bool
+</span><span class="line">      default: <span class="nb">true</span>
+</span><span class="line">    -languages <span class="o">(</span>comma-separated list of languages to offer in the <span class="s1">'lang'</span> menu<span class="o">)</span>
+</span><span class="line">      <span class="nb">type</span>: string default: <span class="s2">"english,french,german"</span>
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">
+</span><span class="line">  Flags from src/gflags.cc:
+</span><span class="line">    -flagfile <span class="o">(</span>load flags from file<span class="o">)</span> <span class="nb">type</span>: string default: <span class="s2">""</span>
+</span><span class="line">  .........
+</span><span class="line">
+</span><span class="line">  ➜  bin  ./sample --helpshort
+</span><span class="line">  sample: Warning: SetUsageMessage<span class="o">()</span> never called
+</span><span class="line">
+</span><span class="line">  Flags from /home/shougang/workspace/drive/Google/cmake_cpp_gflags/src/sample.cc:
+</span><span class="line">    -big_menu <span class="o">(</span>Include <span class="s1">'advanced'</span> options in the menu listing<span class="o">)</span> <span class="nb">type</span>: bool
+</span><span class="line">      default: <span class="nb">true</span>
+</span><span class="line">    -languages <span class="o">(</span>comma-separated list of languages to offer in the <span class="s1">'lang'</span> menu<span class="o">)</span>
+</span><span class="line">      <span class="nb">type</span>: string default: <span class="s2">"english,french,german"</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+
+<h2 id="section-2">在程序里定义参数</h2>
+<p>### 包含头文件</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>header_file</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"> <span class="err">#</span><span class="n">include</span> <span class="o">&lt;</span><span class="n">gflags</span><span class="o">/</span><span class="n">gflags</span><span class="p">.</span><span class="n">h</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+
+<h3 id="gflag--3-">利用 gflag 提供的宏定义参数该宏的 3 个参数分别为命令行参数名，参数默认值，参数的帮助信息。</h3>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>define_flags</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="n">DEFINE_bool</span><span class="p">(</span><span class="n">big_menu</span><span class="p">,</span> <span class="kc">true</span><span class="p">,</span> <span class="s">"Include 'advanced' options in the menu listing"</span><span class="p">);</span>
+</span><span class="line"><span class="n">DEFINE_string</span><span class="p">(</span><span class="n">languages</span><span class="p">,</span> <span class="s">"english,french,german"</span><span class="p">,</span> <span class="s">"comma-separated list of languages to offer in the 'lang' menu"</span><span class="p">);</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+<p>gflags 暂时支持如下参数的类型：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>supported_types</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="sh"><span class="line">DEFINE_bool: boolean
+</span><span class="line">DEFINE_int32: 32-bit integer
+</span><span class="line">DEFINE_int64: 64-bit integer
+</span><span class="line">DEFINE_uint64: unsigned 64-bit integer
+</span><span class="line">DEFINE_double: double
+</span><span class="line">DEFINE_string: C++ string
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+
+<h2 id="section-3">访问参数</h2>
+
+<p>通过 FLAGS_name 像正常变量一样访问标志参数。在这个程序中，通过
+<code>FLAGS_big_menu</code>和<code>FLAGS_languages</code>访问它们。</p>
+
+<h2 id="section-4">不同文件访问参数</h2>
+
+<p>如果想再另外一个不是定义这个参数的文件访问这个参数的话，以参数
+<code>FLAGS_big_menu</code>为例，用宏<code>DECLARE_bool(big_menu）</code>来声明引入这个参数。这个宏相当于做了<code>extern FLAGS_big_menu</code>.</p>
+
+<h2 id="section-5">整合一起，初始化所有参数</h2>
+
+<p>定义号参数后，最后要告诉执行程序去处理命令行传入的参数，使得
+<code>FLAGS_*</code>参数们得到正确赋值。</p>
+
+<p>通常就是再<code>main()</code>函数中调用;</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>set_up_flag</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="c++"><span class="line"><span class="n">google</span><span class="o">::</span><span class="n">ParseCommandLineFlags</span><span class="p">(</span><span class="o">&amp;</span><span class="n">argc</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">argv</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+<p><code>argc</code>和<code>argv</code>就是 main 的入口参数，因为这个函数会改变他们的值，所以都是以指针传入。</p>
+
+<p>第三个参数被称为<code>remove_flags</code>。如果它是<code>true</code>,<code>ParseCommandLineFlags</code>会从<code>argv</code>中移除标识和它们的参数，相应减少<code>argc</code>的值。然后 argv 只保留命令行参数。</p>
+
+<p>相反，<code>remove_flags</code>是<code>false</code>,<code>ParseCommandLineFlags</code>会保留<code>argc</code>不变，但将会重新调整它们的顺序，使得标识再前面。</p>
+
+<p>Note: <code>./sample --big_menu=false arg1</code>中再<code>big_menu</code>是标识，<code>false</code>是它的参数，<code>arg1</code>是命令行参数。</p>
+
+<h2 id="section-6">命令行设置参数</h2>
+<p>gflags 提供多种命令行设置参数。</p>
+
+<p><code>string</code>和<code>int</code>之类，可以用如下方式：</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>set_languages</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">app_containing_foo --languages<span class="o">=</span><span class="s2">"chinese,japanese,korean"</span>
+</span><span class="line">app_containing_foo -languages<span class="o">=</span><span class="s2">"chinese,japanese,korean"</span>
+</span><span class="line">app_containing_foo --languages <span class="s2">"chinese,japanese,korean"</span>
+</span><span class="line">app_containing_foo -languages <span class="s2">"chinese,japanese,korean"</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+<p>对于<code>boolean</code>的标识来说，用如下方式:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>set_boolean</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">app_containing_foo --big_menu
+</span><span class="line">app_containing_foo --nobig_menu
+</span><span class="line">app_containing_foo --big_menu<span class="o">=</span><span class="nb">true</span>
+</span><span class="line">app_containing_foo --big_menu<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+
+<p>和<code>getopt()</code>一样，<code>--</code>将会终止标识的处理。所以在<code>foo -f1 1 -- -f2 2</code>中，
+<code>f1</code>被认为是一个标识，但<code>f2</code>不会。</p>
+
+<h2 id="section-7">特殊标识</h2>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>special_flags</span></figcaption><div class="highlight"><table><tbody><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">--help  显示文件中所有标识的完整帮助信息
+</span><span class="line">--helpfull  和-help 一样，
+</span><span class="line">--helpshort  只显示当前执行文件里的标志
+</span><span class="line">--helpxml  以 xml 凡是打印，方便处理
+</span><span class="line">--version  打印版本信息，由 google::SetVersionString<span class="o">()</span>设定
+</span><span class="line">--flagfile  -flagfile<span class="o">=</span>f 从文件 f 中读取命令行参数
+</span><span class="line">...
+</span></code></pre></td></tr></tbody></table></div></figure></notextile></div>
+<p>具体见：http://gflags.googlecode.com/svn/trunk/doc/gflags.html</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">DreamRunner</span></span>
+
+      
+
+
+
+
+
+
+
+
+
+
+
+<time datetime="2014-03-09T11:53:54+08:00" class="updated">Mar 9<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class="category" href="http://dreamrunner.org/blog/categories/c-plus-plus/">C++</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <iframe id="twitter-widget-0" scrolling="no" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 61px; height: 20px;" title="Twitter Tweet Button" src="Gflags-learn-think_files/tweet_button.html" data-url="http://dreamrunner.org/blog/2014/03/09/gflags-jian-ming-shi-yong/" frameborder="0"></iframe>
+  
+  
+  <div style="position: absolute; width: 450px; left: -10000px;" id="___plusone_0"><iframe ng-non-bindable="" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position:absolute;top:-10000px;width:450px;margin:0px;border-style:none" tabindex="0" vspace="0" id="I0_1577430943081" name="I0_1577430943081" src="Gflags-learn-think_files/fastbutton.html" data-gapiattached="true" width="100%" frameborder="0"></iframe></div><div class="g-plusone" data-size="medium" data-gapiscan="true" data-onload="true" data-gapistub="true"></div>
+  
+  
+  
+	<!-- JiaThis Button BEGIN -->
+<div id="ckepop">
+	<span class="jiathis_txt">分享到：</span>
+	<a class="jiathis_button_qzone">QQ空间</a>
+	<a class="jiathis_button_tsina">新浪微博</a>
+	<a class="jiathis_button_tqq">腾讯微博</a>
+	<a class="jiathis_button_renren">人人网</a>
+	<a href="http://www.jiathis.com/share?uid=1658718" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+	<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript">var jiathis_config = {data_track_clickback:true};</script>
+<script type="text/javascript" src="Gflags-learn-think_files/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="http://dreamrunner.org/blog/2014/03/08/C%2B%2B%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E4%B8%8E%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%BE%8B/" title="Previous Post: C++测试驱动开发与单元测试实例">« C++测试驱动开发与单元测试实例</a>
+      
+      
+        <a class="basic-alignment right" href="http://dreamrunner.org/blog/2014/03/09/octopresszhong-shi-yong-latexxie-shu-xue-gong-shi/" title="Next Post: Octopress中使用Latex写数学公式">Octopress中使用Latex写数学公式 »</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar thirds">
+  
+    <section class="first odd">
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="http://dreamrunner.org/blog/2017/06/11/C%2B%2B11-MemoryModel-Atomic/">C++11 Memory Model and Atomic</a>
+      </li>
+    
+      <li class="post">
+        <a href="http://dreamrunner.org/blog/2014/12/15/make-colorful-equations-with-mathjax/">Make Colorful Equations With Mathjax</a>
+      </li>
+    
+      <li class="post">
+        <a href="http://dreamrunner.org/blog/2014/08/25/C11-multithreading-programming/">浅谈C++11 Multithreading Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="http://dreamrunner.org/blog/2014/08/07/C-multithreading-programming/">浅谈C++ Multithreading Programming</a>
+      </li>
+    
+      <li class="post">
+        <a href="http://dreamrunner.org/blog/2014/07/05/multithreadingxiang-guan-zhu-yu-zong-jie/">Multithreading相关术语总结</a>
+      </li>
+    
+  </ul>
+</section>
+<section class="even">
+  <h1>Category Cloud</h1>
+    <span id="tag-cloud"><a href="http://dreamrunner.org/blog/categories/algorithm" style="font-size: 113.84615384615384%">Algorithm(6)</a> <a href="http://dreamrunner.org/blog/categories/c-" style="font-size: 113.84615384615384%">C++(6)</a> <a href="http://dreamrunner.org/blog/categories/design-pattern" style="font-size: 160.0%">Design Pattern(26)</a> <a href="http://dreamrunner.org/blog/categories/dsp" style="font-size: 102.3076923076923%">DSP(1)</a> <a href="http://dreamrunner.org/blog/categories/fpga" style="font-size: 102.3076923076923%">FPGA(1)</a> <a href="http://dreamrunner.org/blog/categories/misc" style="font-size: 102.3076923076923%">Misc(1)</a> <a href="http://dreamrunner.org/blog/categories/multithreading" style="font-size: 116.15384615384616%">Multithreading(7)</a> <a href="http://dreamrunner.org/blog/categories/programming-pearls" style="font-size: 116.15384615384616%">Programming Pearls(7)</a> <a href="http://dreamrunner.org/blog/categories/software" style="font-size: 106.92307692307692%">Software(3)</a> <a href="http://dreamrunner.org/blog/categories/web" style="font-size: 106.92307692307692%">Web(3)</a> </span>
+</section>
+
+<section class="odd">
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos"><li><a href="https://github.com/shishougang/wiki">wiki</a><p>personal knowledge wiki</p></li><li><a href="https://github.com/shishougang/QuantSystem">QuantSystem</a><p></p></li><li><a href="https://github.com/shishougang/shishougang.github.com">shishougang.github.com</a><p>My blog</p></li><li><a href="https://github.com/shishougang/test">test</a><p>test</p></li><li><a href="https://github.com/shishougang/finance-wiki">finance-wiki</a><p>finance wiki</p></li><li><a href="https://github.com/shishougang/blog_multithreading">blog_multithreading</a><p>multithreading examples of my blog</p></li><li><a href="https://github.com/shishougang/Programming-Pearls">Programming-Pearls</a><p>Programming Pearls Codes</p></li></ul>
+  
+  <a href="https://github.com/shishougang">@shishougang</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'shishougang',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="Gflags-learn-think_files/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+<section class="googleplus first even">
+  <h1>
+    <a href="https://plus.google.com/103923268925965955200?rel=author">
+      <img src="Gflags-learn-think_files/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    <span class="toggle-sidebar"></span></div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright © 2017 - DreamRunner -
+  <span class="credit">Powered by <a href="http://octopress.org/">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'dreamrunner';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://dreamrunner.org/blog/2014/03/09/gflags-jian-ming-shi-yong/';
+        var disqus_url = 'http://dreamrunner.org/blog/2014/03/09/gflags-jian-ming-shi-yong/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+
+<iframe name="oauth2relay586285345" id="oauth2relay586285345" src="Gflags-learn-think_files/postmessageRelay.html" style="width: 1px; height: 1px; position: absolute; top: -100px;" tabindex="-1" aria-hidden="true"></iframe><iframe scrolling="no" allowtransparency="true" src="Gflags-learn-think_files/widget_iframe.html" title="Twitter settings iframe" style="display: none;" frameborder="0"></iframe></body></html>
