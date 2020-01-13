@@ -8,9 +8,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package( gflags REQUIRED )
 
 if ( gflags_FOUND )
-	message(STATUS "Found gflags: ")
+	message(STATUS "Found gflags")
 else()
-	message(STATUS "Not found gflags ")
+	message(STATUS "Not found gflags")
 endif ()
 
 include_directories( ${GFLAGS_INCLUDE_DIR} )
