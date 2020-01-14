@@ -3,7 +3,7 @@ ubuntu下编译gflags:
 # cd gflags
 # mkdir build
 # cd build
-# cmake -DCMAKE_INSTALL_PREFIX=../install \
+# cmake -DCMAKE_INSTALL_PREFIX=~/local \
 	-DBUILD_SHARED_LIBS=OFF \
 	-DBUILD_STATIC_LIBS=ON \
 	-DBUILD_gflags_LIB=ON \
