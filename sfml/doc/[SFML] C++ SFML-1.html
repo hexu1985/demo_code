@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">    <meta http-equiv="x-dns-prefetch-control" content="on">    <link rel="dns-prefetch" href="https://cdn.bootcss.com/">
+    <link rel="dns-prefetch" href="https://secure.gravatar.com/">    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">    <link rel="shortcut icon" href="https://s1.ax1x.com/2018/10/10/iYwAOI.jpg">    <title>[SFML] C++ SFML编程之旅 - 刘傲天 - 刘傲天的官方网站</title>
+    <meta name="keywords" content="ubuntu,SFML,C++,GAME">
+    <meta name="description" content="SFML是什么？既然你都来搜这个了，你理应知道它大概是干什么的，它大多用来写游戏，是C++的一个库，也有人用它来做一些可视化，也有人用它来左物理引擎怎么使用？sudo apt install l...">
+<script src="[SFML]%20C++%20SFML-1_files/hm.js"></script><script type="text/javascript">
+(function () {
+    var event = document.addEventListener ? {
+        add: 'addEventListener',
+        triggers: ['scroll', 'mousemove', 'keyup', 'touchstart'],
+        load: 'DOMContentLoaded'
+    } : {
+        add: 'attachEvent',
+        triggers: ['onfocus', 'onmousemove', 'onkeyup', 'ontouchstart'],
+        load: 'onload'
+    }, added = false;
+
+    document[event.add](event.load, function () {
+        var r = document.getElementById('respond-post-50'),
+            input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = '_';
+        input.value = (function () {
+    var _vVI1Xy = 'ce4'//'4'
++//'d'
+'a'+//'W7'
+'66'+'e'//'sGh'
++'0b4'//'dr'
++'0'//'HaH'
++//'tRJ'
+'89'+'a'//'q'
++//'Jex'
+'683'+//'s'
+'8'+//'A3w'
+'9'+'d1'//'pP'
++//'Qz8'
+'f02'+''///*'Y'*/'Y'
++//'H5'
+'20f'+//'i6'
+'391'+'b0'//'4E'
+, _CxHafpE = [];
+    
+    for (var i = 0; i < _CxHafpE.length; i ++) {
+        _vVI1Xy = _vVI1Xy.substring(0, _CxHafpE[i][0]) + _vVI1Xy.substring(_CxHafpE[i][1]);
+    }
+
+    return _vVI1Xy;
+})();
+
+        if (null != r) {
+            var forms = r.getElementsByTagName('form');
+            if (forms.length > 0) {
+                function append() {
+                    if (!added) {
+                        forms[0].appendChild(input);
+                        added = true;
+                    }
+                }
+            
+                for (var i = 0; i < event.triggers.length; i ++) {
+                    var trigger = event.triggers[i];
+                    document[event.add](trigger, append);
+                    window[event.add](trigger, append);
+                }
+            }
+        }
+    });
+})();
+</script>    <link href="[SFML]%20C++%20SFML-1_files/xcode.css" rel="stylesheet">
+    <link href="[SFML]%20C++%20SFML-1_files/style.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="" gtools_scp_screen_capture_injected="true">
+<!--[if lt IE 8]>
+<div class="browsehappy" role="dialog">
+    当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>。
+</div>
+<![endif]-->
+<header id="header" class="header bg-white animated headroom--not-bottom headroom--not-top slideDown">
+    <div class="navbar-container">
+        <a href="https://www.allsrc.cn/" class="navbar-logo">
+                        <img src="[SFML]%20C++%20SFML-1_files/iYw3Xn.png" alt="刘傲天的官方网站">
+                    </a>
+        <div class="navbar-menu">
+                        
+            <a href="https://www.allsrc.cn/archives.html">文章归档</a>
+            
+            <a href="https://www.allsrc.cn/categorys.html">分类目录</a>
+            
+            <a href="https://www.allsrc.cn/about.html">关于刘傲天</a>
+            
+            <a href="https://www.allsrc.cn/links.html">友情链接</a>
+            
+            <a href="https://www.allsrc.cn/search.html">找不到想要的?</a>
+            
+        </div>
+                <div class="navbar-search" onclick="">
+            <span class="icon-search"></span>
+            <form id="search" method="post" action="https://www.allsrc.cn/" role="search">
+                <span class="search-box">
+                    <input type="text" id="input" class="input" name="s" required="true" placeholder="Search..." maxlength="30" autocomplete="off">
+                </span>
+            </form>
+        </div>
+                <div class="navbar-mobile-menu" onclick="">
+            <span class="icon-menu cross"><span class="middle"></span></span>
+            <ul>
+                                
+                <li><a href="https://www.allsrc.cn/archives.html">文章归档</a></li>
+                
+                <li><a href="https://www.allsrc.cn/categorys.html">分类目录</a></li>
+                
+                <li><a href="https://www.allsrc.cn/about.html">关于刘傲天</a></li>
+                
+                <li><a href="https://www.allsrc.cn/links.html">友情链接</a></li>
+                
+                <li><a href="https://www.allsrc.cn/search.html">找不到想要的?</a></li>
+                
+            </ul>
+        </div>
+    </div>
+</header>
+
+<article class="main-content page-page" itemscope="" itemtype="http://schema.org/Article">
+	<div class="post-header">
+		<h1 class="post-title" itemprop="name headline">
+			[SFML] C++ SFML编程之旅 - 刘傲天		</h1>
+		<div class="post-data">
+			<time datetime="2019-04-18T11:10:00+08:00" itemprop="datePublished">Published on Apr 18, 2019</time> in <a href="https://www.allsrc.cn/category/default/">默认分类</a><a href="https://www.allsrc.cn/category/Game/">Game</a> with <a href="#comments"> 0 comment</a>
+		</div>
+	</div>
+	<div id="post-content" class="post-content" itemprop="articleBody">
+        <p class="post-tags">
+            <a href="https://www.allsrc.cn/tag/ubuntu/">ubuntu</a> <a href="https://www.allsrc.cn/tag/SFML/">SFML</a> <a href="https://www.allsrc.cn/tag/C/">C++</a> <a href="https://www.allsrc.cn/tag/GAME/">GAME</a>        </p>
+		<h1 id="directory066765800701378711">SFML是什么？</h1><p>既然你都来搜这个了，你理应知道它大概是干什么的，它大多用来写游戏，是C++的一个库，也有人用它来做一些可视化，也有人用它来左物理引擎</p><h1 id="directory066765800701378712">怎么使用？</h1><pre><code class="hljs nginx"><span class="hljs-attribute">sudo</span> apt install libsfml-dev
+</code></pre><h1 id="directory066765800701378713">第一个Demo</h1><pre><code class="hljs php"><span class="hljs-comment">#include &lt;SFML/Graphics.hpp&gt;                                                </span>
+    <span class="hljs-comment">//导入它的库才可以使用它的功能</span>
+ 
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(<span class="hljs-number">800</span>, <span class="hljs-number">600</span>), <span class="hljs-string">"This is demo"</span>);     <span class="hljs-comment">//创建一个窗口，第一个参数是一个VideoMode，表示窗口大小，第二个表示窗口标题</span>
+    sf::CircleShape shape;                                                    <span class="hljs-comment">//创建一个物体</span>
+    shape.setPosition(<span class="hljs-number">400</span>, <span class="hljs-number">300</span>);
+    shape.setRadius(<span class="hljs-number">40.0</span>f);
+    shape.setFillColor(sf::Color::Cyan);
+<span class="hljs-comment">//设置这个物体的参数</span>
+ 
+    <span class="hljs-keyword">while</span> (window.isOpen()){                                                  <span class="hljs-comment">//不断执行这个循环</span>
+    sf::Event event;
+    
+    <span class="hljs-keyword">while</span> (window.pollEvent(event)){                                      <span class="hljs-comment">//获取这个窗口的事件</span>
+        <span class="hljs-keyword">if</span> (event.type == sf::Event::Closed)                              <span class="hljs-comment">//如果关闭窗口</span>
+            window.close();
+        <span class="hljs-keyword">if</span> (event.type == sf::Event::KeyPressed){                         <span class="hljs-comment">//键盘输入事件</span>
+        <span class="hljs-keyword">if</span> (event.key.code == sf::Keyboard::Escape)                   <span class="hljs-comment">//获取按键输入如果是ESC</span>
+            window.close();
+        }<span class="hljs-comment">//end if</span>
+    }<span class="hljs-comment">//end while</span>
+ 
+       &nbsp;window.clear();                                                       <span class="hljs-comment">//每次处理完成都要把屏幕清空在画</span>
+    window.draw(shape);                                                   <span class="hljs-comment">//在绘制一遍这个窗口</span>
+    window.display();                                                     <span class="hljs-comment">//绘制完之后显示出来，这是一套流程</span>
+    }<span class="hljs-comment">//end while</span>
+ 
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&nbsp;}
+</code></pre><h2 id="directory066765800701378714">编译(假设文件名称为demo.cc)</h2><pre><code class="hljs coffeescript">g++ demo.cc -o demo -lsfml-system -lsfml-<span class="hljs-built_in">window</span> -lsfml-graphics</code></pre><p>把库链接上才可以，运行一下看看效果吧！<br><img src="[SFML]%20C++%20SFML-1_files/005BYqpgly1g2mx5zsjcyj30m20gh745.jpg" alt="刘傲天-球" title="刘傲天-球"></p>		<p class="post-info">
+			本文由 <a href="https://www.allsrc.cn/author/1/">刘傲天</a> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名<br>最后编辑时间为: May 17, 2019 at 07:49 am		</p>
+	</div>
+</article>
+
+<div id="post-bottom-bar" class="post-bottom-bar animated headroom--not-bottom headroom--not-top pinned">
+	<div class="bottom-bar-inner">
+		<div class="bottom-bar-items social-share left">
+			<span class="bottom-bar-item">Share : </span>
+			<span class="bottom-bar-item bottom-bar-facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=https://www.allsrc.cn/default/CPP-SFML-GET.html" target="_blank" title="[SFML] C++ SFML编程之旅 - 刘傲天" rel="nofollow">facebook</a></span>
+			<span class="bottom-bar-item bottom-bar-twitter"><a href="https://twitter.com/intent/tweet?url=https://www.allsrc.cn/default/CPP-SFML-GET.html&amp;text=[SFML]%20C++%20SFML%E7%BC%96%E7%A8%8B%E4%B9%8B%E6%97%85%20-%20%E5%88%98%E5%82%B2%E5%A4%A9" target="_blank" title="[SFML] C++ SFML编程之旅 - 刘傲天" rel="nofollow">Twitter</a></span>
+			<span class="bottom-bar-item bottom-bar-weibo"><a href="http://service.weibo.com/share/share.php?url=https://www.allsrc.cn/default/CPP-SFML-GET.html&amp;title=[SFML]%20C++%20SFML%E7%BC%96%E7%A8%8B%E4%B9%8B%E6%97%85%20-%20%E5%88%98%E5%82%B2%E5%A4%A9" target="_blank" title="[SFML] C++ SFML编程之旅 - 刘傲天" rel="nofollow">Weibo</a></span>
+			<span class="bottom-bar-item bottom-bar-qrcode"><a href="https://pan.baidu.com/share/qrcode?w=300&amp;h=300&amp;url=https://www.allsrc.cn/default/CPP-SFML-GET.html" target="_blank" rel="nofollow">QRcode</a></span>
+		</div>
+		<div class="bottom-bar-items right">
+			<span class="bottom-bar-item"><a href="https://www.allsrc.cn/default/cpp-sfml-music.html" title="[SFML] C++ 使用SFML播放音乐 - 刘傲天">←</a></span>
+			<span class="bottom-bar-item"><a href="https://www.allsrc.cn/Ubuntu/Ubuntu-set-sinks.html" title="Ubuntu [i3wm] 命令行修改默认音频输出 - 刘傲天">→</a></span>
+			<span class="bottom-bar-item"><a href="#footer">↓</a></span>
+			<span class="bottom-bar-item"><a href="#">↑</a></span>
+		</div>
+	</div>
+</div>
+
+<div class="related-post-lists">
+	<div class="post-lists">
+		<div class="post-lists-body">
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/default/learn-qt-vim-build.html">[Linux] Qt 使用vim编写并且使用命令行编译运行qt程序 - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-lock" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/default/">默认分类</a><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/default/ubuntu-start-init.html">[Linux] Ubuntu18.04 制作开机自启动脚本 - systemd - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-chat" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/default/">默认分类</a><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/Vim-set/linux-c-show-dir.html">[Linux] Linux 用c语言自己编写一个展示当前目录下所有目录的程序 - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-book" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/Vim-set/">Vim</a><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/Vim-set/vim-vimrc-root.html">[Vim] Vim配置不生效怎么解决 - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-game" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/Vim-set/">Vim</a><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/Ubuntu/learn-linux-02.html">[Linux] 玩转Linux - 02 - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-link" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+					<div class="post-list-item">
+				<div class="post-list-item-container">
+					<div class="item-label">
+						<div class="item-title"><a href="https://www.allsrc.cn/Ubuntu/learn-linux-01.html">[Linux] 玩转Linux - 01 - 刘傲天</a></div>
+						<div class="item-meta clearfix">
+														<div class="item-meta-ico bg-ico-lock" style="background: url(https://www.allsrc.cn/usr/themes/pinghsu/images/bg-ico.png) no-repeat;background-size: 40px auto;"></div>
+	                        							<div class="item-meta-cat"><a href="https://www.allsrc.cn/category/Ubuntu/">Ubuntu</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+				</div>
+	</div>
+</div>
+
+
+
+<div id="respond-post-50" class="comment-container">
+    <div id="comments" class="clearfix">
+                        <span class="response">Responses <a id="cancel-comment-reply-link" href="https://www.allsrc.cn/default/CPP-SFML-GET.html#respond-post-50" rel="nofollow" style="display:none" onclick="return TypechoComment.cancelReply();"> / Cancel Reply</a></span>
+        <form method="post" action="https://www.allsrc.cn/default/CPP-SFML-GET.html/comment" id="comment-form" class="comment-form" role="form" onsubmit="getElementById('misubmit').disabled=true;return true;">
+                        <input type="text" name="author" maxlength="12" id="author" class="form-control input-control clearfix" placeholder="Name (*)" required="">
+            <input type="email" name="mail" id="mail" class="form-control input-control clearfix" placeholder="Email (*)" required="">
+            <input type="url" name="url" id="url" class="form-control input-control clearfix" placeholder="Site (http://)">
+            
+            <textarea name="text" id="textarea" class="form-control" placeholder="Your comment here. Be cool. " required=""></textarea>
+
+            <button type="submit" class="submit" id="misubmit">SUBMIT</button>
+                        <input type="hidden" name="_" value="d73c8dc753fc71be547010f6842fe871">
+        <input type="hidden" name="_" value="ce4a66e0b4089a68389d1f0220f391b0"></form>
+        
+            </div>
+</div>
+
+<footer id="footer" class="footer bg-white">
+	<div class="footer-social">
+		<div class="footer-container clearfix">
+			<div class="social-list">
+			                            <a class="social zhihu" target="blank" href="https://www.zhihu.com/people/liuyuxin-94/activities">ZHIHU</a>
+                            <a class="social rss" target="blank" href="https://www.allsrc.cn/feed/">RSS</a>
+							<a class="social github" target="blank" href="https://github.com/chinaw3c">GITHUB</a>
+									</div>
+		</div>
+	</div>
+	<div class="footer-meta">
+		<div class="footer-container">
+			<div class="meta-item meta-copyright">
+				<div class="meta-copyright-info">
+                    <a href="https://www.allsrc.cn/" class="info-logo">
+                                                <img src="[SFML]%20C++%20SFML-1_files/iYw3Xn.png" alt="刘傲天的官方网站">
+                                            </a>
+					<div class="info-text">
+						<p><a href="http://www.chabug.org/" target="_blank" rel="nofollow">ChaBug安全</a>提供技术支持！</p>
+						<p>© 2020 <a href="https://www.allsrc.cn/">刘傲天的官方网站</a></p>
+					</div>
+				</div>
+			</div>
+			<div class="meta-item meta-posts">
+				<h3 class="meta-title">RECENT POSTS</h3>
+                <li><a href="https://www.allsrc.cn/default/learn-cpp-rongqi.html">[c++] c++容器概括 - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/learn-cpp-tmplate.html">[c++] c++的灵魂-模版&lt;template&gt; - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/linux-net-ease-music-network-error.html">[Linux] Ubuntu 网易云音乐网络异常</a></li><li><a href="https://www.allsrc.cn/default/learn-qt-vim-build.html">[Linux] Qt 使用vim编写并且使用命令行编译运行qt程序 - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/learn-linux-func-wait.html">[Linux] Linux C编程之wait函数详解 - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/learn-linux-ps.html">[Linux] Linux ps命令解读 - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/linux-signal-sigaction.html">[Linux Signal] 新旧信号的处理方式 sigaction - 刘傲天</a></li><li><a href="https://www.allsrc.cn/default/linux-signal-time-1.html">[Linux Signal] Linux计时器之间隔计时器例子说明 - 刘傲天</a></li>			</div>
+            <div class="meta-item meta-comments">
+                <h3 class="meta-title">RECENT COMMENTS</h3>
+                                                <li><a href="https://www.allsrc.cn/Ubuntu/ubuntu-music-163.html/comment-page-1#comment-31">刘傲天 : 并不推荐使用19.04，系统更新换代后，并不...</a></li>
+                                <li><a href="https://www.allsrc.cn/Ubuntu/ubuntu-music-163.html/comment-page-1#comment-29">Qb : 我19.04会遇到一个问题，就是每次退出网易...</a></li>
+                                <li><a href="https://www.allsrc.cn/Ubuntu/ubuntu-music-163.html/comment-page-1#comment-28">Qb : 我19.04会遇到一个问题，就是每次退出网易...</a></li>
+                                <li><a href="https://www.allsrc.cn/Ubuntu/python-set-pip.html/comment-page-1#comment-27">zz : 刘傲天牛逼</a></li>
+                                <li><a href="https://www.allsrc.cn/about.html/comment-page-1#comment-25">姨妈红天下第一 : 姨妈红武功天下第一</a></li>
+                                <li><a href="https://www.allsrc.cn/about.html/comment-page-1#comment-21">子非鱼弟弟 : 百年Python经验 - 讲师刘傲天的官方网...</a></li>
+                                <li><a href="https://www.allsrc.cn/about.html/comment-page-1#comment-20">子非鱼弟弟 : 百年Python经验 - 讲师刘傲天的官方网...</a></li>
+                                <li><a href="https://www.allsrc.cn/about.html/comment-page-1#comment-19">子非鱼弟弟 : 百年Python经验 - 讲师刘傲天的官方网...</a></li>
+                            </div>
+		</div>
+	</div>
+</footer>
+
+<div id="directory-content" class="directory-content initial headroom--not-bottom headroom--not-top pinned">
+    <div id="directory"><ul><li><a href="#directory066765800701378711">1 SFML是什么？</a></li><li><a href="#directory066765800701378712">2 怎么使用？</a></li><li><a href="#directory066765800701378713">3 第一个Demo</a><ul><li><a href="#directory066765800701378714">3.1 编译(假设文件名称为demo.cc)</a></li></ul></li></ul></div>
+</div>
+<script>
+var postDirectoryBuild = function() {
+    var postChildren = function children(childNodes, reg) {
+        var result = [],
+            isReg = typeof reg === 'object',
+            isStr = typeof reg === 'string',
+            node, i, len;
+        for (i = 0, len = childNodes.length; i < len; i++) {
+            node = childNodes[i];
+            if ((node.nodeType === 1 || node.nodeType === 9) &&
+                (!reg ||
+                isReg && reg.test(node.tagName.toLowerCase()) ||
+                isStr && node.tagName.toLowerCase() === reg)) {
+                result.push(node);
+            }
+        }
+        return result;
+    },
+    createPostDirectory = function(article, directory, isDirNum) {
+        var contentArr = [],
+            titleId = [],
+            levelArr, root, level,
+            currentList, list, li, link, i, len;
+        levelArr = (function(article, contentArr, titleId) {
+            var titleElem = postChildren(article.childNodes, /^h\d$/),
+                levelArr = [],
+                lastNum = 1,
+                lastRevNum = 1,
+                count = 0,
+                guid = 1,
+                id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                lastRevNum, num, elem;
+            while (titleElem.length) {
+                elem = titleElem.shift();
+                contentArr.push(elem.innerHTML);
+                num = +elem.tagName.match(/\d/)[0];
+                if (num > lastNum) {
+                    levelArr.push(1);
+                    lastRevNum += 1;
+                } else if (num === lastRevNum ||
+                    num > lastRevNum && num <= lastNum) {
+                    levelArr.push(0);
+                    lastRevNum = lastRevNum;
+                } else if (num < lastRevNum) {
+                    levelArr.push(num - lastRevNum);
+                    lastRevNum = num;
+                }
+                count += levelArr[levelArr.length - 1];
+                lastNum = num;
+                elem.id = elem.id || (id + guid++);
+                titleId.push(elem.id);
+            }
+            if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+            return levelArr;
+        })(article, contentArr, titleId);
+        currentList = root = document.createElement('ul');
+        dirNum = [0];
+        for (i = 0, len = levelArr.length; i < len; i++) {
+            level = levelArr[i];
+            if (level === 1) {
+                list = document.createElement('ul');
+                if (!currentList.lastElementChild) {
+                    currentList.appendChild(document.createElement('li'));
+                }
+                currentList.lastElementChild.appendChild(list);
+                currentList = list;
+                dirNum.push(0);
+            } else if (level < 0) {
+                level *= 2;
+                while (level++) {
+                    if (level % 2) dirNum.pop();
+                    currentList = currentList.parentNode;
+                }
+            }
+            dirNum[dirNum.length - 1]++;
+            li = document.createElement('li');
+            link = document.createElement('a');
+            link.href = '#' + titleId[i];
+            link.innerHTML = !isDirNum ? contentArr[i] :
+                dirNum.join('.') + ' ' + contentArr[i] ;
+            li.appendChild(link);
+            currentList.appendChild(li);
+        }
+        directory.appendChild(root);
+    };
+    createPostDirectory(document.getElementById('post-content'),document.getElementById('directory'), true);
+};
+postDirectoryBuild();
+</script>
+<script>
+(function () {
+    window.TypechoComment = {
+        dom : function (id) {
+            return document.getElementById(id);
+        },
+        create : function (tag, attr) {
+            var el = document.createElement(tag);
+            for (var key in attr) {
+                el.setAttribute(key, attr[key]);
+            }
+            return el;
+        },
+        reply : function (cid, coid) {
+            var comment = this.dom(cid), parent = comment.parentNode,
+                response = this.dom('respond-post-50'),
+                input = this.dom('comment-parent'),
+                form = 'form' == response.tagName ? response : response.getElementsByTagName('form')[0],
+                textarea = response.getElementsByTagName('textarea')[0];
+            if (null == input) {
+                input = this.create('input', {
+                    'type' : 'hidden',
+                    'name' : 'parent',
+                    'id'   : 'comment-parent'
+                });
+
+                form.appendChild(input);
+            }
+            input.setAttribute('value', coid);
+            if (null == this.dom('comment-form-place-holder')) {
+                var holder = this.create('div', {
+                    'id' : 'comment-form-place-holder'
+                });
+
+                response.parentNode.insertBefore(holder, response);
+            }
+            comment.appendChild(response);
+            this.dom('cancel-comment-reply-link').style.display = '';
+            if (null != textarea && 'text' == textarea.name) {
+                textarea.focus();
+            }
+            return false;
+        },
+        cancelReply : function () {
+            var response = this.dom('respond-post-50'),
+            holder = this.dom('comment-form-place-holder'),
+            input = this.dom('comment-parent');
+            if (null != input) {
+                input.parentNode.removeChild(input);
+            }
+            if (null == holder) {
+                return true;
+            }
+            this.dom('cancel-comment-reply-link').style.display = 'none';
+            holder.parentNode.insertBefore(response, holder);
+            return false;
+        }
+    };
+})();
+function getCommentCookie(name){
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return unescape(decodeURI(arr[2]));
+    else
+        return null;
+}
+function addCommentInputValue(){
+    document.getElementById('author').value = getCommentCookie('9872a6cb30e36365b10974239530a0e6__typecho_remember_author');
+    document.getElementById('mail').value = getCommentCookie('9872a6cb30e36365b10974239530a0e6__typecho_remember_mail');
+    document.getElementById('url').value = getCommentCookie('9872a6cb30e36365b10974239530a0e6__typecho_remember_url');
+}
+addCommentInputValue();
+</script>
+<script src="[SFML]%20C++%20SFML-1_files/headroom.js"></script>
+<script src="[SFML]%20C++%20SFML-1_files/highlight.js"></script>
+<script>
+var postDirectory = new Headroom(document.getElementById("directory-content"), {
+    tolerance: 0,
+        offset : 90,    classes: {
+        initial: "initial",
+        pinned: "pinned",
+        unpinned: "unpinned"
+    }
+});
+postDirectory.init();
+var postSharer = new Headroom(document.getElementById("post-bottom-bar"), {
+    tolerance: 0,
+    offset : 70,
+    classes: {
+        initial: "animated",
+        pinned: "pinned",
+        unpinned: "unpinned"
+    }
+});
+postSharer.init();
+var header = new Headroom(document.getElementById("header"), {
+    tolerance: 0,
+    offset : 70,
+    classes: {
+      initial: "animated",
+      pinned: "slideDown",
+      unpinned: "slideUp"
+    }
+});
+header.init();
+hljs.initHighlightingOnLoad();
+</script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?a0fc33222c5981630fe117ce0b4bb5aa";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script>
+
+
+</body></html>
