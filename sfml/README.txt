@@ -4,3 +4,5 @@
 2) ubuntu下编译sfml
 # git clone https://github.com/SFML/SFML.git
 
+3) 参考资料:
+https://www.sfml-dev.org/index.php
