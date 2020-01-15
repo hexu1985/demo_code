@@ -1,5 +1,6 @@
 #include <SFML/Audio.hpp> //导入库
 #include <iostream>
+#include <thread>
 
 int main(int argc, char ** argv)
 {
@@ -18,11 +19,9 @@ int main(int argc, char ** argv)
 	//music.pause(); //暂停
 	//music.stop(); //停止播放
 
-    std::cin.get();
-
-//	while(1){
-
-//	}//一直循环，避免程序直接退出
+	while(music.getStatus() != sf::SoundSource::Stopped) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+	}//一直循环，避免程序直接退出
 
 	return 0;
 }
