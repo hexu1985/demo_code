@@ -18,6 +18,8 @@ int main(int argc, char ** argv)
 	//music.pause(); //暂停
 	//music.stop(); //停止播放
 
+    std::cin.get();
+
 //	while(1){
 
 //	}//一直循环，避免程序直接退出
