@@ -3,7 +3,7 @@ RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
 INCLUDES = #-I/home/hexu/local/include
-LDFLAGS = -lgtest -lpthread
+LDFLAGS = -lgtest_main -lgtest -lpthread
 LDPATH = #-L/home/hexu/local/lib
 VPATH = 
 

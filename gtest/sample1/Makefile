@@ -2,9 +2,9 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
-INCLUDES = -I../include
+INCLUDES = -I/home/hexu/local/include
 LDFLAGS = -lgtest -lpthread
-LDPATH = -L../libs
+LDPATH = -L/home/hexu/local/lib
 VPATH = 
 
 SOURCES = $(shell ls *.cpp)
