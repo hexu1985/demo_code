@@ -3,7 +3,6 @@ ubuntu下编译gtest:
 # cd googletest
 # mkdir build
 # cd build
-# cmake -DCMAKE_INSTALL_PREFIX=~/local \
-    ..
-cmake --build . --target install
+# cmake -DCMAKE_INSTALL_PREFIX=~/local ..
+# cmake --build . --target install
 
