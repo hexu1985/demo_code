@@ -2,9 +2,9 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
-INCLUDES = 
-LDFLAGS = -lglog
-LDPATH =
+INCLUDES = -I$(HOME)/local/include
+LDFLAGS = -lglog -lgflags -lpthread
+LDPATH = -L$(HOME)/local/lib
 
 SOURCES = $(shell ls *.cpp)
 PROGS = $(SOURCES:%.cpp=%)
