@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<!-- saved from url=(0105)https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019 -->
+<html class="hasSidebar hasPageActions hasBreadcrumb conceptual has-default-focus js-focus-visible theme-light" lang="zh-cn" dir="ltr" data-css-variable-support="true" data-authenticated="false" data-auth-status-determined="true" data-target="docs" x-ms-format-detection="none" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="教程：调试 C++ 代码 - Visual Studio">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp">
+			<meta property="og:description" content="了解如何启动 Visual Studio 调试器、单步执行代码以及检查数据。">
+		<meta property="og:image" content="https://docs.microsoft.com/en-us/media/logos/logo-ms-social.png">
+		<meta property="og:image:alt" content="Microsoft Logo">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@docsmsft">
+
+
+	<meta name="audience" content="developer">
+<meta name="author" content="Mikejo5000">
+<meta name="bilingual_type" content="hover over">
+<meta name="breadcrumb_path" content="/visualstudio/_breadcrumb/toc.json">
+<meta name="depot_name" content="VS.docs">
+<meta name="description" content="了解如何启动 Visual Studio 调试器、单步执行代码以及检查数据。">
+<meta name="document_id" content="27c156a7-933c-1a70-6cc7-b0ae2d1d4a8c">
+<meta name="document_version_independent_id" content="4ffdd3f4-03d9-655f-f77d-fa66338e740f">
+<meta name="enable_loc_sxs" content="true">
+<meta name="gitcommit" content="https://github.com/MicrosoftDocs/visualstudio-docs-pr.zh-cn/blob/874501878eae09318916bba6da5c116bc9ac8cbe/docs/debugger/getting-started-with-the-debugger-cpp.md">
+<meta name="locale" content="zh-cn">
+<meta name="manager" content="jillfra">
+<meta name="monikers" content="vs-2017">
+<meta name="monikers" content="vs-2019">
+<meta name="ms.author" content="mikejo">
+<meta name="ms.contentlocale" content="zh-CN">
+<meta name="ms.custom" content="debug-experiment, seodec18, get-started">
+<meta name="ms.date" content="02/04/2020">
+<meta name="ms.lasthandoff" content="03/20/2020">
+<meta name="ms.locfileid" content="77091803">
+<meta name="ms.openlocfilehash" content="47b1a031a6c4e4e823a1fcc12aba228750aee27e">
+<meta name="ms.prod" content="visual-studio-windows">
+<meta name="ms.sourcegitcommit" content="2975d722a6d6e45f7887b05e9b526e91cffb0bcf">
+<meta name="ms.technology" content="vs-ide-debug">
+<meta name="ms.topic" content="tutorial">
+<meta name="ms.translationtype" content="HT">
+<meta name="ms.workload" content="multiple">
+<meta name="original_content_git_url" content="https://github.com/MicrosoftDocs/visualstudio-docs-pr.zh-cn/blob/live-sxs/docs/debugger/getting-started-with-the-debugger-cpp.md">
+<meta name="search.ms_docsetname" content="docs">
+<meta name="search.ms_product" content="VS">
+<meta name="search.ms_sitename" content="Docs">
+<meta name="site_name" content="Docs">
+<meta name="toc_preview" content="true">
+<meta name="uhfHeaderId" content="MSDocsHeader-VisualStudio">
+<meta name="updated_at" content="2020-03-20 11:34 AM">
+<meta name="page_type" content="conceptual">
+<meta name="toc_rel" content="toc.json">
+<meta name="pdf_url_template" content="https://docs.microsoft.com/pdfstore/zh-cn/VS.docs/{branchName}{pdfName}">
+<meta name="search.mshattr.devlang" content="c++">
+<meta name="word_count" content="2881">
+
+
+	<meta name="scope" content="VS IDE">
+<link href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp" rel="canonical">
+	<title>教程：调试 C++ 代码 - Visual Studio | Microsoft Docs</title>
+
+		<link rel="stylesheet" href="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/aabee6a6.site-ltr.css">
+
+	<link rel="stylesheet" href="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/f7aab81a.conceptual.css">
+
+
+	<script async="" defer="" crossorigin="anonymous" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/lux.js.下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/analytics.js.下载"></script><script>
+	var msDocs = {
+		data: {
+			timeOrigin: Date.now(),
+			contentLocale: 'zh-cn',
+			contentDir: 'ltr',
+			userLocale: 'zh-cn',
+			userDir: 'ltr',
+			pageTemplate: 'Conceptual',
+			brand: '',
+			context: {
+
+			},
+			hasBinaryRating: true,
+			hasGithubIssues: true,
+			showFeedbackReport: false,
+			enableTutorialFeedback: false,
+			feedbackSystem: 'GitHub',
+			feedbackGitHubRepo: 'MicrosoftDocs/visualstudio-docs.zh-cn',
+			feedbackProductUrl: 'https://developercommunity.visualstudio.com/',
+			contentGitUrl: 'https://github.com/MicrosoftDocs/visualstudio-docs.zh-cn/blob/live/docs/debugger/getting-started-with-the-debugger-cpp.md',
+			defaultDevLang: 'csharp',
+			extendBreadcrumb: true,
+			isEditDisplayable: true,
+			hideViewSource: false,
+			hasPageActions: true,
+			hasBookmark: true,
+			hasShare: true
+		},
+		functions:{}
+	};
+	</script>
+	<script nomodule="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/bluebird.min.js.下载" integrity="sha384-aD4BDeDGeLXLpPK4yKeqtZQa9dv4a/7mQ+4L5vwshIYH1Mc2BrXvHd32iHzYCQy5" crossorigin="anonymous"></script>
+	<script nomodule="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/fetch.umd.min.js.下载" integrity="sha384-EQIXrC5K2+7X8nGgLkB995I0/6jfAvvyG1ieZ+WYGxgJHFMD/alsG9fSDWvzb5Y1" crossorigin="anonymous"></script>
+	<script nomodule="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/template.min.js.下载" integrity="sha384-1zKzI6ldTVHMU7n0W2HpE/lhHI+UG4D9IIaxbj3kT2UhCWicdTuJkTtnKuu0CQzN" crossorigin="anonymous"></script>
+	<script nomodule="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/url.min.js.下载" integrity="sha384-vn7xBMtpSTfzaTRWxj0kVq0UcsbBrTOgZ/M1ISHqe1V358elYva+lfiEC+T8jLPc" crossorigin="anonymous"></script>
+	<script nomodule="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/e482e449.index-polyfills.js.下载"></script>
+		<script src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/qrious.min.js.下载" integrity="sha384-h/SmU/qxwYnRlzklg9PKWpDwyma9UmKuOB//Pz6Cov5KkEqcaFF0vod43/XhoeyJ" crossorigin="anonymous"></script>
+		<script src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/bae9e94a.index-docs.js.下载"></script><style>
+		[data-moniker]:not([data-moniker~='vs-2019']) {
+			display: none !important;
+		}
+	</style><script src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/jsll-4.js.下载" async="" defer=""></script>
+<script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js.下载"></script><style type="text/css" media="print">.usabilla_live_button_container { display: none; }</style><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(1).下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(2).下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(3).下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(4).下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(5).下载"></script><script async="" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/t.js(6).下载"></script><script async="" src="https://web.vortex.data.microsoft.com/collect/v1/t.js?ver=%272.1%27&amp;name=%27Ms.Webi.ContentUpdate%27&amp;time=%272020-06-02T07%3A29%3A52.353Z%27&amp;os=%27Windows%27&amp;appId=%27JS%3ADocs%27&amp;-ver=%271.0%27&amp;-impressionGuid=%27a276b759-ffaf-4974-ad72-edc56ae21ecc%27&amp;-pageName=%2727c156a7-933c-1a70-6cc7-b0ae2d1d4a8c%27&amp;-uri=%27https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%27&amp;-market=%27zh-cn%27&amp;-pageTags=%27%7B%22aud%22%3A%22developer%22%2C%22author%22%3A%22Mikejo5000%22%2C%22depotname%22%3A%22VS.docs%22%2C%22document_version_independent_id%22%3A%224ffdd3f4-03d9-655f-f77d-fa66338e740f%22%2C%22gitcommit%22%3A%22https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fvisualstudio-docs-pr.zh-cn%2Fblob%2F874501878eae09318916bba6da5c116bc9ac8cbe%2Fdocs%2Fdebugger%2Fgetting-started-with-the-debugger-cpp.md%22%2C%22manager%22%3A%22jillfra%22%2C%22pgauth%22%3A%22mikejo%22%2C%22custom%22%3A%22debug-experiment%2C%20seodec18%2C%20get-started%22%2C%22date%22%3A%2202%2F04%2F2020%22%2C%22lasthandoff%22%3A%2203%2F20%2F2020%22%2C%22locfileid%22%3A%2277091803%22%2C%22product%22%3A%22visual-studio-windows%22%2C%22technology%22%3A%22vs-ide-debug%22%2C%22pgtop%22%3A%22tutorial%22%2C%22translationtype%22%3A%22HT%22%2C%22workload%22%3A%22multiple%22%2C%22giturl%22%3A%22https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fvisualstudio-docs-pr.zh-cn%2Fblob%2Flive-sxs%2Fdocs%2Fdebugger%2Fgetting-started-with-the-debugger-cpp.md%22%2C%22publishtime%22%3A%222020-03-20%2011%3A34%20AM%22%2C%22contentlocale%22%3A%22zh-cn%22%2C%22highContrast%22%3A%22false%22%2C%22metaTags%22%3A%7B%7D%7D%27&amp;-pageHeight=9814&amp;-vpHeight=660&amp;-vpWidth=1594&amp;-actionType=%27R%27&amp;-behavior=0&amp;-vScrollOffset=100&amp;-hScrollOffset=0&amp;-contentVer=%272.0%27&amp;-content=%27%5B%5D%27&amp;*baseType=%27Ms.Content.ContentUpdate%27&amp;*title=%27%E6%95%99%E7%A8%8B%EF%BC%9A%E8%B0%83%E8%AF%95%20C%2B%2B%20%E4%BB%A3%E7%A0%81%20-%20Visual%20Studio%20%7C%20Microsoft%20Docs%27&amp;*cookieEnabled=true&amp;*isJs=true&amp;*isDomComplete=false&amp;*isLoggedIn=false&amp;ext-javascript-ver=%271.1%27&amp;ext-javascript-libVer=%274.2.14%27&amp;ext-javascript-domain=%27docs.microsoft.com%27&amp;ext-javascript-msfpc=%27GUID%3Dcd470bcb739240bfa7c5c212a080845f%26HASH%3Dcd47%26LV%3D201909%26V%3D4%26LU%3D1567747712223%27&amp;ext-javascript-userConsent=false&amp;ext-user-localId=%27t%3A1FE4EE331BC369A52614E5C11FC36A98%27&amp;$mscomCookies=false"></script></head>
+
+<body lang="zh-cn" dir="ltr"><div style="display: none;" id="lightningjs-usabilla_live"><div><iframe frameborder="0" id="lightningjs-frame-usabilla_live" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/saved_resource.html"></iframe></div></div>
+<div class="header-holder has-default-focus">
+	<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#main" class="skip-to-main-link visually-hidden-until-focused is-fixed has-inner-focus focus-visible has-top-zero has-left-zero has-right-zero has-padding-medium has-text-centered has-body-background-medium" tabindex="1">跳转至主内容</a>
+	<div id="build-banner-holder" class="has-default-focus has-overflow-hidden"><!---->
+		<section id="build-banner" data-bi-name="build-banner" data-dismissable="disappearing" class="uhf-container build-banner has-padding has-padding-top-medium has-padding-bottom-medium is-banner">
+			<div class="columns is-relative is-gapless-mobile">
+				<div class="column is-3 is-2-desktop has-flex-align-self-center">
+					<div class="build-logo image">
+						<img alt="Microsoft Build" src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/build-2020-follow-logo.svg">
+					</div>
+				</div>
+				<div class="column is-auto is-hidden-touch has-flex-align-self-center" hidden="">
+					<span class="is-size-6 is-block has-margin-left-large has-margin-right-large">
+						
+					</span>
+				</div>
+				<div class="column has-flex-align-self-center">
+					<a id="build-banner-anchor" class="button is-small has-margin-top-small has-margin-none-tablet" data-bi-name="CTA" href="https://mybuild.microsoft.com/?wt.mc_id=build_tw_oo_msdev_developer_home_oochannelbannerpostbuild2020">
+						<span>
+							观看点播
+						</span>
+						<span class="icon">
+							<span class="docon docon-chevron-right-light" aria-hidden="true"></span>
+						</span>
+					</a>
+				</div>
+				<button type="button" data-dismiss="" data-bi-name="close" class="is-tertiary button has-inner-focus delete is-large is-absolute has-top-zero has-right-zero has-margin-small">
+					<span class="visually-hidden"><!---->消除警报<!----></span>
+				</button>
+			</div>
+		</section>
+	<!----></div>
+		<div id="headerAreaHolder" data-bi-name="header">
+<header role="banner" itemscope="itemscope" itemtype="http://schema.org/Organization"><!----><!----><div class="nav-bar"><!---->  <a class="nav-bar-button has-padding-left-medium has-padding-left-none-tablet" itemprop="url" href="https://www.microsoft.com/" aria-label="Microsoft">
+		<div class="nav-bar-logo has-background-image theme-display is-light" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope"></div>
+		<div class="nav-bar-logo has-background-image theme-display is-dark is-high-contrast" role="presentation" aria-hidden="true" itemprop="logo" itemscope="itemscope"></div>
+	</a> 
+			
+		<div class="nav-bar-item is-hidden-tablet">
+			<button class="nav-bar-button is-size-5 is-text has-body-background has-padding-none" title="全球导航" aria-expanded="false">
+				<span class="has-text-weight-semibold has-padding-left-small has-padding-bottom-extra-small"><!---->文档<!----></span>
+				<div class="nav-bar-burger has-padding-none has-height-zero">
+					<span></span>
+					<span></span>
+					<span></span>
+					<span class="is-visually-hidden"><!---->全球导航<!----></span>
+				</div>
+			</button>
+		</div>
+	
+			
+		<nav class="nav-bar-nav" role="navigation" aria-label="全球">
+			<ul class="nav-bar-nav-list">
+				
+		<li class="nav-bar-item is-category has-spacing">
+			<a class="nav-bar-button title has-hover-underline is-4" itemprop="url" href="https://docs.microsoft.com/zh-cn/">
+				<span><!---->Docs<!----></span>
+			</a>
+		</li>
+	
+				<!----> <li class="nav-bar-item">
+				<a class="nav-bar-button has-hover-underline is-active" href="https://docs.microsoft.com/zh-cn/">
+					<span><!---->文档<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class="nav-bar-button has-hover-underline " href="https://docs.microsoft.com/zh-cn/learn/">
+					<span><!---->Learn<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class="nav-bar-button has-hover-underline " href="https://docs.microsoft.com/zh-cn/answers/products/">
+					<span><!---->Q&amp;A<!----></span>
+				</a>
+		  </li><!----> <li class="nav-bar-item">
+				<a class="nav-bar-button has-hover-underline " href="https://docs.microsoft.com/zh-cn/samples/browse/">
+					<span><!---->代码示例<!----></span>
+				</a>
+		  </li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-88">
+			<span><!---->更多<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-88" aria-label="更多">
+			<!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/zh-cn/"><!---->文档<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/zh-cn/learn/"><!---->Learn<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/zh-cn/answers/products/"><!---->Q&amp;A<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item" hidden="">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/zh-cn/samples/browse/"><!---->代码示例<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+			<span class="nav-bar-spacer is-hidden-mobile"></span>
+			
+		<div class="nav-bar-item nav-bar-search-form-item has-padding-left-extra-small has-padding-none-tablet" id="ax-89" hidden="">
+			
+		<form class="is-flex" method="GET" name="searchForm" role="search" id="searchForm" aria-label="搜索" aria-expanded="false" action="https://docs.microsoft.com/zh-cn/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control ">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="site-search-input" class="autocomplete-input input   is-small" type="search" name="search" aria-expanded="false" aria-owns="ax-90-listbox" aria-activedescendant="" aria-label="搜索" placeholder="搜索">
+
+				<span aria-hidden="true" class="icon is-small is-left" hidden="">
+					<span class="has-text-primary docon docon-undefined"></span>
+				</span>
+
+				<span class="autocomplete-loader loader has-text-primary" aria-hidden="true" hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-90-listbox" hidden="">
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="All">
+			<input name="scope" hidden="" value="VS IDE">
+			
+			
+		</form>
+	
+		</div>
+		
+					<div class="nav-bar-item nav-bar-search-form-item has-flex-grow-none
+						has-flex-shrink-none has-margin-right-extra-small has-padding-left-extra-small has-padding-none-tablet">
+						<!-- hidden when the width drops to tablet -->
+						
+		<form class="is-flex" method="GET" name="searchForm" role="search" id="searchFormDesktop" aria-label="搜索" aria-expanded="false" action="https://docs.microsoft.com/zh-cn/search/">
+			<div class="autocomplete" data-bi-name="autocomplete"><!----> <div class="control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-91" class="autocomplete-input input control has-icons-left  is-small" type="search" name="search" aria-expanded="false" aria-owns="ax-92-listbox" aria-activedescendant="" aria-label="搜索" placeholder="搜索">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-search"></span>
+				</span>
+
+				<span class="autocomplete-loader loader has-text-primary" aria-hidden="true" hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-92-listbox" hidden="">
+				
+			</ul><!----></div>
+			<!-- mobile safari will not dispatch submit event unless there's a submit button that is not display:none -->
+			<button type="submit" class="visually-hidden" tabindex="-1" aria-hidden="true"></button>
+			<input name="category" hidden="" value="All">
+			<input name="scope" hidden="" value="VS IDE">
+			
+			
+		</form>
+	
+					</div>
+			  
+		<div class="nav-bar-item has-flex-grow-mobile has-flex-shrink-mobile" hidden="">
+			<button id="form-expander" class="nav-bar-button has-hover-underline is-full-width has-padding-medium has-flex-justify-content-end-mobile" title="搜索" aria-expanded="false" aria-controls="ax-89">
+				
+		<span class="is-visually-hidden-mobile"><!---->搜索<!----></span>
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-search"></span>
+		</span>
+	
+			</button>
+		</div>
+	
+			
+		<div class="nav-bar-item is-size-7 is-hidden-mobile has-padding-left-extra-small">
+			
+		<a class="docs-sign-in auth-status-determined not-authenticated button is-text has-inner-focus has-text-primary is-small" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#">
+			登录
+		</a>
+	 
+		<div class="dropdown has-caret auth-status-determined authenticated">
+			<button class="dropdown-trigger button is-text has-padding-none has-background-transparent" aria-controls="user-menu" aria-expanded="false" aria-label="你的帐户">
+				<figure class="image is-36x36">
+					<img class="has-body-background-medium is-rounded" alt="" data-profile-property="avatarUrl">
+				</figure>
+			</button>
+			<div class="dropdown-menu box" id="user-menu" role="menu">
+				<div class="media is-user-dir">
+					<div class="media-left">
+						<figure class="image is-48x48" aria-hidden="true">
+							<img class="has-body-background-medium is-rounded" aria-labelledby="displayName" data-profile-property="avatarUrl">
+						</figure>
+					</div>
+					<div class="media-content">
+						<p class="title is-size-4">
+							<span id="displayName" class="is-inline-truncated has-max-width-200" data-profile-property="displayName"></span>
+						</p>
+						<p class="subtitle is-size-7 has-margin-bottom-none">
+							<span class="is-inline-truncated has-max-width-200" data-profile-property="upn"></span>
+						</p>
+					</div>
+				</div>
+				<ul>
+					<li><a href="https://docs.microsoft.com/profile" data-profile-property="profileUrl"><!---->配置文件<!----></a></li>
+					<li><a href="https://docs.microsoft.com/profile" data-profile-property="bookmarksUrl"><!---->书签<!----></a></li>
+					<li><a href="https://docs.microsoft.com/profile" data-profile-property="collectionsUrl"><!---->集合<!----></a></li>
+				</ul>
+				<div class="has-border-top">
+					<a class="docs-sign-out" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#"><!---->注销<!----></a>
+				</div>
+			</div>
+		</div>
+	
+		</div>
+	
+		 <!----></div><div class="nav-bar is-content is-hidden-mobile has-border-top"><!----> 
+		<a itemprop="url" class="nav-bar-button title has-hover-underline is-4 has-margin-none has-padding-bottom-extra-small" href="https://docs.microsoft.com/visualstudio">
+			<span><!---->Visual Studio 文档<!----></span>
+		</a>
+	 
+		
+		<nav class="nav-bar-nav" role="navigation" aria-label="站点">
+			<ul class="nav-bar-nav-list">
+				
+				<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-65">
+			<span><!---->任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-65" aria-label="任务">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-66">
+			<span><!---->核心任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-66" aria-label="核心任务">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856608"><!---->开发<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833077"><!---->生成<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833078"><!---->调试<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833079"><!---->测试<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834349"><!---->部署<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834348"><!---->提高性能<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-67">
+			<span><!---->其他任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-67" aria-label="其他任务">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856607"><!---->访问数据<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/visualstudio/designers/designing-user-interfaces"><!---->设计用户界面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/devops"><!---->DevOps<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833081"><!---->扩展 Visual Studio<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=865130"><!---->版本控制<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-68">
+			<span><!---->语言<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-68" aria-label="语言">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833062"><!---->C#<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833063"><!---->C++<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833067"><!---->F#<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833064"><!---->JavaScript<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833068"><!---->Python<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833070"><!---->R<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833066"><!---->TypeScript<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833060"><!---->Visual Basic<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-69">
+			<span><!---->工作负载<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-69" aria-label="工作负载">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-70">
+			<span><!---->Web 和云<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-70" aria-label="Web 和云">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833085"><!---->ASP.NET 和 Web<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833086"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834748"><!---->数据科学和分析应用程序<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833095"><!---->数据存储和处理<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833075"><!---->Office/SharePoint<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834351"><!---->Node.js<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833068"><!---->Python<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-71">
+			<span><!---->Windows<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-71" aria-label="Windows">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833083"><!---->.NET 桌面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833084"><!---->使用 C++ 的桌面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833082"><!---->通用 Windows 平台 (UWP)<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-72">
+			<span><!---->移动设备和游戏<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-72" aria-label="移动设备和游戏">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833089"><!---->Apache Cordova (JavaScript)<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834749"><!---->使用 C++ 的游戏<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833090"><!---->使用 C++ 的移动设备<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833091"><!---->Unity<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833088"><!---->Xamarin (.NET)<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-73">
+			<span><!---->其他<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-73" aria-label="其他">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833099"><!---->使用 C++ 的 Linux<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856606"><!---->.NET Core<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834750"><!---->Visual Studio 扩展开发<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-74">
+			<span><!---->产品资源<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-74" aria-label="产品资源">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://visualstudio.microsoft.com/en-us"><!---->visualstudio.microsoft.com<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://devblogs.microsoft.com/visualstudio/"><!---->Visual Studio 博客<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/downloads/"><!---->下载<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/news/releasenotes/vs2017-relnotes"><!---->发行说明<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/vs/support/"><!---->支持<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/subscriptions/"><!---->订阅<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://marketplace.visualstudio.com/vs"><!---->市场<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-75">
+			<span><!---->更多文档<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-75" aria-label="更多文档">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/nuget/"><!---->NuGet<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://developer.microsoft.com/office/docs"><!---->Office<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/powershell/"><!---->PowerShell<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/sql/"><!---->SQL Server<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://code.visualstudio.com/docs"><!---->Visual Studio Code<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/visualstudio/mac"><!---->Visual Studio for Mac<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/devops"><!---->Azure DevOps Services<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/windows/"><!---->Windows<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/"><!---->...<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button has-hover-underline" aria-controls="ax-76">
+			<span><!---->更多<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-down-light expanded-indicator"></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-76" aria-label="更多">
+			<!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-77">
+			<span><!---->任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-77" aria-label="任务">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-78">
+			<span><!---->核心任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-78" aria-label="核心任务">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856608"><!---->开发<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833077"><!---->生成<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833078"><!---->调试<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833079"><!---->测试<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834349"><!---->部署<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834348"><!---->提高性能<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-79">
+			<span><!---->其他任务<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-79" aria-label="其他任务">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856607"><!---->访问数据<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/visualstudio/designers/designing-user-interfaces"><!---->设计用户界面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/devops"><!---->DevOps<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833081"><!---->扩展 Visual Studio<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=865130"><!---->版本控制<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-80">
+			<span><!---->语言<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-80" aria-label="语言">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833062"><!---->C#<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833063"><!---->C++<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833067"><!---->F#<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833064"><!---->JavaScript<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833068"><!---->Python<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833070"><!---->R<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833066"><!---->TypeScript<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833060"><!---->Visual Basic<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-81">
+			<span><!---->工作负载<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-81" aria-label="工作负载">
+			<!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-82">
+			<span><!---->Web 和云<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-82" aria-label="Web 和云">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833085"><!---->ASP.NET 和 Web<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833086"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834748"><!---->数据科学和分析应用程序<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833095"><!---->数据存储和处理<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833075"><!---->Office/SharePoint<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834351"><!---->Node.js<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833068"><!---->Python<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-83">
+			<span><!---->Windows<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-83" aria-label="Windows">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833083"><!---->.NET 桌面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833084"><!---->使用 C++ 的桌面<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833082"><!---->通用 Windows 平台 (UWP)<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-84">
+			<span><!---->移动设备和游戏<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-84" aria-label="移动设备和游戏">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833089"><!---->Apache Cordova (JavaScript)<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834749"><!---->使用 C++ 的游戏<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833090"><!---->使用 C++ 的移动设备<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833091"><!---->Unity<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833088"><!---->Xamarin (.NET)<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-85">
+			<span><!---->其他<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-85" aria-label="其他">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=833099"><!---->使用 C++ 的 Linux<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=856606"><!---->.NET Core<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://go.microsoft.com/fwlink/?linkid=834750"><!---->Visual Studio 扩展开发<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-86">
+			<span><!---->产品资源<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-86" aria-label="产品资源">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://visualstudio.microsoft.com/en-us"><!---->visualstudio.microsoft.com<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://devblogs.microsoft.com/visualstudio/"><!---->Visual Studio 博客<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/downloads/"><!---->下载<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/news/releasenotes/vs2017-relnotes"><!---->发行说明<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/vs/support/"><!---->支持<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://www.visualstudio.com/subscriptions/"><!---->订阅<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://marketplace.visualstudio.com/vs"><!---->市场<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!----> <li class="dropdown nav-bar-item" hidden="">
+		<button aria-expanded="false" class="dropdown-trigger nav-bar-button " aria-controls="ax-87">
+			<span><!---->更多文档<!----></span>
+			<span class="nav-bar-button-chevron" aria-hidden="true">
+				<span class="docon docon-chevron-right-light "></span>
+			</span>
+		</button>
+		<ul class="dropdown-menu" id="ax-87" aria-label="更多文档">
+			<!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/"><!---->Azure<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/nuget/"><!---->NuGet<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://developer.microsoft.com/office/docs"><!---->Office<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/powershell/"><!---->PowerShell<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/sql/"><!---->SQL Server<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://code.visualstudio.com/docs"><!---->Visual Studio Code<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/visualstudio/mac"><!---->Visual Studio for Mac<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/azure/devops"><!---->Azure DevOps Services<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/windows/"><!---->Windows<!----></a>
+				</li>
+		  <!---->
+				<li class="nav-bar-item">
+					<a class="nav-bar-button" href="https://docs.microsoft.com/"><!---->...<!----></a>
+				</li>
+		  <!---->
+		</ul>
+	</li><!---->
+		</ul>
+	</li><!---->
+			</ul>
+		</nav>
+	
+		<span class="nav-bar-spacer is-hidden-mobile"></span>
+		
+		<ol class="is-flex">
+			 
+		<li class="nav-bar-item ">
+			<a class="button is-small is-primary " href="https://visualstudio.microsoft.com/downloads/?utm_medium=microsoft&amp;utm_source=docs.microsoft.com&amp;utm_campaign=navigation+cta&amp;utm_content=download+vs2019">
+				下载 Visual Studio
+			</a>
+		</li>
+	
+		</ol>
+	
+	 <!----></div></header>		</div>
+		<div class="content-header uhf-container has-padding has-default-focus has-border-bottom-none" data-bi-name="content-header">
+			<nav class="has-padding-none has-padding-left-medium-tablet has-padding-right-medium-tablet has-padding-left-none-uhf-tablet has-padding-left-none-uhf-tablet has-padding-none-desktop has-flex-grow" data-bi-name="breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList" role="navigation" aria-label="痕迹">
+				<ul id="page-breadcrumbs" class="breadcrumbs"><!---->
+			<!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/?view=vs-2019">
+								<span itemprop="name">
+									Docs
+								</span>
+						  </a>
+					<meta itemprop="position" content="1">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/visualstudio/?view=vs-2019">
+								<span itemprop="name">
+									Visual Studio
+								</span>
+						  </a>
+					<meta itemprop="position" content="2">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/visualstudio/windows/?view=vs-2019">
+								<span itemprop="name">
+									Windows
+								</span>
+						  </a>
+					<meta itemprop="position" content="3">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/visualstudio/ide/?view=vs-2019">
+								<span itemprop="name">
+									IDE
+								</span>
+						  </a>
+					<meta itemprop="position" content="4">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/?view=vs-2019">
+								<span itemprop="name">
+									调试
+								</span>
+						  </a>
+					<meta itemprop="position" content="5">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <a itemprop="item" href="https://docs.microsoft.com/zh-cn/visualstudio/get-started/csharp/tutorial-debugger?toc=%2Fvisualstudio%2Fdebugger%2Ftoc.json&amp;view=vs-2019">
+								<span itemprop="name">
+									教程
+								</span>
+						  </a>
+					<meta itemprop="position" content="6">
+				</li><!----> <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+					 <span itemprop="name">
+								了解如何调试 C++
+						  </span>
+					<meta itemprop="position" content="7">
+				</li><!---->
+		<!----></ul>
+			</nav>
+		<div class="content-header-controls">
+			<button type="button" class="contents-button button" data-bi-name="contents-expand" aria-haspopup="true">
+				<span class="icon"><span class="docon docon-menu" aria-hidden="true"></span></span>
+				<span>目录</span>
+			</button>
+		</div>
+		<div class="content-header-controls exit-focus">
+			<button type="button" class="ap-collapse-behavior ap-expanded button" data-bi-name="ap-collapse" aria-controls="action-panel">
+				<span class="icon"><span class="docon docon-exit-mode" aria-hidden="true"></span></span>
+				<span>退出焦点模式</span>
+			</button>
+		</div>
+		<div class="has-padding-none-tablet has-padding-medium is-size-7 is-flex-touch has-flex-justify-content-space-between-touch has-flex-grow">
+			<ul class="is-hidden-mobile action-list has-flex-justify-content-start has-flex-justify-content-end-tablet is-flex is-flex-row has-flex-wrap has-flex-grow is-unstyled">
+				<li>
+					<button type="button" class="bookmark button is-text has-inner-focus is-small is-icon-only-touch" data-list-type="bookmarks" data-bi-name="bookmark" title="添加 教程：调试 C++ 代码 - Visual Studio | Microsoft Docs 的书签" aria-pressed="false">
+						<span class="icon" aria-hidden="true">
+							<span class="docon docon-single-bookmark"></span>
+						</span>
+						<span class="bookmark-status is-visually-hidden-touch is-hidden-portrait">书签</span>
+					</button>
+				</li>
+					<li id="feedback-section-link">
+						<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#feedback" class="button is-text has-inner-focus is-small is-icon-only-touch" data-bi-name="comments" title="发送有关此页面的反馈">
+							<span class="icon">
+								<span class="docon docon-comment-lines" aria-hidden="true"></span>
+							</span>
+							<span class="is-visually-hidden-touch is-hidden-portrait">反馈</span>
+						</a>
+					</li>
+						<li id="contenteditbtn">
+							<a href="https://github.com/MicrosoftDocs/visualstudio-docs.zh-cn/blob/live/docs/debugger/getting-started-with-the-debugger-cpp.md" class="button is-text has-inner-focus is-icon-only-touch is-small" title="编辑本文" data-bi-name="edit" data-original_content_git_url="https://github.com/MicrosoftDocs/visualstudio-docs-pr.zh-cn/blob/live-sxs/docs/debugger/getting-started-with-the-debugger-cpp.md" data-original_content_git_url_template="{repo}/blob/{branch}/docs/debugger/getting-started-with-the-debugger-cpp.md" data-pr_repo="" data-pr_branch="">
+							<span class="icon">
+								<span class="docon docon-edit-outline" aria-hidden="true"></span>
+							</span>
+							<span class="is-visually-hidden-touch is-hidden-portrait">编辑</span>
+						</a>
+					</li>
+				<li>
+<div class="sharing dropdown has-caret">
+	<button class="dropdown-trigger button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small is-icon-only-touch" aria-controls="sharing-menu" aria-expanded="false" title="共享本文" data-bi-name="share">
+		<span class="icon" aria-hidden="true">
+			<span class="docon docon-sharing"></span>
+		</span>
+		<span class="is-visually-hidden-touch is-hidden-portrait">共享</span>
+	</button>
+	<div class="dropdown-menu has-padding-small" id="sharing-menu">
+		<ul data-bi-name="share-links">
+			<li>
+				<a class="button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small share-twitter" data-bi-name="twitter" href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%26WT.mc_id%3Dtwitter&amp;text=%E6%95%99%E7%A8%8B%EF%BC%9A%E8%B0%83%E8%AF%95%20C%2B%2B%20%E4%BB%A3%E7%A0%81%20-%20Visual%20Studio%20%7C%20Microsoft%20Docs&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%26WT.mc_id%3Dtwitter">
+					<span class="icon">
+						<span class="docon docon-brand-twitter has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Twitter</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small share-linkedin" data-bi-name="linkedin" href="https://www.linkedin.com/cws/share?url=https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%26WT.mc_id%3Dlinkedin">
+					<span class="icon">
+						<span class="docon docon-brand-linkedin has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>LinkedIn</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small share-facebook" data-bi-name="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%26WT.mc_id%3Dfacebook">
+					<span class="icon">
+						<span class="docon docon-brand-facebook has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>Facebook</span>
+				</a>
+			</li>
+			<li>
+				<a class="button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small share-email" data-bi-name="email" href="mailto:?subject=%5B%E5%85%B1%E4%BA%AB%E6%96%87%E7%AB%A0%5D%20%E6%95%99%E7%A8%8B%EF%BC%9A%E8%B0%83%E8%AF%95%20C%2B%2B%20%E4%BB%A3%E7%A0%81%20-%20Visual%20Studio%20%7C%20Microsoft%20Docs&amp;body=%E6%95%99%E7%A8%8B%EF%BC%9A%E8%B0%83%E8%AF%95%20C%2B%2B%20%E4%BB%A3%E7%A0%81%20-%20Visual%20Studio%20%7C%20Microsoft%20Docs%0A%0Ahttps%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019%26WT.mc_id%3Demail">
+					<span class="icon">
+						<span class="docon docon-mail-message-fill has-text-primary" aria-hidden="true"></span>
+					</span>
+					<span>电子邮件</span>
+				</a>
+			</li>
+			<li>
+				<span class="button is-text is-fullwidth has-flex-justify-content-start has-inner-focus is-small share-wechat has-padding-top-extra-small has-padding-left-medium has-padding-right-medium">
+					<span class="icon">
+						<span class="docon docon-wechat has-text-primary" data-bi-name="wechat" aria-hidden="true"></span>
+					</span>
+					<span>微信</span>
+				</span>
+			</li>
+			<li>
+				<canvas class="qr-code" height="96" width="96"></canvas>
+			</li>
+		</ul>
+	</div>
+</div>				</li>
+				<li>
+
+<div class="lang-toggle-container" style="display: flex;">
+	<label for="language-toggle" aria-hidden="true" tabindex="-1">使用英语阅读</label>
+	<div class="checkbox-toggle-wrapper">
+		<input type="checkbox" id="language-toggle" aria-label="使用英语阅读" data-m="{&quot;cN&quot;:&quot;language-toggle&quot;,&quot;value&quot;:&quot;off&quot;}">
+		<label for="language-toggle" class="switch"></label>
+	</div>
+</div>				</li>
+			</ul>
+			<button type="button" class="has-border contents-button button is-small is-text is-hidden-tablet has-inner-focus" aria-label="目录" data-bi-name="contents-expand">
+				<span class="icon">
+					<span class="docon docon-editor-list-bullet" aria-hidden="true"></span>
+				</span>
+				<span>目录</span>
+			</button>
+			<div class="is-invisible"></div>
+			<div class="is-hidden-tablet level-item is-flexible level-right">
+				<button type="button" class="page-actions-button button is-small is-text is-hidden-tablet has-inner-focus has-border is-full-height  has-margin-left-small" aria-label="页面操作" data-bi-name="pageactions">
+					<span class="icon">
+						<span class="docon docon-more-vertical" aria-hidden="true"></span>
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="disclaimer-holder" class="has-overflow-hidden has-default-focus"></div>
+	</div>
+
+	<div class="mainContainer  uhf-container has-top-padding  has-default-focus" data-bi-name="body">
+
+		<div class="columns has-large-gaps is-gapless-mobile ">
+
+			<div id="left-container" class="left-container is-hidden-mobile column is-one-third-tablet is-one-quarter-desktop">
+				<nav id="affixed-left-container" class="is-fixed is-flex is-flex-column" role="navigation" aria-label="主要" data-bi-name="left toc" style="width: 318.391px; top: 129.5px; bottom: 24px;"><div class="moniker-picker2" data-bi-name="moniker-picker"><!---->
+		<span class="label has-margin-bottom-extra-small"><!---->版本<!----></span>
+		<div class="dropdown has-margin-bottom-small">
+			<button class="dropdown-trigger has-flex-justify-content-start is-full-width button is-small has-border has-inner-focus" aria-expanded="false" aria-controls="ax-64">
+				<span class="visually-hidden"><!---->选择版本<!----></span>
+				<span class="has-text-overflow-ellipsis"><!---->Visual Studio 2019<!----></span>
+				<span class="dropdown-button-chevron" aria-hidden="true">
+					<span class="icon docon docon-chevron-down-light expanded-indicator"></span>
+				</span>
+			</button>
+			<ul class="dropdown-menu is-full-width is-vertically-scrollable" id="ax-64" aria-label="Visual Studio">
+						<!----><!---->
+		<li>
+			<a class="preserve-view button is-small has-border-none has-inner-focus has-flex-justify-content-start is-full-width has-text-wrap is-text-left" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019"><!---->2019<!----></a>
+		</li>
+	<!----><!----><!---->
+		<li>
+			<a class="preserve-view button is-small has-border-none has-inner-focus has-flex-justify-content-start is-full-width has-text-wrap is-text-left" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2017"><!---->2017<!----></a>
+		</li>
+	<!----><!----><!---->
+		<li>
+			<a class="preserve-view button is-small has-border-none has-inner-focus has-flex-justify-content-start is-full-width has-text-wrap is-text-left" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2015"><!---->2015<!----></a>
+		</li>
+	<!----><!---->
+						
+				  </ul>
+		</div>
+	<!----></div><form action="javascript:" role="search" aria-label="搜索" class="has-margin-bottom-small"><label class="visually-hidden" for="ax-61">搜索</label><div class="autocomplete is-block" data-bi-name="autocomplete"><!----> <div class="control has-icons-left">
+				<input role="combobox" maxlength="100" aria-autocomplete="list" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" id="ax-61" class="autocomplete-input input control has-icons-left is-full-width is-small" type="text" aria-expanded="false" aria-owns="ax-62-listbox" aria-activedescendant="" placeholder="按标题筛选">
+
+				<span aria-hidden="true" class="icon is-small is-left">
+					<span class="has-text-primary docon docon-filter-settings"></span>
+				</span>
+
+				<span class="autocomplete-loader loader has-text-primary" aria-hidden="true" hidden=""></span>
+			</div>
+
+			<ul class="autocomplete-suggestions is-vertically-scrollable" role="listbox" id="ax-62-listbox" hidden="">
+				
+			</ul><!----></div></form><ul class="tree is-vertically-scrollable has-flex-grow has-flex-shrink" role="tree" aria-label="目录" data-bi-name="tree"><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="7" aria-level="1" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/?view=vs-2019">调试程序文档</a></li><li data-moniker="vs-2017 vs-2019" class="tree-item" aria-setsize="7" aria-level="1" aria-posinset="2" role="treeitem" tabindex="-1" aria-expanded="false"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>概述</span></li><li data-moniker="vs-2017 vs-2019" class="tree-item" aria-setsize="7" aria-level="1" aria-posinset="3" role="treeitem" tabindex="-1" aria-expanded="false"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>快速入门</span></li><li class="tree-item is-expanded" aria-setsize="7" aria-level="1" aria-posinset="4" role="treeitem" tabindex="-1" aria-expanded="true"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>教程</span><ul class="tree-group" role="group"><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="1" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/get-started/csharp/tutorial-debugger?toc=%2Fvisualstudio%2Fdebugger%2Ftoc.json&amp;view=vs-2019">了解如何调试 C#</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="2" role="treeitem" tabindex="0" class="tree-item is-leaf is-selected" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019" aria-current="page">了解如何调试 C++</a></li><li role="none"><a aria-setsize="8" aria-level="2" aria-posinset="3" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/get-started/visual-basic/tutorial-debugger?toc=%2Fvisualstudio%2Fdebugger%2Ftoc.json&amp;view=vs-2019">了解如何调试 Visual Basic</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="4" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/python/tutorial-working-with-python-in-visual-studio-step-04-debugging?view=vs-2019">在调试器中运行 Python 代码...</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="5" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debug-live-azure-applications?view=vs-2019">调试实时 Azure 应用</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="6" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/how-to-debug-managed-and-native-code?view=vs-2019">调试 C# 和 C++ 代码</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="7" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/view-historical-application-state?view=vs-2019">检查上一应用状态</a></li><li data-moniker="vs-2017 vs-2019" role="none"><a aria-setsize="8" aria-level="2" aria-posinset="8" role="treeitem" tabindex="-1" class="tree-item is-leaf" data-bi-name="tree-leaf" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugging-absolute-beginners?view=vs-2019">零基础调试</a></li></ul></li><li class="tree-item" aria-setsize="7" aria-level="1" aria-posinset="5" role="treeitem" tabindex="-1" aria-expanded="false"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>操作指南</span></li><li data-moniker="vs-2017 vs-2019" class="tree-item" aria-setsize="7" aria-level="1" aria-posinset="6" role="treeitem" tabindex="-1" aria-expanded="false"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>参考</span></li><li data-moniker="vs-2017" class="tree-item" aria-setsize="7" aria-level="1" aria-posinset="7" role="treeitem" tabindex="-1" aria-expanded="false"><span class="tree-expander" data-bi-name="tree-expander"><span class="tree-expander-indicator docon docon-chevron-right-light" aria-hidden="true"></span>资源</span></li></ul><a class="button is-small is-text has-flex-justify-content-start has-inner-focus has-margin-top-small has-border-top has-border-bottom has-flex-shrink-none" href="https://docs.microsoft.com/zh-cn/visualstudio/opbuildpdf/73e0edff/debugger/toc.pdf?branch=live&amp;view=vs-2019" data-bi-name="downloadPdf"><!----> <span class="icon is-size-8 has-text-subtle">
+				<span aria-hidden="true" class="docon docon-dictionary-download"></span>
+			</span>
+			<span><!---->下载 PDF<!----></span><!----></a></nav>
+			</div>
+
+			<section class="primary-holder column is-two-thirds-tablet is-three-quarters-desktop">
+				<div class="columns is-gapless-mobile has-large-gaps ">
+
+
+				<div id="main-column" class="column  is-full is-four-fifths-desktop ">
+
+					<main id="main" role="main" class="content " data-bi-name="content" lang="zh-cn" dir="ltr">
+
+
+
+						<h1 id="tutorial-learn-to-debug-c-code-using-visual-studio"><span data-ttu-id="9c175-103">教程：了解如何使用 Visual Studio 调试 C++ 代码</span><span class="sxs-lookup"><span data-stu-id="9c175-103">Tutorial: Learn to debug C++ code using Visual Studio</span></span></h1>
+
+						<ul class="metadata page-metadata" data-bi-name="page info" lang="zh-cn" dir="ltr">
+							<li>
+								<time class="" data-article-date="" aria-label="文章评审日期" datetime="2020-02-04T00:00:00.000Z" data-article-date-source="ms.date">2020/02/04</time>
+							</li>
+								<li class="contributors-holder">
+									<a href="https://github.com/MicrosoftDocs/visualstudio-docs.zh-cn/blob/live/docs/debugger/getting-started-with-the-debugger-cpp.md" title="2 作者" aria-label="2 作者">
+										<ul class="contributors" data-bi-name="contributors" aria-hidden="true">
+													<li><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/Mikejo5000.png" data-src="https://github.com/Mikejo5000.png?size=32" role="presentation"></li>
+													<li><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/olprod.png" data-src="https://github.com/olprod.png?size=32" role="presentation"></li>
+										</ul>
+									</a>
+								</li>
+						</ul>
+
+						<nav id="center-doc-outline" class="doc-outline is-hidden-desktop" data-bi-name="intopic toc" role="navigation" aria-label="文章大纲">
+							<h3>本文内容</h3>
+						<ol><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#prerequisites">先决条件</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-a-project">创建项目</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-the-application">创建应用程序</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#start-the-debugger">启动调试器！</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-breakpoint-and-start-the-debugger">设置断点并启动调试器</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-in-the-debugger-using-step-commands">使用单步执行命令在调试器中导航代码</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-using-run-to-click">使用“运行时单击”导航代码</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#restart-your-app-quickly">快速重启应用</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-data-tips">使用数据提示检查变量</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-the-autos-and-locals-windows">使用“自动”和“局部变量”窗口检查变量</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-watch">设置监视</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#examine-the-call-stack">检查调用堆栈</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#change-the-execution-flow">更改执行流</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#next-steps">后续步骤</a></li></ol></nav>
+
+						<!-- <content> -->
+							<p><span data-ttu-id="9c175-104">本文通过分步演练介绍了 Visual Studio 调试器的功能。</span><span class="sxs-lookup"><span data-stu-id="9c175-104">This article introduces the features of the Visual Studio debugger in a step-by-step walkthrough.</span></span> <span data-ttu-id="9c175-105">如果需要更加深入地了解调试器功能，请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugger-feature-tour?view=vs-2019" data-linktype="relative-path">初探调试器</a>。</span><span class="sxs-lookup"><span data-stu-id="9c175-105">If you want a higher-level view of the debugger features, see <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugger-feature-tour?view=vs-2019" data-linktype="relative-path">First look at the debugger</a>.</span></span> <span data-ttu-id="9c175-106">当你调试应用时，通常意味着运行附带有调试器的应用程序  。</span><span class="sxs-lookup"><span data-stu-id="9c175-106">When you <em>debug your app</em>, it usually means that you are running your application with the debugger attached.</span></span> <span data-ttu-id="9c175-107">执行此操作时，调试器在运行过程中可提供许多方法让你查看代码的情况。</span><span class="sxs-lookup"><span data-stu-id="9c175-107">When you do this, the debugger provides many ways to see what your code is doing while it runs.</span></span> <span data-ttu-id="9c175-108">你可以逐步浏览代码、查看变量中存储的值、设置对变量的监视以查看值何时改变、检查代码的执行路径、查看代码分支是否正在运行等等。</span><span class="sxs-lookup"><span data-stu-id="9c175-108">You can step through your code and look at the values stored in variables, you can set watches on variables to see when values change, you can examine the execution path of your code, see whether a branch of code is running, and so on.</span></span> <span data-ttu-id="9c175-109">如果这是你第一次尝试调试代码，可能需要在浏览本文之前阅读<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugging-absolute-beginners?view=vs-2019" data-linktype="relative-path">零基础调试</a>。</span><span class="sxs-lookup"><span data-stu-id="9c175-109">If this is the first time that you've tried to debug code, you may want to read <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugging-absolute-beginners?view=vs-2019" data-linktype="relative-path">Debugging for absolute beginners</a> before going through this article.</span></span></p>
+<p><span data-ttu-id="9c175-110">虽然演示应用为 C++，但大多数功能都适用于 C#、Visual Basic、F#、Python、JavaScript 和 Visual Studio 支持的其他语言（F# 不支持“编辑并继续”。</span><span class="sxs-lookup"><span data-stu-id="9c175-110">Although the demo app is C++, most of the features are applicable to C#, Visual Basic, F#, Python, JavaScript, and other languages supported by Visual Studio (F# does not support Edit-and-continue.</span></span> <span data-ttu-id="9c175-111">F# 和 JavaScript 不支持“自动”窗口  ）。</span><span class="sxs-lookup"><span data-stu-id="9c175-111">F# and JavaScript do not support the <strong>Autos</strong> window).</span></span> <span data-ttu-id="9c175-112">屏幕截图为 C++。</span><span class="sxs-lookup"><span data-stu-id="9c175-112">The screenshots are in C++.</span></span></p>
+<p><span data-ttu-id="9c175-113">在本教程中，你将：</span><span class="sxs-lookup"><span data-stu-id="9c175-113">In this tutorial, you will:</span></span></p>
+<div class="checklist">
+<ul>
+<li><span data-ttu-id="9c175-114">启动调试器并命中断点。</span><span class="sxs-lookup"><span data-stu-id="9c175-114">Start the debugger and hit breakpoints.</span></span></li>
+<li><span data-ttu-id="9c175-115">了解在调试器中逐步执行代码的命令</span><span class="sxs-lookup"><span data-stu-id="9c175-115">Learn commands to step through code in the debugger</span></span></li>
+<li><span data-ttu-id="9c175-116">检查数据提示和调试器窗口中的变量</span><span class="sxs-lookup"><span data-stu-id="9c175-116">Inspect variables in data tips and debugger windows</span></span></li>
+<li><span data-ttu-id="9c175-117">检查调用堆栈</span><span class="sxs-lookup"><span data-stu-id="9c175-117">Examine the call stack</span></span></li>
+</ul>
+</div>
+<h2 id="prerequisites"><span data-ttu-id="9c175-118">先决条件</span><span class="sxs-lookup"><span data-stu-id="9c175-118">Prerequisites</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#prerequisites" aria-labelledby="prerequisites"></a></h2>
+<div data-moniker="vs-2019">
+<p><span data-ttu-id="9c175-119">须安装 Visual Studio 2019 且具有“使用 C++ 的桌面开发”工作负载  。</span><span class="sxs-lookup"><span data-stu-id="9c175-119">You must have Visual Studio 2019 installed and the <strong>Desktop development with C++</strong> workload.</span></span></p>
+</div>
+<div data-moniker="vs-2017">
+<p><span data-ttu-id="9c175-120">须安装 Visual Studio 2017 且具有“C++ 桌面开发”工作负载  。</span><span class="sxs-lookup"><span data-stu-id="9c175-120">You must have Visual Studio 2017 installed and the <strong>Desktop development with C++</strong> workload.</span></span></p>
+</div>
+<div data-moniker="vs-2017">
+<p><span data-ttu-id="9c175-121">如果尚未安装 Visual Studio，请转到 <a href="https://visualstudio.microsoft.com/vs/older-downloads/?utm_medium=microsoft&amp;utm_source=docs.microsoft.com&amp;utm_campaign=vs+2017+download" data-linktype="external">Visual Studio 下载</a>页免费安装。</span><span class="sxs-lookup"><span data-stu-id="9c175-121">If you haven't already installed Visual Studio, go to the <a href="https://visualstudio.microsoft.com/vs/older-downloads/?utm_medium=microsoft&amp;utm_source=docs.microsoft.com&amp;utm_campaign=vs+2017+download" data-linktype="external">Visual Studio downloads</a> page to install it for free.</span></span></p>
+</div>
+<div data-moniker="vs-2019">
+<p><span data-ttu-id="9c175-122">如果尚未安装 Visual Studio，请转到 <a href="https://visualstudio.microsoft.com/downloads" data-linktype="external">Visual Studio 下载</a>页免费安装。</span><span class="sxs-lookup"><span data-stu-id="9c175-122">If you haven't already installed Visual Studio, go to the <a href="https://visualstudio.microsoft.com/downloads" data-linktype="external">Visual Studio downloads</a> page to install it for free.</span></span></p>
+</div>
+<p><span data-ttu-id="9c175-123">如果需要安装工作负载但已有 Visual Studio，请转到“工具”   &gt; “获取工具和功能...”  ，这会打开 Visual Studio 安装程序。</span><span class="sxs-lookup"><span data-stu-id="9c175-123">If you need to install the workload but already have Visual Studio, go to <strong>Tools</strong> &gt; <strong>Get Tools and Features...</strong>, which opens the Visual Studio Installer.</span></span> <span data-ttu-id="9c175-124">Visual Studio 安装程序启动。</span><span class="sxs-lookup"><span data-stu-id="9c175-124">The Visual Studio Installer launches.</span></span> <span data-ttu-id="9c175-125">选择“使用 C++ 的桌面开发”工作负载，然后选择“修改”按钮   。</span><span class="sxs-lookup"><span data-stu-id="9c175-125">Choose the <strong>Desktop development with C++</strong> workload, then choose <strong>Modify</strong>.</span></span></p>
+<h2 id="create-a-project"><span data-ttu-id="9c175-126">创建项目</span><span class="sxs-lookup"><span data-stu-id="9c175-126">Create a project</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-a-project" aria-labelledby="create-a-project"></a></h2>
+<p><span data-ttu-id="9c175-127">首先，创建 C++ 控制台应用程序项目。</span><span class="sxs-lookup"><span data-stu-id="9c175-127">First, you'll create a C++ console application project.</span></span> <span data-ttu-id="9c175-128">项目类型随附了所需的全部模板文件，无需添加任何内容！</span><span class="sxs-lookup"><span data-stu-id="9c175-128">The project type comes with all the template files you'll need, before you've even added anything!</span></span></p>
+<div data-moniker="vs-2017">
+<ol>
+<li><p><span data-ttu-id="9c175-129">打开 Visual Studio 2017。</span><span class="sxs-lookup"><span data-stu-id="9c175-129">Open Visual Studio 2017.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-130">从顶部菜单栏中选择“文件”&gt;“新建”&gt;“项目”    。</span><span class="sxs-lookup"><span data-stu-id="9c175-130">From the top menu bar, choose <strong>File</strong> &gt; <strong>New</strong> &gt; <strong>Project</strong>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-131">在“新建项目”对话框左侧的窗格中，展开“Visual C++”，然后选择“Windows 桌面”    。</span><span class="sxs-lookup"><span data-stu-id="9c175-131">In the <strong>New Project</strong> dialog box in the left pane, expand <strong>Visual C++</strong> and then choose <strong>Windows Desktop</strong>.</span></span> <span data-ttu-id="9c175-132">在中间窗格中，选择“Windows 控制台应用程序”  。</span><span class="sxs-lookup"><span data-stu-id="9c175-132">In the middle pane, choose <strong>Windows Console Application</strong>.</span></span> <span data-ttu-id="9c175-133">然后将项目命名为 get-started-debugging  。</span><span class="sxs-lookup"><span data-stu-id="9c175-133">Then name the project <em>get-started-debugging</em>.</span></span></p>
+<p><span data-ttu-id="9c175-134">如果没有看到“控制台应用”项目模板，请选择“新建项目”对话框左侧窗格中的“打开 Visual Studio 安装程序”链接    。</span><span class="sxs-lookup"><span data-stu-id="9c175-134">If you don't see the <strong>Console App</strong> project template, choose the <strong>Open Visual Studio Installer</strong> link in the left pane of the <strong>New Project</strong> dialog box.</span></span> <span data-ttu-id="9c175-135">Visual Studio 安装程序启动。</span><span class="sxs-lookup"><span data-stu-id="9c175-135">The Visual Studio Installer launches.</span></span> <span data-ttu-id="9c175-136">选择“.NET Core 跨平台开发”工作负载，然后选择“修改”   。</span><span class="sxs-lookup"><span data-stu-id="9c175-136">Choose the <strong>.NET Core cross-platform development</strong> workload, and then choose <strong>Modify</strong>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-137">单击 <strong>“确定”</strong> 。</span><span class="sxs-lookup"><span data-stu-id="9c175-137">Click <strong>OK</strong>.</span></span></p>
+<p><span data-ttu-id="9c175-138">此时，Visual Studio 将打开新项目。</span><span class="sxs-lookup"><span data-stu-id="9c175-138">Visual Studio opens your new project.</span></span></p>
+</li>
+</ol>
+</div>
+<div data-moniker="vs-2019">
+<ol>
+<li><p><span data-ttu-id="9c175-139">打开 Visual Studio 2019。</span><span class="sxs-lookup"><span data-stu-id="9c175-139">Open Visual Studio 2019.</span></span></p>
+<p><span data-ttu-id="9c175-140">如果开始窗口未打开，请选择“文件”&gt;“开始窗口”   。</span><span class="sxs-lookup"><span data-stu-id="9c175-140">If the start window is not open, choose <strong>File</strong> &gt; <strong>Start Window</strong>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-141">在“开始”窗口上，选择“创建新项目”  。</span><span class="sxs-lookup"><span data-stu-id="9c175-141">On the start window, choose <strong>Create a new project</strong>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-142">在“创建新项目”窗口的搜索框中输入或键入“控制台”   。</span><span class="sxs-lookup"><span data-stu-id="9c175-142">On the <strong>Create a new project</strong> window, enter or type <em>console</em> in the search box.</span></span> <span data-ttu-id="9c175-143">接下来，从“语言”列表中选择“C++”，然后从“平台”列表中选择“Windows”   。</span><span class="sxs-lookup"><span data-stu-id="9c175-143">Next, choose <strong>C++</strong> from the Language list, and then choose <strong>Windows</strong> from the Platform list.</span></span></p>
+<p><span data-ttu-id="9c175-144">应用语言和平台筛选器之后，选择“控制台应用”模板，然后选择“下一步”   。</span><span class="sxs-lookup"><span data-stu-id="9c175-144">After you apply the language and platform filters, choose the <strong>Console App</strong> template, and then choose <strong>Next</strong>.</span></span></p>
+<p><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-create-console-project-cpp.png" alt="为“控制台应用”选择 C++ 模板" data-linktype="relative-path"></p>
+<div class="alert is-info">
+<p class="alert-title"><span class="docon docon-status-error-outline" aria-hidden="true"></span> 备注</p>
+<p><span data-ttu-id="9c175-146">如果未看到“控制台应用”模板，则可以通过“创建新项目”窗口安装该模板   。</span><span class="sxs-lookup"><span data-stu-id="9c175-146">If you do not see the <strong>Console App</strong> template, you can install it from the <strong>Create a new project</strong> window.</span></span> <span data-ttu-id="9c175-147">在“找不到所需内容?”消息中，选择“安装更多工具和功能”链接   。</span><span class="sxs-lookup"><span data-stu-id="9c175-147">In the <strong>Not finding what you're looking for?</strong> message, choose the <strong>Install more tools and features</strong> link.</span></span> <span data-ttu-id="9c175-148">然后，在 Visual Studio 安装程序中，选择“使用 C++ 的桌面开发”工作负载  。</span><span class="sxs-lookup"><span data-stu-id="9c175-148">Then, in the Visual Studio Installer, choose the <strong>Desktop development with C++</strong> workload.</span></span></p>
+</div>
+</li>
+<li><p><span data-ttu-id="9c175-149">在“配置新项目”窗口中，在“项目名称”框中键入或输入“get-started-debugging”    。</span><span class="sxs-lookup"><span data-stu-id="9c175-149">In the <strong>Configure your new project</strong> window, type or enter <em>get-started-debugging</em> in the <strong>Project name</strong> box.</span></span> <span data-ttu-id="9c175-150">然后，选择“创建”  。</span><span class="sxs-lookup"><span data-stu-id="9c175-150">Then, choose <strong>Create</strong>.</span></span></p>
+<p><span data-ttu-id="9c175-151">此时，Visual Studio 将打开新项目。</span><span class="sxs-lookup"><span data-stu-id="9c175-151">Visual Studio opens your new project.</span></span></p>
+</li>
+</ol>
+</div>
+<h2 id="create-the-application"><span data-ttu-id="9c175-152">创建应用程序</span><span class="sxs-lookup"><span data-stu-id="9c175-152">Create the application</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-the-application" aria-labelledby="create-the-application"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-153">在 get-started-debugging.cpp 中，使用以下代码替换所有默认代码  ：</span><span class="sxs-lookup"><span data-stu-id="9c175-153">In <em>get-started-debugging.cpp</em>, replace all of the default code with the following code instead:</span></span></p>
+<div class="codeHeader" id="code-try-0" data-bi-name="code-header"><span class="language">C++</span><button type="button" class="action is-relative" data-bi-name="copy" aria-label="复制代码">
+				<span class="icon">
+					<span class="docon docon-edit-copy" role="presentation"></span>
+				</span>
+				<span>复制</span>
+				<div class="successful-copy-alert is-absolute has-right-zero has-top-zero has-left-zero has-bottom-zero is-flex has-flex-align-items-center has-flex-justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden="true">
+					<span class="icon is-size-4">
+						<span class="docon docon-check-mark" role="presentation"></span>
+					</span>
+				</div>
+			</button></div><pre tabindex="0" class="has-inner-focus"><code class="lang-cpp" data-author-content="#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+
+void SendMessage(const std::wstring&amp; name, int msg)
+{
+    std::wcout &lt;&lt; L&quot;Hello, &quot; &lt;&lt; name &lt;&lt; L&quot;! Count to &quot; &lt;&lt; msg &lt;&lt; std::endl;
+}
+
+int main()
+{
+    std::vector&lt;wchar_t&gt; letters = { L&#39;f&#39;, L&#39;r&#39;, L&#39;e&#39;, L&#39;d&#39;, L&#39; &#39;, L&#39;s&#39;, L&#39;m&#39;, L&#39;i&#39;, L&#39;t&#39;, L&#39;h&#39; };
+    std::wstring name = L&quot;&quot;;
+    std::vector&lt;int&gt; a(10);
+    std::wstring key = L&quot;&quot;;
+
+    for (int i = 0; i &lt; letters.size(); i++)
+    {
+        name += letters[i];
+        a[i] = i + 1;
+        SendMessage(name, a[i]);
+    }
+    std::wcin &gt;&gt; key;
+    return 0;
+}
+"><span><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SendMessage</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-built_in">std</span>::wstring&amp; name, <span class="hljs-keyword">int</span> msg)</span>
+</span>{
+    <span class="hljs-built_in">std</span>::wcout &lt;&lt; <span class="hljs-string">L"Hello, "</span> &lt;&lt; name &lt;&lt; <span class="hljs-string">L"! Count to "</span> &lt;&lt; msg &lt;&lt; <span class="hljs-built_in">std</span>::<span class="hljs-built_in">endl</span>;
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">wchar_t</span>&gt; letters = { L<span class="hljs-string">'f'</span>, L'r', L<span class="hljs-string">'e', L'</span>d', L' <span class="hljs-string">', L'</span>s', L'm', L'i', L't', L'h' };
+    <span class="hljs-built_in">std</span>::wstring name = <span class="hljs-string">L""</span>;
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; a(<span class="hljs-number">10</span>);
+    <span class="hljs-built_in">std</span>::wstring key = <span class="hljs-string">L""</span>;
+
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; letters.size(); i++)
+    {
+        name += letters[i];
+        a[i] = i + <span class="hljs-number">1</span>;
+        SendMessage(name, a[i]);
+    }
+    <span class="hljs-built_in">std</span>::wcin &gt;&gt; key;
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</span></code></pre>
+</li>
+</ol>
+<h2 id="start-the-debugger"><span data-ttu-id="9c175-154">启动调试器！</span><span class="sxs-lookup"><span data-stu-id="9c175-154">Start the debugger!</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#start-the-debugger" aria-labelledby="start-the-debugger"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-155">按 F5  （“调试”&gt;“开始调试”  ）或调试工具栏中的“开始调试”  按钮<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-start-debugging.png" alt="开始调试" title="开始调试" data-linktype="relative-path">。</span><span class="sxs-lookup"><span data-stu-id="9c175-155">Press <strong>F5</strong> (<strong>Debug &gt; Start Debugging</strong>) or the <strong>Start Debugging</strong> button <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-start-debugging.png" alt="Start Debugging" title="Start Debugging" data-linktype="relative-path"> in the Debug Toolbar.</span></span></p>
+<p><span data-ttu-id="9c175-156">通过 <strong>F5</strong> 启动应用时，调试器会附加到应用进程，但现在我们还未执行任何特殊操作来检查代码。</span><span class="sxs-lookup"><span data-stu-id="9c175-156"><strong>F5</strong> starts the app with the debugger attached to the app process, but right now we haven't done anything special to examine the code.</span></span> <span data-ttu-id="9c175-157">因此应用只会加载，控制台输出如你所见。</span><span class="sxs-lookup"><span data-stu-id="9c175-157">So the app just loads and you see the console output.</span></span></p>
+<div class="codeHeader" id="code-try-1" data-bi-name="code-header"><span class="language">cmd</span><button type="button" class="action is-relative" data-bi-name="copy" aria-label="复制代码">
+				<span class="icon">
+					<span class="docon docon-edit-copy" role="presentation"></span>
+				</span>
+				<span>复制</span>
+				<div class="successful-copy-alert is-absolute has-right-zero has-top-zero has-left-zero has-bottom-zero is-flex has-flex-align-items-center has-flex-justify-content-center has-text-success-invert has-background-success is-transparent" aria-hidden="true">
+					<span class="icon is-size-4">
+						<span class="docon docon-check-mark" role="presentation"></span>
+					</span>
+				</div>
+			</button></div><pre tabindex="0" class="has-inner-focus"><code class="lang-cmd" data-author-content="Hello, f! Count to 1
+Hello, fr! Count to 2
+Hello, fre! Count to 3
+Hello, fred! Count to 4
+Hello, fred ! Count to 5
+Hello, fred s! Count to 6
+Hello, fred sm! Count to 7
+Hello, fred smi! Count to 8
+Hello, fred smit! Count to 9
+Hello, fred smith! Count to 10
+"><span>Hello, f! Count to <span class="hljs-number">1</span>
+Hello, fr! Count to <span class="hljs-number">2</span>
+Hello, fre! Count to <span class="hljs-number">3</span>
+Hello, fred! Count to <span class="hljs-number">4</span>
+Hello, fred ! Count to <span class="hljs-number">5</span>
+Hello, fred s! Count to <span class="hljs-number">6</span>
+Hello, fred sm! Count to <span class="hljs-number">7</span>
+Hello, fred smi! Count to <span class="hljs-number">8</span>
+Hello, fred smit! Count to <span class="hljs-number">9</span>
+Hello, fred smith! Count to <span class="hljs-number">10</span>
+</span></code></pre>
+<p><span data-ttu-id="9c175-158">在本教程中，我们将使用调试器仔细查看此应用，并查看调试器功能。</span><span class="sxs-lookup"><span data-stu-id="9c175-158">In this tutorial, we'll take a closer look at this app using the debugger and get a look at the debugger features.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-159">按红色的停止<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-stop-debugging.png" alt="停止调试" title="停止调试" data-linktype="relative-path">按钮 (Shift + F5) 来停止调试器   。</span><span class="sxs-lookup"><span data-stu-id="9c175-159">Stop the debugger by pressing the red stop <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-stop-debugging.png" alt="Stop Debugging" title="Stop Debugging" data-linktype="relative-path"> button (<strong>Shift</strong> + <strong>F5</strong>).</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-160">在控制台窗口中，按某个键和 Enter 来关闭控制台窗口  。</span><span class="sxs-lookup"><span data-stu-id="9c175-160">In the console window, press a key and <strong>Enter</strong> to close the console window.</span></span></p>
+</li>
+</ol>
+<h2 id="set-a-breakpoint-and-start-the-debugger"><span data-ttu-id="9c175-161">设置断点并启动调试器</span><span class="sxs-lookup"><span data-stu-id="9c175-161">Set a breakpoint and start the debugger</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-breakpoint-and-start-the-debugger" aria-labelledby="set-a-breakpoint-and-start-the-debugger"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-162">在 <code>main</code> 函数的 <code>for</code> 循环中，通过单击以下代码行的左边距来设置断点：</span><span class="sxs-lookup"><span data-stu-id="9c175-162">In the <code>for</code> loop of the <code>main</code> function, set a breakpoint by clicking the left margin of the following line of code:</span></span></p>
+<p><code>name += letters[i];</code></p>
+<p><span data-ttu-id="9c175-163">设置断点的位置会出现一个红色圆圈的<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-breakpoint.png" alt="断点" title="断点" data-linktype="relative-path">。</span><span class="sxs-lookup"><span data-stu-id="9c175-163">A red circle <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-breakpoint.png" alt="Breakpoint" title="Breakpoint" data-linktype="relative-path"> appears where you set the breakpoint.</span></span></p>
+<p><span data-ttu-id="9c175-164">断点是可靠调试的最基本和最重要的功能之一。</span><span class="sxs-lookup"><span data-stu-id="9c175-164">Breakpoints are one of the most basic and essential features of reliable debugging.</span></span> <span data-ttu-id="9c175-165">断点指示 Visual Studio 应在哪个位置挂起你的运行代码，以使你可以查看变量的值或内存的行为，或确定代码的分支是否运行。</span><span class="sxs-lookup"><span data-stu-id="9c175-165">A breakpoint indicates where Visual Studio should suspend your running code so you can take a look at the values of variables, or the behavior of memory, or whether or not a branch of code is getting run.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-166">按“F5”  或“开始调试”  按钮<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-start-debugging.png" alt="开始调试" title="开始调试" data-linktype="relative-path">，应用随即启动，调试器将运行到你设置断点的代码行。</span><span class="sxs-lookup"><span data-stu-id="9c175-166">Press <strong>F5</strong> or the <strong>Start Debugging</strong> button <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-start-debugging.png" alt="Start Debugging" title="Start Debugging" data-linktype="relative-path">, the app starts, and the debugger runs to the line of code where you set the breakpoint.</span></span></p>
+<p><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-set-breakpoint-cpp.png" alt="设置并命中断点" data-linktype="relative-path"></p>
+<p><span data-ttu-id="9c175-168">黄色箭头表示调试器暂停处的语句，它还在同一点上暂停应用执行（此语句尚未执行）。</span><span class="sxs-lookup"><span data-stu-id="9c175-168">The yellow arrow represents the statement on which the debugger paused, which also suspends app execution at the same point (this statement has not yet executed).</span></span></p>
+<p><span data-ttu-id="9c175-169">如果应用尚未运行，则按 F5 会启动调试器并在第一个断点处停止  。</span><span class="sxs-lookup"><span data-stu-id="9c175-169">If the app is not yet running, <strong>F5</strong> starts the debugger and stops at the first breakpoint.</span></span> <span data-ttu-id="9c175-170">否则，按 F5 将继续运行应用至下一个断点  。</span><span class="sxs-lookup"><span data-stu-id="9c175-170">Otherwise, <strong>F5</strong> continues running the app to the next breakpoint.</span></span></p>
+<p><span data-ttu-id="9c175-171">当你知道要详细检查的代码行或代码段时，断点功能非常有用。</span><span class="sxs-lookup"><span data-stu-id="9c175-171">Breakpoints are a useful feature when you know the line of code or the section of code that you want to examine in detail.</span></span> <span data-ttu-id="9c175-172">有关可设置的不同类型断点（如条件断点）的信息，请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/using-breakpoints?view=vs-2019" data-linktype="relative-path">使用断点</a>。</span><span class="sxs-lookup"><span data-stu-id="9c175-172">For information on the different types of breakpoints you can set, such as conditional breakpoints, see <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/using-breakpoints?view=vs-2019" data-linktype="relative-path">Using breakpoints</a>.</span></span></p>
+</li>
+</ol>
+<h2 id="navigate-code-in-the-debugger-using-step-commands"><span data-ttu-id="9c175-173">使用单步执行命令在调试器中导航代码</span><span class="sxs-lookup"><span data-stu-id="9c175-173">Navigate code in the debugger using step commands</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-in-the-debugger-using-step-commands" aria-labelledby="navigate-code-in-the-debugger-using-step-commands"></a></h2>
+<p><span data-ttu-id="9c175-174">大多数情况下，我们使用键盘快捷方式，因为这是在调试器中快速执行应用的好方法（括号中显示了等效的命令，如菜单命令）。</span><span class="sxs-lookup"><span data-stu-id="9c175-174">Mostly, we use the keyboard shortcuts here, because it's a good way to get fast at executing your app in the debugger (equivalent commands such as menu commands are shown in parentheses).</span></span></p>
+<ol>
+<li><p><span data-ttu-id="9c175-175">在 <code>main</code> 方法中的 <code>for</code> 循环中暂停时，按两次 F11（或选择“调试”&gt;“单步执行”）前进到 <code>SendMessage</code> 方法调用   。</span><span class="sxs-lookup"><span data-stu-id="9c175-175">While paused in the <code>for</code> loop in the <code>main</code> method, press <strong>F11</strong> (or choose <strong>Debug &gt; Step Into</strong>) twice to to advance to the <code>SendMessage</code> method call.</span></span></p>
+<p><span data-ttu-id="9c175-176">按两次 F11 后，应位于以下代码行  ：</span><span class="sxs-lookup"><span data-stu-id="9c175-176">After pressing <strong>F11</strong> twice, you should be at this line of code:</span></span></p>
+<p><code>SendMessage(name, a[i]);</code></p>
+</li>
+<li><p><span data-ttu-id="9c175-177">再按一次 F11 单步执行到 <code>SendMessage</code> 方法  。</span><span class="sxs-lookup"><span data-stu-id="9c175-177">Press <strong>F11</strong> one more time to step into the <code>SendMessage</code> method.</span></span></p>
+<p><span data-ttu-id="9c175-178">黄色指针会前进到 <code>SendMessage</code> 方法。</span><span class="sxs-lookup"><span data-stu-id="9c175-178">The yellow pointer advances into the <code>SendMessage</code> method.</span></span></p>
+<p><span data-ttu-id="9c175-179"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-f11-cpp.png" alt="使用 F11 单步执行代码" title="F10 单步执行" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-179"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-f11-cpp.png" alt="Use F11 to Step Into code" title="F10 Step Into" data-linktype="relative-path"></span></span></p>
+<p><span data-ttu-id="9c175-180">F11 是“单步执行”命令，每按一次，应用就执行下一个语句  。</span><span class="sxs-lookup"><span data-stu-id="9c175-180">F11 is the <strong>Step Into</strong> command and advances the app execution one statement at a time.</span></span> <span data-ttu-id="9c175-181">F11 是一种以最详尽方式检查执行流的好方法。</span><span class="sxs-lookup"><span data-stu-id="9c175-181">F11 is a good way to examine the execution flow in the most detail.</span></span> <span data-ttu-id="9c175-182">（为了更快地浏览代码，我们还向你展示一些其他选项。）默认情况下，调试器会跳过非用户代码（如果需要更多详细信息，请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/just-my-code?view=vs-2019" data-linktype="relative-path">仅我的代码</a>）。</span><span class="sxs-lookup"><span data-stu-id="9c175-182">(To move faster through code, we show you some other options also.) By default, the debugger skips over non-user code (if you want more details, see <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/just-my-code?view=vs-2019" data-linktype="relative-path">Just My Code</a>).</span></span></p>
+<p><span data-ttu-id="9c175-183">假设你已完成了对 <code>SendMessage</code> 方法的检查，并且希望退出该方法但保持位于调试器中。</span><span class="sxs-lookup"><span data-stu-id="9c175-183">Let's say that you are done examining the <code>SendMessage</code> method, and you want to get out of the method but stay in the debugger.</span></span> <span data-ttu-id="9c175-184">可使用“单步跳出”命令执行此操作  。</span><span class="sxs-lookup"><span data-stu-id="9c175-184">You can do this using the <strong>Step Out</strong> command.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-185">按 Shift + F11（或“调试”&gt;“单步跳出”）    。</span><span class="sxs-lookup"><span data-stu-id="9c175-185">Press <strong>Shift</strong> + <strong>F11</strong> (or <strong>Debug &gt; Step Out</strong>).</span></span></p>
+<p><span data-ttu-id="9c175-186">此命令将恢复应用执行（并使调试器前进），直到当前方法或函数返回。</span><span class="sxs-lookup"><span data-stu-id="9c175-186">This command resumes app execution (and advances the debugger) until the current method or function returns.</span></span></p>
+<p><span data-ttu-id="9c175-187">你应当回到 <code>main</code> 方法的 <code>for</code> 循环，在 <code>SendMessage</code> 方法调用处暂停。</span><span class="sxs-lookup"><span data-stu-id="9c175-187">You should be back in the <code>for</code> loop in the <code>main</code> method, paused at the <code>SendMessage</code> method call.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-188">多按几次 F11，直到再次返回到 <code>SendMessage</code> 方法调用  。</span><span class="sxs-lookup"><span data-stu-id="9c175-188">Press <strong>F11</strong> several times until you get back to the <code>SendMessage</code> method call again.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-189">在方法调用处暂停时，按一次 F10（或选择“调试”&gt;“单步跳过”）   。</span><span class="sxs-lookup"><span data-stu-id="9c175-189">While paused at the method call, press <strong>F10</strong> (or choose <strong>Debug &gt; Step Over</strong>) once.</span></span></p>
+<p><span data-ttu-id="9c175-190"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-step-over-cpp.png" alt="使用 F10 单步跳过代码" title="F10 单步跳过" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-190"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-step-over-cpp.png" alt="Use F10 to Step Over code" title="F10 Step Over" data-linktype="relative-path"></span></span></p>
+<p><span data-ttu-id="9c175-191">请注意，这次调试器不会单步执行 <code>SendMessage</code> 方法。</span><span class="sxs-lookup"><span data-stu-id="9c175-191">Notice this time that the debugger does not step into the <code>SendMessage</code> method.</span></span> <span data-ttu-id="9c175-192">按 F10 将使调试器前进，但不会单步执行应用代码中的函数或方法（代码仍将执行）  。</span><span class="sxs-lookup"><span data-stu-id="9c175-192"><strong>F10</strong> advances the debugger without stepping into functions or methods in your app code (the code still executes).</span></span> <span data-ttu-id="9c175-193">通过在进行 <code>SendMessage</code> 方法调用时按“F10”（而不是“F11”），我们跳过了 <code>SendMessage</code> 的实现代码（我们现在可能对此不感兴趣）   。</span><span class="sxs-lookup"><span data-stu-id="9c175-193">By pressing <strong>F10</strong> on the <code>SendMessage</code> method call (instead of <strong>F11</strong>), we skipped over the implementation code for <code>SendMessage</code> (which maybe we're not interested in right now).</span></span> <span data-ttu-id="9c175-194">有关在代码中进行移动的不同方法的详细信息，请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/navigating-through-code-with-the-debugger?view=vs-2019" data-linktype="relative-path">浏览调试器中的代码</a>。</span><span class="sxs-lookup"><span data-stu-id="9c175-194">For more information on different ways to move through your code, see <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/navigating-through-code-with-the-debugger?view=vs-2019" data-linktype="relative-path">Navigate code in the debugger</a>.</span></span></p>
+</li>
+</ol>
+<h2 id="navigate-code-using-run-to-click"><span data-ttu-id="9c175-195">使用“运行时单击”导航代码</span><span class="sxs-lookup"><span data-stu-id="9c175-195">Navigate code using Run to Click</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-using-run-to-click" aria-labelledby="navigate-code-using-run-to-click"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-196">按 F5 前进到断点  。</span><span class="sxs-lookup"><span data-stu-id="9c175-196">Press <strong>F5</strong> to advance to the breakpoint.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-197">在代码编辑器中，向下滚动并将鼠标悬停在 <code>SendMessage</code> 方法中的 <code>std::wcout</code> 函数上，直到左侧出现绿色的“运行时单击”按钮<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-run-to-click.png" alt="运行时单击" title="运行时单击" data-linktype="relative-path">  。</span><span class="sxs-lookup"><span data-stu-id="9c175-197">In the code editor, scroll down and hover over the <code>std::wcout</code> function in the <code>SendMessage</code> method until the green <strong>Run to Click</strong> button <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-run-to-click.png" alt="Run to Click" title="RunToClick" data-linktype="relative-path"> appears on the left.</span></span> <span data-ttu-id="9c175-198">按钮的工具提示显示“将执行运行到此处”。</span><span class="sxs-lookup"><span data-stu-id="9c175-198">The tooltip for the button shows "Run execution to here".</span></span></p>
+<p><span data-ttu-id="9c175-199"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-run-to-click-cpp.png" alt="使用“运行时单击”功能" title="运行时单击" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-199"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-run-to-click-cpp.png" alt="Use the Run to Click feature" title="Run to Click" data-linktype="relative-path"></span></span></p>
+<div class="alert is-info">
+<p class="alert-title"><span class="docon docon-status-error-outline" aria-hidden="true"></span> 备注</p>
+<p><span data-ttu-id="9c175-200">“运行时单击”是 <span data-ttu-id="deca8-101">Visual Studio 2017</span><span class="sxs-lookup"><span data-stu-id="deca8-101">Visual Studio 2017</span></span> 中的新增按钮  。</span><span class="sxs-lookup"><span data-stu-id="9c175-200">The <strong>Run to Click</strong> button is new in <span data-ttu-id="deca8-101">Visual Studio 2017</span><span class="sxs-lookup"><span data-stu-id="deca8-101">Visual Studio 2017</span></span>.</span></span> <span data-ttu-id="9c175-201">（如果未看到绿色箭头按钮，请在此示例中改为使用 F11 以使调试器前进到正确的位置。  ）</span><span class="sxs-lookup"><span data-stu-id="9c175-201">(If you don't see the green arrow button, use <strong>F11</strong> in this example instead to advance the debugger to the right place.)</span></span></p>
+</div>
+</li>
+<li><p><span data-ttu-id="9c175-202">单击“运行时单击”  按钮<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-run-to-click.png" alt="运行时单击" title="运行时单击" data-linktype="relative-path">。</span><span class="sxs-lookup"><span data-stu-id="9c175-202">Click the <strong>Run to Click</strong> button <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-run-to-click.png" alt="Run to Click" title="RunToClick" data-linktype="relative-path">.</span></span></p>
+<p><span data-ttu-id="9c175-203">调试器会前进到 <code>std::wcout</code> 函数。</span><span class="sxs-lookup"><span data-stu-id="9c175-203">The debugger advances to the <code>std::wcout</code> function.</span></span></p>
+<p><span data-ttu-id="9c175-204">使用此按钮类似于设置临时断点。</span><span class="sxs-lookup"><span data-stu-id="9c175-204">Using this button is similar to setting a temporary breakpoint.</span></span> <span data-ttu-id="9c175-205">“运行时单击”对于快速到达应用代码的可见区域十分方便（你可在任何打开的文件中单击）  。</span><span class="sxs-lookup"><span data-stu-id="9c175-205"><strong>Run to Click</strong> is handy for getting around quickly within a visible region of app code (you can click in any open file).</span></span></p>
+</li>
+</ol>
+<h2 id="restart-your-app-quickly"><span data-ttu-id="9c175-206">快速重启应用</span><span class="sxs-lookup"><span data-stu-id="9c175-206">Restart your app quickly</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#restart-your-app-quickly" aria-labelledby="restart-your-app-quickly"></a></h2>
+<p><span data-ttu-id="9c175-207">单击调试工具栏中的“重启”<img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-restart.png" alt="重启应用" title="重启应用" data-linktype="relative-path">按钮 (Ctrl + Shift + F5)     。</span><span class="sxs-lookup"><span data-stu-id="9c175-207">Click the <strong>Restart</strong> <img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/dbg-tour-restart.png" alt="Restart App" title="RestartApp" data-linktype="relative-path"> button in the Debug Toolbar (<strong>Ctrl</strong> + <strong>Shift</strong> + <strong>F5</strong>).</span></span></p>
+<p><span data-ttu-id="9c175-208">当你按下“重启”时，与停止应用并重启调试器相比，它节省了时间  。</span><span class="sxs-lookup"><span data-stu-id="9c175-208">When you press <strong>Restart</strong>, it saves time versus stopping the app and restarting the debugger.</span></span> <span data-ttu-id="9c175-209">调试器在执行代码命中的第一个断点处暂停。</span><span class="sxs-lookup"><span data-stu-id="9c175-209">The debugger pauses at the first breakpoint that is hit by executing code.</span></span></p>
+<p><span data-ttu-id="9c175-210">调试器再次在你之前在 <code>for</code> 循环上设置的断点处停止。</span><span class="sxs-lookup"><span data-stu-id="9c175-210">The debugger stops again at the breakpoint you previously set inside the <code>for</code> loop.</span></span></p>
+<h2 id="inspect-variables-with-data-tips"><span data-ttu-id="9c175-211">使用数据提示检查变量</span><span class="sxs-lookup"><span data-stu-id="9c175-211">Inspect variables with data tips</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-data-tips" aria-labelledby="inspect-variables-with-data-tips"></a></h2>
+<p><span data-ttu-id="9c175-212">允许你检查变量的功能是调试器最有用的功能之一，并且有不同的方法来执行此操作。</span><span class="sxs-lookup"><span data-stu-id="9c175-212">Features that allow you to inspect variables are one of the most useful features of the debugger, and there are different ways to do it.</span></span> <span data-ttu-id="9c175-213">通常，当尝试调试问题时，你试图找出变量是否存储了你期望它们在特定时间具有的值。</span><span class="sxs-lookup"><span data-stu-id="9c175-213">Often, when you try to debug an issue, you are attempting to find out whether variables are storing the values that you expect them to have at a particular time.</span></span></p>
+<ol>
+<li><p><span data-ttu-id="9c175-214">在 <code>name += letters[i]</code> 语句上暂停时，将鼠标悬停在 <code>letters</code> 变量上，会看到其默认值 <code>size={10}</code>。</span><span class="sxs-lookup"><span data-stu-id="9c175-214">While paused on the <code>name += letters[i]</code> statement, hover over the <code>letters</code> variable and you see it's default value, <code>size={10}</code>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-215">展开 <code>letters</code> 变量，查看其属性，其中包括变量包含的所有元素。</span><span class="sxs-lookup"><span data-stu-id="9c175-215">Expand the <code>letters</code> variable to see its properties, which include all the elements that the variable contains.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-216">接下来，将鼠标悬停在 <code>name</code> 变量上，会看到其当前值为空字符串。</span><span class="sxs-lookup"><span data-stu-id="9c175-216">Next, hover over the <code>name</code> variable, and you see its current value, an empty string.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-217">多按几次 F5（或“调试” &gt; “继续”），通过 <code>for</code> 循环执行多次循环访问，再次在断点处暂停，每次都将鼠标悬停在 <code>name</code> 变量上以检查其值    。</span><span class="sxs-lookup"><span data-stu-id="9c175-217">Press <strong>F5</strong> (or <strong>Debug</strong> &gt; <strong>Continue</strong>) a few times to iterate several times through the <code>for</code> loop, pausing again at the breakpoint, and hovering over the <code>name</code> variable each time to check its value.</span></span></p>
+<p><span data-ttu-id="9c175-218"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-data-tip-cpp.png" alt="查看数据提示" title="查看数据提示" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-218"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-data-tip-cpp.png" alt="View a data tip" title="View a Data Tip" data-linktype="relative-path"></span></span></p>
+<p><span data-ttu-id="9c175-219">变量的值随 <code>for</code> 循环的每次迭代而更改，显示的值依次为 <code>f</code>、<code>fr</code>、<code>fre</code>，依此类推。</span><span class="sxs-lookup"><span data-stu-id="9c175-219">The value of the variable changes with each iteration of the <code>for</code> loop, showing values of <code>f</code>, then <code>fr</code>, then <code>fre</code>, and so on.</span></span></p>
+<p><span data-ttu-id="9c175-220">通常情况下，在调试时，需要快速检查变量的属性值，以查看它们是否存储了你希望它们存储的值，可根据数据提示执行此操作。</span><span class="sxs-lookup"><span data-stu-id="9c175-220">Often, when debugging, you want a quick way to check property values on variables, to see whether they are storing the values that you expect them to store, and the data tips are a good way to do it.</span></span></p>
+</li>
+</ol>
+<h2 id="inspect-variables-with-the-autos-and-locals-windows"><span data-ttu-id="9c175-221">使用“自动”和“局部变量”窗口检查变量</span><span class="sxs-lookup"><span data-stu-id="9c175-221">Inspect variables with the Autos and Locals windows</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-the-autos-and-locals-windows" aria-labelledby="inspect-variables-with-the-autos-and-locals-windows"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-222">查看代码编辑器底部的“自动”窗口  。</span><span class="sxs-lookup"><span data-stu-id="9c175-222">Look at the <strong>Autos</strong> window at the bottom of the code editor.</span></span></p>
+<p><span data-ttu-id="9c175-223">如果已关闭，请依次选择“调试” &gt; “Windows” &gt; “自动”，在调试器中暂停时将其打开    。</span><span class="sxs-lookup"><span data-stu-id="9c175-223">If it is closed, open it while paused in the debugger by choosing <strong>Debug</strong> &gt; <strong>Windows</strong> &gt; <strong>Autos</strong>.</span></span></p>
+<p><span data-ttu-id="9c175-224">在“自动”窗口中，可看到变量及其当前值  。</span><span class="sxs-lookup"><span data-stu-id="9c175-224">In the <strong>Autos</strong> window, you see variables and their current value.</span></span> <span data-ttu-id="9c175-225">“自动”窗口显示当前行或前一行使用的所有变量（检查文档中特定于语言的行为）  。</span><span class="sxs-lookup"><span data-stu-id="9c175-225">The <strong>Autos</strong> window shows all variables used on the current line or the preceding line (Check documentation for language-specific behavior).</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-226">接下来，我们来看看“自动”窗口旁边的选项卡中的“局部变量”窗口   。</span><span class="sxs-lookup"><span data-stu-id="9c175-226">Next, look at the <strong>Locals</strong> window, in a tab next to the <strong>Autos</strong> window.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-227">展开 <code>letters</code> 变量以显示其包含的元素。</span><span class="sxs-lookup"><span data-stu-id="9c175-227">Expand the <code>letters</code> variable to show the elements that it contains.</span></span></p>
+<p><span data-ttu-id="9c175-228"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-locals-window-cpp.png" alt="检查局部变量窗口中的变量" title="“局部变量”窗口" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-228"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-locals-window-cpp.png" alt="Inspect variables in the Locals Window" title="Locals Window" data-linktype="relative-path"></span></span></p>
+<p><span data-ttu-id="9c175-229">“局部变量”窗口显示当前<a href="https://www.wikipedia.org/wiki/Scope_(computer_science)" data-linktype="external">作用域</a>中的变量，即当前执行上下文  。</span><span class="sxs-lookup"><span data-stu-id="9c175-229">The <strong>Locals</strong> window shows you the variables that are in the current <a href="https://www.wikipedia.org/wiki/Scope_(computer_science)" data-linktype="external">scope</a>, that is, the current execution context.</span></span></p>
+</li>
+</ol>
+<h2 id="set-a-watch"><span data-ttu-id="9c175-230">设置监视</span><span class="sxs-lookup"><span data-stu-id="9c175-230">Set a watch</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-watch" aria-labelledby="set-a-watch"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-231">在主代码编辑器窗口中，右键单击 <code>name</code> 变量，然后选择“添加监视”  。</span><span class="sxs-lookup"><span data-stu-id="9c175-231">In the main code editor window, right-click the <code>name</code> variable and choose <strong>Add Watch</strong>.</span></span></p>
+<p><span data-ttu-id="9c175-232">“监视”窗口将在代码编辑器的底部打开  。</span><span class="sxs-lookup"><span data-stu-id="9c175-232">The <strong>Watch</strong> window opens at the bottom of the code editor.</span></span> <span data-ttu-id="9c175-233">可使用“监视”窗口指定要关注的变量（或表达式）  。</span><span class="sxs-lookup"><span data-stu-id="9c175-233">You can use a <strong>Watch</strong> window to specify a variable (or an expression) that you want to keep an eye on.</span></span></p>
+<p><span data-ttu-id="9c175-234">现在，你在 <code>name</code> 变量上设置好了监视，当你在调试器中移动时，可看到其值发生变化。</span><span class="sxs-lookup"><span data-stu-id="9c175-234">Now, you have a watch set on the <code>name</code> variable, and you can see its value change as you move through the debugger.</span></span> <span data-ttu-id="9c175-235">与其他变量窗口不同，“监视”窗口始终显示你正在监视的变量（当超出作用域时，它们会变灰）  。</span><span class="sxs-lookup"><span data-stu-id="9c175-235">Unlike the other variable windows, the <strong>Watch</strong> window always shows the variables that you are watching (they're grayed out when out of scope).</span></span></p>
+</li>
+</ol>
+<h2 id="examine-the-call-stack"><span data-ttu-id="9c175-236">检查调用堆栈</span><span class="sxs-lookup"><span data-stu-id="9c175-236">Examine the call stack</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#examine-the-call-stack" aria-labelledby="examine-the-call-stack"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-237">在 <code>for</code> 循环中暂停时，单击“调用堆栈”窗口，默认情况下，该窗口在右下方窗格中打开  。</span><span class="sxs-lookup"><span data-stu-id="9c175-237">While paused in the <code>for</code> loop, click the <strong>Call Stack</strong> window, which is by default open in the lower right pane.</span></span></p>
+<p><span data-ttu-id="9c175-238">如果已关闭，请依次选择“调试” &gt; “Windows” &gt; “调用堆栈”，在调试器中暂停时将其打开    。</span><span class="sxs-lookup"><span data-stu-id="9c175-238">If it is closed, open it while paused in the debugger by choosing <strong>Debug</strong> &gt; <strong>Windows</strong> &gt; <strong>Call Stack</strong>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-239">单击多次 F11，直至看到调试器在 <code>SendMessage</code> 方法中暂停  。</span><span class="sxs-lookup"><span data-stu-id="9c175-239">Click <strong>F11</strong> a few times until you see the debugger pause in the <code>SendMessage</code> method.</span></span> <span data-ttu-id="9c175-240">查看“调用堆栈”窗口  。</span><span class="sxs-lookup"><span data-stu-id="9c175-240">Look at the <strong>Call Stack</strong> window.</span></span></p>
+<p><span data-ttu-id="9c175-241"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-call-stack-cpp.png" alt="检查调用堆栈" title="检查调用堆栈" data-linktype="relative-path"></span><span class="sxs-lookup"><span data-stu-id="9c175-241"><img src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/get-started-call-stack-cpp.png" alt="Examine the call stack" title="ExamineCallStack" data-linktype="relative-path"></span></span></p>
+<p><span data-ttu-id="9c175-242">“调用堆栈”窗口显示方法和函数被调用的顺序  。</span><span class="sxs-lookup"><span data-stu-id="9c175-242">The <strong>Call Stack</strong> window shows the order in which methods and functions are getting called.</span></span> <span data-ttu-id="9c175-243">最上面一行显示当前函数（此应用中的 <code>SendMessage</code> 方法）。</span><span class="sxs-lookup"><span data-stu-id="9c175-243">The top line shows the current function (the <code>SendMessage</code> method in this app).</span></span> <span data-ttu-id="9c175-244">第二行显示 <code>SendMessage</code> 是从 <code>main</code> 方法调用的，依此类推。</span><span class="sxs-lookup"><span data-stu-id="9c175-244">The second line shows that <code>SendMessage</code> was called from the <code>main</code> method, and so on.</span></span></p>
+<div class="alert is-info">
+<p class="alert-title"><span class="docon docon-status-error-outline" aria-hidden="true"></span> 备注</p>
+<p><span data-ttu-id="9c175-245">“调用堆栈”窗口类似于某些 IDE（如 Eclipse）中的调试透视图  。</span><span class="sxs-lookup"><span data-stu-id="9c175-245">The <strong>Call Stack</strong> window is similar to the Debug perspective in some IDEs like Eclipse.</span></span></p>
+</div>
+<p><span data-ttu-id="9c175-246">调用堆栈是检查和理解应用执行流的好方法。</span><span class="sxs-lookup"><span data-stu-id="9c175-246">The call stack is a good way to examine and understand the execution flow of an app.</span></span></p>
+<p><span data-ttu-id="9c175-247">可双击代码行来查看该源代码，这也会更改调试器正在检查的当前作用域。</span><span class="sxs-lookup"><span data-stu-id="9c175-247">You can double-click a line of code to go look at that source code and that also changes the current scope being inspected by the debugger.</span></span> <span data-ttu-id="9c175-248">此操作不会使调试器前进。</span><span class="sxs-lookup"><span data-stu-id="9c175-248">This action does not advance the debugger.</span></span></p>
+<p><span data-ttu-id="9c175-249">还可使用“调用堆栈”窗口中的右键单击菜单执行其他操作  。</span><span class="sxs-lookup"><span data-stu-id="9c175-249">You can also use right-click menus from the <strong>Call Stack</strong> window to do other things.</span></span> <span data-ttu-id="9c175-250">例如，你可将断点插入到指定的函数中，使用“运行到光标处”推进调试器，然后检查源代码  。</span><span class="sxs-lookup"><span data-stu-id="9c175-250">For example, you can insert breakpoints into specified functions, advance the debugger using <strong>Run to Cursor</strong>, and go examine source code.</span></span> <span data-ttu-id="9c175-251">有关详细信息，请参阅<a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2019" data-linktype="relative-path">如何：检查调用堆栈</a>。</span><span class="sxs-lookup"><span data-stu-id="9c175-251">For more information, see <a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/how-to-use-the-call-stack-window?view=vs-2019" data-linktype="relative-path">How to: Examine the Call Stack</a>.</span></span></p>
+</li>
+</ol>
+<h2 id="change-the-execution-flow"><span data-ttu-id="9c175-252">更改执行流</span><span class="sxs-lookup"><span data-stu-id="9c175-252">Change the execution flow</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#change-the-execution-flow" aria-labelledby="change-the-execution-flow"></a></h2>
+<ol>
+<li><p><span data-ttu-id="9c175-253">按两次 F11 以运行 <code>std::wcout</code> 函数  。</span><span class="sxs-lookup"><span data-stu-id="9c175-253">Press <strong>F11</strong> twice to run the <code>std::wcout</code> function.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-254">在 <code>SendMessage</code> 方法调用中暂停调试器后，使用鼠标抓住左侧的黄色箭头（执行指针），将黄色箭头向上移动一行，返回到 <code>std::wcout</code>。</span><span class="sxs-lookup"><span data-stu-id="9c175-254">With the debugger paused in the <code>SendMessage</code> method call, use the mouse to grab the yellow arrow (the execution pointer) on the left and move the yellow arrow up one line, back to <code>std::wcout</code>.</span></span></p>
+</li>
+<li><p><span data-ttu-id="9c175-255">按下 F11  。</span><span class="sxs-lookup"><span data-stu-id="9c175-255">Press <strong>F11</strong>.</span></span></p>
+<p><span data-ttu-id="9c175-256">调试器将重新运行 <code>std::wcout</code> 函数（你会在控制台窗口输出中看到）。</span><span class="sxs-lookup"><span data-stu-id="9c175-256">The debugger reruns the <code>std::wcout</code> function (you see this in the console window output).</span></span></p>
+<p><span data-ttu-id="9c175-257">通过更改执行流，你可以进行测试不同代码执行路径或重新运行代码等操作，而无需重启调试器。</span><span class="sxs-lookup"><span data-stu-id="9c175-257">By changing the execution flow, you can do things like test different code execution paths or rerun code without restarting the debugger.</span></span></p>
+<div class="alert is-warning">
+<p class="alert-title"><span class="docon docon-status-warning-outline" aria-hidden="true"></span> 警告</p>
+<p><span data-ttu-id="9c175-258">通常你需要小心使用此功能，工具提示中会出现警告。</span><span class="sxs-lookup"><span data-stu-id="9c175-258">Often you need to be careful with this feature, and you see a warning in the tooltip.</span></span> <span data-ttu-id="9c175-259">你也可能会看到其他警告。</span><span class="sxs-lookup"><span data-stu-id="9c175-259">You may see other warnings, too.</span></span> <span data-ttu-id="9c175-260">移动指针无法将应用程序还原到更早的应用状态。</span><span class="sxs-lookup"><span data-stu-id="9c175-260">Moving the pointer cannot revert your application to an earlier app state.</span></span></p>
+</div>
+</li>
+<li><p><span data-ttu-id="9c175-261">按 F5 继续运行应用  。</span><span class="sxs-lookup"><span data-stu-id="9c175-261">Press <strong>F5</strong> to continue running the app.</span></span></p>
+<p><span data-ttu-id="9c175-262">恭喜你完成本教程！</span><span class="sxs-lookup"><span data-stu-id="9c175-262">Congratulations on completing this tutorial!</span></span></p>
+</li>
+</ol>
+<h2 id="next-steps"><span data-ttu-id="9c175-263">后续步骤</span><span class="sxs-lookup"><span data-stu-id="9c175-263">Next steps</span></span><a class="docon docon-link heading-anchor" href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#next-steps" aria-labelledby="next-steps"></a></h2>
+<p><span data-ttu-id="9c175-264">在本教程中，你已了解了如何启动调试器、逐步执行代码以及检查变量。</span><span class="sxs-lookup"><span data-stu-id="9c175-264">In this tutorial, you've learned how to start the debugger, step through code, and inspect variables.</span></span> <span data-ttu-id="9c175-265">你可能会希望更深入地了解调试器功能以及查看指向更多信息的链接。</span><span class="sxs-lookup"><span data-stu-id="9c175-265">You may want to get a high-level look at debugger features along with links to more information.</span></span></p>
+<div class="nextstepaction">
+<p><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/debugger-feature-tour?view=vs-2019" data-linktype="relative-path" class="button is-primary has-text-wrap"><span data-ttu-id="9c175-266">初探调试器</span><span class="sxs-lookup"><span data-stu-id="9c175-266">First look at the debugger</span></span></a></p>
+</div>
+
+						<!-- </content> -->
+
+						</main>
+
+						<!-- recommended content page section -->
+
+							<nav data-bi-name="recommendation-bottom" hidden="" id="recommended-content-center" class="is-hidden-desktop" aria-labelledby="recommended-content-center-title">
+								<h3 id="recommended-content-center-title" class="is-size-2 has-margin-top-large has-margin-bottom-small">相关文章</h3>
+							</nav>
+
+						<!-- end recommended content page section -->
+
+						<!-- page rating section -->
+								<div class="is-hidden-desktop has-border-top has-margin-top-large has-padding-top-small">
+									
+									
+<div class="feedback-verbatim has-border-bottom has-padding-bottom-small has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+            <h3 class="has-text-weight-semibold has-margin-top-none has-margin-bottom-small">此页面有帮助吗?</h3>
+            <div>
+                <button class="thumb-rating like has-inner-focus has-padding-left-extra-small has-padding-right-extra-small" title="是" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>是</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus has-padding-none has-padding-right-extra-small" title="否" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-mobile">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>否</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-mobile">
+            <div class="verbatim-textarea box is-relative has-box-shadow-none has-border has-margin-top-small has-padding-extra-small is-size-8">
+                <label for="rating-textarea-mobile" class="visually-hidden">还有其他反馈吗？</label>
+                <textarea id="rating-textarea-mobile" rows="4" maxlength="999" placeholder="还有其他反馈吗？" required="" class="textarea has-border-none has-box-shadow-none has-inner-focus"></textarea>
+            </div>
+            <div class="buttons is-right has-margin-top-medium has-margin-right-extra-small">
+                <button class="skip-rating button is-text is-link is-small" type="button">跳过</button>
+                <button class="submit-rating button is-primary is-small" data-bi-name="rating-verbatim" disabled="" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>谢谢。</p>
+    </div>
+</div>								</div>
+						<!-- end page rating section -->
+
+
+						<!-- feedback section -->
+<section class="feedback-section is-relative" data-bi-name="feedback-section">
+
+    <h2 id="feedback" class="is-size-2 has-margin-top-large">反馈</h2>
+
+    <div class="alert choose-feedback-type has-margin-top-small has-margin-bottom-none">
+        <p aria-hidden="true" id="send-feedback-about" class="has-margin-top-none has-margin-bottom-none">提交和查看相关反馈</p>
+
+        <div class="choose-feedback-buttons has-margin-top-large has-margin-bottom-none">
+                <a class="button feedback-type-product has-margin-bottom-small" aria-label="发送有关此产品的反馈" href="https://developercommunity.visualstudio.com/" data-bi-name="product-feedback">
+                    <span>此产品</span>
+                    <span aria-hidden="true" class="icon docon docon-navigate-external is-size-2 has-margin-left-none"></span>
+                </a>
+
+			<a class="button feedback-type-product has-margin-bottom-small github-link" aria-label="发送有关此页面的反馈" data-bi-name="create-issue-on-github" href="https://github.com/MicrosoftDocs/visualstudio-docs.zh-cn/issues/new?title=&amp;body=%0A%0A%5B%E5%9C%A8%E6%AD%A4%E5%A4%84%E8%BE%93%E5%85%A5%E5%8F%8D%E9%A6%88%5D%0A%0A%0A---%0A%23%23%23%23%20%E6%96%87%E6%A1%A3%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%0A%0A%E2%9A%A0%20*%E8%AF%B7%E5%8B%BF%E7%BC%96%E8%BE%91%E6%AD%A4%E9%83%A8%E5%88%86%E3%80%82%20docs.microsoft.com%20%E2%9E%9F%20GitHub%20%E9%97%AE%E9%A2%98%E9%93%BE%E6%8E%A5%E5%BF%85%E9%A1%BB%E5%85%B7%E6%9C%89%E6%AD%A4%E9%83%A8%E5%88%86%E3%80%82*%0A%0A*%20ID%3A%2027c156a7-933c-1a70-6cc7-b0ae2d1d4a8c%0A*%20Version%20Independent%20ID%3A%204ffdd3f4-03d9-655f-f77d-fa66338e740f%0A*%20Content%3A%20%5B%E6%95%99%E7%A8%8B%EF%BC%9A%E8%B0%83%E8%AF%95%20C%2B%2B%20%E4%BB%A3%E7%A0%81%20-%20Visual%20Studio%5D(https%3A%2F%2Fdocs.microsoft.com%2Fzh-cn%2Fvisualstudio%2Fdebugger%2Fgetting-started-with-the-debugger-cpp%3Fview%3Dvs-2019)%0A*%20Content%20Source%3A%20%5Bdocs%2Fdebugger%2Fgetting-started-with-the-debugger-cpp.md%5D(https%3A%2F%2Fgithub.com%2FMicrosoftDocs%2Fvisualstudio-docs.zh-cn%2Fblob%2Flive%2Fdocs%2Fdebugger%2Fgetting-started-with-the-debugger-cpp.md)%0A*%20Product%3A%20**visual-studio-windows**%0A*%20Technology%3A%20**vs-ide-debug**%0A*%20GitHub%20Login%3A%20%40Mikejo5000%0A*%20Microsoft%20Alias%3A%20**mikejo**">
+				<span aria-hidden="true" class="docon docon-brand-github has-padding-right-extra-small"></span>
+				<span>此页面</span>
+			</a>
+        </div>
+    </div>
+
+    <div class="action-container is-flex has-flex-justify-content-end has-margin-top-small has-margin-bottom-small">
+        <a class="view-on-github" data-bi-name="view-on-github" href="https://github.com/MicrosoftDocs/visualstudio-docs.zh-cn/issues?utf8=%E2%9C%93&amp;q=%224ffdd3f4-03d9-655f-f77d-fa66338e740f%22&amp;in=body">
+            <span aria-hidden="true" class="docon docon-brand-github"></span>
+            <span>查看所有页面反馈</span>
+            <span aria-hidden="true" class="icon docon docon-navigate-external is-size-3"></span>
+        </a>
+    </div>
+</section>
+
+						<!-- end feedback section -->
+
+						<!-- feedback report section -->
+						<!-- end feedback report section -->
+
+						<div class="footerContainer is-visible-interactive has-default-focus ">
+<footer id="footer-interactive" data-bi-name="footer" class="footer-layout">
+
+    <div class="is-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link has-flex-shrink-none" href="https://docs.microsoft.com/zh-cn/locale?target=https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019" data-bi-name="select-locale"><span class="icon docon docon-world is-size-4 has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">中文 (简体)</span></a>
+		<div class="has-margin-left-medium has-margin-right-medium has-flex-shrink-none">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu-interactive" aria-expanded="false" title="主题" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>主题</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu-interactive" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start is-selected" data-theme-to="light" aria-pressed="true">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support has-border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+亮					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="dark" aria-pressed="false">
+					<span class="theme-dark has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+暗					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+高对比度					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+
+    <ul class="links" data-bi-name="footerlinks">
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/previous-versions/" data-bi-name="archivelink">旧版文档</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/teamblog" data-bi-name="bloglink">博客</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/contribute" data-bi-name="contributorGuide">参与</a></li>
+				<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">隐私和 Cookie</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/legal/termsofuse" data-bi-name="termsofuse">使用条款</a></li>
+		<li><a data-mscc-ic="false" href="https://aka.ms/sitefeedback" data-bi-name="feedback">网站反馈</a></li>
+			<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">商标</a></li>
+		<li>© Microsoft 2020</li>
+    </ul>
+</footer>
+						</div>
+					</div>
+
+					<div class="is-size-7 right-container column is-one-quarter is-one-fifth-desktop is-hidden-mobile is-hidden-tablet-only" data-bi-name="pageactions" role="complementary" aria-label="页面操作">
+						<div id="affixed-right-container" class="doc-outline is-fixed is-vertically-scrollable" style="width: 171.828px; top: 129.5px; bottom: 24px;">
+								
+								
+<div class="feedback-verbatim has-border-bottom has-padding-bottom-small has-margin-bottom-small" data-bi-name="rating">
+    <div class="binary-rating">
+        <div class="binary-rating-buttons">
+            <h3 class="has-text-weight-semibold has-margin-top-none has-margin-bottom-small">此页面有帮助吗?</h3>
+            <div>
+                <button class="thumb-rating like has-inner-focus has-padding-left-extra-small has-padding-right-extra-small" title="是" data-bi-name="rating-yes" aria-expanded="false" data-bi-sat="1" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-like"></span>
+                    <span>是</span>
+                </button>
+                <button class="thumb-rating dislike has-inner-focus has-padding-none has-padding-right-extra-small" title="否" data-bi-name="rating-no" data-bi-sat="0" aria-expanded="false" aria-controls="rating-container-desktop">
+                    <span aria-hidden="true" class="icon docon docon-dislike"></span>
+                    <span>否</span>
+                </button>
+            </div>
+        </div>
+        <form class="feedback-verbatim-form is-hidden" id="rating-container-desktop">
+            <div class="verbatim-textarea box is-relative has-box-shadow-none has-border has-margin-top-small has-padding-extra-small is-size-8">
+                <label for="rating-textarea-desktop" class="visually-hidden">还有其他反馈吗？</label>
+                <textarea id="rating-textarea-desktop" rows="4" maxlength="999" placeholder="还有其他反馈吗？" required="" class="textarea has-border-none has-box-shadow-none has-inner-focus"></textarea>
+            </div>
+            <div class="buttons is-right has-margin-top-medium has-margin-right-extra-small">
+                <button class="skip-rating button is-text is-link is-small" type="button">跳过</button>
+                <button class="submit-rating button is-primary is-small" data-bi-name="rating-verbatim" disabled="" type="submit">提交</button>
+            </div>
+        </form>
+    </div>
+    <div class="thankyou-rating is-hidden" tabindex="-1">
+        <p>谢谢。</p>
+    </div>
+</div>								<nav data-bi-name="recommendation-sidebar" hidden="" id="recommended-content-nav" role="navigation" aria-labelledby="recommended-content-nav-title">
+									<h3 id="recommended-content-nav-title">相关文章</h3>
+								</nav>
+							<nav id="side-doc-outline" data-bi-name="intopic toc" role="navigation" aria-label="文章大纲">
+								<h3>本文内容</h3>
+							<ol><li class="selected"><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#prerequisites">先决条件</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-a-project">创建项目</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#create-the-application">创建应用程序</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#start-the-debugger">启动调试器！</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-breakpoint-and-start-the-debugger">设置断点并启动调试器</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-in-the-debugger-using-step-commands">使用单步执行命令在调试器中导航代码</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#navigate-code-using-run-to-click">使用“运行时单击”导航代码</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#restart-your-app-quickly">快速重启应用</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-data-tips">使用数据提示检查变量</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#inspect-variables-with-the-autos-and-locals-windows">使用“自动”和“局部变量”窗口检查变量</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#set-a-watch">设置监视</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#examine-the-call-stack">检查调用堆栈</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#change-the-execution-flow">更改执行流</a></li><li><a href="https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019#next-steps">后续步骤</a></li></ol></nav>
+						</div>
+					</div>
+
+					<!--end of div.columns -->
+				</div>
+
+			<!--end of .primary-holder -->
+			</section>
+
+			<aside id="interactive-container" class="interactive-container is-visible-interactive column has-body-background-dark ">
+			</aside>
+		</div>
+
+		<!--end of .mainContainer -->
+	</div>
+
+	<div id="openFeedbackContainer" class="openfeedback-container"></div>
+
+	<div class="footerContainer has-default-focus is-hidden-interactive ">
+<footer id="footer" data-bi-name="footer" class="footer-layout uhf-container has-padding" role="contentinfo">
+
+    <div class="is-flex is-full-height has-padding-right-extra-large-desktop">
+			<a data-mscc-ic="false" class="locale-selector-link has-flex-shrink-none" href="https://docs.microsoft.com/zh-cn/locale?target=https://docs.microsoft.com/zh-cn/visualstudio/debugger/getting-started-with-the-debugger-cpp?view=vs-2019" data-bi-name="select-locale"><span class="icon docon docon-world is-size-4 has-margin-right-small" aria-hidden="true"></span><span class="local-selector-link-text">中文 (简体)</span></a>
+		<div class="has-margin-left-medium has-margin-right-medium has-flex-shrink-none">
+<div class="dropdown has-caret-up">
+	<button class="dropdown-trigger button is-transparent is-small is-icon-only-touch has-inner-focus theme-dropdown-trigger" aria-controls="theme-menu" aria-expanded="false" title="主题" data-bi-name="theme">
+		<span class="icon">
+			<span class="docon docon-sun" aria-hidden="true"></span>
+		</span>
+		<span>主题</span>
+	</button>
+	<div class="dropdown-menu" id="theme-menu" role="menu">
+		<ul class="theme-selector has-padding-small">
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start is-selected" data-theme-to="light" aria-pressed="true">
+					<span class="theme-light has-margin-right-small">
+						<span class="theme-selector-icon css-variable-support has-border is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+亮					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="dark" aria-pressed="false">
+					<span class="theme-dark has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+暗					</span>
+				</button>
+			</li>
+			<li class="theme is-block">
+				<button class="button is-text is-small theme-control is-fullwidth has-flex-justify-content-start" data-theme-to="high-contrast" aria-pressed="false">
+					<span class="theme-high-contrast has-margin-right-small">
+						<span class="has-border theme-selector-icon css-variable-support is-inline-block has-body-background" aria-hidden="true">
+							<svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 14">
+								<rect width="22" height="14" class="has-fill-body-background"></rect>
+								<rect x="5" y="5" width="12" height="4" class="has-fill-secondary"></rect>
+								<rect x="5" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="8" y="2" width="2" height="1" class="has-fill-secondary"></rect>
+								<rect x="11" y="2" width="3" height="1" class="has-fill-secondary"></rect>
+								<rect x="1" y="1" width="2" height="2" class="has-fill-secondary"></rect>
+								<rect x="5" y="10" width="7" height="2" rx="0.3" class="has-fill-primary"></rect>
+								<rect x="19" y="1" width="2" height="2" rx="1" class="has-fill-secondary"></rect>
+							</svg>
+						</span>
+					</span>
+					<span role="menuitem">
+高对比度					</span>
+				</button>
+			</li>
+		</ul>
+	</div>
+</div>		</div>
+	</div>
+    <ul class="links" data-bi-name="footerlinks">
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/previous-versions/" data-bi-name="archivelink">旧版文档</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/teamblog" data-bi-name="bloglink">博客</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/contribute" data-bi-name="contributorGuide">参与</a></li>
+				<li><a data-mscc-ic="false" href="https://go.microsoft.com/fwlink/?LinkId=521839" data-bi-name="privacy">隐私和 Cookie</a></li>
+		<li><a data-mscc-ic="false" href="https://docs.microsoft.com/zh-cn/legal/termsofuse" data-bi-name="termsofuse">使用条款</a></li>
+		<li><a data-mscc-ic="false" href="https://aka.ms/sitefeedback" data-bi-name="feedback">网站反馈</a></li>
+			<li><a data-mscc-ic="false" href="https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/EN-US.aspx" data-bi-name="trademarks">商标</a></li>
+		<li>© Microsoft 2020</li>
+    </ul>
+</footer>
+	</div>
+
+	<div id="action-panel" role="region" aria-label="操作面板" class="action-panel has-default-focus" tabindex="-1"></div>
+
+
+<div class="xl-chrome-ext-bar" id="xl_chrome_ext_{4DB361DE-01F7-4376-B494-639E489D19ED}" style="display: none;">
+      <div class="xl-chrome-ext-bar__logo"></div>
+
+      <a id="xl_chrome_ext_download" href="javascript:;" class="xl-chrome-ext-bar__option">下载视频</a>
+      <a id="xl_chrome_ext_close" href="javascript:;" class="xl-chrome-ext-bar__close"></a>
+    </div><div class="usabilla_live_button_container" role="button" tabindex="0" style="width: 0px; height: 0px; z-index: 99999990; right: 0px; top: 50%; margin-top: 0px; position: fixed; display: none;" aria-label="Usabilla Feedback Button"><iframe src="./教程：调试 C++ 代码 - Visual Studio _ Microsoft Docs_files/saved_resource(1).html" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" data-tags="right" title="Usabilla Feedback Button" style="width: 0px; height: 0px; margin: 0px; padding: 0px; border: 0px; overflow: hidden; z-index: 9998; position: absolute; left: 0px; top: 0px; box-shadow: 0px 0px 0px; background-color: transparent;"></iframe></div></body></html>
