@@ -7,7 +7,8 @@ LDFLAGS =
 LDPATH =
 
 SOURCES = $(shell ls *.cpp)
-PROGS = $(SOURCES:%.cpp=%)
+PROGS = $(subst .cpp,,$(SOURCES))
+#PROGS = $(SOURCES:%.cpp=%)
 
 all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
