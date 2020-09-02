@@ -1,6 +1,6 @@
 
 SOURCES = $(shell ls *.cpp)
-PROGS = $(subst .cpp,,$(SOURCES))
+PROGS = $(SOURCES:%.cpp=%)
 
 all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
