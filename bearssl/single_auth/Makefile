@@ -2,9 +2,9 @@
 RM = rm -f
 CC = gcc
 CFLAGS = -Wall -g
-INCLUDES = -Ibearssl/inc
+INCLUDES = -I../bearssl/inc
 LDFLAGS = -lbearssl
-LDPATH = -Lbearssl/build
+LDPATH = -L../bearssl/build
 
 SOURCES = $(shell ls *.c)
 PROGS = $(subst .c,,$(SOURCES))

@@ -150,7 +150,7 @@ sock_write(void *ctx, const unsigned char *buf, size_t len)
  * command-line tool (with the "ta" command).
  */
 
-#include "client_rsa.h"
+#include "trust-anchor.h"
 
 /*
  * Main program: this is a simple program that expects 2 or 3 arguments.
@@ -222,7 +222,8 @@ main(int argc, char *argv[])
 	 * target host name: it will be used for the SNI extension. The
 	 * last parameter is 0: we are not trying to resume a session.
 	 */
-	br_ssl_client_reset(&sc, host, 0);
+	//br_ssl_client_reset(&sc, host, 0);
+	br_ssl_client_reset(&sc, "server", 0);
 
 	/*
 	 * Initialise the simplified I/O wrapper context, to use our
