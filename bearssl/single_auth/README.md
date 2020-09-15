@@ -2,4 +2,4 @@
 $ gencert.sh 
 
 2) 证书转hardcode的.h文件
-$ genheader.sh
+$ enccert.sh
