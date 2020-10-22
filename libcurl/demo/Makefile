@@ -7,7 +7,7 @@ INCLUDE =
 LDFLAGS = -lcurl
 LDPATH = 
 
-PROGS =	get_post get_post2 get_http save_http process resume
+PROGS =	get_post get_post2 get_http get_http_gzip save_http resume # process 
 
 .PHONY: all
 all: $(PROGS)
@@ -30,6 +30,9 @@ get_post2: get_post2.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 get_http: get_http.o
+	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
+
+get_http_gzip: get_http_gzip.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 
 save_http: save_http.o
