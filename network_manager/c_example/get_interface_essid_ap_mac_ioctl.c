@@ -32,9 +32,9 @@ int main(int argc, char *argv[])
     sprintf(wreq.ifr_name, argv[1]);//?
     /*create a socket to get info from ioctl*/
     if((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) == -1) {
-        //fprintf(stderr, "Cannot open socket /n");
-        //fprintf(stderr, "errno = %d /n", errno);
-        //fprintf(stderr, "Error description is : %s/n",strerror(errno));
+        //fprintf(stderr, "Cannot open socket \n");
+        //fprintf(stderr, "errno = %d \n", errno);
+        //fprintf(stderr, "Error description is : %s\n",strerror(errno));
         perror("Cannot creat socket,error");
         exit(1);
     }
@@ -54,11 +54,11 @@ int main(int argc, char *argv[])
         exit(2);
     }
     else {
-        printf("IOCTL SIOCGIWESSID Successfull/n");
+        printf("IOCTL SIOCGIWESSID Successfull\n");
     }
     /*get ESSID from ioctl*/
     /*output current connecting essid*/
-    printf("%s/n",wreq.u.essid.pointer);
+    printf("ssid: %s\n", (const char *) wreq.u.essid.pointer);
     /*output current connecting essid*/
     /*get AP info from ioctl*/
     if (ioctl(sockfd,SIOCGIWAP, &wreq) == -1) {
@@ -66,10 +66,11 @@ int main(int argc, char *argv[])
         exit(2);
     }
     else {
-        printf("IOCTL SIOCGIWAP Successfull/n");
+        printf("IOCTL SIOCGIWAP Successfull\n");
     }
     /*get AP info from ioctl*/
 
+    printf("AP mac: ");
     /* output current connecting AP MAC*/
     for (i = 0; i < 6; i++) {
         unsigned char *APaddr = (unsigned char *) wreq.u.ap_addr.sa_data;
@@ -77,7 +78,7 @@ int main(int argc, char *argv[])
         if (i != 5)
             printf("%c", ':');
          else
-            printf("/n");
+            printf("\n");
     }
     /* output current connecting AP MAC*/
 }
