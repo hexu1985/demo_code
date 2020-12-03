@@ -56,7 +56,7 @@ void parseBinaryNetlinkMessage(struct nlmsghdr *nh) {
       case IFLA_IFNAME:
         {
           char ifname[IFNAMSIZ];
-          char *action;
+          const char *action;
           snprintf(ifname, sizeof(ifname), "%s",
               (char *) RTA_DATA(rta));
           //action = (ifi->ifi_flags & IFF_LOWER_UP) ? "up" : "down";
@@ -69,7 +69,7 @@ void parseBinaryNetlinkMessage(struct nlmsghdr *nh) {
   }
 }
 
-void parseNetlinkAddrMsg(struct nlmsghdr *nlh, int new)
+void parseNetlinkAddrMsg(struct nlmsghdr *nlh, int is_new_addr)
 {
   struct ifaddrmsg *ifa = (struct ifaddrmsg *) NLMSG_DATA(nlh);
   struct rtattr *rth = IFA_RTA(ifa);
@@ -81,7 +81,7 @@ void parseNetlinkAddrMsg(struct nlmsghdr *nlh, int new)
       char name[IFNAMSIZ];
       if_indextoname(ifa->ifa_index, name);
       nl_log("%s %s address %d.%d.%d.%d\n",
-          name, (new != 0)?"add":"del",
+          name, (is_new_addr != 0)?"add":"del",
           (ipaddr >> 24) & 0xff,
           (ipaddr >> 16) & 0xff,
           (ipaddr >> 8) & 0xff,
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
   int sock, len;
   char buffer[4096];
   struct nlmsghdr *nlh;
-  char* fname = "netlink.log";
+  const char* fname = "netlink.log";
 
   if (argc > 1 && strcmp(argv[1],"-f")==0){
     fp = fopen(fname, "w");
