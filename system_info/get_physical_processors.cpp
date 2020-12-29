@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <regex>
+#include <set>
 
 int main(int argc, char *argv[]) 
 {
@@ -12,19 +13,17 @@ int main(int argc, char *argv[])
     }
 
     std::string line;
-    std::regex rgx("^cpu cores.*:.*([0-9]+).*$");
+    std::regex rgx("^physical id.*$");
+    std::set<std::string> cpu_set;
     while (std::getline(meminfo, line)) {
         if (std::regex_match(line, rgx)) {
             std::cout << line << std::endl;
-        }
-        std::smatch sm;    // same as std::match_results<string::const_iterator> sm;
-        if (std::regex_match (line, sm, rgx)) {
-            std::cout << sm.size() << std::endl;
-            for (int i = 0; i < sm.size(); i++) {
-                std::cout << i << ". " << sm[i] << std::endl;
-            }
+            cpu_set.insert(line);
         }
     }
+    std::cout << "physical cpu count: " << cpu_set.size() << std::endl;
+
 
     return 0;
 }
+
