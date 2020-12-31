@@ -21,6 +21,8 @@ add_executable(push_button_test
   mywidget.ui
   mywidget.h
   mywidget.cpp
+  button_proxy_style.cpp
+  button_proxy_style.h
   )
 
 target_link_libraries(push_button_test Qt5::Widgets)

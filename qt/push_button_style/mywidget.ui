@@ -22,6 +22,21 @@
      <height>91</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton { 
+	background-color: rgb(255,255,255);
+	border:1px solid black;
+}
+QPushButton:pressed
+{
+    /*背景颜色*/  
+    background-color:rgb(255,255,255);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:0px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:0px;
+}</string>
+   </property>
    <property name="text">
     <string>PushButton1</string>
    </property>
@@ -34,6 +49,23 @@
      <width>231</width>
      <height>91</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton
+{
+	background-color: rgb(255,255,255);
+	border:1px solid black;
+}
+
+QPushButton:pressed
+{
+    /*背景颜色*/  
+    background-color:rgb(255,255,255);
+    /*左内边距为3像素，让按下时字向右移动3像素*/  
+    padding-left:0px;
+    /*上内边距为3像素，让按下时字向下移动3像素*/  
+    padding-top:0px;
+}</string>
    </property>
    <property name="text">
     <string>PushButton2</string>
