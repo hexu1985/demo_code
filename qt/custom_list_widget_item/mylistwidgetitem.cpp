@@ -14,14 +14,14 @@ MyListWidgetItem::~MyListWidgetItem()
     delete ui;
 }
 
-void MyListWidgetItem::setImage(const char *image_path)
+void MyListWidgetItem::setImage(QString image_path)
 {
     QPixmap img(image_path);
     ui->label_image->setScaledContents(true);
     ui->label_image->setPixmap(img);
 }
 
-void MyListWidgetItem::setText(const char *str)
+void MyListWidgetItem::setText(QString str)
 {
     ui->label_path->setText(str);
 }

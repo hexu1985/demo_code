@@ -28,22 +28,29 @@ void FileViewer::showFileInfoList(QFileInfoList list)
 {
     ui->ListWidgetFile->clear();
     for(unsigned int i=0;i<list.count();i++)
+//    for(unsigned int i=0;i<2;i++)
     {
         QFileInfo tmpFileInfo=list.at(i);
         if((tmpFileInfo.isDir()))
         {
-            QIcon icon(":/images/dir.png");
-            QString fileName=tmpFileInfo.fileName();
-            QListWidgetItem *tmp=new QListWidgetItem (icon,fileName);
-            ui->ListWidgetFile->addItem(tmp);
+            QString fileName = tmpFileInfo.fileName();
+            QListWidgetItem *tmp = new QListWidgetItem(ui->ListWidgetFile);
+            MyListWidgetItem *widget = new MyListWidgetItem(ui->ListWidgetFile);
+            tmp->setSizeHint(QSize(360,120));
+            widget->setImage(":/images/dir.png");
+            widget->setText(fileName);
+            ui->ListWidgetFile->setItemWidget(tmp, widget);
 
         }
         else if(tmpFileInfo.isFile())
         {
-            QIcon icon(":/images/file.png");
-            QString fileName=tmpFileInfo.fileName();
-            QListWidgetItem *tmp=new QListWidgetItem (icon,fileName);
-            ui->ListWidgetFile->addItem(tmp);
+            QString fileName = tmpFileInfo.fileName();
+            QListWidgetItem *tmp = new QListWidgetItem(ui->ListWidgetFile);
+            MyListWidgetItem *widget = new MyListWidgetItem(ui->ListWidgetFile);
+            tmp->setSizeHint(QSize(360,120));
+            widget->setImage(":/images/file.png");
+            widget->setText(fileName);
+            ui->ListWidgetFile->setItemWidget(tmp, widget);
         }
     }
 }

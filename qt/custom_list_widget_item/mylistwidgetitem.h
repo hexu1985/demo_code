@@ -2,6 +2,7 @@
 #define MYLISTWIDGETITEM_H
 
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 class MyListWidgetItem;
@@ -15,8 +16,8 @@ public:
     explicit MyListWidgetItem(QWidget *parent = 0);
     ~MyListWidgetItem();
 
-    void setImage(const char *image_path);
-    void setText(const char *str);
+    void setImage(QString image_path);
+    void setText(QString str);
 
 private:
     Ui::MyListWidgetItem *ui;
