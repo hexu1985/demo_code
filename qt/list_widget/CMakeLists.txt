@@ -22,6 +22,7 @@ add_executable(list_widget_test
   main.cpp
   fileviewer.cpp
   fileviewer.h
+  ${RESOURCES}
   )
 
 target_link_libraries(list_widget_test Qt5::Widgets)
