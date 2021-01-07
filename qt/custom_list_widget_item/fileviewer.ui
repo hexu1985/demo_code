@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FileViewer</class>
- <widget name="FileViewer" class="QDialog">
+ <widget class="QDialog" name="FileViewer">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -12,6 +13,16 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QListWidget" name="ListWidgetFile">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>281</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -15,6 +15,9 @@ public:
     explicit MyListWidgetItem(QWidget *parent = 0);
     ~MyListWidgetItem();
 
+    void setImage(const char *image_path);
+    void setText(const char *str);
+
 private:
     Ui::MyListWidgetItem *ui;
 };
