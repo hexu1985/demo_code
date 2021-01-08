@@ -18,9 +18,16 @@ public:
 
     void setImageLabel(QString image_path);
     void setTextLabel(QString str);
+    void setTestLabel(QString image_path);
 
     void setIndex(int index);
     int getIndex() const;
+
+private slots:
+    void on_pushButton_clicked();
+
+signals:
+    void clicked(int index);
 
 private:
     Ui::MyListWidgetItem *ui;

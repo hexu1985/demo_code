@@ -39,22 +39,6 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QFrame" name="frame">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>391</width>
-     <height>111</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::StyledPanel</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Raised</enum>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_test">
    <property name="geometry">
     <rect>
@@ -68,10 +52,33 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <zorder>frame</zorder>
-  <zorder>label_image</zorder>
-  <zorder>label_path</zorder>
-  <zorder>label_test</zorder>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton { 
+	background-color: rgba(0,0,0,0);
+	border:1px solid gray;
+}
+
+QPushButton:pressed
+{
+    background-color:rgba(0,0,0,0);
+    padding-left:0px;
+    padding-top:0px;
+}
+</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

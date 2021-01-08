@@ -40,3 +40,15 @@ int MyListWidgetItem::getIndex() const
     return index_;
 }
 
+void MyListWidgetItem::on_pushButton_clicked()
+{
+    std::cout << "MyListWidgetItem::on_pushButton_clicked():index:" << index_ << std::endl;
+    emit clicked(index_);
+}
+
+void MyListWidgetItem::setTestLabel(QString image_path)
+{
+    QPixmap img(image_path);
+    ui->label_test->setScaledContents(true);
+    ui->label_test->setPixmap(img);
+}

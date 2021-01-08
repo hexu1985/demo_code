@@ -2,5 +2,6 @@
 <qresource>
     <file>images/dir.png</file>
     <file>images/file.png</file>
+    <file>images/vim.png</file>
 </qresource>
 </RCC>

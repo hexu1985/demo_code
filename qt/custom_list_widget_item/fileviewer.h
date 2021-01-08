@@ -27,9 +27,12 @@ public slots:
     void OnCurrentRowChanged(int currentRow);
     void OnItemClicked(QListWidgetItem *item);
 
+    void OnCustomItemClicked(int index);
+
 private:
     Ui::FileViewer *ui;
     std::vector<MyListWidgetItem *> widget_vector_;
+    std::vector<QListWidgetItem *> item_vector_;
 };
 
 #endif // FILEVIEWER_H
