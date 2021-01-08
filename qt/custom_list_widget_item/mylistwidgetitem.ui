@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>360</width>
+    <width>400</width>
     <height>120</height>
    </rect>
   </property>
@@ -44,7 +44,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>361</width>
+     <width>391</width>
      <height>111</height>
     </rect>
    </property>
@@ -55,6 +55,23 @@
     <enum>QFrame::Raised</enum>
    </property>
   </widget>
+  <widget class="QLabel" name="label_test">
+   <property name="geometry">
+    <rect>
+     <x>316</x>
+     <y>40</y>
+     <width>51</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>label_image</zorder>
+  <zorder>label_path</zorder>
+  <zorder>label_test</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -14,8 +14,8 @@ int main( int argc, char **argv )
     translator.load("fileviewer_zh",".");
     a.installTranslator(&translator);    
     
-    FileViewer *fileviewer = new FileViewer();
-    fileviewer->show();
+    FileViewer fileviewer;
+    fileviewer.show();
 
 #if 0
     MyListWidgetItem *widget = new MyListWidgetItem();

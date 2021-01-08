@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include <QFileInfoList>
+#include <QListWidgetItem> 
+#include <vector>
+#include "mylistwidgetitem.h"
 
 namespace Ui {
 class FileViewer;
@@ -19,8 +22,14 @@ public:
 protected:
     void showFileInfoList(QFileInfoList list);
 
+public slots:
+    void OnCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void OnCurrentRowChanged(int currentRow);
+    void OnItemClicked(QListWidgetItem *item);
+
 private:
     Ui::FileViewer *ui;
+    std::vector<MyListWidgetItem *> widget_vector_;
 };
 
 #endif // FILEVIEWER_H

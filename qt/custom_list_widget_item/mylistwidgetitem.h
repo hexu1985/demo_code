@@ -16,11 +16,15 @@ public:
     explicit MyListWidgetItem(QWidget *parent = 0);
     ~MyListWidgetItem();
 
-    void setImage(QString image_path);
-    void setText(QString str);
+    void setImageLabel(QString image_path);
+    void setTextLabel(QString str);
+
+    void setIndex(int index);
+    int getIndex() const;
 
 private:
     Ui::MyListWidgetItem *ui;
+    int index_;
 };
 
 #endif // MYLISTWIDGETITEM_H

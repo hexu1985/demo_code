@@ -5,10 +5,13 @@
 #include "ui_fileviewer.h"
 #include "mylistwidgetitem.h"
 
+#include <iostream>
+
 FileViewer::FileViewer(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FileViewer)
 {
+    std::cout << "FileViewer::FileViewer()" << std::endl;
     ui->setupUi(this);
 
     QString root = "/";
@@ -21,11 +24,13 @@ FileViewer::FileViewer(QWidget *parent) :
 
 FileViewer::~FileViewer()
 {
+    std::cout << "FileViewer::~FileViewer()" << std::endl;
     delete ui;
 }
 
 void FileViewer::showFileInfoList(QFileInfoList list)
 {
+    widget_vector_.clear();
     ui->ListWidgetFile->clear();
     for(unsigned int i=0;i<list.count();i++)
 //    for(unsigned int i=0;i<2;i++)
@@ -37,8 +42,9 @@ void FileViewer::showFileInfoList(QFileInfoList list)
             QListWidgetItem *tmp = new QListWidgetItem(ui->ListWidgetFile);
             MyListWidgetItem *widget = new MyListWidgetItem(ui->ListWidgetFile);
             tmp->setSizeHint(QSize(360,120));
-            widget->setImage(":/images/dir.png");
-            widget->setText(fileName);
+            widget->setImageLabel(":/images/dir.png");
+            widget->setTextLabel(fileName);
+            widget->setIndex(i);
             ui->ListWidgetFile->setItemWidget(tmp, widget);
 
         }
@@ -48,9 +54,33 @@ void FileViewer::showFileInfoList(QFileInfoList list)
             QListWidgetItem *tmp = new QListWidgetItem(ui->ListWidgetFile);
             MyListWidgetItem *widget = new MyListWidgetItem(ui->ListWidgetFile);
             tmp->setSizeHint(QSize(360,120));
-            widget->setImage(":/images/file.png");
-            widget->setText(fileName);
+            widget->setImageLabel(":/images/file.png");
+            widget->setTextLabel(fileName);
+            widget->setIndex(i);
             ui->ListWidgetFile->setItemWidget(tmp, widget);
         }
     }
+}
+
+void FileViewer::OnCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) 
+{
+    std::cout << "FileViewer::OnCurrentItemChanged()" << std::endl;
+    std::cout << "current: " << current->text().toStdString() << std::endl;
+    if (previous) {
+      std::cout << "previous: " << previous->text().toStdString() << std::endl;
+    } else {
+      std::cout << "previous: nullptr" << std::endl;
+    }
+}
+
+void FileViewer::OnCurrentRowChanged(int currentRow)
+{
+    std::cout << "FileViewer::OnCurrentRowChanged()" << std::endl;
+    std::cout << "currentRow: " << currentRow << std::endl;
+}
+
+void FileViewer::OnItemClicked(QListWidgetItem *item)
+{
+    std::cout << "FileViewer::OnItemClicked()" << std::endl;
+    std::cout << "item: " << item->text().toStdString() << std::endl;
 }
