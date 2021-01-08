@@ -34,11 +34,14 @@ QListWidget::item:selected:!active {
   color:rgba(0,0,0,0); 
 }
 
+    )";
+
+#if 0
 QScrollBar:vertical
 {
     width:5px;
 }
-    )";
+#endif
 
 FileViewer::FileViewer(QWidget *parent) :
     QDialog(parent),
@@ -67,8 +70,8 @@ void FileViewer::showFileInfoList(QFileInfoList list)
     widget_vector_.clear();
     item_vector_.clear();
     ui->ListWidgetFile->clear();
-//    for(unsigned int i=0;i<list.count();i++)
-    for(unsigned int i=0;i<2;i++)
+    for(unsigned int i=0;i<list.count();i++)
+//    for(unsigned int i=0;i<2;i++)
     {
         QFileInfo tmpFileInfo=list.at(i);
         if((tmpFileInfo.isDir()))
