@@ -8,12 +8,45 @@
 
 #include <iostream>
 
+static QString list_widget_style = R"(
+QListWidget {
+  border:0px;
+  background-color:rgba(0,0,0,0);
+}
+
+QListWidget::Item {
+  padding-left:0px;
+  padding-right:0px;
+}
+
+QListWidget::Item:hover {
+  background:rgba(0,0,0,0); 
+}
+
+QListWidget::item:selected {
+  background:rgba(0,0,0,0); 
+  color:rgba(0,0,0,0); 
+}
+
+QListWidget::item:selected:!active {
+  border-width:0px; 
+  background:rgba(0,0,0,0); 
+  color:rgba(0,0,0,0); 
+}
+
+QScrollBar:vertical
+{
+    width:5px;
+}
+    )";
+
 FileViewer::FileViewer(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::FileViewer)
 {
     std::cout << "FileViewer::FileViewer()" << std::endl;
     ui->setupUi(this);
+    ui->ListWidgetFile->setStyleSheet(list_widget_style);
 
     QString root = "/";
     QDir rootDir(root);	
@@ -34,8 +67,8 @@ void FileViewer::showFileInfoList(QFileInfoList list)
     widget_vector_.clear();
     item_vector_.clear();
     ui->ListWidgetFile->clear();
-    for(unsigned int i=0;i<list.count();i++)
-//    for(unsigned int i=0;i<2;i++)
+//    for(unsigned int i=0;i<list.count();i++)
+    for(unsigned int i=0;i<2;i++)
     {
         QFileInfo tmpFileInfo=list.at(i);
         if((tmpFileInfo.isDir()))

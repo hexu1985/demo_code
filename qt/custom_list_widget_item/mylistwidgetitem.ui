@@ -55,16 +55,16 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>10</y>
-     <width>381</width>
-     <height>101</height>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>120</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton { 
 	background-color: rgba(0,0,0,0);
-	border:1px solid gray;
+	border:0px solid gray;
 }
 
 QPushButton:pressed
@@ -79,6 +79,27 @@ QPushButton:pressed
     <string/>
    </property>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>381</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <zorder>frame</zorder>
+  <zorder>label_image</zorder>
+  <zorder>label_path</zorder>
+  <zorder>label_test</zorder>
+  <zorder>pushButton</zorder>
  </widget>
  <resources/>
  <connections/>
