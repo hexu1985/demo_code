@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QFileInfoList>
+#include <QListWidgetItem>
 
 namespace Ui {
 class FileViewer;
@@ -18,6 +19,11 @@ public:
 
 protected:
     void showFileInfoList(QFileInfoList list);
+
+public slots:
+    void OnCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+    void OnCurrentRowChanged(int currentRow);
+    void OnItemClicked(QListWidgetItem *item);
 
 private:
     Ui::FileViewer *ui;
