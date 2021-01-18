@@ -9,5 +9,7 @@ INCLUDEPATH += .
 
 QT += widgets
 # Input
+CONFIG += c++11
 HEADERS += mytimer.h 
 SOURCES += mytimer.cpp main.cpp
+LIBS += -lpthread
