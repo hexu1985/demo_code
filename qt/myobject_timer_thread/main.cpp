@@ -9,7 +9,7 @@ void thread_func()
 {
     std::this_thread::sleep_for(std::chrono::seconds(3));
     std::cout << "QTimer::singleShot:" << std::endl; 
-    QTimer::singleShot(3000, global_object_ptr, SLOT(MyTimerSlot()));
+    QTimer::singleShot(1000, global_object_ptr, SLOT(MyTimerSlot()));
 }
 
 int main(int argc, char *argv[])
