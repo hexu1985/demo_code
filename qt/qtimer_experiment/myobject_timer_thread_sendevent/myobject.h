@@ -10,6 +10,7 @@ public:
 
 public slots:
     void MyTimerSlot();
+    bool eventFilter(QObject *, QEvent *);
 };
 
 #endif // MYTIME

@@ -1,0 +1,4 @@
+/home/hexu/git/demo_code/qt/myobject_timer_thread_sendevent/build/CMakeFiles/edit_cache.dir
+/home/hexu/git/demo_code/qt/myobject_timer_thread_sendevent/build/CMakeFiles/rebuild_cache.dir
+/home/hexu/git/demo_code/qt/myobject_timer_thread_sendevent/build/CMakeFiles/qtimer_test.dir
+/home/hexu/git/demo_code/qt/myobject_timer_thread_sendevent/build/CMakeFiles/qtimer_test_autogen.dir
