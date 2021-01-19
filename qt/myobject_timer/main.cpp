@@ -1,6 +1,6 @@
 #include <QCoreApplication>
-#include <thread>
 #include "myobject.h"
+#include <iostream>
 
 MyObject *global_object_ptr = 0;
 
@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 
     global_object_ptr = &my_object;
 
+    std::cout << "QTimer::singleShot:" << std::endl; 
     QTimer::singleShot(3000, global_object_ptr, SLOT(MyTimerSlot()));
 
     return a.exec();
