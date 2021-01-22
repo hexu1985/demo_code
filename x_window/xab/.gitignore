@@ -1,0 +1,5 @@
+*.o
+*.bitmap
+xab
+xab.1.gz
+xab.tar.gz

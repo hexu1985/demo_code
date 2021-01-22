@@ -1,0 +1,58 @@
+[Introduction]
+
+This is xab, an abbreviation software for X.
+
+
+[Installing]
+
+libxtst-dev libx11-dev
+
+To compile type:
+make
+
+
+[Warning]
+
+This software actually grabs everything you type
+and could be easily (mis)used to record everything.
+You should not use the software if you do not
+trust the author or do not understand the code.
+
+
+[Licence]
+
+Licenced unter GNU-GPL v3 or later.
+
+
+[Capturing]
+
+There are some ways to capture all keyevents.
+
+- One would be to make a window and grab all keyevents.
+  STATUS: Implemented
+
+- One would be to use the XRecord async extension.
+  But this uses massively CPU Power, at least in the
+  way xmacrorec2 does it (because XRecordProcessReplies
+  does not block).
+  STATUS: Implemented
+
+- One would be to use the XRecord extension in a
+  blocking way.
+  STATUS: Next Feature
+
+- One would be to use /dev/input/event*, which is linux
+  specific and maybe needs some work to get to keycodes.
+  Another problem is that you need access to that files,
+  which are normally reserved for root.
+
+- One would be to sniff the network (tcp or socket) and
+  get all XEvent packages. You need to be root to have
+  such access to the network.
+
+
+[Ideas]
+
+Provide a plugin system, where
+plugins can register for all input events.
+
