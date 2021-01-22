@@ -18,9 +18,10 @@ int main(int argc, char *agrv[])
     sheight = DisplayHeight(display, screen);/*获取屏幕高度*/
     int scount = ScreenCount(display);
 
+    std::cout << "screen count: " << scount << std::endl;
+    std::cout << "default screen index: " << screen << std::endl;
     std::cout << "screen width: " << swidth << std::endl;
     std::cout << "screen height: " << sheight << std::endl;
-    std::cout << "screen count: " << scount << std::endl;
 
     return 0;
 }
