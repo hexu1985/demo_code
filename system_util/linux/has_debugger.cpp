@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sys/ptrace.h>
 
 bool startswith(const std::string& str, const std::string &prefix) {
     return str.compare(0, prefix.length(), prefix) == 0;
@@ -61,6 +62,7 @@ int main()
     auto pid = getpid();
     std::cout << "my pid: " << pid << std::endl;
 
+#if 0
     bool current_state = has_debugger();
     std::cout << (current_state ? "has debugger!" : "no debugger!") << std::endl;
 
@@ -75,6 +77,12 @@ int main()
         std::cout << (current_state ? "has debugger!" : "no debugger!") << std::endl;
         last_state = current_state;
     }
+#else
+    std::cout << (has_debugger() ? "has debugger!" : "no debugger!") << std::endl;
+    ptrace(PTRACE_TRACEME, 0, NULL, NULL);
+    std::cout << "after ptrace" << std::endl;
+    std::cout << (has_debugger() ? "has debugger!" : "no debugger!") << std::endl;
+#endif
 
     return 0;
 }
