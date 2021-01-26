@@ -1,0 +1,2 @@
+1) Project ERROR: Unknown module(s) in QT: x11extras
+$ sudo apt-get install libqt5x11extras5-dev
