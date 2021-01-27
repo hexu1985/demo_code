@@ -84,7 +84,6 @@ int main(int argc, char *argv[])
         reboot_myself = false;
     }
     
-    sleep(3);
     std::cout << "pid: " << pid << std::endl;
     auto args = get_args_by_pid(pid);
     std::ostream_iterator<std::string> out_it (std::cout,", ");
@@ -106,13 +105,25 @@ int main(int argc, char *argv[])
                 exit(1);
             }
         } else {
-            for (int i = 3; i < 1024; i++)
+            if (0 == access("/tmp/test_reboot", R_OK)) {
+                unlink("/tmp/test_reboot");
+            } else {
+                exit(0);
+            }
+            for (int i = 3; i < 1024; i++) {
                 close(i);
+            }
         }
         std::vector<char *> exe_argv;
+#if 0
         for (int i = 0; i < args.size(); i++) {
             exe_argv.push_back(const_cast<char *>(args[i].c_str()));
         }
+#else
+        for (auto &arg: args) {
+            exe_argv.push_back(const_cast<char *>(arg.c_str()));
+        }
+#endif
         exe_argv.push_back(NULL);
         execv(exe.c_str(), exe_argv.data());
     } else { // error
