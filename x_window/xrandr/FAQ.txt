@@ -1,0 +1,4 @@
+https://github.com/raboof/xrandr.git
+可能需要安装依赖
+sudo apt install xutils-dev
+
