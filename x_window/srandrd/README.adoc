@@ -1,0 +1,94 @@
+// See LICENSE for copyright and license details
+// vim: set ft=asciidoc:
+SRANDRD(1)
+==========
+:doctype: manpage
+
+== NAME
+
+srandrd - simple randr daemon
+
+== SYNOPSIS
+
+*srandrd* ['OPTIONS'] 'COMMAND|list'
+
+*list*::
+	List outputs and EDIDs and terminate
+
+== OPTIONS
+
+*-h*::
+	Print help and exit
+*-n*::
+	Don't fork to background
+*-V*::
+    Show version information and exit
+*-v*::
+    Verbose output
+*-e*::
+    Emit connected devices at startup
+
+== DESCRIPTION
+
+srandrd(1) is a tool that executes a command on xrandr output change
+events, i.e. if a monitor is plugged or unplugged. By default srandrd
+forks to background and exits if the xserver exits.
+
+The following variables are defined:
+
+'SRANDRD_OUTPUT' defines the name of the graphics card output / port
+that triggered the event, e.g. 'DVI-0'.
+
+'SRANDRD_EVENT' defines the event that happened.  It's one of the
+following:
+
+----
+[connected|disconnected|unknown]
+----
+
+'SRANDRD_EDID' defines a semi-unique identifier of the monitor that has
+been connected.  The identifier is usually not unique (the same) within
+a monitor series.  The identifier has this format:
+
+----
+VENDOR[4]PRODUCT[4]SERIAL[8]
+----
+
+'SRANDRD_SCREENID' defines the xinerama screen id (if available).  The
+identifier has this format:
+
+----
+XINERAMA_SCREENID[1..n]
+----
+
+== EXAMPLE
+
+An example usage could be
+
+----
+srandrd display_handler
+----
+
+where display_handler being the following script
+
+----
+#!/bin/sh
+
+case "${SRANDRD_OUTPUT} ${SRANDRD_EVENT}" in
+  "DVI-0 connected") xrandr --output DVI-0 --auto --right-of LVDS;;
+  "VGA-0 connected") xrandr --output VGA-0 --auto --left-of LVDS;;
+esac
+----
+
+== RESOURCES
+
+github: https://github.com/jceb/srandrd
+
+== RELATED
+
+screenconfig: https://github.com/jceb/screenconfig
+
+== AUTHOR
+
+* Jan Christoph Ebersbach <jceb@e-jc.de>
+* Stefan Bolte <portix@gmx.net>

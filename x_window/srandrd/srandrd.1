@@ -1,0 +1,167 @@
+'\" t
+.\"     Title: srandrd
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets vsnapshot <http://docbook.sf.net/>
+.\"      Date: 10/13/2018
+.\"    Manual: \ \&
+.\"    Source: \ \&
+.\"  Language: English
+.\"
+.TH "SRANDRD" "1" "10/13/2018" "\ \&" "\ \&"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+srandrd \- simple randr daemon
+.SH "SYNOPSIS"
+.sp
+\fBsrandrd\fR [\fIOPTIONS\fR] \fICOMMAND|list\fR
+.PP
+\fBlist\fR
+.RS 4
+List outputs and EDIDs and terminate
+.RE
+.SH "OPTIONS"
+.PP
+\fB\-h\fR
+.RS 4
+Print help and exit
+.RE
+.PP
+\fB\-n\fR
+.RS 4
+Don\(cqt fork to background
+.RE
+.PP
+\fB\-V\fR
+.RS 4
+Show version information and exit
+.RE
+.PP
+\fB\-v\fR
+.RS 4
+Verbose output
+.RE
+.PP
+\fB\-e\fR
+.RS 4
+Emit connected devices at startup
+.RE
+.SH "DESCRIPTION"
+.sp
+srandrd(1) is a tool that executes a command on xrandr output change events, i\&.e\&. if a monitor is plugged or unplugged\&. By default srandrd forks to background and exits if the xserver exits\&.
+.sp
+The following variables are defined:
+.sp
+\fISRANDRD_OUTPUT\fR defines the name of the graphics card output / port that triggered the event, e\&.g\&. \fIDVI\-0\fR\&.
+.sp
+\fISRANDRD_EVENT\fR defines the event that happened\&. It\(cqs one of the following:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+[connected|disconnected|unknown]
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+\fISRANDRD_EDID\fR defines a semi\-unique identifier of the monitor that has been connected\&. The identifier is usually not unique (the same) within a monitor series\&. The identifier has this format:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+VENDOR[4]PRODUCT[4]SERIAL[8]
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+\fISRANDRD_SCREENID\fR defines the xinerama screen id (if available)\&. The identifier has this format:
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+XINERAMA_SCREENID[1\&.\&.n]
+.fi
+.if n \{\
+.RE
+.\}
+.SH "EXAMPLE"
+.sp
+An example usage could be
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+srandrd display_handler
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+where display_handler being the following script
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#!/bin/sh
+
+case "$S{RANDRD_OUTPUT} ${SRANDRD_EVENT}" in
+  "DVI\-0 connected") xrandr \-\-output DVI\-0 \-\-auto \-\-right\-of LVDS;;
+  "VGA\-0 connected") xrandr \-\-output VGA\-0 \-\-auto \-\-left\-of LVDS;;
+esac
+.fi
+.if n \{\
+.RE
+.\}
+.SH "RESOURCES"
+.sp
+github: https://github\&.com/jceb/srandrd
+.SH "RELATED"
+.sp
+screenconfig: https://github\&.com/jceb/screenconfig
+.SH "AUTHOR"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Jan Christoph Ebersbach <jceb@e\-jc\&.de>
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.sp -1
+.IP \(bu 2.3
+.\}
+Stefan Bolte <portix@gmx\&.net>
+.RE
