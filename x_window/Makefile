@@ -3,7 +3,7 @@ RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g -std=c++11
 INCLUDES = 
-LDFLAGS = -lX11 -lXrandr -lXext -lXtst -lpthread
+LDFLAGS = -lX11 -lXrandr -lXinerama -lXext -lXtst -lpthread
 LDPATH =
 
 SOURCES = $(shell ls *.cpp)

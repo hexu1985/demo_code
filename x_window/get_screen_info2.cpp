@@ -993,6 +993,8 @@ static void get_outputs()
 int main(int argc, char *agrv[])
 {
     const char *display_name = NULL;
+    int		event_base, error_base;
+    int		major, minor;
 
     dpy = XOpenDisplay(display_name);
     std::cout << "ScreenCount: " << ScreenCount(dpy) << std::endl;
@@ -1000,6 +1002,13 @@ int main(int argc, char *agrv[])
     screen = DefaultScreen(dpy);
 
     root = RootWindow(dpy, screen);
+
+    if (!XRRQueryExtension (dpy, &event_base, &error_base) ||
+            !XRRQueryVersion (dpy, &major, &minor))
+    {
+        fprintf (stderr, "RandR extension missing\n");
+        exit (1);
+    }
 
     get_screen(true);
     printf("Screen %d: minimum %d x %d, current %d x %d, maximum %d x %d\n",
