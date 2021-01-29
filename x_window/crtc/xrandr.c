@@ -81,70 +81,6 @@ static const struct {
 };
 
 static void _X_NORETURN
-usage(void)
-{
-    fprintf(stderr, "usage: %s [options]\n", program_name);
-    fprintf(stderr, "  where options are:\n");
-    fprintf(stderr, "  -display <display> or -d <display>\n");
-    fprintf(stderr, "  -help\n");
-    fprintf(stderr, "  -o <normal,inverted,left,right,0,1,2,3>\n");
-    fprintf(stderr, "            or --orientation <normal,inverted,left,right,0,1,2,3>\n");
-    fprintf(stderr, "  -q        or --query\n");
-    fprintf(stderr, "  -s <size>/<width>x<height> or --size <size>/<width>x<height>\n");
-    fprintf(stderr, "  -r <rate> or --rate <rate> or --refresh <rate>\n");
-    fprintf(stderr, "  -v        or --version\n");
-    fprintf(stderr, "  -x        (reflect in x)\n");
-    fprintf(stderr, "  -y        (reflect in y)\n");
-    fprintf(stderr, "  --screen <screen>\n");
-    fprintf(stderr, "  --verbose\n");
-    fprintf(stderr, "  --current\n");
-    fprintf(stderr, "  --dryrun\n");
-    fprintf(stderr, "  --nograb\n");
-    fprintf(stderr, "  --prop or --properties\n");
-    fprintf(stderr, "  --fb <width>x<height>\n");
-    fprintf(stderr, "  --fbmm <width>x<height>\n");
-    fprintf(stderr, "  --dpi <dpi>/<output>\n");
-    fprintf(stderr, "  --output <output>\n");
-    fprintf(stderr, "      --auto\n");
-    fprintf(stderr, "      --mode <mode>\n");
-    fprintf(stderr, "      --preferred\n");
-    fprintf(stderr, "      --pos <x>x<y>\n");
-    fprintf(stderr, "      --rate <rate> or --refresh <rate>\n");
-    fprintf(stderr, "      --reflect normal,x,y,xy\n");
-    fprintf(stderr, "      --rotate normal,inverted,left,right\n");
-    fprintf(stderr, "      --left-of <output>\n");
-    fprintf(stderr, "      --right-of <output>\n");
-    fprintf(stderr, "      --above <output>\n");
-    fprintf(stderr, "      --below <output>\n");
-    fprintf(stderr, "      --same-as <output>\n");
-    fprintf(stderr, "      --set <property> <value>\n");
-    fprintf(stderr, "      --scale <x>x<y>\n");
-    fprintf(stderr, "      --scale-from <w>x<h>\n");
-    fprintf(stderr, "      --transform <a>,<b>,<c>,<d>,<e>,<f>,<g>,<h>,<i>\n");
-    fprintf(stderr, "      --off\n");
-    fprintf(stderr, "      --crtc <crtc>\n");
-    fprintf(stderr, "      --panning <w>x<h>[+<x>+<y>[/<track:w>x<h>+<x>+<y>[/<border:l>/<t>/<r>/<b>]]]\n");
-    fprintf(stderr, "      --gamma <r>:<g>:<b>\n");
-    fprintf(stderr, "      --primary\n");
-    fprintf(stderr, "  --noprimary\n");
-    fprintf(stderr, "  --newmode <name> <clock MHz>\n");
-    fprintf(stderr, "            <hdisp> <hsync-start> <hsync-end> <htotal>\n");
-    fprintf(stderr, "            <vdisp> <vsync-start> <vsync-end> <vtotal>\n");
-    fprintf(stderr, "            [flags...]\n");
-    fprintf(stderr, "            Valid flags: +HSync -HSync +VSync -VSync\n");
-    fprintf(stderr, "                         +CSync -CSync CSync Interlace DoubleScan\n");
-    fprintf(stderr, "  --rmmode <name>\n");
-    fprintf(stderr, "  --addmode <output> <name>\n");
-    fprintf(stderr, "  --delmode <output> <name>\n");
-    fprintf(stderr, "  --listproviders\n");
-    fprintf(stderr, "  --setprovideroutputsource <prov-xid> <source-xid>\n");
-    fprintf(stderr, "  --setprovideroffloadsink <prov-xid> <sink-xid>\n");
-
-    exit(1);
-    /*NOTREACHED*/
-}
-
-static void _X_NORETURN
 fatal (const char *format, ...)
 {
     va_list ap;
@@ -1356,8 +1292,6 @@ print_output_property_value(Bool is_edid,
 
     printf ("?");
 }
-
-
 
 int
 main (int argc, char **argv)
