@@ -345,30 +345,38 @@ init_name (name_t *name)
 }
 
 static void
+set_name_kind_t (name_t *name, name_kind_t name_kind)
+{
+    uint32_t kind = name->kind;
+    kind |= name_kind;
+    name->kind = static_cast<name_kind_t>(kind);
+}
+
+static void
 set_name_string (name_t *name, char *string)
 {
-    name->kind |= name_string;
+    set_name_kind_t (name, name_string);
     name->string = string;
 }
 
 static void
 set_name_xid (name_t *name, XID xid)
 {
-    name->kind |= name_xid;
+    set_name_kind_t (name, name_xid);
     name->xid = xid;
 }
 
 static void
 set_name_index (name_t *name, int index)
 {
-    name->kind |= name_index;
+    set_name_kind_t (name, name_index);
     name->index = index;
 }
 
 static void
 set_name_preferred (name_t *name)
 {
-    name->kind |= name_preferred;
+    set_name_kind_t (name, name_preferred);
 }
 
 static void
@@ -380,7 +388,7 @@ set_name_all (name_t *name, name_t *old)
 	name->string = old->string;
     if (old->kind & name_index)
 	name->index = old->index;
-    name->kind |= old->kind;
+    set_name_kind_t (name, old->kind);
 }
 
 static void
@@ -406,7 +414,7 @@ set_transform (transform_t  *dest,
     /* note: this string is leaked */
     dest->filter = strdup (filter);
     dest->nparams = nparams;
-    dest->params = malloc (nparams * sizeof (XFixed));
+    dest->params = (XFixed *) malloc (nparams * sizeof (XFixed));
     memcpy (dest->params, params, nparams * sizeof (XFixed));
 }
 
@@ -434,7 +442,7 @@ equal_transform (transform_t *a, transform_t *b)
 static output_t *
 add_output (void)
 {
-    output_t *output = calloc (1, sizeof (output_t));
+    output_t *output = (output_t *) calloc (1, sizeof (output_t));
 
     if (!output)
 	fatal ("out of memory\n");
@@ -453,7 +461,7 @@ find_output (name_t *name)
 
     for (output = outputs; output; output = output->next)
     {
-        name_kind_t common = name->kind & output->output.kind;
+        name_kind_t common = static_cast<name_kind_t>(name->kind & output->output.kind);
 
         if ((common & name_xid) && name->xid == output->output.xid)
             break;
@@ -486,7 +494,7 @@ find_crtc (name_t *name)
         name_kind_t common;
 
         crtc = &crtcs[c];
-        common = name->kind & crtc->crtc.kind;
+        common = static_cast<name_kind_t>(name->kind & crtc->crtc.kind);
 
         if ((common & name_xid) && name->xid == crtc->crtc.xid)
             break;
@@ -805,6 +813,14 @@ set_gamma_info(output_t *output)
 }
 
 static void
+set_changes_t (output_t *output, changes_t output_changes)
+{
+    uint32_t changes = output->changes;
+    changes |= output_changes;
+    output->changes = static_cast<changes_t>(changes);
+}
+
+static void
 set_output_info (output_t *output, RROutput xid, XRROutputInfo *output_info)
 {
     /* sanity check output info */
@@ -983,7 +999,7 @@ get_crtcs (void)
     int		c;
 
     num_crtcs = res->ncrtc;
-    crtcs = calloc (num_crtcs, sizeof (crtc_t));
+    crtcs = (crtc_t *) calloc (num_crtcs, sizeof (crtc_t));
     if (!crtcs) fatal ("out of memory\n");
 
     for (c = 0; c < res->ncrtc; c++)
@@ -1165,14 +1181,14 @@ get_outputs (void)
                 switch (output_info->connection) {
                     case RR_Connected:
                         if (!output_info->crtc) {
-                            output->changes |= changes_automatic;
+                            set_changes_t(output, changes_automatic);
                             output->automatic = True;
                         }
                         break;
                     case RR_Disconnected:
                         if (output_info->crtc)
                         {
-                            output->changes |= changes_automatic;
+                            set_changes_t(output, changes_automatic);
                             output->automatic = True;
                         }
                         break;
@@ -1193,7 +1209,7 @@ get_outputs (void)
                     if ((!(output->changes & changes_mode)))
                     {
                         set_name_preferred (&output->mode);
-                        output->changes |= changes_mode;
+                        set_changes_t(output, changes_mode);
                     }
                     break;
                 case RR_Disconnected:
@@ -1201,8 +1217,8 @@ get_outputs (void)
                     {
                         set_name_xid (&output->mode, None);
                         set_name_xid (&output->crtc, None);
-                        output->changes |= changes_mode;
-                        output->changes |= changes_crtc;
+                        set_changes_t(output, changes_mode);
+                        set_changes_t(output, changes_crtc);
                     }
                     break;
             }
@@ -1229,14 +1245,14 @@ print_output_property_value(Bool is_edid,
     /* special-case the EDID */
     if (is_edid && value_format == 8)
     {
-        const uint8_t *val = value_bytes;
+        const uint8_t *val = (const uint8_t *) value_bytes;
         printf ("%02" PRIx8, *val);
         return;
     }
 
     if (value_type == XA_ATOM && value_format == 32)
     {
-        const Atom *val = value_bytes;
+        const Atom *val = (const Atom *) value_bytes;
         char *str = XGetAtomName (dpy, *val);
         if (str != NULL)
         {
@@ -1250,19 +1266,19 @@ print_output_property_value(Bool is_edid,
     {
         if (value_format == 8)
         {
-            const int8_t *val = value_bytes;
+            const int8_t *val = (const int8_t *) value_bytes;
             printf ("%" PRId8, *val);
             return;
         }
         if (value_format == 16)
         {
-            const int16_t *val = value_bytes;
+            const int16_t *val = (const int16_t *) value_bytes;
             printf ("%" PRId16, *val);
             return;
         }
         if (value_format == 32)
         {
-            const int32_t *val = value_bytes;
+            const int32_t *val = (const int32_t *) value_bytes;
             printf ("%" PRId32, *val);
             return;
         }
@@ -1272,19 +1288,19 @@ print_output_property_value(Bool is_edid,
     {
         if (value_format == 8)
         {
-            const uint8_t *val = value_bytes;
+            const uint8_t *val = (const uint8_t *) value_bytes;
             printf ("%" PRIu8, *val);
             return;
         }
         if (value_format == 16)
         {
-            const uint16_t *val = value_bytes;
+            const uint16_t *val = (const uint16_t *) value_bytes;
             printf ("%" PRIu16, *val);
             return;
         }
         if (value_format == 32)
         {
-            const uint32_t *val = value_bytes;
+            const uint32_t *val = (const uint32_t *) value_bytes;
             printf ("%" PRIu32, *val);
             return;
         }
@@ -1513,7 +1529,7 @@ main (int argc, char **argv)
 				    printf ("\n\t\t");
 			    }
 
-			    for (k = 0; k < nitems; k++)
+			    for (k = 0; k < (int) nitems; k++)
 			    {
 				    if (k != 0)
 				    {
@@ -1592,7 +1608,7 @@ main (int argc, char **argv)
 	    }
 	    else
 	    {
-		    mode_shown = calloc (output_info->nmode, sizeof (Bool));
+		    mode_shown = (int *) calloc (output_info->nmode, sizeof (Bool));
 		    if (!mode_shown) fatal ("out of memory\n");
 		    for (j = 0; j < output_info->nmode; j++)
 		    {
