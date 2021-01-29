@@ -174,6 +174,12 @@ struct _output {
     bool	    found;
 };
 
+static const char *connection[3] = {
+    "connected",
+    "disconnected",
+    "unknown connection"
+};
+
 static output_t *outputs = NULL;
 static output_t **outputs_tail = &outputs;
 static crtc_t   *crtcs;
@@ -1002,7 +1008,52 @@ int main(int argc, char *agrv[])
             maxWidth, maxHeight);
 
     get_crtcs();
+    get_outputs();
 
+    for (output_t *output = outputs; output; output = output->next) {
+        XRROutputInfo   *output_info = output->output_info;
+        crtc_t	    *crtc = output->crtc_info;
+        XRRCrtcInfo	    *crtc_info = crtc ? crtc->crtc_info : NULL;
+        XRRModeInfo	    *mode = output->mode_info;
+        Atom	    *props;
+        int		    j, nprop;
+        Bool	    *mode_shown;
+        Rotation	    rotations = output_rotations (output);
+
+        if (RR_Disconnected == output_info->connection) {
+            printf("%s %s\n", output_info->name, connection[output_info->connection]);
+            continue;
+        } else {
+            printf("%s %s", output_info->name, connection[output_info->connection]);
+        }
+
+        if (output_is_primary(output)) {
+            printf(" primary");
+        }
+
+        if (mode)
+        {
+            if (crtc_info) {
+                printf(" %dx%d+%d+%d",
+                        crtc_info->width, crtc_info->height,
+                        crtc_info->x, crtc_info->y);
+            } else {
+                printf(" %dx%d+%d+%d",
+                        mode->width, mode->height, output->x, output->y);
+            }
+            if (verbose)
+                printf(" (0x%x)", (int)mode->id);
+            if (output->rotation != RR_Rotate_0 || verbose)
+            {
+                printf(" %s", 
+                        rotation_name (output->rotation));
+                if (output->rotation & (RR_Reflect_X|RR_Reflect_Y))
+                    printf (" %s", reflection_name (output->rotation));
+            }
+        }
+
+        printf("\n");
+    }
 
     return 0;
 }
