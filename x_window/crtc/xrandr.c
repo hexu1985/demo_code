@@ -40,8 +40,6 @@
 #include <stdarg.h>
 #include <math.h>
 
-#include "config.h"
-
 static char	*program_name;
 static Display	*dpy;
 static Window	root;
