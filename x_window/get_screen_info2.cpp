@@ -384,11 +384,11 @@ static void
 set_name_all (name_t *name, name_t *old)
 {
     if (old->kind & name_xid)
-	name->xid = old->xid;
+        name->xid = old->xid;
     if (old->kind & name_string)
-	name->string = old->string;
+        name->string = old->string;
     if (old->kind & name_index)
-	name->index = old->index;
+        name->index = old->index;
     set_name_kind_t (name, old->kind);
 }
 
@@ -398,7 +398,7 @@ init_transform (transform_t *transform)
     int x;
     memset (&transform->transform, '\0', sizeof (transform->transform));
     for (x = 0; x < 3; x++)
-	transform->transform.matrix[x][x] = XDoubleToFixed (1.0);
+        transform->transform.matrix[x][x] = XDoubleToFixed (1.0);
     transform->filter = "";
     transform->nparams = 0;
     transform->params = NULL;
@@ -572,33 +572,33 @@ find_mode_for_output (output_t *output, name_t *name)
 
     for (m = 0; m < output_info->nmode; m++)
     {
-	XRRModeInfo	    *mode;
+        XRRModeInfo	    *mode;
 
-	mode = find_mode_by_xid (output_info->modes[m]);
-	if (!mode) continue;
-	if ((name->kind & name_xid) && name->xid == mode->id)
-	{
-	    best = mode;
-	    break;
-	}
-	if ((name->kind & name_string) && !strcmp (name->string, mode->name))
-	{
-	    double   dist;
+        mode = find_mode_by_xid (output_info->modes[m]);
+        if (!mode) continue;
+        if ((name->kind & name_xid) && name->xid == mode->id)
+        {
+            best = mode;
+            break;
+        }
+        if ((name->kind & name_string) && !strcmp (name->string, mode->name))
+        {
+            double   dist;
 
-	    /* Stay away from doublescan modes unless refresh rate is specified. */
-	    if (!output->refresh && (mode->modeFlags & RR_DoubleScan))
-		continue;
+            /* Stay away from doublescan modes unless refresh rate is specified. */
+            if (!output->refresh && (mode->modeFlags & RR_DoubleScan))
+                continue;
 
-	    if (output->refresh)
-		dist = fabs (mode_refresh (mode) - output->refresh);
-	    else
-		dist = 0;
-	    if (!best || dist < bestDist)
-	    {
-		bestDist = dist;
-		best = mode;
-	    }
-	}
+            if (output->refresh)
+                dist = fabs (mode_refresh (mode) - output->refresh);
+            else
+                dist = 0;
+            if (!best || dist < bestDist)
+            {
+                bestDist = dist;
+                best = mode;
+            }
+        }
     }
     return best;
 }
@@ -610,28 +610,28 @@ preferred_mode (output_t *output)
     int		    m;
     XRRModeInfo	    *best;
     int		    bestDist;
-    
+
     best = NULL;
     bestDist = 0;
     for (m = 0; m < output_info->nmode; m++)
     {
-	XRRModeInfo *mode_info = find_mode_by_xid (output_info->modes[m]);
-	int	    dist;
-	
-	if (m < output_info->npreferred)
-	    dist = 0;
-	else if (output_info->mm_height)
-	    dist = (1000 * DisplayHeight(dpy, screen) / DisplayHeightMM(dpy, screen) -
-		    1000 * mode_info->height / output_info->mm_height);
-	else
-	    dist = DisplayHeight(dpy, screen) - mode_info->height;
+        XRRModeInfo *mode_info = find_mode_by_xid (output_info->modes[m]);
+        int	    dist;
+
+        if (m < output_info->npreferred)
+            dist = 0;
+        else if (output_info->mm_height)
+            dist = (1000 * DisplayHeight(dpy, screen) / DisplayHeightMM(dpy, screen) -
+                    1000 * mode_info->height / output_info->mm_height);
+        else
+            dist = DisplayHeight(dpy, screen) - mode_info->height;
 
         if (dist < 0) dist = -dist;
-	if (!best || dist < bestDist)
-	{
-	    best = mode_info;
-	    bestDist = dist;
-	}
+        if (!best || dist < bestDist)
+        {
+            best = mode_info;
+            bestDist = dist;
+        }
     }
     return best;
 }
@@ -681,18 +681,18 @@ output_rotations (output_t *output)
     Rotation	    rotation = RR_Rotate_0;
     XRROutputInfo   *output_info = output->output_info;
     int		    c;
-    
+
     for (c = 0; c < output_info->ncrtc; c++)
     {
-	crtc_t	*crtc = find_crtc_by_xid (output_info->crtcs[c]);
-	if (crtc)
-	{
-	    if (!found) {
-		rotation = crtc->crtc_info->rotations;
-		found = True;
-	    } else
-		rotation &= crtc->crtc_info->rotations;
-	}
+        crtc_t	*crtc = find_crtc_by_xid (output_info->crtcs[c]);
+        if (crtc)
+        {
+            if (!found) {
+                rotation = crtc->crtc_info->rotations;
+                found = True;
+            } else
+                rotation &= crtc->crtc_info->rotations;
+        }
     }
     return rotation;
 }
@@ -710,9 +710,9 @@ output_can_use_rotation (output_t *output, Rotation rotation)
      */
     for (c = 0; c < output_info->ncrtc; c++)
     {
-	crtc_t	*crtc = find_crtc_by_xid (output_info->crtcs[c]);
-	if (crtc && !crtc_can_use_rotation (crtc, rotation))
-	    return False;
+        crtc_t	*crtc = find_crtc_by_xid (output_info->crtcs[c]);
+        if (crtc && !crtc_can_use_rotation (crtc, rotation))
+            return False;
     }
     return True;
 }
@@ -1135,16 +1135,16 @@ panic (Status s, crtc_t *crtc)
 {
     int	    c = crtc->crtc.index;
     const char *message;
-    
+
     switch (s) {
-    case RRSetConfigSuccess:		message = "succeeded";		    break;
-    case BadAlloc:			message = "out of memory";	    break;
-    case RRSetConfigFailed:		message = "failed";		    break;
-    case RRSetConfigInvalidConfigTime:	message = "invalid config time";    break;
-    case RRSetConfigInvalidTime:	message = "invalid time";	    break;
-    default:				message = "unknown failure";	    break;
+        case RRSetConfigSuccess:		message = "succeeded";		    break;
+        case BadAlloc:			message = "out of memory";	    break;
+        case RRSetConfigFailed:		message = "failed";		    break;
+        case RRSetConfigInvalidConfigTime:	message = "invalid config time";    break;
+        case RRSetConfigInvalidTime:	message = "invalid time";	    break;
+        default:				message = "unknown failure";	    break;
     }
-    
+
     fprintf (stderr, "%s: Configure crtc %d %s\n", program_name, c, message);
     revert ();
     exit (1);
@@ -1310,18 +1310,34 @@ print_output_property_value(Bool is_edid,
     printf ("?");
 }
 
-int main(int argc, char *agrv[])
+int
+main (int argc, char **argv)
 {
-    const char *display_name = NULL;
+    char          *display_name = NULL;
+    int 		i;
     int		event_base, error_base;
+    int		ret = 0;
+    output_t	*output = NULL;
     int		major, minor;
+    Bool	current = False;
 
-    dpy = XOpenDisplay(display_name);
-    std::cout << "ScreenCount: " << ScreenCount(dpy) << std::endl;
+    program_name = argv[0];
 
-    screen = DefaultScreen(dpy);
+    dpy = XOpenDisplay (display_name);
 
-    root = RootWindow(dpy, screen);
+    if (dpy == NULL) {
+        fprintf (stderr, "Can't open display %s\n", XDisplayName(display_name));
+        exit (1);
+    }
+    if (screen < 0)
+        screen = DefaultScreen (dpy);
+    if (screen >= ScreenCount (dpy)) {
+        fprintf (stderr, "Invalid screen number %d (display has %d)\n",
+                screen, ScreenCount (dpy));
+        exit (1);
+    }
+
+    root = RootWindow (dpy, screen);
 
     if (!XRRQueryExtension (dpy, &event_base, &error_base) ||
             !XRRQueryVersion (dpy, &major, &minor))
@@ -1330,16 +1346,17 @@ int main(int argc, char *agrv[])
         exit (1);
     }
 
-    get_screen(true);
-    printf("Screen %d: minimum %d x %d, current %d x %d, maximum %d x %d\n",
+    get_screen (current);
+    get_crtcs ();
+    get_outputs ();
+
+    printf ("Screen %d: minimum %d x %d, current %d x %d, maximum %d x %d\n",
             screen, minWidth, minHeight,
-            DisplayWidth(dpy, screen), DisplayHeight(dpy, screen),
+            DisplayWidth (dpy, screen), DisplayHeight(dpy, screen),
             maxWidth, maxHeight);
 
-    get_crtcs();
-    get_outputs();
-
-    for (output_t *output = outputs; output; output = output->next) {
+    for (output = outputs; output; output = output->next)
+    {
         XRROutputInfo   *output_info = output->output_info;
         crtc_t	    *crtc = output->crtc_info;
         XRRCrtcInfo	    *crtc_info = crtc ? crtc->crtc_info : NULL;
@@ -1363,26 +1380,25 @@ int main(int argc, char *agrv[])
         if (mode)
         {
             if (crtc_info) {
-                printf(" %dx%d+%d+%d",
+                printf (" %dx%d+%d+%d",
                         crtc_info->width, crtc_info->height,
                         crtc_info->x, crtc_info->y);
             } else {
-                printf(" %dx%d+%d+%d",
+                printf (" %dx%d+%d+%d",
                         mode->width, mode->height, output->x, output->y);
             }
             if (verbose)
-                printf(" (0x%x)", (int)mode->id);
+                printf (" (0x%x)", (int)mode->id);
             if (output->rotation != RR_Rotate_0 || verbose)
             {
-                printf(" %s", 
+                printf (" %s", 
                         rotation_name (output->rotation));
                 if (output->rotation & (RR_Reflect_X|RR_Reflect_Y))
                     printf (" %s", reflection_name (output->rotation));
             }
         }
-
-        printf("\n");
+        printf ("\n");
     }
 
-    return 0;
+    return(ret);
 }
