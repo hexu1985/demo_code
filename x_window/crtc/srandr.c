@@ -33,25 +33,26 @@ int process_events(Display * dpy)
 {
 	XEvent ev;
 
-	XRRSelectInput(dpy, DefaultRootWindow(dpy), RROutputChangeNotifyMask);
+	XRRSelectInput(dpy, DefaultRootWindow(dpy), RRScreenChangeNotifyMask | RROutputChangeNotifyMask);
 	XSync(dpy, False);
 //	XSetIOErrorHandler((XIOErrorHandler) error_handler);
 	while (1) {
 		if (!XNextEvent(dpy, &ev)) {
 			XEvent* xevent = &ev;
 			XRRNotifyEvent *aevent = (XRRNotifyEvent*) (xevent);
+            fprintf(stderr, "some event get: %d\n", (int) xevent->type);
 			if (xevent->type == rr_event_base_ + RRScreenChangeNotify ||
 					xevent->type == rr_event_base_ + RRNotify) {
 				switch (xevent->type - rr_event_base_) {
 					case RRScreenChangeNotify:
-						printf("RRScreenChangeNotify event received.\n");
+						fprintf(stderr, "RRScreenChangeNotify event received.\n");
 						XRRUpdateConfiguration(xevent);
 						break;
 					case RRNotify:
-						printf("%s event received.\n", RRNotifySubtypeToString(aevent->subtype));
+						fprintf(stderr, "%s event received.\n", RRNotifySubtypeToString(aevent->subtype));
 						break;
 					default:
-						printf("Unknown GDK event received.\n");
+						fprintf(stderr, "Unknown GDK event received.\n");
 				}
             }
 		}
