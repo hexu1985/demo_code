@@ -47,7 +47,6 @@ static Window	root;
 static int	screen = -1;
 static Bool	verbose = False;
 static Bool	automatic = False;
-static Bool	properties = False;
 
 static const char *direction[5] = {
     "normal", 
@@ -55,15 +54,6 @@ static const char *direction[5] = {
     "inverted", 
     "right",
     "\n"};
-
-/* subpixel order */
-static const char *order[6] = {
-    "unknown",
-    "horizontal rgb",
-    "horizontal bgr",
-    "vertical rgb",
-    "vertical bgr",
-    "no subpixels"};
 
 static const struct {
     const char	    *string;
@@ -313,19 +303,6 @@ mode_refresh (XRRModeInfo *mode_info)
     return rate;
 }
 
-/* h sync frequency in Hz */
-static double
-mode_hsync (XRRModeInfo *mode_info)
-{
-    double rate;
-    
-    if (mode_info->hTotal)
-	rate = (double) mode_info->dotClock / (double) mode_info->hTotal;
-    else
-    	rate = 0;
-    return rate;
-}
-
 static void
 init_name (name_t *name)
 {
@@ -459,16 +436,6 @@ find_output (name_t *name)
             break;
     }
     return output;
-}
-
-static output_t *
-find_output_by_xid (RROutput output)
-{
-    name_t  output_name;
-
-    init_name (&output_name);
-    set_name_xid (&output_name, output);
-    return find_output (&output_name);
 }
 
 static crtc_t *
@@ -656,32 +623,6 @@ crtc_can_use_rotation (crtc_t *crtc, Rotation rotation)
     if (((rotations & dir) != 0) && ((rotations & reflect) == reflect))
 	return True;
     return False;
-}
-
-/*
- * Report only rotations that are supported by all crtcs
- */
-static Rotation
-output_rotations (output_t *output)
-{
-    Bool	    found = False;
-    Rotation	    rotation = RR_Rotate_0;
-    XRROutputInfo   *output_info = output->output_info;
-    int		    c;
-
-    for (c = 0; c < output_info->ncrtc; c++)
-    {
-        crtc_t	*crtc = find_crtc_by_xid (output_info->crtcs[c]);
-        if (crtc)
-        {
-            if (!found) {
-                rotation = crtc->crtc_info->rotations;
-                found = True;
-            } else
-                rotation &= crtc->crtc_info->rotations;
-        }
-    }
-    return rotation;
 }
 
 static Bool
@@ -1224,84 +1165,10 @@ get_outputs (void)
     }
 }
 
-static void
-print_output_property_value(Bool is_edid,
-                            int value_format, /* 8, 16, 32 */
-                            Atom value_type,  /* XA_{ATOM,INTEGER,CARDINAL} */
-                            const void *value_bytes)
-{
-    /* special-case the EDID */
-    if (is_edid && value_format == 8)
-    {
-        const uint8_t *val = (const uint8_t *) value_bytes;
-        printf ("%02" PRIx8, *val);
-        return;
-    }
-
-    if (value_type == XA_ATOM && value_format == 32)
-    {
-        const Atom *val = (const Atom *) value_bytes;
-        char *str = XGetAtomName (dpy, *val);
-        if (str != NULL)
-        {
-            printf ("%s", str);
-            XFree (str);
-            return;
-        }
-    }
-
-    if (value_type == XA_INTEGER)
-    {
-        if (value_format == 8)
-        {
-            const int8_t *val = (const int8_t *) value_bytes;
-            printf ("%" PRId8, *val);
-            return;
-        }
-        if (value_format == 16)
-        {
-            const int16_t *val = (const int16_t *) value_bytes;
-            printf ("%" PRId16, *val);
-            return;
-        }
-        if (value_format == 32)
-        {
-            const int32_t *val = (const int32_t *) value_bytes;
-            printf ("%" PRId32, *val);
-            return;
-        }
-    }
-
-    if (value_type == XA_CARDINAL)
-    {
-        if (value_format == 8)
-        {
-            const uint8_t *val = (const uint8_t *) value_bytes;
-            printf ("%" PRIu8, *val);
-            return;
-        }
-        if (value_format == 16)
-        {
-            const uint16_t *val = (const uint16_t *) value_bytes;
-            printf ("%" PRIu16, *val);
-            return;
-        }
-        if (value_format == 32)
-        {
-            const uint32_t *val = (const uint32_t *) value_bytes;
-            printf ("%" PRIu32, *val);
-            return;
-        }
-    }
-
-    printf ("?");
-}
-
 int
 main (int argc, char **argv)
 {
     char          *display_name = NULL;
-    int 		i;
     int		event_base, error_base;
     int		ret = 0;
     output_t	*output = NULL;
@@ -1348,10 +1215,6 @@ main (int argc, char **argv)
         crtc_t	    *crtc = output->crtc_info;
         XRRCrtcInfo	    *crtc_info = crtc ? crtc->crtc_info : NULL;
         XRRModeInfo	    *mode = output->mode_info;
-        Atom	    *props;
-        int		    j, nprop;
-        Bool	    *mode_shown;
-        Rotation	    rotations = output_rotations (output);
 
         if (RR_Disconnected == output_info->connection) {
 #if 0
