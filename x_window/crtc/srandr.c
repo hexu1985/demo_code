@@ -35,7 +35,6 @@ int process_events(Display * dpy)
 
 	XRRSelectInput(dpy, DefaultRootWindow(dpy), RRScreenChangeNotifyMask | RROutputChangeNotifyMask);
 	XSync(dpy, False);
-//	XSetIOErrorHandler((XIOErrorHandler) error_handler);
 	while (1) {
 		if (!XNextEvent(dpy, &ev)) {
 			XEvent* xevent = &ev;
