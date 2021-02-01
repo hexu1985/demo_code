@@ -111,7 +111,7 @@ typedef enum _name_kind {
 
 typedef struct {
   name_kind_t	    kind;
-  char    	    *string;
+  char    	    *string = NULL;
   XID	    	    xid;
   int		    index;
 } name_t;
@@ -124,22 +124,22 @@ typedef struct _output_prop output_prop_t;
 
 struct _transform {
   XTransform	    transform;
-  const char	    *filter;
+  const char	    *filter = NULL;
   int		    nparams;
-  XFixed	    *params;
+  XFixed	    *params = NULL;
 };
 
 struct _crtc {
   name_t	    crtc;
   Bool	    changing;
-  XRRCrtcInfo	    *crtc_info;
+  XRRCrtcInfo	    *crtc_info = NULL;
 
-  XRRModeInfo	    *mode_info;
-  XRRPanning      *panning_info;
+  XRRModeInfo	    *mode_info = NULL;
+  XRRPanning      *panning_info = NULL;
   int		    x;
   int		    y;
   Rotation	    rotation;
-  output_t	    **outputs;
+  output_t	    **outputs = NULL;
   int		    noutput;
   transform_t	    current_transform, pending_transform;
 };
@@ -151,27 +151,27 @@ struct _output_prop {
 };
 
 struct _output {
-  struct _output   *next;
+  struct _output   *next = NULL;
 
   changes_t	    changes;
 
-  output_prop_t   *props;
+  output_prop_t   *props = NULL;
 
   name_t	    output;
-  XRROutputInfo   *output_info;
+  XRROutputInfo   *output_info = NULL;
 
   name_t	    crtc;
-  crtc_t	    *crtc_info;
-  crtc_t	    *current_crtc_info;
+  crtc_t	    *crtc_info = NULL;
+  crtc_t	    *current_crtc_info = NULL;
 
   name_t	    mode;
   double	    refresh;
-  XRRModeInfo	    *mode_info;
+  XRRModeInfo	    *mode_info = NULL;
 
   name_t	    addmode;
 
   relation_t	    relation;
-  char	    *relative_to;
+  char	    *relative_to = NULL;
 
   int		    x, y;
   Rotation	    rotation;
@@ -201,7 +201,7 @@ typedef enum _umode_action {
 
 
 struct _umode {
-  struct _umode   *next;
+  struct _umode   *next = NULL;
 
   umode_action_t  action;
   XRRModeInfo	    mode;
@@ -214,43 +214,50 @@ const char *connection[3] = {
   "disconnected",
   "unknown connection"};
 
+static void fatal (const char *format, ...)
+{
+  va_list ap;
 
+  va_start (ap, format);
+  fprintf (stderr, "XMonitorInfoQuery: ");
+  vfprintf (stderr, format, ap);
+  va_end (ap);
+  exit (1);
+  /*NOTREACHED*/
+}
+
+static void warning (const char *format, ...)
+{
+  va_list ap;
+
+  va_start (ap, format);
+  fprintf (stderr, "XMonitorInfoQuery:");
+  vfprintf (stderr, format, ap);
+  va_end (ap);
+}
+
+/* Because fmin requires C99 suppport */
+inline double dmin (double x, double y)
+{
+  return x < y ? x : y;
+}
 
 struct XMonitorInfoQuery {
-  char	*program_name;
-  Display	*dpy;
+  Display	*dpy = NULL;
   Window	root;
   int	screen = -1;
   Bool	verbose = False;
   Bool	automatic = False;
-
-  void fatal (const char *format, ...)
-  {
-    va_list ap;
-
-    va_start (ap, format);
-    fprintf (stderr, "%s: ", program_name);
-    vfprintf (stderr, format, ap);
-    va_end (ap);
-    exit (1);
-    /*NOTREACHED*/
-  }
-
-  void warning (const char *format, ...)
-  {
-    va_list ap;
-
-    va_start (ap, format);
-    fprintf (stderr, "%s: ", program_name);
-    vfprintf (stderr, format, ap);
-    va_end (ap);
-  }
-
-  /* Because fmin requires C99 suppport */
-  inline double dmin (double x, double y)
-  {
-    return x < y ? x : y;
-  }
+  output_t	*outputs = NULL;
+  output_t	**outputs_tail = &outputs;
+  crtc_t	*crtcs = NULL;
+  int	num_crtcs = 0;
+  XRRScreenResources  *res = NULL;
+  Bool	dryrun = False;
+  int	minWidth = 0;
+  int maxWidth = 0;
+  int minHeight = 0;
+  int maxHeight = 0;
 
   const char *rotation_name (Rotation rotation)
   {
@@ -279,17 +286,6 @@ struct XMonitorInfoQuery {
     }
     return "invalid reflection";
   }
-
-  output_t	*outputs = NULL;
-  output_t	**outputs_tail = &outputs;
-  crtc_t	*crtcs = NULL;
-  int	num_crtcs = 0;
-  XRRScreenResources  *res = NULL;
-  Bool	dryrun = False;
-  int	minWidth = 0;
-  int maxWidth = 0;
-  int minHeight = 0;
-  int maxHeight = 0;
 
   /* v refresh frequency in Hz */
   double mode_refresh (XRRModeInfo *mode_info)
@@ -893,7 +889,7 @@ struct XMonitorInfoQuery {
     if (!res) fatal ("could not get screen resources");
   }
 
-  void get_crtcs (void)
+  void get_crtcs ()
   {
     int		c;
 
@@ -1111,8 +1107,6 @@ struct XMonitorInfoQuery {
     int		major, minor;
     Bool	current = False;
 
-    program_name = "XMonitorInfoRequest";
-
     dpy = XOpenDisplay (display_name);
 
     if (dpy == NULL) {
@@ -1193,6 +1187,8 @@ struct XMonitorInfoQuery {
       }
       printf ("\n");
     }
+
+    XCloseDisplay(dpy);
   }
 };
 
