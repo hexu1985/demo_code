@@ -25,6 +25,7 @@
  * and part of the server code for randr.
  */
 
+#include "x_monitor_info_query.hpp"
 #include <stdio.h>
 #include <X11/Xlib.h>
 #include <X11/Xlibint.h>
@@ -242,7 +243,7 @@ inline double dmin (double x, double y)
   return x < y ? x : y;
 }
 
-struct XMonitorInfoQuery {
+struct XMonitorInfoQueryImpl {
   Display	*dpy = NULL;
   Window	root;
   int	screen = -1;
@@ -1157,7 +1158,7 @@ struct XMonitorInfoQuery {
     }
   }
 
-  XMonitorInfoQuery() 
+  XMonitorInfoQueryImpl() 
   {
     int		event_base, error_base;
     int		major, minor;
@@ -1190,15 +1191,24 @@ struct XMonitorInfoQuery {
     get_outputs ();
   }
 
-  ~XMonitorInfoQuery() 
+  ~XMonitorInfoQueryImpl() 
   {
     XCloseDisplay(dpy);
   } 
 };
 
-int main (int argc, char **argv)
+XMonitorInfoQuery::XMonitorInfoQuery() 
 {
-  XMonitorInfoQuery query;
-  query.print();
-  return (0);
+  impl_ = new XMonitorInfoQueryImpl;
 }
+
+XMonitorInfoQuery::~XMonitorInfoQuery()
+{
+  delete impl_;
+}
+
+void XMonitorInfoQuery::print()
+{
+  impl_->print();
+}
+
