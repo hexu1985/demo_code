@@ -1101,44 +1101,12 @@ struct XMonitorInfoQuery {
 
   void print()
   {
-    char  *display_name = NULL;
-    int		event_base, error_base;
-    output_t	*output = NULL;
-    int		major, minor;
-    Bool	current = False;
-
-    dpy = XOpenDisplay (display_name);
-
-    if (dpy == NULL) {
-      fprintf (stderr, "Can't open display %s\n", XDisplayName(display_name));
-      exit (1);
-    }
-    if (screen < 0)
-      screen = DefaultScreen (dpy);
-    if (screen >= ScreenCount (dpy)) {
-      fprintf (stderr, "Invalid screen number %d (display has %d)\n",
-          screen, ScreenCount (dpy));
-      exit (1);
-    }
-
-    root = RootWindow (dpy, screen);
-
-    if (!XRRQueryExtension (dpy, &event_base, &error_base) ||
-        !XRRQueryVersion (dpy, &major, &minor))
-    {
-      fprintf (stderr, "RandR extension missing\n");
-      exit (1);
-    }
-
-    get_screen (current);
-    get_crtcs ();
-    get_outputs ();
-
     printf ("Screen %d: minimum %d x %d, current %d x %d, maximum %d x %d\n",
         screen, minWidth, minHeight,
         DisplayWidth (dpy, screen), DisplayHeight(dpy, screen),
         maxWidth, maxHeight);
 
+    output_t  *output = NULL;
     for (output = outputs; output; output = output->next)
     {
       XRROutputInfo   *output_info = output->output_info;
@@ -1187,9 +1155,45 @@ struct XMonitorInfoQuery {
       }
       printf ("\n");
     }
-
-    XCloseDisplay(dpy);
   }
+
+  XMonitorInfoQuery() 
+  {
+    int		event_base, error_base;
+    int		major, minor;
+    Bool	current = False;
+    dpy = XOpenDisplay (NULL);
+    if (dpy == NULL) {
+      fprintf (stderr, "Can't open display %s\n", XDisplayName(NULL));
+      exit (1);
+    }
+
+    if (screen < 0)
+      screen = DefaultScreen (dpy);
+    if (screen >= ScreenCount (dpy)) {
+      fprintf (stderr, "Invalid screen number %d (display has %d)\n",
+          screen, ScreenCount (dpy));
+      exit (1);
+    }
+
+    root = RootWindow (dpy, screen);
+
+    if (!XRRQueryExtension (dpy, &event_base, &error_base) ||
+        !XRRQueryVersion (dpy, &major, &minor))
+    {
+      fprintf (stderr, "RandR extension missing\n");
+      exit (1);
+    }
+
+    get_screen (current);
+    get_crtcs ();
+    get_outputs ();
+  }
+
+  ~XMonitorInfoQuery() 
+  {
+    XCloseDisplay(dpy);
+  } 
 };
 
 int main (int argc, char **argv)
