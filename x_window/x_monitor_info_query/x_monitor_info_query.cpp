@@ -49,22 +49,6 @@ static const char *direction[5] = {
   "right",
   "\n"};
 
-static const struct {
-  const char	    *string;
-  unsigned long   flag;
-} mode_flags[] = {
-  { "+HSync", RR_HSyncPositive },
-  { "-HSync", RR_HSyncNegative },
-  { "+VSync", RR_VSyncPositive },
-  { "-VSync", RR_VSyncNegative },
-  { "Interlace", RR_Interlace },
-  { "DoubleScan", RR_DoubleScan },
-  { "CSync",	    RR_CSync },
-  { "+CSync",	    RR_CSyncPositive },
-  { "-CSync",	    RR_CSyncNegative },
-  { NULL,	    0 }
-};
-
 typedef enum _relation {
   relation_left_of,
   relation_right_of,
