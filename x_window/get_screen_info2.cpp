@@ -291,19 +291,6 @@ static const char *connection[3] = {
     "disconnected",
     "unknown connection"};
 
-#define OUTPUT_NAME 1
-
-#define CRTC_OFF    2
-#define CRTC_UNSET  3
-#define CRTC_INDEX  0x40000000
-
-#define MODE_NAME   1
-#define MODE_OFF    2
-#define MODE_UNSET  3
-#define MODE_PREF   4
-
-#define POS_UNSET   -1
-
 static output_t	*outputs = NULL;
 static output_t	**outputs_tail = &outputs;
 static crtc_t	*crtcs;
@@ -1367,10 +1354,18 @@ main (int argc, char **argv)
         Rotation	    rotations = output_rotations (output);
 
         if (RR_Disconnected == output_info->connection) {
+#if 0
             printf("%s %s\n", output_info->name, connection[output_info->connection]);
+#else
+            std::cout << output_info->name << " " << connection[output_info->connection] << std::endl;
+#endif
             continue;
         } else {
+#if 0
             printf("%s %s", output_info->name, connection[output_info->connection]);
+#else
+            std::cout << output_info->name << " " << connection[output_info->connection] << std::endl;
+#endif
         }
 
         if (output_is_primary(output)) {
