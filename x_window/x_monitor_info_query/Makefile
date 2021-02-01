@@ -7,7 +7,7 @@ LDFLAGS = -lXrandr -lXinerama -lXext -lX11 -lpthread
 LDPATH =
 
 SOURCES = $(shell ls *.cpp)
-PROGS = x_monitor_manager_test
+PROGS = x_monitor_info_query
 
 all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
@@ -18,5 +18,5 @@ clean:
 %.o:%.cpp
 	$(CXX) -o $@ -c $< $(CXXFLAGS) $(INCLUDE)
 
-x_monitor_manager_test: x_monitor_manager.o
+x_monitor_info_query: x_monitor_info_query.o
 	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
