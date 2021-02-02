@@ -12,7 +12,6 @@
 #include <inttypes.h>
 #include <stdarg.h>
 #include <math.h>
-#include <time.h>
 
 /* subpixel order */
 static const char *order[6] = {
@@ -38,9 +37,6 @@ int process_events(Display * dpy)
     XSync(dpy, False);
     XRRScreenChangeNotifyEvent *sce;    
     int spo;
-    uint64_t last_config_timestamp = 0;
-    time_t last_time_sec = 0;
-    time_t time_sec;
     while (1) {
         XNextEvent(dpy, (XEvent *) &event);
         printf ("Event received, type = %d\n", event.type);
@@ -51,15 +47,6 @@ int process_events(Display * dpy)
         switch (event.type - event_base) {
             case RRScreenChangeNotify:
                 sce = (XRRScreenChangeNotifyEvent *) &event;
-
-                time_sec = time(0);
-                if (time_sec - last_time_sec < 2 &&
-                        last_config_timestamp == sce->config_timestamp) {
-                    printf("Duplicate Event\n");
-                    break;
-                }
-                last_time_sec = time_sec;
-                last_config_timestamp = sce->config_timestamp;
 
                 printf("Got a screen change notify event!\n");
                 printf(" window = %d\n root = %d\n size_index = %d\n rotation %d\n", 
