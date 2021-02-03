@@ -336,7 +336,9 @@ struct XMonitorInfoQueryImpl {
     memset (&transform->transform, '\0', sizeof (transform->transform));
     for (x = 0; x < 3; x++)
       transform->transform.matrix[x][x] = XDoubleToFixed (1.0);
-    transform->filter = "";
+    char *filter = (char *) malloc(1);
+    filter[0] = '\0';
+    transform->filter = filter;
     transform->nparams = 0;
     transform->params = NULL;
   }
@@ -347,6 +349,7 @@ struct XMonitorInfoQueryImpl {
       XFixed	    *params,
       int	    nparams)
   {
+    free_transform(dest);
     dest->transform = *transform;
     /* note: this string is leaked */
     dest->filter = strdup (filter);
@@ -357,7 +360,6 @@ struct XMonitorInfoQueryImpl {
 
   void copy_transform (transform_t *dest, transform_t *src)
   {
-    free_transform(dest);
     set_transform (dest, &src->transform,
         src->filter, src->params, src->nparams);
   }
@@ -378,6 +380,7 @@ struct XMonitorInfoQueryImpl {
   output_t *add_output (void)
   {
     output_t *output = (output_t *) calloc (1, sizeof (output_t));
+    memset(output, 0, sizeof (output_t));
 
     if (!output)
       fatal ("out of memory\n");
@@ -862,15 +865,12 @@ struct XMonitorInfoQueryImpl {
       output->primary = output_is_primary(output);
   }
 
-  void get_screen (Bool current)
+  void get_screen ()
   {
     XRRGetScreenSizeRange (dpy, root, &minWidth, &minHeight,
         &maxWidth, &maxHeight);
 
-    if (current)
-      res = XRRGetScreenResourcesCurrent (dpy, root);
-    else
-      res = XRRGetScreenResources (dpy, root);
+    res = XRRGetScreenResources (dpy, root);
     if (!res) fatal ("could not get screen resources");
   }
 
@@ -1146,7 +1146,6 @@ struct XMonitorInfoQueryImpl {
   {
     int		event_base, error_base;
     int		major, minor;
-    Bool	current = False;
     dpy = XOpenDisplay (NULL);
     if (dpy == NULL) {
       fprintf (stderr, "Can't open display %s\n", XDisplayName(NULL));
@@ -1170,13 +1169,13 @@ struct XMonitorInfoQueryImpl {
       exit (1);
     }
 
-    get_screen (current);
+    get_screen ();
     get_crtcs ();
     get_outputs ();
   }
 
   void free_transform(transform_t *trans) {
-    if (trans->filter && strlen(trans->filter)) {
+    if (trans->filter) {
       free((char *) trans->filter);
       trans->filter = NULL;
     }
@@ -1186,20 +1185,37 @@ struct XMonitorInfoQueryImpl {
     }
   }
 
+  void free_output(output_t  *output) {
+    free_transform(&output->transform);
+    if (output->crtc_info) {
+      free_transform(&output->crtc_info->current_transform);
+    }
+
+    if (output->output_info) {
+      XRRFreeOutputInfo(output->output_info);
+    }
+    free(output);  
+  }
+
   void free_outputs() {
     output_t  *output = NULL;
     output_t  *keep = NULL;
     for (output = outputs; output; )
     {
-      keep = output;
-      output = output->next;
-      free(keep);  
+      keep = output->next;
+      free_output(output);
+      output = keep;
     }
   }
 
   void free_crtcs() {
     for (int i = 0; i < num_crtcs; i++) {
       free_transform(&crtcs[i].current_transform);
+      free_transform(&crtcs[i].pending_transform);
+      if (crtcs[i].crtc_info) {
+        XRRFreeCrtcInfo(crtcs[i].crtc_info);
+        crtcs[i].crtc_info = NULL;
+      }
     }
     free(crtcs);
   }
@@ -1209,6 +1225,7 @@ struct XMonitorInfoQueryImpl {
     free_outputs();
     free_crtcs();
     XCloseDisplay(dpy);
+    XRRFreeScreenResources(res);
   } 
 };
 
