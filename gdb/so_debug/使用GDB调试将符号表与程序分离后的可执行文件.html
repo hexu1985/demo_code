@@ -1,0 +1,1716 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://blog.csdn.net/chen_jianjian/article/details/102778060"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="report" content='{"pid": "blog", "spm":"1001.2101"}'>
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <meta name="applicable-device" content="pc">
+    <link  href="https://g.csdnimg.cn/static/logo/favicon32.ico"  rel="shortcut icon" type="image/x-icon" />
+    <title>使用GDB调试将符号表与程序分离后的可执行文件_chen_jianjian的专栏-CSDN博客</title>
+    <script>
+      (function(){ 
+        var el = document.createElement("script"); 
+        el.src = "https://s3a.pstatp.com/toutiao/push.js?1abfa13dfe74d72d41d83c86d240de427e7cac50c51ead53b2e79d40c7952a23ed7716d05b4a0f683a653eab3e214672511de2457e74e99286eb2c33f4428830"; 
+        el.id = "ttzz"; 
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(el, s);
+      })(window)
+    </script>
+        <meta name="keywords" content="使用GDB调试将符号表与程序分离后的可执行文件">
+        <meta name="csdn-baidu-search"  content='{"autorun":true,"install":true,"keyword":"使用GDB调试将符号表与程序分离后的可执行文件"}'>
+    <meta name="description" content="环境：　　Centos7.3、GCC4.8.5适用场景：　　由于调试信息比较大，通常将程序分离为可执行程序和符号信息文件，只对外发布可执行程序，需要调试时再将符号信息文件附加。一、创建可执行程序：　　use_library.cpp#include &amp;lt;iostream&amp;gt;#include &quot;use_library.h&quot;int main(){    int...">
+    <script src='//g.csdnimg.cn/tingyun/1.8.3/blog.js' type='text/javascript'></script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-a2acbc5e61.min.css">
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin3-template/skin3-template-45808e735f.min.css">
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var isCorporate = false;//注释删除enterprise
+        var username =  "chen_jianjian";
+        var skinImg = "white";
+        var blog_address = "https://blog.csdn.net/chen_jianjian";
+        var currentUserName = "u013454589";
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/chen_jianjian/article/details/102778060";
+        var blogUrl = "https://blog.csdn.net/";
+        var avatar = "https://profile.csdnimg.cn/1/3/1/3_chen_jianjian";
+        var articleTitle = "使用GDB调试将符号表与程序分离后的可执行文件";
+        var articleDesc = "环境：　　Centos7.3、GCC4.8.5适用场景：　　由于调试信息比较大，通常将程序分离为可执行程序和符号信息文件，只对外发布可执行程序，需要调试时再将符号信息文件附加。一、创建可执行程序：　　use_library.cpp#include &amp;lt;iostream&amp;gt;#include \&quot;use_library.h\&quot;int main(){    int...";
+        var articleTitles = "使用GDB调试将符号表与程序分离后的可执行文件_chen_jianjian的专栏-CSDN博客";
+        var nickName = "几米夜空";
+        var articleDetailUrl = "https://blog.csdn.net/chen_jianjian/article/details/102778060";
+        if(window.location.host.split('.').length == 3) {
+            blog_address = blogUrl + username;
+        }
+        var skinStatus = "White";
+        var blogStaticHost = "https://csdnimg.cn/release/blogv2/"
+    </script>
+    <script src="https://g.csdnimg.cn/??fixed-sidebar/1.1.6/fixed-sidebar.js" type="text/javascript"></script>
+    <script src='//g.csdnimg.cn/common/csdn-report/report.js' type='text/javascript'></script>
+    <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+    <script src="https://dup.baidustatic.com/js/ds.js"></script>
+</head>
+<body class="nodata " style="">
+        <script>
+            var toolbarSearchExt = '{"landingWord":[],"queryWord":"","tag":[],"title":"使用GDB调试将符号表与程序分离后的可执行文件"}';
+        </script>
+    <script src="https://g.csdnimg.cn/common/csdn-toolbar/csdn-toolbar.js" type="text/javascript"></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css" />
+<div class="main_father clearfix d-flex justify-content-center" style="height:100%;"> 
+    <div class="container clearfix" id="mainBox">
+        <main>
+<script type="text/javascript">
+    var blogSensitiveWords = "";
+    function getQueryString(name) {   
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象  
+      var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+      if( r != null ) return decodeURIComponent( r[2] ); return '';   
+    }
+    function stripscript(s){ 
+      var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]") 
+      var rs = ""; 
+      for (var i = 0; i < s.length; i++) { 
+        rs = rs+s.substr(i, 1).replace(pattern, ''); 
+      } 
+      return rs; 
+    }
+    var blogHotWords = stripscript(getQueryString('utm_term')).length > 1 ? stripscript(getQueryString('utm_term')) : ''
+</script>
+<div class="blog-content-box">
+    <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <h1 class="title-article" id="articleContentId">使用GDB调试将符号表与程序分离后的可执行文件</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                    <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/reprint.png" alt="">
+                    <div class="bar-content">
+                    <a class="follow-nickName " href="https://blog.csdn.net/chen_jianjian" target="_blank" rel="noopener">几米夜空</a>
+                    <span class="time">2019-10-28 11:23:12</span>
+                    <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png" alt="">
+                    <span class="read-count">452</span>
+                    <a id="blog_detail_zk_collection" class="un-collection" data-report-click='{"mod":"popu_823","spm":"1001.2101.3001.4232","ab":"new"}'>
+                        <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" alt="">
+                        <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                        <span class="name">收藏</span>
+                        <span class="get-collection">
+                        </span>
+                    </a>
+                    </div>
+                </div>
+                <div class="blog-tags-box">
+                    <div class="tags-box artic-tag-box">
+                            <span class="label">分类专栏：</span>
+                                <a class="tag-link" href="https://blog.csdn.net/chen_jianjian/category_5672589.html" target="_blank" rel="noopener">linux C</a>
+                    </div>
+                </div>
+                <div class="slide-content-box">
+                    <div class="article-source-link">
+                        原文链接：<a href="https://www.cnblogs.com/dongc/p/9690754.html" target="_blank" rel="noopener">https://www.cnblogs.com/dongc/p/9690754.html</a>
+                    </div>
+                </div>
+                <div class="operating">
+                    <a class="href-article-edit slide-toggle">版权</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-b5506197d8.css">
+                <div id="content_views" class="htmledit_views">
+                    <h2>环境&#xff1a;</h2> 
+<p>　　Centos7.3、GCC4.8.5</p> 
+<h2>适用场景&#xff1a;</h2> 
+<p>　　由于调试信息比较大&#xff0c;通常将程序分离为可执行程序和符号信息文件&#xff0c;只对外发布可执行程序&#xff0c;需要调试时再将符号信息文件附加。</p> 
+<h2>一、创建可执行程序&#xff1a;</h2> 
+<p>　　use_library.cpp</p> 
+<pre>#include &lt;iostream&gt;
+#include &#34;use_library.h&#34;
+
+int main()
+{
+    int res &#61; my_library(1, 2);
+    std::cout &lt;&lt; &#34;my_library:&#34; &lt;&lt; res &lt;&lt; std::endl;
+}</pre> 
+<p>　　CMakeLists.txt</p> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<pre>cmake_minimum_required(VERSION 2.8)
+
+project(use_libray)
+
+include_directories(/root/my_library)
+link_directories(/root/my_library/cmake)
+
+aux_source_directory(. DIR_SRCS)
+
+add_executable(use_library ${DIR_SRCS})
+target_link_libraries(use_library  my_library)</pre> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<h2>二、创建动态库&#xff1a;</h2> 
+<p>　　my_library.h</p> 
+<pre>int my_library(int a, int b);</pre> 
+<p>　　my_library.cpp</p> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<pre>#include &lt;stdlib.h&gt;
+#include &#34;my_library.h&#34;
+
+int my_library(int a, int b)
+{
+
+    int *p &#61; NULL;
+    *p &#61; 100;
+    return *p;
+}</pre> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<p>　　这里我们故意制造一个异常让进程崩溃&#xff0c;生成core文件。</p> 
+<p>　　CMakeLists.txt</p> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<pre>cmake_minimum_required(VERSION 2.8)
+
+project(my_library)
+
+include_directories(/root/use_library/)
+
+aux_source_directory(. DIR_SRCS)
+
+add_library(my_library SHARED ${DIR_SRCS})</pre> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<h2>三、生成动态库&#xff1a;</h2> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<pre>#生成动态库
+mkdir /home/share/my_library/cmake
+cd /home/share/my_library/cmake
+cmake -D CMAKE_BUILD_TYPE&#61;Debug ..
+make
+
+#生成符号文件
+objcopy --only-keep-debug libmy_library.so libmy_library.so.debug
+
+#生成发布文件
+strip libmy_library.so -o libmy_library.so.release
+objcopy --add-gnu-debuglink&#61;libmy_library.so.debug libmy_library.so.release
+cp libmy_library.so.release libmy_library.so</pre> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<h2>四、生成可执行程序&#xff1a;</h2> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<pre>#生成执行程序
+mkdir /home/share/use_library/cmake
+cd /home/share/use_library/cmake
+cmake -D CMAKE_BUILD_TYPE&#61;Debug ..
+
+#生成符号文件
+objcopy --only-keep-debug use_library use_library.debug
+
+#生成发布文件
+strip use_library -o use_library.release
+objcopy --add-gnu-debuglink&#61;use_library.debug use_library.release
+cp use_library.release use_library</pre> 
+<p><img alt="复制代码" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9jb21tb24uY25ibG9ncy5jb20vaW1hZ2VzL2NvcHljb2RlLmdpZg" /></p> 
+<p>　　可以通过&#34;objdump -s -j .gnu_debuglink xxx&#34;命令查看关联信息。</p> 
+<h2>五、生成core文件&#xff1a;</h2> 
+<pre>./use_library</pre> 
+<h2>六、使用符号文件进行调试&#xff1a;</h2> 
+<p>　　6.1&#xff09;调试core文件</p> 
+<pre>gdb -c core.xxx</pre> 
+<p>　　注意不能使用gdb -c core.xxx ./use_library&#xff0c;由于core文件生成时使用的依赖库目录与调试目录可能不一致&#xff0c;如果直接加载可执行文件&#xff0c;会根据core文件生成时可执行文件依赖的路径&#xff0c;加载动态库和符号文件 。</p> 
+<p>　　6.2&#xff09;我们可以设置依赖库&#xff0c;首先查看依赖库</p> 
+<p><img alt="" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvNDA1Njk4LzIwMTgxMC80MDU2OTgtMjAxODEwMTMxOTI3Mzg4MzctMjAyNjgzMzUyNC5wbmc?x-oss-process&#61;image/format,png" /></p> 
+<p> 　　将libmy_library.so和libmy_library.so.debug放在当前目录下&#xff08;./home/share/my_library/cmake&#xff09;&#xff0c;并设置set solib-search-path路径</p> 
+<p>　　注意动态库的路径前缀一定要一致&#xff0c;示例中的绝对路径为&#xff1a;/home/share/use_library/cmake/home/share/my_library/cmake</p> 
+<p><img alt="" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvNDA1Njk4LzIwMTgxMC80MDU2OTgtMjAxODEwMTMxOTU5MTkwMTgtMTU1MTMwODg1NC5wbmc?x-oss-process&#61;image/format,png" /></p> 
+<p>　　关于GDB调试时&#xff0c;依赖库搜索路径规则为&#xff1a;</p> 
+<p>　　1&#xff09;使用solib-absolute-prefix进行搜索</p> 
+<p>　　2&#xff09;使用solib-search-path进行搜索</p> 
+<p>　　3&#xff09;使用$PATH进行搜索</p> 
+<p>　　4&#xff09;使用$LD_LIBRARY_PATH进行搜索</p> 
+<p>　　按上面说的规则举例说明&#xff1a;</p> 
+<p>　　1&#xff09;&#xff08;solib-absolute-prefix&#xff09;/home/share/my_library/cmake/libmy_library.so</p> 
+<p>　　2&#xff09;&#xff08;solib-search-path&#xff09;/libmy_library.so</p> 
+<p>　　3&#xff09;&#xff08;$PATH&#xff09;/&#xff08;solib-absolute-prefix&#xff09;/home/share/my_library/cmake/libmy_library.so</p> 
+<p>　　4&#xff09;&#xff08;$LD_LIBRARY_PATH&#xff09;/&#xff08;solib-absolute-prefix&#xff09;/home/share/my_library/cmake/libmy_library.so</p> 
+<p>　　6.3&#xff09;加载可执行文件</p> 
+<p><img alt="" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvNDA1Njk4LzIwMTgxMC80MDU2OTgtMjAxODEwMTMyMDA1NDI0OTQtMTM0OTQ3Nzk4Ni5wbmc?x-oss-process&#61;image/format,png" /></p> 
+<p>　　6.4&#xff09;显示调用堆栈</p> 
+<p> <img alt="" class="has" src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDE4LmNuYmxvZ3MuY29tL2Jsb2cvNDA1Njk4LzIwMTgxMC80MDU2OTgtMjAxODEwMTMyMDA3MDI0NjItMTc5ODE4NTE2OC5wbmc?x-oss-process&#61;image/format,png" /></p> 
+<h2>结尾&#xff1a;</h2> 
+<p>　　需要注意的是.debug文件需要与可执行文件或动态库在相同目录下&#xff0c;若还是不能调试&#xff0c;可能是没有关联调试文件&#xff0c;可以通过&#34;objdump -s -j .gnu_debuglink xxx&#34;命令查看关联信息。</p> 
+<h2>参考资料&#xff1a;</h2> 
+<p>　　1&#xff09;<a href="http://blog.chinaunix.net/uid-13746440-id-5578584.html">http://blog.chinaunix.net/uid-13746440-id-5578584.html</a></p> 
+<p>　　2&#xff09;<a href="https://www.jb51.net/article/136097.htm">https://www.jb51.net/article/136097.htm</a></p> 
+<p>　　3&#xff09;<a href="https://blog.csdn.net/_xiao/article/details/23289971">https://blog.csdn.net/_xiao/article/details/23289971</a></p> 
+<p>　　4&#xff09;<a href="https://blog.csdn.net/bingqingsuimeng/article/details/50522242">https://blog.csdn.net/bingqingsuimeng/article/details/50522242</a></p> 
+<p>　　5&#xff09;<a href="https://blog.csdn.net/someonea/article/details/3202409">https://blog.csdn.net/someonea/article/details/3202409</a></p> 
+<p>　　6&#xff09;<a href="https://blog.csdn.net/dong_007_007/article/details/49247725">https://blog.csdn.net/dong_007_007/article/details/49247725</a></p> 
+<p>　　7&#xff09;<a href="https://blog.csdn.net/huohongpeng/article/details/54575675">https://blog.csdn.net/huohongpeng/article/details/54575675</a></p> 
+<p>　　8&#xff09;<a href="https://blog.csdn.net/u012719556/article/details/45315089">https://blog.csdn.net/u012719556/article/details/45315089</a></p> 
+<p> </p>
+                </div>
+        </div>
+    </article>
+</div>
+            <div id="csdn-shop-window"></div>
+<div class="more-toolbox" id="toolBarBox">
+    <span id="fixedBar"></span>
+    <div class="left-toolbox">
+        <ul class="toolbox-list">
+            <li class="tool-item tool-item-size tool-active is-like" id="is-like"><a>
+            <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt="">
+            <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt="">
+            <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUp.png" alt="">   
+            <span class="name" id="is-like-span">点赞</span>
+            <span id="spanCount" class="count">
+            </span>
+            </a></li>
+            <li class="tool-item tool-item-size tool-active tool-item-comment">
+                <a href="#commentBox">
+                    <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarComment.png" alt="">
+                    <img class="isactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCommentactive.png" style="display:none;" alt="">
+                    <span class="name">评论</span>
+                    <span class="count">
+                    </span>
+                </a>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-QRcode" id="tool-share">
+                <a href="javascript:;" data-report-click='{"mod":"1582594662_002","spm":"1001.2101.3001.4129","ab":"new"}'>
+                    <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarShare.png" alt="">
+                    <img class="isactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarShareactive.png" style="display:none;" alt="">
+                    <span class="name">分享</span>
+                </a>
+                <div class="QRcode" id="tool-QRcode" style="left:-92%;">
+                    <span id="QRcode-close">x</span>
+                    <p class="title">
+                    海报分享
+                    </p>
+                    <div id='shareCode'></div>
+                    <p>
+                    扫一扫，分享海报
+                    </p>
+                </div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-collection ">
+                <a href="javascript:;" data-report-click='{"mod":"popu_824","spm":"1001.2101.3001.4130","ab":"new"}'>
+                    <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                    <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" alt="">
+                    <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                    <span class="name" id="is-collection">收藏</span>
+                    <span class="count get-collection" id="get-collection">
+                    </span>
+                </a>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-more">
+              <a class="article-report">
+                <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarReport.png" alt="">
+                <img class="isactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarReportactive.png" style="display:none;" alt="">
+                <span class="name">举报</span>
+              </a>
+            </li>
+            <li class="tool-item">
+                    <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view='{"mod":"1592215036_002","spm":"1001.2101.3001.4232","extend1":"关注"}'>关注</a>
+                <a class="tool-item-follow active-animation" style="display:none;">关注</a>
+            </li>
+            <li class="tool-item">
+                    <p class="company active" id="health-companies" href="javascript:;" >一键三连</p>
+                <span class="triplet-prompt">点赞Mark关注该博主, 随时了解TA的最新博文<img class="close-prompt" src="https://csdnimg.cn/release/blogv2/dist/pc/img/closePrompt.png"></span>
+            </li>
+        </ul>
+        <div style="display:flex">
+         </div>
+         <div class="hot-word-tip-box">
+          <span class="hot-word-text">已标记关键词</span>
+          <span class="hot-word-count"></span> 
+          <span class="hot-word-bar"></span>
+          <span class="hot-word-clear">清除标记</span>
+        </div>
+    </div>  
+</div>
+<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/production/qrcode-7c90a92189.min.js"></script>
+<script src="//g.csdnimg.cn/??sharewx/1.2.1/sharewx.js" type="text/javascript"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/collection-box/2.0.3/collection-box.js"></script>
+                <div id="dmp_ad_58" style="width:100%;overflow-x:hidden"><div id="kp_box_58" data-pid="58"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-format="fluid"
+     data-ad-layout-key="-gi-21+3s-18+2p"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="5869798804"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=58&a=3778&c=0&k=&spm=1001.2101.3001.5002&d=1&t=3&u=d8d9ac96c98f45c28c4e8824a0e8e657" style="display: block;width: 0px;height: 0px;"></div></div>
+            <div class="second-recommend-box recommend-box">
+<div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/jvcbjkb/12663329"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~BlogCommendFromMachineLearnPai2~default-1.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"1","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://download.csdn.net/download/jvcbjkb/12663329"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://download.csdn.net/download/jvcbjkb/12663329" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~BlogCommendFromMachineLearnPai2~default-1.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"1","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://download.csdn.net/download/jvcbjkb/12663329"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control'>
+					C语言<em>调试</em> <em>gdb</em>.exe下载
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">07-26</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://download.csdn.net/download/jvcbjkb/12663329" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~BlogCommendFromMachineLearnPai2~default-1.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"1","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://download.csdn.net/download/jvcbjkb/12663329"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>gdb</em> 9.2版本，于2020年7月26日编译完成。mingw编译器不提供<em>gdb</em>下载，可用于配置vscode的<em>gdb</em><em>调试</em>。下载后，可直接放在gcc.exe同级目录下。</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<a id="commentBox" name="commentBox"></a>
+<div class="comment-box">
+	<div class="comment-edit-box d-flex">
+		<a id="commentsedit"></a>
+		<div class="user-img">
+			<a href="https://blog.csdn.net/u013454589" target="_blank">
+				<img class="" src="https://profile.csdnimg.cn/2/1/6/3_u013454589">
+			</a>
+		</div>
+		<form id="commentform">
+			<img class="comment-sofa-flag" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentFlag@2x.png">
+      <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="优质评论可以帮助作者获得更高权重" maxlength="1000"></textarea>
+			<div class="comment-emoticon"><img class="comment-emoticon-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/emoticon.png" alt="表情包"></div> 
+      <span class="comment-emoticon-tip">插入表情</span>
+      <div class="comment-emoticon-box">
+        <div class="comment-emoticon-img-box">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:001.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/001.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:002.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/002.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:003.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/003.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:004.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/004.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:005.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/005.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:006.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/006.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:007.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/007.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:008.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/008.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:009.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/009.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:010.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/010.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:011.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/011.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:012.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/012.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:013.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/013.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:014.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/014.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:015.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/015.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:016.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/016.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:017.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/017.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:018.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/018.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:019.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/019.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:020.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/020.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:021.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/021.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:022.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/022.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:023.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/023.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:024.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/024.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:025.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/025.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:026.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/026.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:027.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/027.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:028.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/028.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:029.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/029.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:030.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/030.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:031.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/031.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:032.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/032.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:033.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/033.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:034.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/034.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:035.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/035.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:036.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/036.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:037.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/037.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:038.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/038.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:039.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/039.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:040.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/040.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:041.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/041.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:042.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/042.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:043.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/043.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:044.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/044.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:045.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/045.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:046.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/046.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:047.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/047.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:048.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/048.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:049.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/049.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:050.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/050.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:051.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/051.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:052.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/052.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:053.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/053.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:054.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/054.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:055.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/055.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:056.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/056.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:057.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/057.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:058.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/058.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:059.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/059.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:060.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/060.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:061.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/061.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:062.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/062.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:063.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/063.png">
+            <img class="emoticon-monkey-img" data-emoticon="[face]monkey2:064.png[/face]" src="https://g.csdnimg.cn/static/face/monkey2/064.png">
+        </div>
+      </div>
+      <div class="opt-box">
+				<div id="ubbtools" class="add_code">
+					<a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+				</div>
+				<input type="hidden" id="comment_replyId" name="comment_replyId">
+				<input type="hidden" id="article_id" name="article_id" value="102778060">
+				<input type="hidden" id="comment_userId" name="comment_userId" value="">
+				<input type="hidden" id="commentId" name="commentId" value="">
+				<div class="dropdown" id="myDrap">
+					<a class="dropdown-face d-flex align-items-center" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+						<div class="txt-selected text-truncate">添加代码片</div>
+						<svg class="icon d-block" width="200px" height="100.00px" viewBox="0 0 2048 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path  d="M597.33333292 298.666667h853.333334L1023.99999992 725.333333 597.33333292 298.666667z"  /></svg>
+					</a>
+					<ul class="dropdown-menu" id="commentCode" aria-labelledby="drop4">
+						<li><a data-code="html">HTML/XML</a></li>
+						<li><a data-code="objc">objective-c</a></li>
+						<li><a data-code="ruby">Ruby</a></li>
+						<li><a data-code="php">PHP</a></li>
+						<li><a data-code="csharp">C</a></li>
+						<li><a data-code="cpp">C++</a></li>
+						<li><a data-code="javascript">JavaScript</a></li>
+						<li><a data-code="python">Python</a></li>
+						<li><a data-code="java">Java</a></li>
+						<li><a data-code="css">CSS</a></li>
+						<li><a data-code="sql">SQL</a></li>
+						<li><a data-code="plain">其它</a></li>
+					</ul>
+				</div>
+				<div class="right-box" id="rightBox" data-type="2">
+							<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+							<a data-report-click='{"mod":"1582594662_003","spm":"1001.2101.3001.4227","ab":"new"}'><input type="submit"
+									class="btn btn-sm btn-comment" value="发表评论"></a>
+				</div>
+			</div>
+		</form>
+		<input type="button" class="bt-comment-show" value="评论">
+	</div>
+	<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+		</div>
+	</div>
+</div>            <div class="recommend-tit-mod">相关推荐</div>
+            <div class="recommend-box insert-baidu-box">
+                <div class="recommend-item-box clearfix" style="display:none"></div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/iteye_1485/article/details/82542859"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"2","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/iteye_1485/article/details/82542859"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/iteye_1485/article/details/82542859" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"2","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/iteye_1485/article/details/82542859"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control'>
+					<em>GDB</em>指令&mdash;&mdash;读取<em>符号表</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/iteye_1485" target="_blank"><span class="blog-title">844604778</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1977
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/iteye_1485/article/details/82542859" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-2.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"2","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/iteye_1485/article/details/82542859"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-2.control'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>GDB</em>指令&mdash;&mdash;读取<em>符号表</em>
+-symbols &amp;lt;file&amp;gt;
+-s &amp;lt;file&amp;gt;
+从指定文件file中读取<em>符号表</em>。
+-se file
+从指定文件file中读取<em>符号表</em>信息，并把他用在<em>可执行文件</em>中。
+-core &amp;lt;file&amp;gt;
+-c &amp;lt;file&amp;gt;
+<em>调试</em>时core dump(核心转储)的core文件。
+-directory &amp;lt;direct...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/mrhesongze/article/details/81980397"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-3.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"3","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/mrhesongze/article/details/81980397"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/mrhesongze/article/details/81980397" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-3.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"3","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/mrhesongze/article/details/81980397"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control'>
+					<em>GDB</em><em>调试</em>二进制和<em>符号表</em>symbol分开的<em>程序</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/mrhesongze" target="_blank"><span class="blog-title">mrhesongze的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-23</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					7184
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/mrhesongze/article/details/81980397" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-3.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"3","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/mrhesongze/article/details/81980397"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-3.control'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>GDB</em>支持将<em>程序</em><em>调试</em>信息放在独立的文件里，与可执行<em>程序</em><em>分离</em>，其可以自动查找和自动加载<em>调试</em>信息。
+由于<em>调试</em>信息比较大，甚至比可执行<em>程序</em>还要大，通常将可执行<em>程序</em>的<em>调试</em>信息以单独文件的形式发布，需要<em>调试</em>时可以再安装这些文件。<em>GDB</em>支持两种设置单独<em>调试</em>信息文件的方式：
+第一种，可执行<em>程序</em>含<em>调试</em>链接，该链接指定单独的<em>调试</em>信息文件名。单独<em>调试</em>文件名通常是executable.debug，executable是...</div>
+			</a>
+		</div>
+	</div>
+</div>
+		<dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix">
+			
+		</dl>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/yygydjkthh/article/details/43318523"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-4.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"4","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/yygydjkthh/article/details/43318523"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/yygydjkthh/article/details/43318523" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-4.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"4","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/yygydjkthh/article/details/43318523"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-4.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-4.control'>
+					<em>gdb</em>如何<em>调试</em>没有<em>符号表</em>(未加-g选项的编译)的<em>程序</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/yygydjkthh" target="_blank"><span class="blog-title">狂客队长</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-30</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/yygydjkthh/article/details/43318523" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-4.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"4","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/yygydjkthh/article/details/43318523"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-4.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-4.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">很多时候，发行版的<em>程序</em>在编译的时候都是没有加上-g这个选项的，那么若是想<em>调试</em>一个<em>程序</em>，应该怎么办呢？
+
+在加了-g选项时，是可以通过行号、函数名等进行断点的设置的，但是没有<em>符号表</em>的情况下，那么怎么来进行<em>程序</em>的断点的设置并进行<em>调试</em>呢？
+
+
+
+这就要用到反汇编然后再对地址进行断点的设置来进行<em>调试</em>，具体情况可参看以下例子的过程：
+
+test.c代码如下：
+
+#include 
+#i</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/moonvs2010/article/details/11604249"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-5.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"5","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/moonvs2010/article/details/11604249"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/moonvs2010/article/details/11604249" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-5.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"5","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/moonvs2010/article/details/11604249"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-5.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-5.control'>
+					Linux下可执行<em>程序</em><em>调试</em>信息的<em>分离</em>及release<em>程序</em>的<em>调试</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/moonvs2010" target="_blank"><span class="blog-title">Justlinux2010的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-12</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4556
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/moonvs2010/article/details/11604249" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-5.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"5","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/moonvs2010/article/details/11604249"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-5.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-5.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">前两天在群里看到在讨论如何把debug版中的<em>符号表</em>加到release版本中，觉得这个非常有用，所以学习一下。
+<em>使用</em>的工具是objcopy。
+如果要生成单独的<em>调试</em>信息文件，命令如下：
+
+
+objcopy &ndash;only-keep-debug foo foo.dbg
+
+
+如果要去除<em>调试</em>信息（还可以<em>使用</em>strip命令），命令如下：
+
+
+objcopy --only-keep-debug</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/yhs_cy/article/details/78156867"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/yhs_cy/article/details/78156867"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/yhs_cy/article/details/78156867" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/yhs_cy/article/details/78156867"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control'>
+					<em>GDB</em><em>调试</em><em>可执行文件</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/yhs_cy" target="_blank"><span class="blog-title">yhs的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-03</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					3925
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/yhs_cy/article/details/78156867" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/yhs_cy/article/details/78156867"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.control'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>GDB</em><em>调试</em><em>可执行文件</em></div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/august_edward/article/details/79965904"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/august_edward/article/details/79965904"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/august_edward/article/details/79965904" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/august_edward/article/details/79965904"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.control'>
+					shell编译<em>可执行文件</em>，主要用来产生<em>gdb</em>可以<em>调试</em>的<em>可执行文件</em>,并执行
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/august_edward" target="_blank"><span class="blog-title">august_edward的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">04-16</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					513
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/august_edward/article/details/79965904" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/august_edward/article/details/79965904"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">#!/bin/sh#此bash主要用来产生<em>gdb</em>可以<em>调试</em>的<em>可执行文件</em>，输入参数为与编译文件同名#比如：hello.c文件，只需输入./gccgo.sh hello即可,并运行	gcc -g $1.c -o $1	./$1</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/tina_tian1/article/details/49821631"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tina_tian1/article/details/49821631"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/tina_tian1/article/details/49821631" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tina_tian1/article/details/49821631"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.control'>
+					<em>gdb</em><em>调试</em>linux可执行<em>程序</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/tina_tian1" target="_blank"><span class="blog-title">tina_tian1的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-13</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4805
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/tina_tian1/article/details/49821631" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tina_tian1/article/details/49821631"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">[root@localhost CSwapServer_dist]# <em>gdb</em> CSwapServer
+GNU <em>gdb</em> (<em>GDB</em>) Red Hat Enterprise Linux (7.2-83.el6)
+Copyright (C) 2010 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/u014421422/article/details/43114195"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014421422/article/details/43114195"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/u014421422/article/details/43114195" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014421422/article/details/43114195"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.control'>
+					linux<em>使用</em><em>gdb</em><em>调试</em><em>程序</em>完全教程
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/u014421422" target="_blank"><span class="blog-title">因热爱而执着，因执着而成功。</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-25</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4482
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/u014421422/article/details/43114195" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014421422/article/details/43114195"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">转自：http://blog.csdn.net/haoel/article/details/2879
+
+<em>GDB</em>概述
+&mdash;&mdash;&mdash;&mdash;
+
+<em>GDB</em>是GNU开源组织发布的一个强大的UNIX下的<em>程序</em><em>调试</em>工具。或许，各位比较喜欢那种图形界面方式的，像VC、BCB等IDE的<em>调试</em>，但如果你是在UNIX平台下做软件，你会发现<em>GDB</em>这个<em>调试</em>工具有比VC、BCB的图形化<em>调试</em>器更强大的功能。所谓&ldquo;寸有所长，尺有所短&rdquo;</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_35421203/article/details/112864379"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-10.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"10","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_35421203/article/details/112864379"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_35421203/article/details/112864379" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-10.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"10","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_35421203/article/details/112864379"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-10.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-10.control'>
+					<em>gdb</em><em>调试</em>没有<em>符号表</em>被读取_<em>使用</em><em>GDB</em><em>调试</em>将<em>符号表</em>与<em>程序</em><em>分离</em>后的<em>可执行文件</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_35421203" target="_blank"><span class="blog-title">weixin_35421203的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-12</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					27
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_35421203/article/details/112864379" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-10.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"10","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_35421203/article/details/112864379"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-10.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-10.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">环境：Centos7.3、GCC4.8.5适用场景：由于<em>调试</em>信息比较大，通常将<em>程序</em><em>分离</em>为可执行<em>程序</em>和符号信息文件，只对外发布可执行<em>程序</em>，需要<em>调试</em>时再将符号信息文件附加。一、创建可执行<em>程序</em>：use_library.cpp#include #include&quot;use_library.h&quot;intmain(){int res = my_library(1, 2);std::cout&lt;&lt; &quot;my_...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/zhongfujin/article/details/78767236"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-11.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"11","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/zhongfujin/article/details/78767236"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/zhongfujin/article/details/78767236" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-11.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"11","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/zhongfujin/article/details/78767236"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control'>
+					Linux下将动态库的<em>调试</em>信息<em>分离</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/zhongfujin" target="_blank"><span class="blog-title">zhongfujin的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-10</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1819
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/zhongfujin/article/details/78767236" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-11.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"11","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/zhongfujin/article/details/78767236"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-11.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">&nbsp; &nbsp; 在linux下有个工具叫做strip，这是一个可以将linux下的<em>可执行文件</em>的<em>符号表</em>去除，减少每个<em>可执行文件</em>的大小，这对于嵌入式方面很有必要。但是没有了<em>符号表</em>也就意味着没有办法采用<em>gdb</em>进行<em>调试</em>，因为<em>gdb</em><em>调试</em>是读取ELF文件头来获取<em>符号表</em>，进而<em>调试</em>，但strip之后，<em>可执行文件</em>的ELF文件头就没有.symtab这个<em>符号表</em>，有的仅是动态<em>符号表</em>。在strip之后nm libxxx.so是看不...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/a_jige/article/details/18444939"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-12.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"12","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/a_jige/article/details/18444939"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/a_jige/article/details/18444939" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-12.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"12","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/a_jige/article/details/18444939"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-12.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-12.control'>
+					与<em>符号表</em><em>分离</em><em>程序</em>或动态库, 如何用<em>GDB</em><em>调试</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/a_jige" target="_blank"><span class="blog-title">阿戟哥哥的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-18</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2422
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/a_jige/article/details/18444939" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-12.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"12","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/a_jige/article/details/18444939"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-12.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-12.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Debugging Information in Separate Files
+<em>GDB</em>支持用户将<em>程序</em><em>调试</em>信息放在一个独立的文件里，而不是和可执行<em>程序</em>在一个文件中，<em>GDB</em>可以某种方式来查找和自动加载<em>调试</em>信息。由于<em>调试</em>信息可能非常大,有时可能比可执行代码自身还要大,某些系统将其可执行<em>程序</em>的<em>调试</em>信息以单独的文件发布，在需要<em>调试</em>问题的时候，用户可以再安装这些文件。
+<em>GDB</em>支持两种设置单</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_39759656/article/details/82858101"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-13.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"13","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/qq_39759656/article/details/82858101"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_39759656/article/details/82858101" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-13.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"13","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/qq_39759656/article/details/82858101"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control'>
+					<em>gdb</em><em>调试</em>coredump(<em>使用</em>篇)
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_39759656" target="_blank"><span class="blog-title">瞌睡的洋葱的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-26</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					3万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_39759656/article/details/82858101" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-13.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"13","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/qq_39759656/article/details/82858101"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-13.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">看到一个非常好的介绍coredump的文章,做个记录,
+
+参考链接:
+
+https://blog.csdn.net/sunxiaopengsun/article/details/72974548
+
+什么是coredump
+
+&nbsp;&nbsp;Coredump叫做核心转储，它是进程运行时在突然崩溃的那一刻的一个内存快照。操作系统在<em>程序</em>发生异常而异常在进程内部又没有被捕获的情况下，会把进程此刻内存、寄存器状态、运行...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_39611072/article/details/111741415"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-14.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"14","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_39611072/article/details/111741415"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_39611072/article/details/111741415" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-14.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"14","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_39611072/article/details/111741415"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-14.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-14.control'>
+					<em>gdb</em><em>调试</em>没有<em>符号表</em>被读取_<em>GDB</em>如何<em>调试</em>没有<em>符号表</em>(未加-g选项的编译)的<em>程序</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_39611072" target="_blank"><span class="blog-title">weixin_39611072的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-20</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					117
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_39611072/article/details/111741415" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromMachineLearnPai2~default-14.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"14","strategy":"2~default~BlogCommendFromMachineLearnPai2~default","dest":"https://blog.csdn.net/weixin_39611072/article/details/111741415"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-14.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-14.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">/********************************************************************** Author : Samson* Date  : 01/30/2015* Test platform:*       3.13.0-24-generic*       GNU bash, 4.3.11(1)-release...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/winlerman/article/details/52121244"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/winlerman/article/details/52121244"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/winlerman/article/details/52121244" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/winlerman/article/details/52121244"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.control'>
+					剥离与插入<em>调试</em>信息及<em>符号表</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/winlerman" target="_blank"><span class="blog-title">时代终结者</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-04</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					943
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/winlerman/article/details/52121244" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/winlerman/article/details/52121244"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">http://blog.chinaunix.net/uid-24774106-id-3526766.html</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/u014749668/article/details/82531439"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014749668/article/details/82531439"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/u014749668/article/details/82531439" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014749668/article/details/82531439"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.control'>
+					<em>gdb</em><em>调试</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/u014749668" target="_blank"><span class="blog-title">u014749668的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					56
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/u014749668/article/details/82531439" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/u014749668/article/details/82531439"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">【1】生成<em>可执行文件</em>&mdash;&mdash;-编译添加 -g    （比没有的加-g的<em>可执行文件</em>大） 
+【2】启动<em>gdb</em>&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;<em>gdb</em>+<em>可执行文件</em> 
+【3】设置断点&mdash;&mdash;&mdash;&mdash;&mdash;-break（b） 22 在22行设置断点 
+    （2）条件断点&mdash;&mdash;&mdash;&mdash;&mdash; b 12 if i==15 (在12行这个for语句【里面】设置i为15的时候停止于此处) 
+【4】查看断点信息 &mdash;&mdash;&mdash;info（i）break(b) 
+l&mdash;li...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_37941471/article/details/81476942"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_37941471/article/details/81476942"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_37941471/article/details/81476942" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_37941471/article/details/81476942"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.control'>
+					一个完整的<em>gdb</em><em>调试</em>过程以及一些常用的命令
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_37941471" target="_blank"><span class="blog-title">qq_37941471的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-07</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_37941471/article/details/81476942" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_37941471/article/details/81476942"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">1. 启动<em>调试</em>
+
+gcc -g test.c   // 编译文件，生成可执行<em>程序</em>，并且给文件加上<em>调试</em>信息
+<em>gdb</em> a.out       // 开始启动<em>调试</em>
+
+ 
+
+
+2. 显示当前的代码：l
+
+ 
+另外:
+
+l 函数名  // 显示这个函数的代码（10行）
+如果想继续查看，继续输入该命令
+
+3. 在某一行打断点：b 行号
+
+
+
+4. 开始运行<em>程序</em>：r( run )
+
+
+
+5. 逐步执行：s( s...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/lemonaha/article/details/72837561"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lemonaha/article/details/72837561"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/lemonaha/article/details/72837561" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lemonaha/article/details/72837561"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.control'>
+					CMake生成可用<em>gdb</em><em>调试</em>的<em>可执行文件</em>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/lemonaha" target="_blank"><span class="blog-title">lemonaha的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-01</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					3062
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/lemonaha/article/details/72837561" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lemonaha/article/details/72837561"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">1 首先在CMakeLists.txt中加入SET(CMAKE_BUILD_TYPE &quot;Debug&quot;)在下面加入：SET(CMAKE_CXX_FLAGS_DEBUG &quot;$ENV{CXXFLAGS} -O0 -Wall -g -g<em>gdb</em>&quot;)SET(CMAKE_CXX_FLAGS_RELEASE &quot;$ENV{CXXFLAGS} -O3 -Wall&quot;)原因是CMake 中有一个变量 CMAKE_BUILD</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://finixlei.blog.csdn.net/article/details/104107608"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://finixlei.blog.csdn.net/article/details/104107608"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://finixlei.blog.csdn.net/article/details/104107608" class="tit ellipsis-online ellipsis-online-1" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://finixlei.blog.csdn.net/article/details/104107608"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.control'>
+					<em>使用</em>strip, eu-strip, objcopy等剥离与导回<em>符号表</em>及<em>调试</em>信息
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/nirendao" target="_blank"><span class="blog-title">FinixLei的专栏 (https://github.com/FinixLei)</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-29</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2368
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://finixlei.blog.csdn.net/article/details/104107608" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.control\"}","dist_request_id":"1328767.122.16172626382293545","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://finixlei.blog.csdn.net/article/details/104107608"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.control&dist_request_id=1328767.122.16172626382293545&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.control'>
+				<div class="desc ellipsis-online ellipsis-online-1">1.<em>符号表</em>信息和<em>调试</em>信息
+<em>符号表</em>信息（symbols）和<em>调试</em>信息（debug info）是由不同段区分的。
+<em>使用</em> readelf -S binfile 可以查看ELF文件的所有段。
+<em>调试</em>信息相关的段：
+# readelf -S a.out | grep debug
+  [27] .debug_aranges    PROGBITS         0000000000000000  000016d...</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+            <div class="template-box">
+                <span>©️2020 CSDN</span>
+                <span>皮肤主题: 大白</span>
+                <span> 设计师:CSDN官方博客</span>
+                <span>
+                    <a href="https://blog.csdn.net/" class="back-home c-blue c-blue-hover c-blue-focus">返回首页</a>
+                </span>
+            </div>
+<div class="blog-footer-bottom" style="margin-top:10px;"></div>
+<script src="https://g.csdnimg.cn/common/csdn-footer/csdn-footer.js" data-isfootertrack="false" type="text/javascript"></script>
+<script type="text/javascript">
+    window.csdn.csdnFooter.options = {
+        el: '.blog-footer-bottom',
+        type: 2
+    }
+</script>        </main>
+<aside class="blog_container_aside">
+	<div id="asideProfile" class="aside-box">
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/chen_jianjian" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4121","dest":"https://blog.csdn.net/chen_jianjian","ab":"new"}'>
+                <img src="https://profile.csdnimg.cn/1/3/1/3_chen_jianjian" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex flex-column profile-intro-name-box">
+            <div class="profile-intro-name-boxTop">
+                <a href="https://blog.csdn.net/chen_jianjian" class="" id="uid" title="几米夜空" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4122","dest":"https://blog.csdn.net/chen_jianjian","ab":"new"}'>
+                    <span class="name " username="chen_jianjian">几米夜空</span>
+                </a>
+                <span>
+                </span>
+                <span class="flag expert-blog">
+                <span class="bubble">CSDN认证博客专家</span>
+                </span>
+                <span class="flag company-blog">
+                <span class="bubble">CSDN认证企业博客</span>
+                </span>
+            </div>
+            <div class="profile-intro-name-boxFooter">
+                <span class="personal-home-page personal-home-years">码龄11年</span>
+                    <span class="personal-home-page">
+                    <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证">
+                    <img src="https://csdnimg.cn/identity/nocErtification.png" alt="">
+                    暂无认证
+                    </a>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="35">
+            <a href="https://blog.csdn.net/chen_jianjian" data-report-click='{"mod":"1598321000_001","spm":"1001.2101.3001.4310"}' data-report-query="t=1">  
+                <dt><span class="count">35</span></dt>
+                <dd class="font">原创</dd>
+            </a>
+        </dl>
+        <dl class="text-center" data-report-click='{"mod":"1598321000_002","spm":"1001.2101.3001.4311"}' title="91753">
+            <a href="https://blog.csdn.net/rank/list/weekly" target="_blank">
+                <dt><span class="count">9万+</span></dt>
+                <dd class="font">周排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" title="38717">
+            <a href="https://blog.csdn.net/rank/list/total" data-report-click='{"mod":"1598321000_003","spm":"1001.2101.3001.4312"}' target="_blank">
+                <dt><span class="count">3万+</span></dt>
+                <dd class="font">总排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" style="min-width:58px" title="216343">  
+            <dt><span class="count">21万+</span></dt>
+            <dd>访问</dd>
+        </dl>
+        <dl class="text-center" title="5级,点击查看等级说明">
+            <dt><a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank">
+                <img class="level" src="https://csdnimg.cn/identity/blog5.png">
+            </a>
+            </dt>
+            <dd>等级</dd>
+        </dl>
+    </div>
+    <div class="item-rank"></div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="2598">
+            <dt><span class="count">2598</span></dt>
+            <dd>积分</dd>
+        </dl>
+         <dl class="text-center" id="fanBox" title="36">
+            <dt><span class="count" id="fan">36</span></dt>
+            <dd>粉丝</dd>
+        </dl>
+        <dl class="text-center" title="27">
+            <dt><span class="count">27</span></dt>
+            <dd>获赞</dd>
+        </dl>
+        <dl class="text-center" title="10">
+            <dt><span class="count">10</span></dt>
+            <dd>评论</dd>
+        </dl>
+        <dl class="text-center" title="104">
+            <dt><span class="count">104</span></dt>
+            <dd>收藏</dd>
+        </dl>
+    </div>
+    <div class="profile-intro-name-boxOpration">
+        <div class="opt-letter-watch-box">
+        <a class="bt-button personal-letter" href="https://im.csdn.net/chat/chen_jianjian" target="_blank" rel="noopener">私信</a>
+        </div>
+        <div class="opt-letter-watch-box"> 
+            <a class="personal-watch bt-button" id="btnAttent" >关注</a>  
+        </div>
+    </div>
+</div>
+<div id="asideSearchArticle" class="aside-box">
+	<div class="aside-content search-comter">
+    <div class="aside-search aside-search-blog">         
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章">
+        <a class="btn-search-blog">
+                    <img src="//csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042">
+        </a>
+    </div>
+    </div>
+</div>
+
+
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list">
+			<li>
+				<a href="https://blog.csdn.net/chen_jianjian/article/details/51242813" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/chen_jianjian/article/details/51242813","ab":"new"}'>
+				make: *** /lib/modules/2.6.32-573.el6.x86_64/build: 没有那个文件或目录。 停止。
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">17899</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/chen_jianjian/article/details/48706465" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/chen_jianjian/article/details/48706465","ab":"new"}'>
+				centos下定时执行脚本或者命令
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">11704</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/chen_jianjian/article/details/81502840" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/chen_jianjian/article/details/81502840","ab":"new"}'>
+				Lua编写wireshark插件基础
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">10659</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/chen_jianjian/article/details/80627693" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/chen_jianjian/article/details/80627693","ab":"new"}'>
+				LD_PRELOAD作用
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">9453</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/chen_jianjian/article/details/51131709" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/chen_jianjian/article/details/51131709","ab":"new"}'>
+				Brotli压缩算法
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">9280</span>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="asideCategory" class="aside-box flexible-box">
+    <h3 class="aside-title">分类专栏</h3>
+    <div class="aside-content">
+        <ul>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_10093445.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_10093445.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">docker</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_1087682.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_1087682.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">HAPROXY源代码分析</span>
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_1216577.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_1216577.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">shell</span>
+                    </span>
+                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_5672589.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_5672589.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">linux C</span>
+                    </span>
+                    <span class="count float-right">10篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6179003.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6179003.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">linux</span>
+                    </span>
+                    <span class="count float-right">39篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6306243.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6306243.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">waf</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6306244.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6306244.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">nginx</span>
+                    </span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6576941.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6576941.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">python</span>
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6655580.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6655580.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">linux protobuf</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6888596.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6888596.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">java</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_7702101.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_7702101.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">工具类</span>
+                    </span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p class="text-center">
+        <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a>
+    </p>
+</div>
+<div id="asideNewComments" class="aside-box">
+    <h3 class="aside-title">最新评论</h3>
+    <div class="aside-content">
+        <ul class="newcomment-list">
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/chen_jianjian/article/details/86630895#comments_13733168" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/86630895#comments_13733168","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/86630895#comments_13733168","ab":"new"}'>计算机网络时间同步技术原理介绍</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/mrlixuec" class="user-name" target="_blank">mrlixuec: </a>
+                    <span class="code-comments">转载不写出处 恶心</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/chen_jianjian/article/details/79759865#comments_12670507" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/79759865#comments_12670507","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/79759865#comments_12670507","ab":"new"}'>centos 7源码编译安装qemu-kvm和spice</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/yangguangmeng" class="user-name" target="_blank">阳光梦: </a>
+                    <span class="code-comments">您好，这个安装完毕可以图形化界面操作使用？谢谢</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/chen_jianjian/article/details/48706465#comments_11650247" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/48706465#comments_11650247","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/48706465#comments_11650247","ab":"new"}'>centos下定时执行脚本或者命令</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/qq_40673345" class="user-name" target="_blank">短腿长颈鹿小姐: </a>
+                    <span class="code-comments">多谢</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/chen_jianjian/article/details/99643649#comments_10838207" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/99643649#comments_10838207","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/99643649#comments_10838207","ab":"new"}'>在qemu kvm虚机中编译DPVS</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/good138" class="user-name" target="_blank">good138: </a>
+                    <span class="code-comments">请问您用的什么网卡啊？我用virtio网卡总是报错</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/chen_jianjian/article/details/89515409#comments_10740488" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/89515409#comments_10740488","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/chen_jianjian/article/details/89515409#comments_10740488","ab":"new"}'>Reed-Solomon 编码算法</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/gjhunique" class="user-name" target="_blank">gjhunique: </a>
+                    <span class="code-comments">可逆矩阵为什么算出来是（1 0 0， 2 3 1，3 2 1）？</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="asideArchive" class="aside-box" style="display:block!important; width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/chen_jianjian/article/details/112968332" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/chen_jianjian/article/details/112968332","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/chen_jianjian/article/details/112968332","ab":"new"}'>2021-01-21</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/chen_jianjian/article/details/110949635" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/chen_jianjian/article/details/110949635","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/chen_jianjian/article/details/110949635","ab":"new"}'>Linux服务器丢包故障的解决</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/chen_jianjian/article/details/108637197" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/chen_jianjian/article/details/108637197","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/chen_jianjian/article/details/108637197","ab":"new"}'>ldconfig相关</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2021/01" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2021年</span><span class="num">1篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2020/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2020年</span><span class="num">6篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2019/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2019年</span><span class="num">17篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2018/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2018年</span><span class="num">14篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2017/11" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2017年</span><span class="num">9篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2016/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2016年</span><span class="num">23篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2015/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2015年</span><span class="num">14篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2014/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2014年</span><span class="num">6篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2013/03" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2013年</span><span class="num">2篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/chen_jianjian/article/month/2012/08" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2012年</span><span class="num">3篇</span></a></div>
+        </div>
+    </div>
+</div>
+	<div id="footerRightAds" class="isShowFooterAds">
+		<div class="aside-box">
+			<div id="kp_box_57" data-pid="57"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-左下视窗（300*600） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="1173711872"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=57&a=2488&c=0&k=&spm=1001.2101.3001.5001&d=1&t=3&u=a800adc62484403f9ca97ba001204aa5" style="display: block;width: 0px;height: 0px;"></div>
+		</div>
+	</div>
+    <!-- 详情页显示目录 -->
+<!--文章目录-->
+<div id="asidedirectory" class="aside-box">
+    <div class='groupfile' id="directory">
+        <h3 class="aside-title">目录</h3>
+        <div class="align-items-stretch group_item">
+            <div class="pos-box">
+            <div class="scroll-box">
+                <div class="toc-box"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).parents("p.text-center").remove();
+	})
+</script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-tooltip/2.4/user-tooltip.js"></script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-medal/1.0.6/user-medal.js"></script>    </div>
+<div class="recommend-right  align-items-stretch clearfix" id="rightAside" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right" >
+                        <div class='flex-column aside-box groupfile' id="groupfile">
+                <div class="groupfile-div">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div id="recommendAdBox">
+                    <div id="kp_box_479" data-pid="479"><div id="protag-banner-3"></div>
+<script type="text/javascript">
+  window.googletag = window.googletag || { cmd: [] };
+  window.protag = window.protag || { cmd: [] };
+  window.protag.cmd.push(function () {
+   window.protag.display("protag-banner-3");
+  });
+</script>
+<script type="text/javascript" async="async" src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>  
+<script async="async" type="text/javascript" src="https://protagcdn.com/s/csdn.net/bbs/protag-banners.js"></script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=479&a=3476&c=0&k=&spm=1001.2101.3001.4834&d=1&t=3&u=6dddc86e2a7e4ddaba966cd82a29bfd5" style="display: block;width: 0px;height: 0px;"></div>
+                </div>
+            <div class='aside-box kind_person d-flex flex-column'>
+                    <h3 class="aside-title">分类专栏</h3>
+                    <div class="align-items-stretch kindof_item" id="kind_person_column">
+                        <div class="aside-content">
+                            <ul>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_10093445.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_10093445.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">docker</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_1087682.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_1087682.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">HAPROXY源代码分析</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_1216577.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_1216577.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756754.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">shell</span>
+                                        </span>
+                                        <span class="count float-right">5篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_5672589.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_5672589.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">linux C</span>
+                                        </span>
+                                        <span class="count float-right">10篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6179003.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6179003.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">linux</span>
+                                        </span>
+                                        <span class="count float-right">39篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6306243.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6306243.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">waf</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6306244.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6306244.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">nginx</span>
+                                        </span>
+                                        <span class="count float-right">2篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6576941.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6576941.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">python</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6655580.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6655580.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">linux protobuf</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_6888596.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_6888596.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756757.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">java</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/chen_jianjian/category_7702101.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/chen_jianjian/category_7702101.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">工具类</span>
+                                        </span>
+                                        <span class="count float-right">2篇</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</div>
+<div class="mask-dark"></div>
+<script>
+    var articleId = 102778060;
+    var commentscount = 0;
+    var curentUrl = "https://blog.csdn.net/chen_jianjian/article/details/102778060";
+    var myUrl = "https://my.csdn.net/";
+    var highlight = ["使用","GDB","调试","符号表","程序","分离","可执行文件"];//高亮数组
+    var isRecommendModule = true;
+    var isBaiduPre = true;
+    var baiduCount = 2;
+    var share_card_url = "https://blog.csdn.net/chen_jianjian/article/shareArticleCardPage?article_id=102778060"
+	var articleType = 2;
+    var baiduKey = "使用GDB调试将符号表与程序分离后的可执行文件";
+    var userNewReport = false;
+    var needInsertBaidu = true;
+    var recommendRegularDomainArr = ["blog.csdn.net/.+/article/details/","download.csdn.net/download/","edu.csdn.net/course/detail/","ask.csdn.net/questions/","bbs.csdn.net/topics/","www.csdn.net/gather_.+/"]
+    var codeStyle = "";
+    var baiduSearchType = "title";
+    var canRead = true;
+    var blogMoveHomeArticle = false;
+    var showPcWindowAd = false;
+    var showSearchText = "";
+    var linkPage = true;
+    var articleSource = 1;
+    var articleReport = '{"pid": "blog", "spm":"1001.2101"}';
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.4/js/sandalstrap.min.js"></script>
+<div class="skin-boxshadow"></div>
+</body>
+    <!-- 富文本柱状图  -->
+	<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css"/>
+	<script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/lib/chart.min.js"></script>
+    <script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/widget2chart.js"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_highlight-db1e81323a.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_common-906586e915.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css">
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            qr: {
+                isShow: false,
+            },
+            guide: {
+                isShow: true
+            }
+        }
+    }
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            window.csdn.userLogin.loadAjax(function(res){
+                if(userNewReport){
+                    showReportNew(false,articleTitles);
+                }else{
+                    showReport(false,articleTitles);
+                }
+            })
+        });
+    })
+</script>
+    <script src="https://g.csdnimg.cn/baidu-search/1.0.9/baidu-search.js"  type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/download/old_static/js/qrcode.js"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/common-b286f966c8.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/detail-180dec70dc.min.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/user-ordercart/1.0.6/user-ordercart.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/column-78261cfea6.min.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/side-toolbar/3.0/side-toolbar.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/common/shop-window/shop-window.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/copyright/1.0.3/copyright.js" type="text/javascript"></script>
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+</script>
+<script type="text/javascript" src="https://csdnimg.cn/release/blog_mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/user-login/2.3.2/user-login.js"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/login-box/1.1.4/login-box.js"></script></html>
