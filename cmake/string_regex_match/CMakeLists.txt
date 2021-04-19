@@ -1,0 +1,18 @@
+project(HELLO)
+
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+
+if (DEFINED ENV{TEST_VALUE})
+    message(STATUS "env TEST is $ENV{TEST_VALUE}")
+    string(REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" NEW_TEST_VALUE $ENV{TEST_VALUE})
+    message("NEW_TEST_VALUE: ${NEW_TEST_VALUE}")
+    set(VALUE "$ENV{TEST_VALUE}")
+    string(REGEX MATCH "[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+" NEW_VALUE ${VALUE})
+    message("NEW_VALUE: ${NEW_VALUE}")
+else()
+    message(WARNING "not defined TEST_VALUE env")
+    set(VALUE "default")
+endif()
+
+add_definitions("-DVALUE=\"${VALUE}\"")
+add_executable(main main.cpp)
