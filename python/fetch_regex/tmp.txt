@@ -1,0 +1,21 @@
+CommunicatingSocket.hpp:15:class SocketAddressView;
+CommunicatingSocket.hpp:20:class CommunicatingSocket : public Socket {
+DNSResolver.hpp:20:class DNSResolver {
+GAIException.hpp:18:class GAIException: public SocketException {
+SocketAddress.hpp:20:class SocketAddress {
+SocketAddressView.hpp:21:class SocketAddressView {
+SocketCommon.hpp:28:enum class NetworkLayerType {
+SocketCommon.hpp:35:enum class TransportLayerType {
+SocketException.hpp:19:class SocketException : public std::runtime_error {
+Socket.hpp:19:class _WSAStartupHolder_;
+Socket.hpp:21:class _WSAStartupSharedHolder_ {
+Socket.hpp:46:class Socket {
+SYSException.hpp:18:class SYSException: public SocketException {
+tcp_connect.hpp:18:class TCPSocket;
+TCPServerSocket.hpp:15:class TCPSocket;
+TCPServerSocket.hpp:20:class TCPServerSocket : public Socket {
+TCPSocket.hpp:19:class TCPSocket : public CommunicatingSocket {
+TCPSocket.hpp:50:    friend class TCPServerSocket;
+UDPClientSocket.hpp:18:class UDPClientSocket: public CommunicatingSocket {
+udp_connect.hpp:18:class UDPClientSocket;
+UDPSocket.hpp:18:class UDPSocket : public Socket {
