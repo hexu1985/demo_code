@@ -5,6 +5,20 @@ project(HELLO)
 set(list1 a d c e b g f)
 set(list2 a c b h)
 
+set(var "a")
+if (${var} IN_LIST list1)
+    message("${var} in ${list1}")
+else()
+    message("${var} in not ${list1}")
+endif()
+
+set(var "x")
+if (${var} IN_LIST list1)
+    message("${var} in ${list1}")
+else()
+    message("${var} in not ${list1}")
+endif()
+
 message("list1: ${list1}")
 message("list2: ${list2}")
 
