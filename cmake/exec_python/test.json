@@ -1,0 +1,21 @@
+{"menu": {
+    "header": "SVG Viewer",
+    "items": [
+        {"id": "Open"},
+        {"id": "OpenOld", "label": null },
+        {"id": "OpenNew", "label": "Open New"},
+        null,
+        {"id": "ZoomIn", "label": ["Zoom In", "Zoom At"] },
+        {"id": "ZoomOut", 
+               "label": 
+	         { 
+	         "short": ["zo", "zout"], 
+	         "long":"Zoom Out"
+	         }
+    	},
+        {"id": "OriginalView", "label": "Original View"},
+    	null
+     ],
+    "elements" : ["one", "two", { "number":"three", "Desc": "Number" }, null ],
+    "item_list" : [ "open", "close", "save"]
+}}
