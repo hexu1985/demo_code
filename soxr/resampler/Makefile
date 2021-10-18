@@ -3,7 +3,7 @@ RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g -std=c++11
 INCLUDES = -I../soxr/src
-LDFLAGS = -lsoxr -lgomp
+LDFLAGS = -lsoxr #-lgomp
 LDPATH = -L../soxr/build/src
 
 SOURCES = $(shell ls *.cpp)
