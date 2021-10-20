@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     std::string out_pcm_file = "test_16k_pcm.raw";
     int src_sample_rate = 48000;
     int dst_sample_rate = 16000;
-    unsigned src_channels = 1;
+    unsigned src_channels = 2;
     soxr_error_t error;
 
     char *in_buffer = nullptr;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
     std::cout << "in_buffer_size: " << in_buffer_size << '\n';
 
-    size_t out_buffer_size = (in_buffer_size + 2) / 3;
+    size_t out_buffer_size = in_buffer_size / 3;
     char *out_buffer = new char [out_buffer_size];
     memset(out_buffer, 0x00, out_buffer_size);
 
@@ -57,24 +57,27 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    size_t idone = 0;
-    size_t odone = 0;
+    int data_size_bytes = sizeof (int16_t) * src_channels;
     size_t total_idone = 0;
     size_t total_odone = 0;
-    int16_t *i_ptr = (int16_t *) in_buffer;
-    int16_t *o_ptr = (int16_t *) out_buffer;
-    size_t in_num_samples = in_buffer_size / sizeof (int16_t);
-    size_t out_num_samples = out_buffer_size / sizeof (int16_t);
+    uint8_t *i_ptr = (uint8_t *) in_buffer;
+    uint8_t *o_ptr = (uint8_t *) out_buffer;
+    size_t in_num_samples = in_buffer_size / data_size_bytes;
+    size_t out_num_samples = out_buffer_size / data_size_bytes;
     size_t ilen = in_num_samples;
     size_t olen = out_num_samples;
+    std::cout << "in_num_samples: " << in_num_samples << '\n';
+    std::cout << "out_num_samples: " << out_num_samples << '\n';
     do {
+        std::cout << "soxr_process: " << std::endl;
+        size_t idone, odone;
         error = soxr_process(soxr, i_ptr, ilen, &idone, o_ptr, olen, &odone);
         if (error != 0) {
             std::cout << "soxr_process failed: " << error << '\n';
             exit(1);
         }
-        i_ptr += idone;
-        o_ptr += odone;
+        i_ptr += idone*data_size_bytes;
+        o_ptr += odone*data_size_bytes;
         ilen -= idone;
         olen -= odone;
         total_idone += idone;
@@ -84,7 +87,7 @@ int main(int argc, char *argv[])
     std::cout << "total_idone: " << total_idone << '\n';
     std::cout << "total_odone: " << total_odone << '\n';
 
-    write_binary_file(out_pcm_file, out_buffer, total_odone*sizeof(int16_t));
+    write_binary_file(out_pcm_file, out_buffer, total_odone*data_size_bytes);
 
     soxr_delete(soxr);
 
