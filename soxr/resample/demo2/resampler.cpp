@@ -57,13 +57,13 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    int data_size_bytes = sizeof (int16_t) * src_channels;
+    int data_size_bytes = sizeof (int16_t);
     size_t total_idone = 0;
     size_t total_odone = 0;
     uint8_t *i_ptr = (uint8_t *) in_buffer;
     uint8_t *o_ptr = (uint8_t *) out_buffer;
-    size_t in_num_samples = in_buffer_size / data_size_bytes;
-    size_t out_num_samples = out_buffer_size / data_size_bytes;
+    size_t in_num_samples = in_buffer_size / data_size_bytes / src_channels;
+    size_t out_num_samples = out_buffer_size / data_size_bytes / src_channels;
     size_t ilen = in_num_samples;
     size_t olen = out_num_samples;
     std::cout << "in_num_samples: " << in_num_samples << '\n';
@@ -76,8 +76,8 @@ int main(int argc, char *argv[])
             std::cout << "soxr_process failed: " << error << '\n';
             exit(1);
         }
-        i_ptr += idone*data_size_bytes;
-        o_ptr += odone*data_size_bytes;
+        i_ptr += idone*data_size_bytes*src_channels;
+        o_ptr += odone*data_size_bytes*src_channels;
         ilen -= idone;
         olen -= odone;
         total_idone += idone;
@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     std::cout << "total_idone: " << total_idone << '\n';
     std::cout << "total_odone: " << total_odone << '\n';
 
-    write_binary_file(out_pcm_file, out_buffer, total_odone*data_size_bytes);
+    write_binary_file(out_pcm_file, out_buffer, total_odone*data_size_bytes*src_channels);
 
     soxr_delete(soxr);
 

@@ -2,9 +2,9 @@
 RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g -std=c++11
-INCLUDES = -I../soxr/src
+INCLUDES = -I../../soxr/src
 LDFLAGS = -lsoxr #-lgomp
-LDPATH = -L../soxr/build/src
+LDPATH = -L../../soxr/build/src
 
 SOURCES = $(shell ls *.cpp)
 PROGS = $(subst .cpp,,$(SOURCES))

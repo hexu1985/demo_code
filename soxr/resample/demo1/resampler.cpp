@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     soxr_io_spec_t io_spec = soxr_io_spec(SOXR_INT16_I, SOXR_INT16_I);
 
     /* When creating a var-rate resampler, q_spec must be set as follows: */
-    soxr_quality_spec_t q_spec = soxr_quality_spec(SOXR_HQ, SOXR_VR);
+    soxr_quality_spec_t q_spec = soxr_quality_spec(SOXR_LQ, 0);
 
     /* The ratio of the given input rate and output rates must equate to the
      * maximum I/O ratio that will be used: */
