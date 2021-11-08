@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="never" />
+    <meta name="description" content="关键词：doxygen、Doxyfile、doxywizard、dot、graphviz等等。 使用doxygen从源码注释生成帮助文档或者SDK，输出格式有多种比如htmp、Latex等等。 如果想" />
+    <meta property="og:description" content="关键词：doxygen、Doxyfile、doxywizard、dot、graphviz等等。 使用doxygen从源码注释生成帮助文档或者SDK，输出格式有多种比如htmp、Latex等等。 如果想" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Ubuntu下doxygen+graphviz使用概录 - ArnoldLu - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=Y1yBNCRf3ODEjYGJn208vPUnnX-rIyYVsZ75AvRbzGM" />
+    <link id="MainCss" rel="stylesheet" href="/skins/anothereon001/bundle-anothereon001.min.css?v=9x2ZP2K8SSBJowZA6xv0D5FvOmlvd5g21u0NBEAEwfQ" />
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/anothereon001/bundle-anothereon001-mobile.min.css?v=xFiYH0_zTHqf_pk9Nf2PvR4VdQ1qJnJcRVcot-VdM-8" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/arnoldlu/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/arnoldlu/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/arnoldlu/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 323754;
+        var currentBlogApp = 'arnoldlu';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'AnotherEon001';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2019-09-22 12:00';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=2Mic1VLeHXarpdzASbXqFMIMVLEBiWXNO5yiTHUcmhw"></script>
+    
+    
+    
+</head>
+<body class="has-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding"><a href="https://www.cnblogs.com/" title="开发者的网上家园"><img src="/images/logo.svg?v=R9M0WmLAIPVydmdzE2keuvnjl-bPR7_35oHqtiBzGsM" alt="博客园Logo" /></a></li>
+                <li><a href="/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="ga('send', 'event', 'Link', 'click', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="text" tabindex="3" />
+                        <button type="submit" id="zzk_search_button">
+                            <img src="/images/aggsite/search.svg" alt="搜索" />
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔">
+                        <img id="new_post_icon" class="navbar-icon" src="/images/aggsite/newpost.svg" alt="写随笔" />
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客">
+                        <img id="myblog_icon" class="navbar-icon" src="/images/aggsite/myblog.svg" alt="我的博客" />
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息">
+                        <img id="msg_icon" class="navbar-icon" src="/images/aggsite/message.svg?v=J0WS2P2iPgaIVgXxcAhliw4AFZIpaTWxtdoNAv9eiCA" alt="短消息" />
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="/images/aggsite/avatar-default.svg" alt="用户头像" />
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="/images/lite-mode-check.svg" class="hide" /><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup/">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <p>
+<a href="http://elixir.free-electrons.com/linux/latest/source" target="_blank">LXR</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/6421317.html" target="_blank"> | KVM</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/6229978.html" target="_blank"> | PM</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/7025751.html" target="_blank"> | Time</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/7406441.html" target="_blank"> | Interrupt</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/7998225.html" target="_blank"> | Systems Performance</a>
+<a href="http://www.cnblogs.com/arnoldlu/p/7997549.html" target="_blank"> | Bootup Optimization</a>
+</p>
+    </div>
+    <div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/arnoldlu/">Arnold Lu@南京</a>
+</h1>
+<div id="subtitle">联系方式：arnoldlu@qq.com</div>
+</div>
+<div id="sub"><div id="blog_stats_place_holder"><script>loadBlogStats();</script></div></div>
+
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	<div id="post_detail">
+    <div class="post">
+        <h2>
+            
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/arnoldlu/p/11552271.html">
+    <span>Ubuntu下doxygen+graphviz使用概录</span>
+    
+
+
+
+</a>
+
+        </h2>
+        <div class="postbody">
+            <div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<p>关键词：<span style="color: rgba(255, 0, 0, 1)">doxygen、Doxyfile、doxywizard、dot、graphviz</span>等等。</p>
+<p>&nbsp;</p>
+<p>使用doxygen从源码注释生成帮助文档或者SDK，输出格式有多种比如htmp、Latex等等。</p>
+<p>如果想可视化头文件关系、函数调用关系，可以生成dot格式的布局方式；然后使用graphviz的dot工具生成可视化关系图。</p>
+<p>这里面主要包括三部分：在代码中添加doxygen规则注释；生成doxygen配置文档doxyfile；graphviz的dot布局可视化配置。</p>
+<p>使用doxygen的优点：</p>
+<p>1. 注释紧跟代码，一条命令生成响应SDK，快捷、及时更新，容易维护。</p>
+<p>2. 加上dot之后，函数关系、类关系等更加明确，有利于理解代码。</p>
+<p>3. 输出格式丰富，适合各种形式发布。</p>
+<p>4. 不同Doxyfile输出不同内容，适合对内对外发布。</p>
+<h1>0. 工具安装</h1>
+<p>需要安装doxygen、doxywizard、graphviz：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">sudo apt install doxygen
+sudo apt install doxygen</span>-<span style="color: rgba(0, 0, 0, 1)">gui
+sudo apt install graphviz graphviz</span>-doc</pre>
+</div>
+<h1>1. doxygen介绍</h1>
+<p>关于doxygen的介绍在<a href="http://www.doxygen.nl/manual/index.html" target="_blank">Doxygen Manual</a>中有详细的说明，包括user manual、reference manual和information for developers三部分。</p>
+<p>下图是doxygen信息流框图，按照文件doxyfile的配置，doxygen从sources中解析注释，输出结果，结果可以使XML、Latex、HTML、PDF等等。</p>
+<p style="text-align: center"><img src="http://www.doxygen.nl/manual/infoflow.png" alt=""></p>
+<h1 style="text-align: left">2. 配置doxygen</h1>
+<p style="text-align: left">doxygen的使用方法通过doxygen -h可以获取。</p>
+<p style="text-align: left">快速创建配置文件doxyfile的方式：</p>
+<div class="cnblogs_code">
+<pre>doxygen -s -g doxyfile--------------<span style="color: rgba(0, 0, 0, 1)">简化版的doxyfile，没有很多注释信息。
+doxygen </span>-g doxyfile</pre>
+</div>
+<p>上面的创建方式比较简单，但是配置比较复杂。</p>
+<p style="text-align: left">doxygen-gui提供了doxywizard可视化配置工具。</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 0, 0, 1)">doxywizard-----------------新建一个Doxyfile，并进行配置。
+doxywizard Doxyfile--------从已有配置文件Doxyfile读取配置。</span></pre>
+</div>
+<p>第一步，设置doxygen工作目录。</p>
+<p style="text-align: left">第二步，包括三部分分别是Wizard概要设置，Expert对功能进行专家模式设置，Run开始执行doxygen生成帮助文档。</p>
+<p style="text-align: left"><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190919195312815-1098159768.png" alt=""></p>
+<p>如果要用好doxygen，就需要对Expert详细了解。</p>
+<p style="text-align: left"><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190919200449853-1018683868.png" alt=""></p>
+<p style="text-align: left">参考文档：《<a href="http://www.doxygen.nl/manual/doxywizard_usage.html" target="_blank">Doxywizard usage</a>》</p>
+<h1 style="text-align: left">3. 如何给代码加doxygen注释</h1>
+<p style="text-align: left">在《<a href="http://www.doxygen.nl/manual/docblocks.html" target="_blank">Documenting the code</a>》中详细介绍了给不同语言添加注释的方法。</p>
+<p style="text-align: left">常用的功能包括个文件添加注释和函数添加注释。</p>
+<p style="text-align: left">比如文件注释：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 128, 0, 1)">/*</span><span style="color: rgba(0, 128, 0, 1)">*
+ * @file    usb_hidraw_api.c
+ * @author  xxx
+ * @brief   操作hidraw设备接口open/close/read/write.
+</span><span style="color: rgba(0, 128, 0, 1)">*/</span></pre>
+</div>
+<p>显示结果如下：</p>
+<p style="text-align: left"><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190923094914309-2114112339.png" alt=""></p>
+<p>添加函数注释：</p>
+<div class="cnblogs_code">
+<pre><span style="color: rgba(0, 128, 0, 1)">/*</span><span style="color: rgba(0, 128, 0, 1)">*
+  @brief    从hidraw设备读取数据。
+  @param    fd hidraw设备句柄。
+  @param    r_buf 读取函数缓存指针。
+  @param    len 读取大小。
+  @return   0: 读取成功。\n
+            -1: 读取失败。
+ </span><span style="color: rgba(0, 128, 0, 1)">*/</span>
+<span style="color: rgba(0, 0, 255, 1)">int</span> usb_read(<span style="color: rgba(0, 0, 255, 1)">int</span> fd,<span style="color: rgba(0, 0, 255, 1)">char</span> *r_buf,<span style="color: rgba(0, 0, 255, 1)">int</span><span style="color: rgba(0, 0, 0, 1)"> len)
+{
+    </span><span style="color: rgba(0, 0, 255, 1)">int</span><span style="color: rgba(0, 0, 0, 1)">    ret;
+    </span><span style="color: rgba(0, 0, 255, 1)">char</span> tmp_buf[<span style="color: rgba(128, 0, 128, 1)">520</span><span style="color: rgba(0, 0, 0, 1)">];
+    </span><span style="color: rgba(0, 0, 255, 1)">if</span>(r_buf ==<span style="color: rgba(0, 0, 0, 1)"> NULL) {  
+        perror(</span><span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(128, 0, 0, 1)">usb_read::pointer error!</span><span style="color: rgba(128, 0, 0, 1)">"</span><span style="color: rgba(0, 0, 0, 1)">);  
+        </span><span style="color: rgba(0, 0, 255, 1)">return</span> -<span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">;  
+    }
+
+    ret </span>= read(fd, tmp_buf, len+<span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">);  
+    </span><span style="color: rgba(0, 0, 255, 1)">if</span>(ret &lt; <span style="color: rgba(128, 0, 128, 1)">0</span><span style="color: rgba(0, 0, 0, 1)">) {
+        </span><span style="color: rgba(0, 128, 0, 1)">//</span><span style="color: rgba(0, 128, 0, 1)">printf("read data error  %d\n",ret);</span>
+        <span style="color: rgba(0, 0, 255, 1)">return</span> -<span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">;
+    }
+    memcpy(r_buf,</span>&amp;tmp_buf[<span style="color: rgba(128, 0, 128, 1)">1</span><span style="color: rgba(0, 0, 0, 1)">],len);
+    </span><span style="color: rgba(0, 0, 255, 1)">return</span> <span style="color: rgba(128, 0, 128, 1)">0</span><span style="color: rgba(0, 0, 0, 1)">;
+}</span></pre>
+</div>
+<p>结果如下：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190923094837210-1555449157.png" alt=""></p>
+<p>更多增强功能参考官网文档。</p>
+<h1 style="text-align: left">4. 使用graphviz的dot功能</h1>
+<p>使用graphviz的dot功能，可以生成详细的函数调用关系图、include关系图等，提高阅读效率。</p>
+<p>通过Run的Show configuration可以查看配置信息：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190923100321588-916112989.png" alt=""></p>
+<p>下面看看对dot的配置：</p>
+<div class="cnblogs_code">
+<pre>#---------------------------------------------------------------------------<span style="color: rgba(0, 0, 0, 1)">
+# Configuration options related to the dot tool
+#</span>---------------------------------------------------------------------------<span style="color: rgba(0, 0, 0, 1)">
+CLASS_DIAGRAMS         </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+MSCGEN_PATH            </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+DIA_PATH               </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+HIDE_UNDOC_RELATIONS   </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+HAVE_DOT               </span>=<span style="color: rgba(0, 0, 0, 1)"> YES----------------------------打开dot功能。
+DOT_NUM_THREADS        </span>= <span style="color: rgba(128, 0, 128, 1)">0</span><span style="color: rgba(0, 0, 0, 1)">
+DOT_FONTNAME           </span>=<span style="color: rgba(0, 0, 0, 1)"> Helvetica----------------------设置dot功能的字体和大小。
+DOT_FONTSIZE           </span>= <span style="color: rgba(128, 0, 128, 1)">10</span><span style="color: rgba(0, 0, 0, 1)">
+DOT_FONTPATH           </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+CLASS_GRAPH            </span>=<span style="color: rgba(0, 0, 0, 1)"> YES----------------------------类等关系图。
+COLLABORATION_GRAPH    </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+GROUP_GRAPHS           </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+UML_LOOK               </span>=<span style="color: rgba(0, 0, 0, 1)"> NO
+UML_LIMIT_NUM_FIELDS   </span>= <span style="color: rgba(128, 0, 128, 1)">10</span><span style="color: rgba(0, 0, 0, 1)">
+TEMPLATE_RELATIONS     </span>=<span style="color: rgba(0, 0, 0, 1)"> NO
+INCLUDE_GRAPH          </span>=<span style="color: rgba(0, 0, 0, 1)"> YES----------------------------include关系图。
+INCLUDED_BY_GRAPH      </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+CALL_GRAPH             </span>=<span style="color: rgba(0, 0, 0, 1)"> YES----------------------------调用和被调用关系图。
+CALLER_GRAPH           </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+GRAPHICAL_HIERARCHY    </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+DIRECTORY_GRAPH        </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+DOT_IMAGE_FORMAT       </span>=<span style="color: rgba(0, 0, 0, 1)"> png----------------------------dot输出的图像格式。
+INTERACTIVE_SVG        </span>=<span style="color: rgba(0, 0, 0, 1)"> NO
+DOT_PATH               </span>= /usr/bin/<span style="color: rgba(0, 0, 0, 1)">dot-------------------一定要指定的系统中dot路径。
+DOTFILE_DIRS           </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+MSCFILE_DIRS           </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+DIAFILE_DIRS           </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+PLANTUML_JAR_PATH      </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+PLANTUML_INCLUDE_PATH  </span>=<span style="color: rgba(0, 0, 0, 1)"> 
+DOT_GRAPH_MAX_NODES    </span>= <span style="color: rgba(128, 0, 128, 1)">50</span><span style="color: rgba(0, 0, 0, 1)">
+MAX_DOT_GRAPH_DEPTH    </span>= <span style="color: rgba(128, 0, 128, 1)">0</span><span style="color: rgba(0, 0, 0, 1)">
+DOT_TRANSPARENT        </span>=<span style="color: rgba(0, 0, 0, 1)"> NO
+DOT_MULTI_TARGETS      </span>=<span style="color: rgba(0, 0, 0, 1)"> NO
+GENERATE_LEGEND        </span>=<span style="color: rgba(0, 0, 0, 1)"> YES
+DOT_CLEANUP            </span>= YES</pre>
+</div>
+<p>生成的函数调用关系图：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190923100706217-2098085755.png" alt=""></p>
+<p>&nbsp;</p>
+<p>include关系图：</p>
+<p><img src="https://img2018.cnblogs.com/blog/1083701/201909/1083701-20190923100757330-1067480525.png" alt=""></p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+        </div>
+        <p class="postfoot">
+            posted on 
+<span id="post-date">2019-09-22 00:00</span>&nbsp;
+<a href="https://www.cnblogs.com/arnoldlu/">ArnoldLu</a>&nbsp;
+阅读(<span id="post_view_count">1637</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=11552271" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(11552271);return false;">收藏</a>
+        </p>
+    </div>
+</div>
+
+<script src="https://common.cnblogs.com/highlight/10.3.1/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 323754, cb_blogApp = 'arnoldlu', cb_blogUserGuid = '421fcf3e-89c6-e611-845c-ac853d9f53ac';
+    var cb_entryId = 11552271, cb_entryCreatedDate = '2019-09-22 00:00', cb_postType = 1;
+    updatePostStats(
+        [cb_entryId],
+        function(id, count) { $("#post_view_count").text(count) },
+        function(id, count) { $("#post_comment_count").text(count) })
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+</script>
+<a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_card1"></div>
+    <div id="cnblogs_c2" class="under-post-card">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_card2"></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+       var commentManager = new blogCommentManager();
+       commentManager.renderComments(0);
+       fixPostBody();
+       deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);       deliverT2();
+       deliverC1C2();
+       loadNewsAndKb();
+       loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);       LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+       GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+       loadOptUnderPost();
+       GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+    <li>
+        <a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+
+    </li>
+    <li>
+        
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/arnoldlu/">
+首页</a>
+
+    </li>
+    <li>
+        
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+
+    </li>
+    <li>
+        
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/ArnoldLu">
+联系</a>
+    </li>
+    <li>
+        
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/arnoldlu/rss/">
+订阅</a>
+        
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/arnoldlu/rss/">
+    <img src="/skins/anothereon001/images/xml.gif" alt="订阅" />
+</a>
+    </li>
+    <li>
+        
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+
+    </li>
+</ul>
+
+
+<div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script>
+<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+<div id="sidebar_c3"></div>
+<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a href="https://www.cnblogs.com/" id="footer_site_link">博客园</a>
+	<br />
+	Copyright &copy; 2021 ArnoldLu
+<br /><span id="poweredby">Powered by .NET 5.0 on Kubernetes</span>
+
+</p>
+
+
+</div>
+</div>
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8L-rpLgFVEJMgssCVvNUAjuPiS-PAw25Tk5jv9S3HfRvc1kpijASNwKPzYWVzrnNC-VncW0JK123c9ApUbj2sLWgsb4ZRTgwjZTyxFDohzq5IfRsUgqrU0lU1LjHaFul7NVvovApGheghfPrVFYNvCc" />
+</body>
+</html>
