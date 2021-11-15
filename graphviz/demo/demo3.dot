@@ -1,0 +1,12 @@
+digraph g{
+    // rankdir="LR"
+    A;B;C;D;E;F;H;
+    {rank="same"; C;D;E}
+    A->B;
+    B->C;
+    C->D;
+    D->E;
+    D->F;
+    E->H;
+}
+
