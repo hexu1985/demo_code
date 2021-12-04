@@ -13,4 +13,13 @@ plt.axis([-7,7,-7,7])   # 自定义坐标轴范围[xmin, xmax, ymin, ymax]
 plt.xticks(range(-7,8)) # x轴刻度
 plt.yticks(range(-7,8)) # y轴刻度
 
+# 移动坐标轴
+ax = plt.gca()
+ax.spines['right'].set_color('none')
+ax.spines['top'].set_color('none')
+ax.xaxis.set_ticks_position('bottom')
+ax.yaxis.set_ticks_position('left')
+ax.spines['bottom'].set_position(('data', 0))
+ax.spines['left'].set_position(('data', 0))
+
 plt.show()
