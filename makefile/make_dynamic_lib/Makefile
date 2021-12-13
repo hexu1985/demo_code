@@ -23,9 +23,12 @@ clean:
 test1: test1.o
 #	$(CXX) -o $@ $^ $(LDFLAGS) $(LDPATH)
 #	$(CXX) -o $@ $^ -Wl,-R./hello $(LDFLAGS) $(LDPATH)
+#	$(CXX) -o $@ $^ -Wl,-rpath,./hello $(LDFLAGS) $(LDPATH)
 #	$(CXX) -o $@ $^ -Wl,-R./hello -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
-	# 设置runpath为$ORGIN, 即相对于可执行程序的路径
-	$(CXX) -o $@ $^ -Wl,-R'$$ORIGIN/hello' -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
+#	$(CXX) -o $@ $^ -Wl,-rpath,./hello -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
+# 设置runpath为$ORGIN, 即相对于可执行程序的路径
+#	$(CXX) -o $@ $^ -Wl,-R'$$ORIGIN/hello' -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
+	$(CXX) -o $@ $^ -Wl,-rpath,'$$ORIGIN/hello' -Wl,--enable-new-dtags $(LDFLAGS) $(LDPATH)
 
 test2: test2.o
 	$(CXX) -o $@ $^ -ldl
