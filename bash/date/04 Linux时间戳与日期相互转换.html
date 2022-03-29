@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-cn"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-crossorigin">
+    <meta name="description" content="Linux时间戳与日期相互转换 1.&amp;#160;用时间戳显示当前时间：date&amp;#160;+%s 2.将时间戳转换成日期时间：date -d @1568271453 3.转换指定日期为时间戳：date">
+    <meta property="og:description" content="Linux时间戳与日期相互转换 1.&amp;#160;用时间戳显示当前时间：date&amp;#160;+%s 2.将时间戳转换成日期时间：date -d @1568271453 3.转换指定日期为时间戳：date">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>04 : Linux时间戳与日期相互转换 - 小小xu - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>:not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([class*="language-"]):not([highlighted]):not(.hljs):not([class*="brush:"]) {
+        background: rgb(245, 245, 245);
+        padding: 5px;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+    }:not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {
+            background: rgb(245, 245, 245) !important;
+            border-color: transparent !important;
+        }</style><link rel="stylesheet" href="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/blog-common.css">
+    <link id="MainCss" rel="stylesheet" href="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/bundle-coffee.css">
+    <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/cnblogs.css">
+    <link type="text/css" rel="stylesheet" href="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/custom.css">
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/bundle-coffee-mobile.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/jim-xu/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/jim-xu/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/jim-xu/wlwmanifest.xml">
+    <script type="text/javascript" async="" charset="utf-8" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/core.js"></script><script type="text/javascript" async="" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/analytics.js"></script><script>
+        var currentBlogId = 535341;
+        var currentBlogApp = 'jim-xu';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'coffee';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function(){ return ''; } });
+            }
+        } catch(error) { }
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+    </script>
+        <script>
+            var currentPostDateAdded = '2019-09-12 15:06';
+        </script>
+    <script src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/jquery-2.js"></script>
+    <script src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/blog-common.js"></script><style type="text/css">.medium-zoom-overlay{position:fixed;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s;will-change:opacity}.medium-zoom--opened .medium-zoom-overlay{cursor:pointer;cursor:zoom-out;opacity:1}.medium-zoom-image{cursor:pointer;cursor:zoom-in;transition:transform .3s cubic-bezier(.2,0,.2,1)!important}.medium-zoom-image--hidden{visibility:hidden}.medium-zoom-image--opened{position:relative;cursor:pointer;cursor:zoom-out;will-change:transform}</style><script id="hljs-script" async="" data-loaded="true" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/highlight.js"></script>
+    
+    
+    
+<meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><script src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/pubads_impl_2022031601.js" async=""></script></head>
+<body class="skin-coffee has-navbar">
+    <a name="top"></a>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/logo.svg" alt="博客园Logo">
+                    </a>
+                </li>
+                <li><a href="https://www.cnblogs.com/" onclick="countClicks('skin-navbar-sitehome')">首页</a></li>
+                <li><a href="https://news.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-news')">新闻</a></li>
+                <li><a href="https://q.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-q')">博问</a></li>
+                <li><a id="nav_brandzone" href="https://brands.cnblogs.com/huawei" onclick="countClicks('nav', 'skin-navbar-brands')">专区</a></li>
+                <li><a href="https://ing.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-ing')">闪存</a></li>
+                <li><a href="https://edu.cnblogs.com/" onclick="countClicks('nav', 'skin-navbar-edu')">班级</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3">
+                        <button type="submit" id="zzk_search_button">
+                            <img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/search.svg" alt="搜索">
+                        </button>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/lite-mode-on.svg" alt="简洁模式">
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/lite-mode-check.svg" class="hide"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/jim-xu/"><img id="blogLogo" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/jim-xu/">田园里的--小蟋蟀</a>
+</h1>
+<h2>我在青春的田野上播种勤奋与努力，希望能在未来收获成熟与睿智……</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/jim-xu/">
+首页</a>
+</li>
+	<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E5%B0%8F%E5%B0%8Fxu">
+联系</a></li>
+	<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+	<li>
+
+	
+</li>
+</ul>
+
+
+
+			<div class="blogStats">
+				
+				<!--done-->
+随笔- 72&nbsp;
+文章- 0&nbsp;
+评论- 2&nbsp;
+阅读- 
+<span title="总阅读数: 111399">
+11万</span>&nbsp;
+
+
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jim-xu/p/11511996.html">
+    <span role="heading" aria-level="2">04 : Linux时间戳与日期相互转换</span>
+    
+
+
+
+</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body blogpost-body-html">
+<p><br><strong>Linux时间戳与日期相互转换</strong></p>
+<p>&nbsp;</p>
+<p><strong>&nbsp;1.&nbsp;</strong><span style="font-family: 微软雅黑">用时间戳显示当前时间：</span>date&nbsp;+%s</p>
+<p align="justify">&nbsp;<img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/1774819-20190912150452952-464980930.png" alt="" class="medium-zoom-image"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="justify">&nbsp;</p>
+<p align="justify">2.将时间戳转换成日期时间：date -d @1568271453</p>
+<p align="justify">&nbsp;<img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/1774819-20190912150457877-549273831.png" alt="" class="medium-zoom-image"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="justify">&nbsp;</p>
+<p align="justify">3.<span style="font-family: 宋体">转换指定日期为时间戳：</span>date -d '2019-9-12 15:00' +%s</p>
+<p align="justify">&nbsp;<img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/1774819-20190912150520255-261611493.png" alt="" class="medium-zoom-image"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="justify">&nbsp;</p>
+<p align="justify">&nbsp;4.&nbsp;<span style="font-family: 宋体">指定日期格式转换：</span>date -d @1568271453 +"%Y-%m-%d %H:%M:%S"</p>
+<p align="justify">&nbsp;<img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/1774819-20190912150531506-400698612.png" alt="" class="medium-zoom-image"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p align="justify">&nbsp;</p>
+</div>
+<div id="MySignature" role="contentinfo">
+    运维
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo"><div id="BlogPostCategory">
+    分类: 
+            <a href="https://www.cnblogs.com/jim-xu/category/1534114.html" target="_blank">Linux基础记录</a></div>
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/jim-xu/tag/linux%E5%9F%BA%E7%A1%80/">linux基础</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(11511996,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow('a5577f6c-4be1-4aa6-4728-08d725ff7d6b');" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/jim-xu/" target="_blank"><img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/20190821152739.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/jim-xu/">小小xu</a><br>
+            <a href="https://home.cnblogs.com/u/jim-xu/followees/">关注 - 0</a><br>
+            <a href="https://home.cnblogs.com/u/jim-xu/followers/">粉丝 - 6</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow('a5577f6c-4be1-4aa6-4728-08d725ff7d6b');return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(11511996,'Digg')">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(11511996,'Bury')">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/jim-xu/p/11507743.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/jim-xu/p/11507743.html" title="发布于 2019-09-11 17:53">03 : linux判断服务器是虚拟机还是物理机</a>
+    <br>
+    <a href="https://www.cnblogs.com/jim-xu/p/11520545.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/jim-xu/p/11520545.html" title="发布于 2019-09-14 22:14">04 - logstash  简单使用 - 收集系统日志</a>
+
+</div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2019-09-12 15:06</span>&nbsp;
+<a href="https://www.cnblogs.com/jim-xu/">小小xu</a>&nbsp;
+阅读(<span id="post_view_count">11977</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=11511996" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(11511996);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: '', targetType: 'blogPost', targetId: '11511996', targetLink: 'https://www.cnblogs.com/jim-xu/p/11511996.html', title: '04 : Linux时间戳与日期相互转换' })">举报</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+
+<script>
+    var cb_entryId = 11511996, cb_entryCreatedDate = '2019-09-12 15:06', cb_postType = 1;
+    var allowComments = true, cb_blogId = 535341, cb_blogApp = 'jim-xu', cb_blogUserGuid = 'a5577f6c-4be1-4aa6-4728-08d725ff7d6b';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login('!comments');">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="cnblogs_ch"><a href="https://click.aliyun.com/m/1000325269/" target="_blank" onclick="gtag('event', 'click', {'event_category': 'ad', 'event_label': 'T2-阿里云-采购季'})">【推荐】阿里云采购季-热卖返场优惠享不停，云产品新老同享1元起</a><br><a href="https://cloud.baidu.com/campaign/2022/index.html?track=f685c156ee58624f28cc3a33e1947160036fe70e52355ff7#person" target="_blank" onclick="gtag('event', 'click', {'event_category': 'ad', 'event_label': 'T2-百度智能云-开年采购季'})">【推荐】百度智能云2022开年大促0.4折起，企业新用户享高配优惠</a><br><a href="https://brands.cnblogs.com/huawei" target="_blank" onclick="gtag('event', 'click', {'event_category': 'ad', 'event_label': 'T2-华为专区'})">【推荐】华为开发者专区，与开发者一起构建万物互联的智能世界</a><br></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card" style="display: none;">
+            <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;"></div>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/tcjiaan/p/16058491.html" target="_blank">[ASP.NET Core] MVC 模型绑定：非规范正文内容的处理</a>
+    <br>
+· <a href="https://www.cnblogs.com/yexiaochai/p/16041013.html" target="_blank">全面认识数据指标体系</a>
+    <br>
+· <a href="https://www.cnblogs.com/weixiao-he/p/16051730.html" target="_blank">项目开发中对成长的一些思考</a>
+    <br>
+· <a href="https://www.cnblogs.com/makemylife/p/16047060.html" target="_blank">专车架构进化往事：好的架构是进化来的，不是设计来的</a>
+    <br>
+· <a href="https://www.cnblogs.com/xuanyuan/p/16048303.html" target="_blank">一个故事看懂 CPU 的 SIMD 技术</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>最新新闻</b>：
+    <br>
+ ·          <a href="https://news.cnblogs.com/n/717718/" target="_blank">音乐能增加幸福感改善生活质量</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717717/" target="_blank">有赞教育产研全部被裁？回应：产品维护、客户服务、销售正常运行</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717716/" target="_blank">大疆被卷入俄乌冲突，回应：俄方无需我们技术支持</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717715/" target="_blank">孟晚舟时隔4年再出席华为业绩会：祖国变化很大，正努力跟上变化</a>
+        <br>
+ ·          <a href="https://news.cnblogs.com/n/717714/" target="_blank">分拆而非出售，自动驾驶公司图森的中国团队估值10亿美元寻求融资</a>
+        <br>
+    » <a href="https://news.cnblogs.com/" title="IT 新闻" target="_blank">更多新闻...</a>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+
+                window.tocManager.displayDisableTocTips = false;
+                window.tocManager.generateToc();
+            setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div>
+
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem"><!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	
+<div id="blog-news">
+    <span id="cnzz_stat_icon_1278065684"><a href="https://www.cnzz.com/stat/website.php?web_id=1278065684" target="_blank" title="站长统计"><img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/pic1.gif" vspace="0" hspace="0" border="0"></a></span><script type="text/javascript">window['__document_write_ajax_callbacks__']['5']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['6']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['4']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['3']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['1']();</script>
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/jim-xu/">
+            小小xu
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/jim-xu/" title="入园时间：2019-08-21">
+            2年7个月
+        </a>
+        <br>
+        粉丝：
+        <a href="https://home.cnblogs.com/u/jim-xu/followers/">
+            6
+        </a>
+        <br>
+        关注：
+        <a href="https://home.cnblogs.com/u/jim-xu/followees/">
+            0
+        </a>
+        <div id="p_b_follow">
+<a href="javascript:void(0)" onclick="follow('a5577f6c-4be1-4aa6-4728-08d725ff7d6b')">+加关注</a></div>
+        <script type="text/javascript">window['__document_write_ajax_callbacks__']['7']();</script><script>window['__document_write_ajax_callbacks__']['2']();</script>
+    </div>
+</div>
+</div>
+
+</div>
+<div id="sidebar_c3" style="display: block;"><a href="https://c.gridsumdissector.com/r/?gid=gad_545_ewontdtj&amp;ck=1075&amp;adk=10813&amp;autorefresh=__AUTOREFRESH__" target="_blank"><img src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/35695-20220216170915075-1346863871.jpg" alt="字节跳动2022校园招聘" onclick="countClicks('ad', 'C3-字节-雇主春招');" width="300" height="250"></a></div>
+			<div id="calendar"><div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" title="Calendar" cellspacing="0" cellpadding="0" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar('2022/02/28'); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2022年3月</td>
+                            <td class="CalNextPrev" align="right">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar('2022/04/29'); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" abbr="日" scope="col" align="center">日</th>
+        <th class="CalDayHeader" abbr="一" scope="col" align="center">一</th>
+        <th class="CalDayHeader" abbr="二" scope="col" align="center">二</th>
+        <th class="CalDayHeader" abbr="三" scope="col" align="center">三</th>
+        <th class="CalDayHeader" abbr="四" scope="col" align="center">四</th>
+        <th class="CalDayHeader" abbr="五" scope="col" align="center">五</th>
+        <th class="CalDayHeader" abbr="六" scope="col" align="center">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">27</td>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                        <td class="" align="center">
+                            4
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        5
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            6
+                        </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                            <td class="" align="center">
+                                11
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            12
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            13
+                        </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                            <td class="" align="center">
+                                18
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            20
+                        </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                            <td class="" align="center">
+                                25
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            26
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            27
+                        </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                29
+                            </td>
+                            <td class="" align="center">
+                                30
+                            </td>
+                            <td class="" align="center">
+                                31
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            3
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            9
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script></div>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div id="sidebar_search" class="mySearch">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block"><div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/mysql%E6%95%B0%E6%8D%AE%E5%BA%93/">mysql数据库<span class="tag-count">(15)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/docker%E7%AC%94%E8%AE%B0/">docker笔记<span class="tag-count">(12)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/python%20-%20%E8%AE%B0%E5%BD%95%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%BF%87%E7%A8%8B/">python - 记录学习的过程<span class="tag-count">(10)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/linux%E5%9F%BA%E7%A1%80/">linux基础<span class="tag-count">(10)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/redis-nosql/">redis-nosql<span class="tag-count">(7)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/%E6%95%85%E9%9A%9C%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">故障问题总结<span class="tag-count">(6)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/elk%E6%97%A5%E5%BF%97%E7%B3%BB%E7%BB%9F/">elk日志系统<span class="tag-count">(5)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/k8s%E7%AC%94%E8%AE%B0/">k8s笔记<span class="tag-count">(4)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/jim-xu/tag/rabbitmq%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/">rabbitmq消息队列<span class="tag-count">(3)</span></a>
+        </li>
+    
+
+</ul>
+</div>
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div class="catListPostCategory">
+        <h3 class="catListTitle">
+            
+随笔分类
+
+
+
+        </h3>
+
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1571923.html" class="category-item-link" rel="" target="">docker 容器(12)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1534115.html" class="category-item-link" rel="" target="">elk日志系统(5)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1592333.html" class="category-item-link" rel="" target="">kubernetes（k8s） (4)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1537061.html" class="category-item-link" rel="" target="">linux故障问题记录(6)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1534114.html" class="category-item-link" rel="" target="">Linux基础记录(9)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1534116.html" class="category-item-link" rel="" target="">mysql数据库(14)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1534122.html" class="category-item-link" rel="" target="">python - 记录学习的过程(10)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1534121.html" class="category-item-link" rel="" target="">rabbitmq消息队列(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1554215.html" class="category-item-link" rel="" target="">redis—nosql数据库(7)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/category/1535499.html" class="category-item-link" rel="" target="">shell编程(1)</a>
+ 
+                </li>                
+            
+        </ul>
+    </div>    
+    <div class="catListPostArchive">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+
+        </h3>
+
+        <ul>
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2020/05.html" class="category-item-link" rel="" target="">2020年5月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2020/03.html" class="category-item-link" rel="" target="">2020年3月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2020/02.html" class="category-item-link" rel="" target="">2020年2月(5)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2019/12.html" class="category-item-link" rel="" target="">2019年12月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2019/11.html" class="category-item-link" rel="" target="">2019年11月(13)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2019/10.html" class="category-item-link" rel="" target="">2019年10月(22)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2019/09.html" class="category-item-link" rel="" target="">2019年9月(20)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/jim-xu/archive/2019/08.html" class="category-item-link" rel="" target="">2019年8月(5)</a>
+ 
+                </li>                
+            
+        </ul>
+    </div>    
+</div>
+
+<!-- 最新评论 -->
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block"><div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11788726.html">
+                            1. 04: Job for docker.service failed because the control process exited with error code解决(12351)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11879233.html">
+                            2. 03：k8s创建容器（pod）(12343)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11511996.html">
+                            3. 04 : Linux时间戳与日期相互转换(11972)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/12929358.html">
+                            4. MYSQL把一张表的数据批量复制到另外一张表(9834)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11539805.html">
+                            5. 06： known_hosts文件作用，以及常见问题(7770)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11457056.html">
+                            6. 03: zabbix报错：active check configuration update from....started to fail(6981)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11520545.html">
+                            7. 04 - logstash  简单使用 - 收集系统日志(6493)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11873442.html">
+                            8. 01：k8s 安装部署(5964)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11507743.html">
+                            9. 03 : linux判断服务器是虚拟机还是物理机(3323)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11441762.html">
+                            10. 02：linux  磁盘满了，却找不到大文件问题处理 lsof命令(2895)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11430501.html">
+                            11. 01：linux系统负载高  -  常用排查方法(2194)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11494467.html">
+                            12. 03 - Kibana 安装 , 索引添加和界面介绍(2119)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11494545.html">
+                            13. Ubuntu常用命令大全(1679)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11874315.html">
+                            14. 02：配置k8s-master为镜像仓库(1519)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11708905.html">
+                            15. 04 : docker - 基于容器制作镜像(1459)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/12286350.html">
+                            16. socket实现简单的文件下载传输功能(1391)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/12918242.html">
+                            17. 06：rpm 和 yum 执行卡住，解决方法(1353)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11409408.html">
+                            18. 01 - elasticsearch介绍和安装（7.x）(1310)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11795406.html">
+                            19. 09 :  docker  4种网络类型(1218)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/jim-xu/p/11494432.html">
+                            20. 02 - logstash 安装和简单使用(1058)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<!-- 评论排行榜 -->
+
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">推荐排行榜</h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/jim-xu/p/11788726.html">
+                                1. 04: Job for docker.service failed because the control process exited with error code解决(5)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/jim-xu/p/11430501.html">
+                                2. 01：linux系统负载高  -  常用排查方法(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2022 小小xu
+<br><span id="poweredby">Powered by .NET 6 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8AuMt_3FvyxIgNOR82PHE4kJvoCCytpCtpnXSB494K3QeqYHVjVdu7yqzNQRb50FqOu6jllWaWdm_x-JttyJ04nx3WkzkR8wkRlc0JGfXuOUBfWLw8eYUKJmV5c2osGwp0SWOEdb68L-BxhGwAJeY14">
+    <script async="" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/js.js"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+    </script>
+    <script defer="defer" src="04%20Linux%E6%97%B6%E9%97%B4%E6%88%B3%E4%B8%8E%E6%97%A5%E6%9C%9F%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2_files/hm.js"></script>
+
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1278065684'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1278065684%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">getFollowStatus('a5577f6c-4be1-4aa6-4728-08d725ff7d6b');</script></body></html>
