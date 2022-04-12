@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <asm/types.h>
-#include <unistd.h>
 //该头文件需要放在netlink.h前面防止编译出现__kernel_sa_family未定义
 #include <sys/socket.h>
 #include <linux/netlink.h>
@@ -37,27 +37,15 @@ void MonitorNetlinkUevent()
     if(bind(sockfd,(struct sockaddr *)&sa,sizeof(sa))==-1)
         printf("bind error:%s\n",strerror(errno));
 
-    int count = 0;
-    for (;;) {
-        memset(buf, 0, sizeof(buf));
-        len=recvmsg(sockfd,&msg,0);
-        if(len<0) {
-            printf("receive error\n");
-            continue;
-        } else if(len<32||len>sizeof(buf)) {
-            printf("invalid message");
-            continue;
-        }
-
-        count++;
-        printf("***********************msg %d start***********************\n", count);
-        for(i=0;i<len;i++)
-            if(*(buf+i)=='\0')
-                buf[i]='\n';
-        printf("received %d bytes\n%s\n",len,buf);
-        printf("***********************msg %d ends************************\n", count);
-        fflush(stdout);
-    }
+    len=recvmsg(sockfd,&msg,0);
+    if(len<0)
+        printf("receive error\n");
+    else if(len<32||len>sizeof(buf))
+        printf("invalid message");
+    for(i=0;i<len;i++)
+        if(*(buf+i)=='\0')
+            buf[i]='\n';
+    printf("received %d bytes\n%s\n",len,buf);
     close(sockfd);
 }
 

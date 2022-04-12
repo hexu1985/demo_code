@@ -15,21 +15,12 @@ void MonitorNetlinkUevent()
     struct sockaddr_nl sa;
     int len;
     char buf[4096];
-    struct iovec iov;
-    struct msghdr msg;
     int i;
 
     memset(&sa,0,sizeof(sa));
     sa.nl_family=AF_NETLINK;
     sa.nl_groups=NETLINK_KOBJECT_UEVENT;
     sa.nl_pid = 0;//getpid(); both is ok
-    memset(&msg,0,sizeof(msg));
-    iov.iov_base=(void *)buf;
-    iov.iov_len=sizeof(buf);
-    msg.msg_name=(void *)&sa;
-    msg.msg_namelen=sizeof(sa);
-    msg.msg_iov=&iov;
-    msg.msg_iovlen=1;
 
     sockfd=socket(AF_NETLINK,SOCK_RAW,NETLINK_KOBJECT_UEVENT);
     if(sockfd==-1)
@@ -40,7 +31,7 @@ void MonitorNetlinkUevent()
     int count = 0;
     for (;;) {
         memset(buf, 0, sizeof(buf));
-        len=recvmsg(sockfd,&msg,0);
+        len=recv(sockfd,buf,4096,0);
         if(len<0) {
             printf("receive error\n");
             continue;
@@ -51,9 +42,12 @@ void MonitorNetlinkUevent()
 
         count++;
         printf("***********************msg %d start***********************\n", count);
-        for(i=0;i<len;i++)
+        for(i=0;i<len;i++) {
             if(*(buf+i)=='\0')
                 buf[i]='\n';
+            else if(!isprint(*(buf+i)))
+                buf[i] == '.';
+        }
         printf("received %d bytes\n%s\n",len,buf);
         printf("***********************msg %d ends************************\n", count);
         fflush(stdout);
