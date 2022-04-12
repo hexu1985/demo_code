@@ -1,0 +1,3600 @@
+***********************start***********************
+***********************msg 1 start***********************
+received 250 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+MAJOR=189
+MINOR=132
+DEVNAME=bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5389
+
+***********************msg 1 ends************************
+***********************msg 2 start***********************
+received 279 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+
+***********************msg 2 ends************************
+***********************msg 3 start***********************
+received 180 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+SUBSYSTEM=scsi
+DEVTYPE=scsi_host
+SEQNUM=5391
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+
+***********************msg 3 ends************************
+***********************msg 4 start***********************
+received 199 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+SUBSYSTEM=scsi_host
+SEQNUM=5392
+E=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+
+***********************msg 4 ends************************
+***********************msg 5 start***********************
+received 300 bytes
+bind@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+DRIVER=usb-storage
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5393
+
+***********************msg 5 ends************************
+***********************msg 6 start***********************
+received 263 bytes
+bind@/devices/pci0000:00/0000:00:14.0/usb2/2-3
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+MAJOR=189
+MINOR=132
+DEVNAME=bus/usb/002/005
+DEVTYPE=usb_device
+DRIVER=usb
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5394
+c00dp00ic08isc06ip50in00
+SEQNUM=5393
+
+***********************msg 6 ends************************
+***********************msg 7 start***********************
+received 696 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ê
+
+w≈Â'¯ı
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+DEVNAME=/dev/bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5389
+MAJOR=189
+MINOR=132
+USEC_INITIALIZED=72112231373
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb
+ID_DRIVE_THUMB=1
+
+***********************msg 7 ends************************
+***********************msg 8 start***********************
+received 410 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+r
+
+w≈Â±Ge
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+USEC_INITIALIZED=72112232190
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb-storage
+666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb
+ID_DRIVE_THUMB=1
+
+***********************msg 8 ends************************
+***********************msg 9 start***********************
+received 189 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ï
+
+
+) (†˚X
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+SUBSYSTEM=scsi
+DEVTYPE=scsi_host
+SEQNUM=5391
+USEC_INITIALIZED=72112232949
+6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+USEC_INITIALIZED=72112232190
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb-storage
+666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb
+ID_DRIVE_THUMB=1
+
+***********************msg 9 ends************************
+***********************msg 10 start***********************
+received 192 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ò
+
+
+†˚X
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+SUBSYSTEM=scsi_host
+SEQNUM=5392
+USEC_INITIALIZED=72112233500
+0
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5390
+USEC_INITIALIZED=72112232190
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb-storage
+666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb
+ID_DRIVE_THUMB=1
+
+***********************msg 10 ends************************
+***********************msg 11 start***********************
+received 411 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+s
+
+w≈Â±Ge
+
+
+
+
+
+
+
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+DRIVER=usb-storage
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5393
+USEC_INITIALIZED=72112232190
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+66
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+DRIVER=usb
+ID_DRIVE_THUMB=1
+
+***********************msg 11 ends************************
+***********************msg 12 start***********************
+received 697 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ë
+
+w≈Â'¯ı
+
+
+
+
+
+
+
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+DEVNAME=/dev/bus/usb/002/005
+DEVTYPE=usb_device
+DRIVER=usb
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5394
+USEC_INITIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 12 ends************************
+***********************msg 13 start***********************
+received 206 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_target
+SEQNUM=5395
+
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5394
+USEC_INITIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 13 ends************************
+***********************msg 14 start***********************
+received 243 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+MODALIAS=scsi:t-0x00
+SEQNUM=5396
+EC_INITIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 14 ends************************
+***********************msg 15 start***********************
+received 249 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+SUBSYSTEM=scsi_device
+SEQNUM=5397
+TIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 15 ends************************
+***********************msg 16 start***********************
+received 243 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+SUBSYSTEM=scsi_disk
+SEQNUM=5398
+=5397
+TIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 16 ends************************
+***********************msg 17 start***********************
+received 273 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+SUBSYSTEM=scsi_generic
+MAJOR=21
+MINOR=0
+DEVNAME=sg0
+SEQNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 17 ends************************
+***********************msg 18 start***********************
+received 263 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+SUBSYSTEM=bsg
+MAJOR=244
+MINOR=0
+DEVNAME=bsg/1:0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 18 ends************************
+***********************msg 19 start***********************
+received 203 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+£
+
+
+) (Újüb
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_target
+SEQNUM=5395
+USEC_INITIALIZED=72113256285
+YSTEM=bsg
+MAJOR=244
+MINOR=0
+DEVNAME=bsg/1:0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 19 ends************************
+***********************msg 20 start***********************
+received 242 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ 
+
+
+) (}µµ
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+MODALIAS=scsi:t-0x00
+SEQNUM=5396
+USEC_INITIALIZED=72113257096
+DRIVER=sd
+/1:0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 20 ends************************
+***********************msg 21 start***********************
+received 218 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+≤
+
+
+}µµ
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+SUBSYSTEM=scsi_device
+SEQNUM=5397
+USEC_INITIALIZED=72113257709
+D=72113257096
+DRIVER=sd
+/1:0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 21 ends************************
+***********************msg 22 start***********************
+received 214 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Æ
+
+
+â©
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+SUBSYSTEM=scsi_disk
+SEQNUM=5398
+USEC_INITIALIZED=72113258232
+709
+D=72113257096
+DRIVER=sd
+/1:0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 22 ends************************
+***********************msg 23 start***********************
+received 245 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Õ
+
+
+ﬂÿ°
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+SUBSYSTEM=bsg
+DEVNAME=/dev/bsg/1:0:0:0
+SEQNUM=5400
+MAJOR=244
+MINOR=0
+USEC_INITIALIZED=72113258527
+0:0:0
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 23 ends************************
+***********************msg 24 start***********************
+received 250 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+“
+
+
+<Ë±¯
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+SUBSYSTEM=scsi_generic
+DEVNAME=/dev/sg0
+SEQNUM=5399
+MAJOR=21
+MINOR=0
+USEC_INITIALIZED=72113258863
+
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 24 ends************************
+***********************msg 25 start***********************
+received 99 bytes
+add@/devices/virtual/bdi/8:0
+ACTION=add
+DEVPATH=/devices/virtual/bdi/8:0
+SUBSYSTEM=bdi
+SEQNUM=5401
+3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+SUBSYSTEM=scsi_generic
+DEVNAME=/dev/sg0
+SEQNUM=5399
+MAJOR=21
+MINOR=0
+USEC_INITIALIZED=72113258863
+
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 25 ends************************
+***********************msg 26 start***********************
+received 139 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+c
+
+
+*Ñ°
+
+
+
+
+
+
+
+
+
+
+
+ACTION=add
+DEVPATH=/devices/virtual/bdi/8:0
+SUBSYSTEM=bdi
+SEQNUM=5401
+USEC_INITIALIZED=72113290447
+_generic/sg0
+SUBSYSTEM=scsi_generic
+DEVNAME=/dev/sg0
+SEQNUM=5399
+MAJOR=21
+MINOR=0
+USEC_INITIALIZED=72113258863
+
+SEQNUM=5400
+QNUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 26 ends************************
+***********************msg 27 start***********************
+received 264 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+MAJOR=8
+MINOR=0
+DEVNAME=sda
+DEVTYPE=disk
+SEQNUM=5402
+NUM=5399
+OR=189
+MINOR=132
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 27 ends************************
+***********************msg 28 start***********************
+received 288 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+SUBSYSTEM=block
+MAJOR=8
+MINOR=1
+DEVNAME=sda1
+DEVTYPE=partition
+PARTN=1
+SEQNUM=5403
+2
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 28 ends************************
+***********************msg 29 start***********************
+received 288 bytes
+add@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+SUBSYSTEM=block
+MAJOR=8
+MINOR=2
+DEVNAME=sda2
+DEVTYPE=partition
+PARTN=2
+SEQNUM=5404
+2
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 29 ends************************
+***********************msg 30 start***********************
+received 255 bytes
+bind@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+DRIVER=sd
+MODALIAS=scsi:t-0x00
+SEQNUM=5405
+PE=partition
+PARTN=2
+SEQNUM=5404
+2
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=0110
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_VENDOR_FROM_DATABASE=Kingston Technology
+ID_MODEL_FROM_DATABASE=DataTraveler 100 G3/G4/SE9 G2
+ID_DRIVE_THUMB=1
+
+***********************msg 30 ends************************
+***********************msg 31 start***********************
+received 1332 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+
+
+∑{À≈Ó
+
+Ä
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+DEVNAME=/dev/sda
+DEVTYPE=disk
+SEQNUM=5402
+MAJOR=8
+MINOR=0
+USEC_INITIALIZED=72113449308
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_VERSION=Joliet Extension
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_PART_TABLE_UUID=483122d5
+ID_PART_TABLE_TYPE=dos
+ID_DRIVE_THUMB=1
+TAGS=:systemd:
+
+***********************msg 31 ends************************
+***********************msg 32 start***********************
+received 1537 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Ÿ
+
+∑À#Dâ
+
+Ä
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+SUBSYSTEM=block
+DEVNAME=/dev/sda2
+DEVTYPE=partition
+PARTN=2
+SEQNUM=5404
+MAJOR=8
+MINOR=2
+USEC_INITIALIZED=72113484523
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2 /dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+TAGS=:systemd:
+¬ç;p
+***********************msg 32 ends************************
+***********************msg 33 start***********************
+received 1613 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+%
+
+∑À#Dâ
+
+Ä
+
+ACTION=add
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+SUBSYSTEM=block
+DEVNAME=/dev/sda1
+DEVTYPE=partition
+PARTN=1
+SEQNUM=5403
+USEC_INITIALIZED=72113486795
+MAJOR=8
+MINOR=1
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 33 ends************************
+***********************msg 34 start***********************
+received 243 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+À
+
+
+) (}µµ
+
+
+
+
+
+
+
+ACTION=bind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+DRIVER=sd
+MODALIAS=scsi:t-0x00
+SEQNUM=5405
+USEC_INITIALIZED=72113503311
+3486795
+MAJOR=8
+MINOR=1
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 34 ends************************
+***********************msg 35 start***********************
+received 290 bytes
+change@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+ACTION=change
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+DISK_MEDIA_CHANGE=1
+MAJOR=8
+MINOR=0
+DEVNAME=sda
+DEVTYPE=disk
+SEQNUM=5406
+MB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 35 ends************************
+***********************msg 36 start***********************
+received 294 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+SUBSYSTEM=block
+MAJOR=8
+MINOR=1
+DEVNAME=sda1
+DEVTYPE=partition
+PARTN=1
+SEQNUM=5407
+
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 36 ends************************
+***********************msg 37 start***********************
+received 294 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+SUBSYSTEM=block
+MAJOR=8
+MINOR=2
+DEVNAME=sda2
+DEVTYPE=partition
+PARTN=2
+SEQNUM=5408
+
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 37 ends************************
+***********************msg 38 start***********************
+received 927 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+w
+
+∑{À≈Ó
+
+Ä
+
+ACTION=change
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+DISK_MEDIA_CHANGE=1
+DEVNAME=/dev/sda
+DEVTYPE=disk
+SEQNUM=5406
+MAJOR=8
+MINOR=0
+USEC_INITIALIZED=72113449308
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+TAGS=:systemd:
+4C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+DEVLINKS=/dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-01
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+TAGS=:systemd:
+
+***********************msg 38 ends************************
+***********************msg 39 start***********************
+received 1616 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+(
+
+∑À#Dâ
+
+Ä
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda1
+SUBSYSTEM=block
+DEVNAME=/dev/sda1
+DEVTYPE=partition
+PARTN=1
+SEQNUM=5407
+USEC_INITIALIZED=72113486795
+MAJOR=8
+MINOR=1
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=iso9660
+ID_FS_USAGE=filesystem
+ID_FS_UUID=2020-08-06-22-59-01-00
+ID_FS_UUID_ENC=2020-08-06-22-59-01-00
+ID_FS_VERSION=Joliet Extension
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-01
+ID_PART_ENTRY_TYPE=0x0
+ID_PART_ENTRY_FLAGS=0x80
+ID_PART_ENTRY_NUMBER=1
+ID_PART_ENTRY_OFFSET=0
+ID_PART_ENTRY_SIZE=4284224
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=0
+DEVLINKS=/dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part1 /dev/disk/by-uuid/2020-08-06-22-59-01-00 /dev/disk/by-partuuid/483122d5-01 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 39 ends************************
+***********************msg 40 start***********************
+received 1540 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+‹
+
+∑À#Dâ
+
+Ä
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda/sda2
+SUBSYSTEM=block
+DEVNAME=/dev/sda2
+DEVTYPE=partition
+PARTN=2
+SEQNUM=5408
+MAJOR=8
+MINOR=2
+USEC_INITIALIZED=72113484523
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 40 ends************************
+***********************msg 41 start***********************
+received 269 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+SUBSYSTEM=bsg
+MAJOR=244
+MINOR=0
+DEVNAME=bsg/1:0:0:0
+SEQNUM=5409
+
+ID_BUS=usb
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 41 ends************************
+***********************msg 42 start***********************
+received 279 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+SUBSYSTEM=scsi_generic
+MAJOR=21
+MINOR=0
+DEVNAME=sg0
+SEQNUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 42 ends************************
+***********************msg 43 start***********************
+received 255 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+SUBSYSTEM=scsi_device
+SEQNUM=5411
+DEVNAME=sg0
+SEQNUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 43 ends************************
+***********************msg 44 start***********************
+received 249 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+SUBSYSTEM=scsi_disk
+SEQNUM=5412
+=5411
+DEVNAME=sg0
+SEQNUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 44 ends************************
+***********************msg 45 start***********************
+received 105 bytes
+remove@/devices/virtual/bdi/8:0
+ACTION=remove
+DEVPATH=/devices/virtual/bdi/8:0
+SUBSYSTEM=bdi
+SEQNUM=5413
+ON=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+SUBSYSTEM=scsi_disk
+SEQNUM=5412
+=5411
+DEVNAME=sg0
+SEQNUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 45 ends************************
+***********************msg 46 start***********************
+received 270 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+MAJOR=8
+MINOR=0
+DEVNAME=sda
+DEVTYPE=disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 46 ends************************
+***********************msg 47 start***********************
+received 248 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+–
+
+
+ﬂÿ°
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/bsg/1:0:0:0
+SUBSYSTEM=bsg
+DEVNAME=/dev/bsg/1:0:0:0
+SEQNUM=5409
+MAJOR=244
+MINOR=0
+USEC_INITIALIZED=72126590008
+TYPE=disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 47 ends************************
+***********************msg 48 start***********************
+received 253 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+’
+
+
+<Ë±¯
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_generic/sg0
+SUBSYSTEM=scsi_generic
+DEVNAME=/dev/sg0
+SEQNUM=5410
+MAJOR=21
+MINOR=0
+USEC_INITIALIZED=72126590337
+disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 48 ends************************
+***********************msg 49 start***********************
+received 221 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+µ
+
+
+}µµ
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_device/1:0:0:0
+SUBSYSTEM=scsi_device
+SEQNUM=5411
+USEC_INITIALIZED=72126590505
+=0
+USEC_INITIALIZED=72126590337
+disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 49 ends************************
+***********************msg 50 start***********************
+received 142 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+f
+
+
+*Ñ°
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/virtual/bdi/8:0
+SUBSYSTEM=bdi
+SEQNUM=5413
+USEC_INITIALIZED=72126590848
+_device/1:0:0:0
+SUBSYSTEM=scsi_device
+SEQNUM=5411
+USEC_INITIALIZED=72126590505
+=0
+USEC_INITIALIZED=72126590337
+disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 50 ends************************
+***********************msg 51 start***********************
+received 217 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+±
+
+
+â©
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/scsi_disk/1:0:0:0
+SUBSYSTEM=scsi_disk
+SEQNUM=5412
+USEC_INITIALIZED=72126590665
+505
+=0
+USEC_INITIALIZED=72126590337
+disk
+SEQNUM=5414
+NUM=5410
+b
+ID_DRIVE_THUMB=1
+ID_FS_BOOT_SYSTEM_ID=EL\x20TORITO\x20SPECIFICATION
+ID_FS_LABEL=Ubuntu_18.04.5_LTS_amd64
+ID_FS_LABEL_ENC=Ubuntu\x2018.04.5\x20LTS\x20amd64
+ID_FS_TYPE=vfat
+ID_FS_USAGE=filesystem
+ID_FS_UUID=EC34-71CF
+ID_FS_UUID_ENC=EC34-71CF
+ID_FS_VERSION=FAT12
+ID_INSTANCE=0:0
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_PART_TABLE_TYPE=dos
+ID_PART_TABLE_UUID=483122d5
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 51 ends************************
+***********************msg 52 start***********************
+received 907 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+c
+
+∑{À≈Ó
+
+Ä
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0/block/sda
+SUBSYSTEM=block
+DEVNAME=/dev/sda
+DEVTYPE=disk
+SEQNUM=5414
+MAJOR=8
+MINOR=0
+USEC_INITIALIZED=72113449308
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 52 ends************************
+***********************msg 53 start***********************
+received 228 bytes
+unbind@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+SEQNUM=5415
+NITIALIZED=72113449308
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 53 ends************************
+***********************msg 54 start***********************
+received 249 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+MODALIAS=scsi:t-0x00
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 54 ends************************
+***********************msg 55 start***********************
+received 214 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Æ
+
+
+) (}µµ
+
+
+
+
+
+
+
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+SEQNUM=5415
+USEC_INITIALIZED=72126630410
+e
+MODALIAS=scsi:t-0x00
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 55 ends************************
+***********************msg 56 start***********************
+received 235 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+√
+
+
+) (}µµ
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0/1:0:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_device
+MODALIAS=scsi:t-0x00
+SEQNUM=5416
+USEC_INITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 56 ends************************
+***********************msg 57 start***********************
+received 212 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_target
+SEQNUM=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 57 ends************************
+***********************msg 58 start***********************
+received 205 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+SUBSYSTEM=scsi_host
+SEQNUM=5418
+M=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 58 ends************************
+***********************msg 59 start***********************
+received 186 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+SUBSYSTEM=scsi
+DEVTYPE=scsi_host
+SEQNUM=5419
+i_host
+SEQNUM=5418
+M=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 59 ends************************
+***********************msg 60 start***********************
+received 206 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+¶
+
+
+) (Újüb
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/target1:0:0
+SUBSYSTEM=scsi
+DEVTYPE=scsi_target
+SEQNUM=5417
+USEC_INITIALIZED=72126665839
+=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 60 ends************************
+***********************msg 61 start***********************
+received 195 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+õ
+
+
+†˚X
+
+
+
+
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1/scsi_host/host1
+SUBSYSTEM=scsi_host
+SEQNUM=5418
+USEC_INITIALIZED=72126666090
+2126665839
+=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 61 ends************************
+***********************msg 62 start***********************
+received 192 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+ò
+
+
+) (†˚X
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0/host1
+SUBSYSTEM=scsi
+DEVTYPE=scsi_host
+SEQNUM=5419
+USEC_INITIALIZED=72126666268
+90
+2126665839
+=5417
+NITIALIZED=72126630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 62 ends************************
+***********************msg 63 start***********************
+received 226 bytes
+unbind@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+SEQNUM=5420
+26630000
+0
+SEQNUM=5416
+8
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 63 ends************************
+***********************msg 64 start***********************
+received 285 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5421
+ingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 64 ends************************
+***********************msg 65 start***********************
+received 256 bytes
+unbind@/devices/pci0000:00/0000:00:14.0/usb2/2-3
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+MAJOR=189
+MINOR=132
+DEVNAME=bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5422
+c08isc06ip50in00
+SEQNUM=5421
+ingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 65 ends************************
+***********************msg 66 start***********************
+received 256 bytes
+remove@/devices/pci0000:00/0000:00:14.0/usb2/2-3
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+MAJOR=189
+MINOR=132
+DEVNAME=bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5423
+c08isc06ip50in00
+SEQNUM=5421
+ingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 66 ends************************
+***********************msg 67 start***********************
+received 238 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+∆
+
+
+w≈Â±Ge
+
+
+
+
+
+
+
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+SEQNUM=5420
+USEC_INITIALIZED=72112232190
+M=005
+SEQNUM=5423
+c08isc06ip50in00
+SEQNUM=5421
+ingston
+ID_VENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 67 ends************************
+***********************msg 68 start***********************
+received 297 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+
+
+w≈Â±Ge
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3:1.0
+SUBSYSTEM=usb
+DEVTYPE=usb_interface
+PRODUCT=951/1666/110
+TYPE=0/0/0
+INTERFACE=8/6/80
+MODALIAS=usb:v0951p1666d0110dc00dsc00dp00ic08isc06ip50in00
+SEQNUM=5421
+USEC_INITIALIZED=72126702176
+ENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 68 ends************************
+***********************msg 69 start***********************
+received 281 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Ò
+
+
+w≈Â'¯ı
+
+
+
+
+
+
+
+ACTION=unbind
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+DEVNAME=/dev/bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5422
+USEC_INITIALIZED=72112231373
+MAJOR=189
+MINOR=132
+ZED=72126702176
+ENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 69 ends************************
+***********************msg 70 start***********************
+received 281 bytes
+libudev
+˛Ì ˛(
+
+
+(
+
+
+Ò
+
+
+w≈Â'¯ı
+
+
+
+
+
+
+
+ACTION=remove
+DEVPATH=/devices/pci0000:00/0000:00:14.0/usb2/2-3
+SUBSYSTEM=usb
+DEVNAME=/dev/bus/usb/002/005
+DEVTYPE=usb_device
+PRODUCT=951/1666/110
+TYPE=0/0/0
+BUSNUM=002
+DEVNUM=005
+SEQNUM=5423
+USEC_INITIALIZED=72126702298
+MAJOR=189
+MINOR=132
+ZED=72126702176
+ENDOR_ID=0951
+ID_MODEL=DataTraveler_3.0
+ID_MODEL_ENC=DataTraveler\x203.0
+ID_MODEL_ID=1666
+ID_REVISION=PMAP
+ID_SERIAL=Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0
+ID_SERIAL_SHORT=60A44C413CE6E481693006B2
+ID_TYPE=disk
+ID_INSTANCE=0:0
+ID_BUS=usb
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_USB_DRIVER=usb-storage
+ID_PATH=pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+ID_PATH_TAG=pci-0000_00_14_0-usb-0_3_1_0-scsi-0_0_0_0
+ID_DRIVE_THUMB=1
+DEVLINKS=/dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0
+TAGS=:systemd:
+6B2
+ID_TYPE=disk
+ID_USB_DRIVER=usb-storage
+ID_USB_INTERFACES=:080650:
+ID_USB_INTERFACE_NUM=00
+ID_VENDOR=Kingston
+ID_VENDOR_ENC=Kingston
+ID_VENDOR_ID=0951
+ID_PART_ENTRY_SCHEME=dos
+ID_PART_ENTRY_UUID=483122d5-02
+ID_PART_ENTRY_TYPE=0xef
+ID_PART_ENTRY_NUMBER=2
+ID_PART_ENTRY_OFFSET=13784
+ID_PART_ENTRY_SIZE=4928
+ID_PART_ENTRY_DISK=8:0
+UDISKS_IGNORE=1
+DEVLINKS=/dev/disk/by-uuid/EC34-71CF /dev/disk/by-label/Ubuntu\x2018.04.5\x20LTS\x20amd64 /dev/disk/by-partuuid/483122d5-02 /dev/disk/by-id/usb-Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part2 /dev/disk/by-path/pci-0000:00:14.0-usb-0:3:1.0-scsi-0:0:0:0-part2
+TAGS=:systemd:
+Kingston_DataTraveler_3.0_60A44C413CE6E481693006B2-0:0-part1
+TAGS=:systemd:
+
+***********************msg 70 ends************************

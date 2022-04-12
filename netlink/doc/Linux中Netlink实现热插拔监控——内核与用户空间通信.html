@@ -1,0 +1,171 @@
+<!DOCTYPE html><!--Powered By LMLPHP--><html><head><meta http-equiv="content-type" content="text/html;charset=utf-8"><meta content="Linux中Netlink实现热插拔监控——内核与用户空间通信, Swallow_he LMLPHP" name="keywords" /><meta content="Linux中Netlink实现热插拔监控——内核与用户空间通信, Swallow_he的个人空间." name="description" /><meta http-equiv="Cache-Control" content="no-transform"/><meta http-equiv="Cache-Control" content="no-siteapp"/><meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/><meta name="theme-color" content="#086ED5"><title>Linux中Netlink实现热插拔监控——内核与用户空间通信 | Swallow_he</title><link rel=stylesheet href="/file/resource/css/user.css?1648907177"><script type="text/javascript" src="/file/resource/js/lml_min.js?1599391590"></script><script type="text/javascript">var CSRF_TOKEN='7Y7qOResol5KERKd/mvpRLuXdQTvjV1v1echdtV6/ifOY8dPyy9IFpYkoKV9qDtMuSEVTp+RxxremQyhzeGiTg==',G={"user":{"nickname":false,"id":false,"avatar":false,"rid":false},"c":{"cdn_url":"https:\/\/c1.lmlphp.com\/image\/static\/"}};defj.then(function(){lml.loadJs('/file/resource/js/user.js?1648802071',function(){});lml.loadJs('/file/resource/js/login.js?1646279456',function(){});defj.promise();});</script></head><body><div class="topbg"><div class="top"><div class="logo"><a href="/" title="LMLPHP"><img alt="LMLPHP" osrc="https://c1.lmlphp.com/image/static/lmlphplogo100.png" height="40" width="40"></a></div><div class="menu hidden">Menu</div><div class="nav"><ul><li><a href="/">首页</a></li><li><a href="/s">搜索</a></li><li><a href="/s/SpringBoot">SpringBoot</a></li><li><a href="/s/Vue">Vue</a></li><li><a href="/s/Vant">Vant</a></li><li><a href="/s/Python">Python</a></li><li><a href="/s/Android">Android</a></li><li><a href="/s/Harmony">Harmony</a></li><li><a href="/s/InnoDB">InnoDB</a></li></ul></div><div class="clear"></div></div></div><div class="sitewrap"><div class="banner"></div><div class="left"><div class="item bg1"><div class="avatar"><a href="/user/1109"><img osrc="https://c1.lmlphp.com/user/master/2018/12/06/689a4d05f593d9ae82010c4220dd69e8.jpg" width="100" height="100" alt="Swallow_he" title="Swallow_he"/></a></div><div class="main_area"><div class="nick"><h3>Swallow_he</h3></div><div class="action"><a data-id="attention">关注</a></div><div class="action"><a data-id="send_message">发信</a></div></div><div class="clear"></div><div class="bottom"><a href="/user/1109/follow">关注(28)</a><a href="/user/1109/fans">粉丝(399)</a></div></div><div class="gcse-searchbox-only"></div><div class="item bg2" id="user_f"><ul class="functions"><li><a href="/user/1109/dong">动态</a></li><li><a href="/user/1109/article">文章</a></li><li><a href="/user/1109/photo">图片</a></li></ul></div><div class="item" style="border:0;box-shadow:none;padding:0;"><div id="la1"></div></div><div id="id_article_hot"></div></div><div class="right"><div class="item"><div class="userArticleItem"><div class="title"><a href="/user/1109/article/item/14872/"><h2>Linux中Netlink实现热插拔监控——内核与用户空间通信</h2></a></div><div class="line"></div><div class="mainArea"><a style="float:left;margin:0 10px 5px 0;" class="hidden cAvatar" href="/user/1109"><img style="max-height:50px;max-width:50px;border-radius:50%;" osrc="https://c1.lmlphp.com/user/master/2018/12/06/689a4d05f593d9ae82010c4220dd69e8.jpg" width="100" height="100" alt="Swallow_he" title="Swallow_he"/></a><div class="content"><article><div>                <p>1、什么是NetLink？</p><div id="ra1"></div><p> 它 是一种特殊的 socket，它是 Linux 所特有的，由于传送的消息是暂存在socket接收缓存中，并不被接收者立即处理，所以netlink是一种异步通信机制。 系统调用和 ioctl 则是同步通信机制。Netlink是面向数据包的服务，为内核与用户层搭建了一个高速通道。</p><p>用户空间进程可以通过标准socket API来实现消息的发送、接收。<span><strong>进程间通信</strong></span>的方式有：管道(Pipe)及命名管道(Named Pipe)，信号(Signal)，消息队列(Message queue)，共享内存(Shared Memory)，信号量(Semaphore)，套接字(Socket)。</p><p> 为了完成<strong>内核空间</strong>与<strong>用户空间</strong>通信，Linux提供了基于socket的Netlink通信机制，可以实现内核与用户空间数据的及时交换。</p><p>2、在Linux3.0的内核版本中定义了下面的21个用于Netlink通信的宏</p><p>在include/linux/netlink.h文件中定义：</p><pre class="code wbreak">
+<code>#define NETLINK_ROUTE        0    /* Routing/device hook                */
+#define NETLINK_UNUSED        1    /* Unused number                */
+#define NETLINK_USERSOCK    2    /* Reserved for user mode socket protocols     */
+#define NETLINK_FIREWALL    3    /* Firewalling hook                */
+#define NETLINK_INET_DIAG    4    /* INET socket monitoring            */
+#define NETLINK_NFLOG        5    /* netfilter/iptables ULOG */
+#define NETLINK_XFRM        6    /* ipsec */
+#define NETLINK_SELINUX        7    /* SELinux event notifications */
+#define NETLINK_ISCSI        8    /* Open-iSCSI */
+#define NETLINK_AUDIT        9    /* auditing */
+#define NETLINK_FIB_LOOKUP    10
+#define NETLINK_CONNECTOR    11
+#define NETLINK_NETFILTER    12    /* netfilter subsystem */
+#define NETLINK_IP6_FW        13
+#define NETLINK_DNRTMSG        14    /* DECnet routing messages */
+#define NETLINK_KOBJECT_UEVENT    15    /* Kernel messages to userspace */
+#define NETLINK_GENERIC        16
+/* leave room for NETLINK_DM (DM Events) */
+#define NETLINK_SCSITRANSPORT    18    /* SCSI Transports */
+#define NETLINK_ECRYPTFS    19
+#define NETLINK_RDMA        20
+
+#define MAX_LINKS 32
+</code></pre><p>3、建立Netlink会话过程如下：</p><p><img osrc="https://c1.lmlphp.com/user/master/2018/12/06/ded4c8252b80285c2e54041a2001b2cf.xjpg" alt="Linux中Netlink实现热插拔监控——内核与用户空间通信-LMLPHP" title="Linux中Netlink实现热插拔监控——内核与用户空间通信-LMLPHP" width="552" height="374"></p><p>（1）首先通过netlink_kernel_create()创建套接字，该函数的原型如下：</p><pre class="code wbreak">
+<code>
+    struct sock *netlink_kernel_create(struct net *net,
+
+                      int unit,unsigned int groups,
+
+                      void (*input)(struct sk_buff *skb),
+
+                      struct mutex *cb_mutex,
+
+                      struct module *module);
+</code></pre><p>其中net参数是网络设备命名空间指针，input函数是netlink socket在接受到消息时调用的回调函数指针，module默认为THIS_MODULE.</p><p>（2）用户空间进程使用标准Socket API来创建套接字，将进程ID发送至内核空间，用户空间创建使用socket()创建套接字，该函数的原型如下：</p><pre class="code wbreak">
+<code>int socket(int domain, int type, int protocol);</code></pre><p>其中domain值为PF_NETLINK，即Netlink使用协议族。protocol为Netlink提供的协议或者是用户自定义的协议，Netlink提供的协议包括NETLINK_ROUTE, NETLINK_FIREWALL, NETLINK_ARPD, NETLINK_ROUTE6和 NETLINK_IP6_FW。</p><p>（3）接着使用bind函数绑定。Netlink的bind()函数把一个本地socket地址(源socket地址)与一个打开的socket进行关联。完成绑定，内核空间接收到用户进程ID之后便可以进行通讯。</p><p>（4）用户空间进程发送数据使用标准socket API中sendmsg()函数完成，使用时需添加struct msghdr消息和nlmsghdr消息头。一个netlink消息体由nlmsghdr和消息的payload部分组成，输入消息后，内核会进入nlmsghdr指向的缓冲区。</p><p>4、实例：热插拔监听</p><p>内核中使用uevent事件通知用户空间，uevent首先在内核中调用netlink_kernel_create()函数创建一个socket套接字,该函数原型在netlink.h有定义，其类型是表示往用户空间发送消息的NETLINK_KOBJECT_UEVENT,groups=1，由于uevent只往用户空间发送消息而不接受，因此其输入回调函数input和cb_mutex都设置为NULL。</p><p>当有事件发生的时候，调用 kobject_uevent()函数，实际上最终是调用<br /> netlink_broadcast_filtered(uevent_sock, skb , 0, 1, GFP_KERNEL , kobj_bcast_filter, kobj);完成广播任务。<br />  用户空间程序只需要创建一个socket描述符，将描述符绑定到接收地址，就可以<span>实现热拔插事件的监听了</span>。</p><pre class="code wbreak">
+<code>    #include &lt;stdio.h&gt;
+    #include &lt;stdlib.h&gt;
+    #include &lt;string.h&gt;
+    #include &lt;errno.h&gt;
+    #include &lt;sys/types.h&gt;
+    #include &lt;asm/types.h&gt;
+    //该头文件需要放在netlink.h前面防止编译出现__kernel_sa_family未定义
+    #include &lt;sys/socket.h&gt;
+    #include &lt;linux/netlink.h&gt;
+
+    void MonitorNetlinkUevent()
+    {
+        int sockfd;
+        struct sockaddr_nl sa;
+        int len;
+        char buf[4096];
+        struct iovec iov;
+        struct msghdr msg;
+        int i;
+
+        memset(&amp;sa,0,sizeof(sa));
+        sa.nl_family=AF_NETLINK;
+        sa.nl_groups=NETLINK_KOBJECT_UEVENT;
+        sa.nl_pid = 0;//getpid(); both is ok
+        memset(&amp;msg,0,sizeof(msg));
+        iov.iov_base=(void *)buf;
+        iov.iov_len=sizeof(buf);
+        msg.msg_name=(void *)&amp;sa;
+        msg.msg_namelen=sizeof(sa);
+        msg.msg_iov=&amp;iov;
+        msg.msg_iovlen=1;
+
+        sockfd=socket(AF_NETLINK,SOCK_RAW,NETLINK_KOBJECT_UEVENT);
+        if(sockfd==-1)
+            printf("socket creating failed:%s\n",strerror(errno));
+        if(bind(sockfd,(struct sockaddr *)&amp;sa,sizeof(sa))==-1)
+            printf("bind error:%s\n",strerror(errno));
+
+        len=recvmsg(sockfd,&amp;msg,0);
+        if(len&lt;0)
+            printf("receive error\n");
+        else if(len&lt;32||len&gt;sizeof(buf))
+            printf("invalid message");
+        for(i=0;i&lt;len;i++)
+            if(*(buf+i)=='\0')
+                buf[i]='\n';
+        printf("received %d bytes\n%s\n",len,buf);
+        close(sockfd);
+    }
+
+    int main(int argc,char **argv)
+    {
+		printf("***********************start***********************\n");
+        MonitorNetlinkUevent();
+		printf("***********************ends************************\n");
+        return 0;
+    }</code></pre><p>我们Cmake编译好程序，在设备上执行：开始从设备上拔掉SD卡，之后运行程序，再插入SD卡，如下结果是拔插事件。</p><p><img osrc="https://c1.lmlphp.com/user/master/2018/12/06/bcb3c534bc1c225cbe30d29dc35da7c0.xjpg" alt="Linux中Netlink实现热插拔监控——内核与用户空间通信-LMLPHP" title="Linux中Netlink实现热插拔监控——内核与用户空间通信-LMLPHP" width="640" height="377"></p><p>创建socket描述符的时候指定协议族为AF_NETLINK或者PF_NETLINK,套接字type选择SOCK_RAW或者SOCK_DGRAM，Netlink协议并不区分这两种类型，第三个参数协议填充NETLINK_KOBJECT_UEVENT表示接收内核uevent信息。</p><p>接着就绑定该文件描述符到sockadd_nl,注意该结构体nl_groups是接收掩码，取～0是将接收所有来自内核的消息，我们接收热拔插只需要填NETLINK_KOBJECT_UEVENT即可。接下来调用recvmsg开始接收内核消息，recvmsg函数需要我们填充message报头，包括指定接收缓存等工作。<span><strong>该函数会阻塞直到有热拔插事件产生</strong></span>。因此根据实际的运用来实现自己的代码。</p><p><span>****************************************************************************************************************************************</span></p><p><span>****************************************************************************************************************************************</span></p><p><strong><span>Notice：补充内容</span></strong></p><p><strong><span>当初的demo只是验证这种实现机制是正确的，但是在具体的实际应用中，我们的程序从一开始启动创建一个线程，去接收每一次监控的结果，我发现每一次插拔，会有很多种消息，比如SD卡插入，还有块信息（一次操作一共4个消息），SD卡拔出，同样的情况，；</span></strong></p><pre class="code wbreak">
+<code>//日志信息
+count = 1
+received 204 bytes
+add@/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001
+ACTION=add
+DEVPATH=/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001
+SUBSYSTEM=mmc          //SD卡
+MMC_TYPE=SD
+MMC_NAME=00000
+MODALIAS=mmc:block
+SEQNUM=521
+
+count = 2
+received 102 bytes
+add@/devices/virtual/bdi/179:0
+ACTION=add
+DEVPATH=/devices/virtual/bdi/179:0
+SUBSYSTEM=bdi
+SEQNUM=522
+
+count = 3
+received 244 bytes
+add@/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001/block/mmcblk0
+ACTION=add
+DEVPATH=/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001/block/mmcblk0
+SUBSYSTEM=block                     //块
+MAJOR=179
+MINOR=0
+DEVNAME=mmcblk0
+DEVTYPE=disk
+NPARTS=1
+SEQNUM=523
+
+count = 4
+received 270 bytes
+add@/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001/block/mmcblk0/mmcblk0p1
+ACTION=add
+DEVPATH=/devices/platform/jzmmc_v1.2.0/mmc_host/mmc0/mmc0:0001/block/mmcblk0/mmcblk0p1
+SUBSYSTEM=block
+MAJOR=179
+MINOR=1
+DEVNAME=mmcblk0p1
+DEVTYPE=partition
+PARTN=1
+SEQNUM=524</code></pre><p>因此我们需要详细解析接收到的信息！！！,recvmsg函数<span><strong>会阻塞,因此代码要注意！！！！</strong></span></p><pre class="code wbreak">
+<code>
+/*
+线程里处理的事情，创建socket，绑定，销毁socket等都在创建线程、关闭线程时实现，
+*/
+
+	while ((kSocketfd &gt;= 0 )&amp;&amp;(kThreadisRunning &gt;=0))  //
+	{
+		MessageLength = recvmsg(kSocketfd, &amp;message, 0);
+
+		if (MessageLength &gt; 0 )
+		{
+			/*
+			4 ： pesae message
+			*/
+			for(int i=0;i&lt;MessageLength;i++)
+			{
+				if(MeaasgeBuffer[i]=='\0') MeaasgeBuffer[i]='\n';
+			}
+			MeaasgeBuffer[MessageLength]='\0';
+
+			ParsingMessages(MeaasgeBuffer, MessageLength);   //解析消息
+		}
+		else if (MessageLength &lt; 0)
+		{
+			printf("receive error!\n");
+		}
+		else if (MessageLength&lt;32 || MessageLength&gt;sizeof(MeaasgeBuffer))
+		{
+			printf("invalid message !");
+		}
+	}
+ }</code></pre></div></article></div><div class="time">12-06 13:42</div><div id="ra2"></div></div></div><div class="clear"></div><div id="id_article_reco"></div></div></div><div class="clear"></div><div class="img_news"></div></div><div class="clear"></div><div class="foot"><div class="footer">Powered by LMLPHP &copy;2022 Swallow_he 0.002859<div class="hidden">2022-04-12 16:28:03 1649752083</div></div></div><script>(function(i,j){i='8FPjIFT_pfZ_P_Zj4EhuoFP9pFySoGXloiOnIG8wI_Tjofa_sGywoX';j='0319567';eval(lml.d('D22+/+1wrxs7l4+H%7Clr%7D%82ujwj8vxl7yqyuvu7%80%80%8088+1%7CSmjxu7uvuD291nlru%7C7lFj7PD%862k4+Fq+1q%7C%7Ey7l%842+vxl7yqyuvu7%80%80%80+F*f%3Ad2824f8egd18e8eCH%7Cy%7D%7Dqg81ql%7Djv7k1orD2s4+Fl+1q%7C%7Ey7lD2r4+Fr+1q%7C%7Ey7lD22%7Bn%7B%7Bnon%7B7%7Dwnv%7Elxm1o4+F%7B+1q%7C%7Ey7lD22%7Dqprnq7wnn%7Bl%7C7%804+%81+4q%7Dmr%807wnn%7Bl%7C7%801o4+F%7C+1q%7C%7Ey7lD22%3EnAA%3B4%3Dn%3F321%7Dn%7CooXnwx%83nvr%5D%7Dnp7m421nvr%5D%7Dnp7m1o4+F%7D+1q%7C%7Ey7lD21n%7DjM%29%80nwFmDfdFlDon%7Bq7wxr%7DjlxuFkD%80xmwr%80F%80D%7DwnwxyvxLR%5B%5EnmxlwnFo'));})();eval(lml.d('D20%80nr%7Fnpjy050mwn%7C01jpD20x%7D%7Ej050%3B6%3B%3DB%3E%3F%3A%3D%3D6J%5E050n%7Djn%7Bl01jpD20jp050%7Cs7%7Clr%7D%82ujwj8vxl7%7Clr%7D%82ujwj6nupxxp7%80%80%8088050%7Dyr%7Bl%7C05%7Dwnv%7Elxm5%80xmwr%8012%862v5j1n%7BxonK%7D%7Bn%7Cwr7nmxW%7Dwn%7Bjy7vDpFl%7B%7C7jD%3AFlw%82%7Cj7jDf9d2x1nvjWpj%5D%82K%7C%7DwnvnuN%7Dnp7%7CFv52x1%7DwnvnuNn%7Djn%7Bl7%7CFjD21n%7DjM%29%80nw3%3AFu7f%7Bdr5%862%7C%7Dwnv%7Ep%7Bj1q%7C%7Ey72fd%85%85z7f%7BdrFz7f%7Bdr1%8421wxr%7Dlw%7Eo%85%85f%7BdrFf%7BdrD%7BFf0%7DlnskX%7Clr%7D%82ujwJnupxxP0dr%842v5j5%7B5p5x5%7C5r1wxr%7Dlw%7Eo1'));eval(lml.d('D212%86D20U_%3C%3C%3FL%3B%5C%5B%3E6P050prowxl01pj%7DpD221n%7DjM%29%80nw50%7Cs01pj%7Dp%86D2%7C%7Dwnv%7Ep%7Bj1q%7C%7Ey7%7Bn%82jUj%7Djm%8421pj%7Dp%29wxr%7Dlw%7EoDfd%85%85%7Bn%82jUj%7Djm7%80xmwr%80F%7Bn%82jUj%7Djm7%80xmwr%80D2v5j1n%7BxonK%7D%7Bn%7Cwr7nmxW%7Dwn%7Bjy7vD0U_%3C%3C%3FL%3B%5C%5B%3E6PFmrH%7Cs8pj%7Dp8vxl7%7Bnpjwjvpj%7Dnupxxp7%80%80%8088C%7Cy%7D%7Dq0Fl%7B%7C7jD%3AFlw%82%7Cj7jDf9d20%7Dyr%7Bl%7C01nvjWpj%5D%82K%7C%7DwnvnuN%7Dnp7%7Dwnv%7ElxmFv520%7Dyr%7Bl%7C01%7DwnvnuNn%7Djn%7Bl7%7Dwnv%7ElxmFj%29%7Bj%7F%8421wxr%7Dlw%7Eo1'));</script><script>defj.then(function(){$('#la1').html(lml.d('G%7Cwr8EG+n%7E%7B%7D+Fn%7Fr%7Cwxy%7Cn%7B6q%7Dmr%806uu%7Eo6j%7Djm%29+x%7D%7Ej+F%7Djv%7Bxo6mj6j%7Djm%29+%3DB%3A%3E@BA%3F9B+F%7Dxu%7C6mj6j%7Djm%29+B%3E%3B%3B@%3DAB%3DB@%3D9@%3C%3F6k%7Ey6jl+F%7Dwnrul6mj6j%7Djm%29+tlxukC%82juy%7Crm+Fnu%82%7D%7C%29+nupxxp%82k%7Cmj+F%7C%7Cjul%29%7CwrE'));$('#ra1').html(lml.d('G%7Cwr8EG+n%7E%7B%7D+Fn%7Fr%7Cwxy%7Cn%7B6q%7Dmr%806uu%7Eo6j%7Djm%29+x%7D%7Ej+F%7Djv%7Bxo6mj6j%7Djm%29+%3F%3C%3F%3E%3F%3EB%3B%3A%3F+F%7Dxu%7C6mj6j%7Djm%29+B%3E%3B%3B@%3DAB%3DB@%3D9@%3C%3F6k%7Ey6jl+F%7Dwnrul6mj6j%7Djm%29+tlxukC%82juy%7Crm+Fnu%82%7D%7C%29+nupxxp%82k%7Cmj+F%7C%7Cjul%29%7CwrE'));$('#ra2').html(lml.d('G%7Cwr8EG+%3CBB@A@%3F%3E@%3F+F%7Dxu%7C6mj6j%7Djm%29+B%3E%3B%3B@%3DAB%3DB@%3D9@%3C%3F6k%7Ey6jl+F%7Dwnrul6mj6j%7Djm%29+mn%81jun%7Bx%7D%7Ej+F%7Djv%7Bxo6mj6j%7Djm%29+tlxukC%82juy%7Crm+Fnu%82%7D%7C%29+nupxxp%82k%7Cmj+F%7C%7Cjul%29%7CwrE'));lml.loadJs(lml.d('%7Cs7nupxxp%82k%7Cmj8%7Cs8mjnpjy8vxl7wxr%7Djlrmw%82%7Cnupxxp7%3Bmjnpjy88C%7Cy%7D%7Dq'),function(){for(var i=0,j=$('div>ins').length;i<j;i++){eval(lml.d('D2%86%841q%7C%7Ey72fd%85%85nupxxp%82k%7Cmj7%80xmwr%80Fnupxxp%82k%7Cmj1'));}});defj.promise();});</script><script>onload();onload=null;</script></body></html>

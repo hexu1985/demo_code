@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="sogou_site_verification" content="EEplM9r5SR">
+    <meta name="baidu-site-verification" content="CF3iexlYQz">
+    <meta name="360-site-verification" content="b0078e7022efd96ef92ebfb94320309f">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="linux-kernel,netlink">
+    <meta name="description" content="让我们考虑一下这个示例代码：
+
+&lt;pre class=&quot;lang-c prettyprint-override&quot;&gt;&lt;code&gt;#include &amp;lt;linux/netlink.h&amp;gt;
+#include ">
+    <title>linux-kernel - 如何在用户空间中使用NETLINK_KOBJECT_UEVENT协议？ - Thinbug</title>
+    <link rel="stylesheet" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/reset.css">
+    <link rel="stylesheet" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/base.css">
+    
+    <link rel="next" href="">
+    
+
+    <script src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/reactive_library_fy2021.js"></script><script src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/cookie.js"></script><script src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/show_ads_impl_fy2019.js" id="google_shimpl"></script><script type="text/javascript" async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/analytics.js"></script><script type="text/javascript" async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/js_002.js"></script><script src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/push.js"></script><script src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/hm.js"></script><script async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/js.js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'UA-143782868-1');
+    </script>
+
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?41df2cb3f8e0d043db13c179c978bee4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+
+    <script data-ad-client="ca-pub-6263610230477973" async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/adsbygoogle.js" data-checked-head="true"></script>
+
+  <meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><link rel="preload" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js" as="script"><script type="text/javascript" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js"></script><link rel="preload" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js" as="script"><script type="text/javascript" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js"></script><link rel="preload" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js" as="script"><script type="text/javascript" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/integrator.js"></script></head>
+
+  <body aria-hidden="false" style="padding: 0px 0px 154px;">
+    <nav>
+      <div class="nav-items">
+        <a href="https://www.thinbug.com/" class="nav-logo">Thinbug</a>
+        <ul class="nav">
+          <li><a href="https://www.thinbug.com/news">News</a></li>
+        </ul>
+      </div>
+      
+    </nav>
+    
+<link rel="stylesheet" href="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/github-markdown.css">
+<style>
+.question-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: 100vh;
+  flex-wrap: wrap;
+}
+
+        img {
+          max-width: 100%;
+        }
+
+        .left {
+          width: 66.66%;
+          padding: 0 10px;
+        }
+
+        pre {
+          overflow-x: scroll;;
+          width: 100%;
+        }
+
+        .right {
+          width: 33.33%;
+          min-width:300px;
+        }
+
+        .ad1 {
+           
+          height: 80px;
+        }
+
+        .ad2 {
+          margin-top: 92px;
+        }
+
+
+        .tag a {
+          margin-right: 10px;
+        }
+
+        .tag span {
+          margin-right: 10px;
+        }
+
+        h3 a {
+          color: #444;
+          text-decoration: none;
+        }
+
+        .meta, .meta a {
+          color: #666;
+          text-decoration: none;
+          font-size: small;
+        }
+
+        h3 {
+          color: #000;
+        }
+
+        .releated-question-wrapper {
+          border: 1px solid #d9d9d9;
+          border-radius: 4px;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          margin: 0;
+          padding: 14px;
+          color: rgba(0,0,0,0.65);
+          font-size: 16px;
+          font-variant: tabular-nums;
+          line-height: 2;
+          list-style: none;
+          -webkit-font-feature-settings: 'tnum';
+          font-feature-settings: 'tnum';
+          position: relative;
+        }
+
+        .releated-question-wrapper .header{
+          font-size: 16px;
+          color: black;
+          font-weight:bold;
+         }
+
+        .releated-question-wrapper ul{
+          margin: 0;
+          padding: 0;
+          list-style: none;
+        }
+
+        .releated-question-wrapper a{
+          color: #007bff;
+          font-weight: normal;
+          cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+          .left {
+            width: 100%;
+          }
+
+          .right {
+            margin-top: 30px;
+            width: 100%;
+          }
+
+          .question-container {
+            padding: 0;
+          }
+        }
+
+</style>
+<div class="container question-container" style="height: auto !important; min-height: 0px !important;">
+  <div class="left" style="height: auto !important;">
+    <h3>
+      <a href="https://www.thinbug.com/q/44662644">
+        如何在用户空间中使用NETLINK_KOBJECT_UEVENT协议？
+      </a>
+    </h3>
+
+    <div class="meta">
+      <span class="date">时间：2017-06-20 20:42:56</span>
+      
+      <p>
+
+        <span class="tag">
+          标签：
+          
+          <span class="label">
+            linux-kernel
+          </span>
+          
+          <span class="label">
+            netlink
+          </span>
+          
+        </span>
+
+        
+      </p>
+    </div>
+    <div class="hr-line-dashed"></div>
+    
+    <div>
+
+      <script async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/adsbygoogle_002.js" crossorigin="anonymous" data-checked-head="true"></script>
+      
+      <ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-6263610230477973" data-ad-slot="2678421423" data-ad-format="auto" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_1_expand" style="border: medium none; height: 280px; width: 700px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_1_anchor" style="border: medium none; height: 280px; width: 700px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:700px;height:280px" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/ads.html" data-google-container-id="a!2" data-google-query-id="CKnxyq-NjvcCFchsKgodYy4EIA" data-load-complete="true" width="700" height="280" frameborder="0"></iframe></ins></ins></ins>
+        <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+
+    </div>
+    <div class="question-body markdown-body">
+      <p>让我们考虑一下这个示例代码：</p>
+
+<pre class="lang-c prettyprint-override"><code>#include &lt;linux/netlink.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;string.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdio.h&gt;
+
+#define BUF_SIZE 4096
+
+int main() {
+    int fd, res;
+    unsigned int i, len;
+    char buf[BUF_SIZE];
+    struct sockaddr_nl nls;
+
+    fd = socket(PF_NETLINK, SOCK_RAW, NETLINK_KOBJECT_UEVENT);
+    if (fd == -1) {
+        return 1;
+    }
+
+    memset(&amp;nls, 0, sizeof(nls));
+    nls.nl_family = AF_NETLINK;
+    nls.nl_pid = getpid();
+    nls.nl_groups = 1;
+
+    res = bind(fd, (struct sockaddr *)&amp;nls, sizeof(nls));
+    if (res == -1) {
+        return 2;
+    }
+
+    while (1) {
+        len = recv(fd, buf, sizeof(buf), 0);
+
+        printf("============== Received %d bytes\n", len);
+        for (i = 0; i &lt; len; ++i) {
+            if (buf[i] == 0) {
+                printf("[0x00]\n");
+            } else if (buf[i] &lt; 33 || buf[i] &gt; 126) {
+                printf("[0x%02hhx]", buf[i]);
+            } else {
+                printf("%c", buf[i]);
+            }
+        }
+        printf("&lt;END&gt;\n");
+    }
+
+    close(fd);
+    return 0;
+}
+</code></pre>
+
+<p>它在netlink套接字上侦听与hotplug相关的事件。基本上，它的工作原理。然而，即使在谷歌上搜索整个晚上，阅读不同的文档和手册以及通过示例工作之后，我也不清楚某些部分。</p>
+
+<p>基本上，我有两个问题。</p>
+
+<ol>
+<li> <code>sockaddr_nl.nl_groups</code>的不同值是什么意思？至少对于<code>NETLINK_KOBJECT_UEVENT</code>协议。</li>
+<li>如果为邮件分配的缓冲区太小，则会简单地截断该邮件（您可以使用<code>BUF_SIZE</code>大小来查看该邮件）。这个缓冲区大小应该是什么，不丢失任何数据？是否有可能知道传入消息的用户空间长度以分配足够的空间？</li>
+<!--醇-->
+
+<p>我希望直接答案作为对内核代码的引用。</p>
+    </ol></div>
+
+    <div class="answer-list">
+      <h4>1 个答案:</h4>
+      
+      <div class="hr-line-dashed"></div>
+      <p>答案 0 :(得分：1)</p>
+      <div class="answer markdown-body">
+        <ol>
+<li> <p>这些值表示不同的多播组。一个netlink套接字可以具有31个不同的多播组（0表示单播），可以将多播消息发送到该组。对于<code>NETLINK_KOBJECT_UEVENT</code>，它似乎固定为<code>1</code> <a href="https://elixir.bootlin.com/linux/latest/source/lib/kobject_uevent.c#L330" rel="nofollow noreferrer">see f.ex. here</a>。</p> </li>
+<li> <p>您应该能够使用<code>level</code>设置为<code>SOL_SOCKET</code>且<code>optname</code>设置为<code>SO_RCVBUF</code>的{​​{3}}。</p> </li>
+</ol>
+      </div>
+      
+    </div>
+
+  </div>
+
+  <div class="right" style="height: auto !important;">
+    <div style="height: auto !important;">
+        <script async="" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/adsbygoogle.js"></script>
+        <ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-6263610230477973" data-ad-slot="2820756182" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done" data-ad-status="filled"><ins id="aswift_2_expand" style="border: medium none; height: 280px; width: 360px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_2_anchor" style="border: medium none; height: 280px; width: 360px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:360px;height:280px" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/ads.html" data-google-container-id="a!3" data-google-query-id="COfbzK-NjvcCFYN2Kgodxb4CtA" data-load-complete="true" width="360" height="280" frameborder="0"></iframe></ins></ins></ins>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+
+    <div style="height:20px"></div>
+
+    <div class="releated-question-wrapper">
+      <div class="header">
+        相关问题
+      </div>
+      <div class="hr-line-dashed"></div>
+      <ul>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/7464951">如何使组织协议工作？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/8026091">mysql中的REPLACE无法使用可用空间。如何重命名自由空间？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/25774888">在内核空间和用户空间中工作</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/27618875">无法使用类型的协议在Swift中工作</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/38384259">如何在内核空间中转储用户空间堆栈？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/42143711">MQTT协议如何工作</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/44662644">如何在用户空间中使用NETLINK_KOBJECT_UEVENT协议？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/45317599">I2C协议如何工作</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/47031960">类和协议存在不适用于自定义协议</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/50126499">如何在内核空间中分配用户空间内存？</a>
+        </li>
+        
+      </ul>
+    </div>
+
+
+
+    
+
+    <div>
+      <a href="https://www.inktok.com/" target="_blank" style="text-decoration: none;">
+        <img id="inktokad" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/ad1.webp">
+      </a>
+    </div><div style="width: 100%; height: auto; clear: both; text-align: center;" class="google-auto-placed"><ins style="display: block; margin: 10px auto; background-color: transparent; height: 0px;" data-ad-format="auto" class="adsbygoogle adsbygoogle-noablate" data-ad-client="ca-pub-6263610230477973" data-adsbygoogle-status="done" data-ad-status="unfilled"><ins id="aswift_3_expand" style="border: medium none; height: 0px; width: 360px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_3_anchor" style="border: medium none; height: 0px; width: 360px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: hidden; opacity: 0;"><iframe id="aswift_3" name="aswift_3" style="left: 0px; position: absolute; top: 0px; border: 0px none; width: 360px; height: 0px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/ads_003.html" data-google-container-id="a!4" data-load-complete="true" data-google-query-id="CNa-7a-NjvcCFdYhYAodn_0PrQ" width="360" height="0" frameborder="0"></iframe></ins></ins></ins></div>
+
+    <div class="releated-question-wrapper">
+      <div class="header">
+        最新问题
+      </div>
+      <div class="hr-line-dashed"></div>
+      <ul>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614764">我写了这段代码，但我无法理解我的错误</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68615123">在此代码中是否有使用“this”的替代方法？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614097">在 SQL Server 和 PostgreSQL 上查询，我如何从第一个表获得第二个表的可视化</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68615109">为什么我的 Onclick 箭头功能在 React 中不起作用？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614313">java中的random.expovariate()</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614427">每千个数字得到</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614175">是否有可能使 loadstring 不可能等于打印？卢阿</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68613238">启动调试会话时出错 - Google Cloud Shell</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614678">我无法从一个代码实例的列表中删除 None 值，但我可以在另一个实例中。为什么它适用于一个细分市场而不适用于另一个细分市场？</a>
+        </li>
+        
+        <li>
+          <a href="https://www.thinbug.com/q/68614125">Appscript 通过会议在 Google 日历中发送电子邮件和创建活动</a>
+        </li>
+        
+      </ul>
+    </div>
+    <div class="">
+    </div>
+  </div>
+</div>
+
+
+    <div>
+      <script>
+        var host = window.location.host;
+if (host =="www.thinbug.com"){
+  (function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+}
+      </script>
+
+    
+
+  
+
+</div><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important;" data-adsbygoogle-status="done" data-ad-status="unfilled"><ins id="aswift_0_expand" style="border: medium none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_0_anchor" style="border: medium none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/ads_004.html" data-google-container-id="a!1" data-load-complete="true" frameborder="0"></iframe></ins></ins></ins><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: block; width: 100% !important; height: 129px !important; bottom: 0px; clear: none !important; float: none !important; left: 0px; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1; overflow: visible !important; padding: 0px !important; position: fixed; right: auto !important; top: auto !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647; background: rgb(250, 250, 250) none repeat scroll 0% 0% !important;" data-anchor-status="displayed" data-ad-status="filled" data-anchor-shown="true"><ins style="inset: auto !important; clear: none !important; display: block !important; float: none !important; height: 5px !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; position: relative !important; vertical-align: baseline !important; visibility: visible !important; width: auto !important; z-index: 1 !important; background-color: rgb(250, 250, 250) !important; box-shadow: rgba(0, 0, 0, 0.2) 0px -1px 5px -1px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px !important;" class="ee"><span style="display: block !important; width: 80px !important; height: 45px !important; bottom: 0px !important; left: 0% !important; pointer-events: none !important;"><svg style="margin: 0px !important; position: absolute !important; bottom: 0px !important; left: 0% !important; display: block !important; width: 80px !important; height: 30px !important; transform: none !important; pointer-events: initial !important;"><defs><filter id="dropShadowTop" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB"><feComponentTransfer in="SourceAlpha" result="TransferredAlpha"><feFuncR type="discrete" tableValues="0.5"></feFuncR><feFuncG type="discrete" tableValues="0.5"></feFuncG><feFuncB type="discrete" tableValues="0.5"></feFuncB></feComponentTransfer><feGaussianBlur in="TransferredAlpha" stdDeviation="2"></feGaussianBlur><feOffset dx="0" dy="0" result="offsetblur"></feOffset><feMerge><feMergeNode></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs><path d="M0,26 L0,6 A6,6 0 0,1 6,1 L50,1 A6,6 0 0,1 56,6 L56,20 A6,6 0 0,0 62,26 Z" stroke="#FAFAFA" stroke-width="1" fill="#FAFAFA" style="filter: url(&quot;#dropShadowTop&quot;);"></path><rect x="0" y="25" width="80" height="5" style="fill: rgb(250, 250, 250);"></rect><g class="down" stroke="#616161" stroke-width="2px" stroke-linecap="square"><line x1="22" y1="12" x2="28" y2="18"></line><line x1="28" y1="18" x2="34" y2="12"></line></g></svg></span></ins><ins id="aswift_5_expand" style="border: medium none !important; height: 124px !important; width: 100% !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-table !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_5_anchor" style="border: medium none !important; height: 124px !important; width: 100% !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_5" name="aswift_5" style="width: 1005px !important; height: 124px !important; display: block; margin: 0px auto;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/zrt_lookup.html" data-google-container-id="a!6" data-google-query-id="CJ7Eyq-NjvcCFY5xYAodwcUEIw" data-load-complete="true" width="1005" height="124" frameborder="0"></iframe></ins></ins></ins><iframe src="https://www.google.com/recaptcha/api2/aframe" style="display: none;" width="0" height="0"></iframe></body><iframe id="google_esf" name="google_esf" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/zrt_lookup_002.html" style="display: none;"></iframe><ins class="adsbygoogle adsbygoogle-noablate" style="display: none !important; width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; clear: none !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; position: fixed !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647 !important; background: transparent none repeat scroll 0% 0% !important;" data-adsbygoogle-status="done" aria-hidden="true" data-ad-status="filled" data-vignette-loaded="true"><ins id="aswift_4_expand" style="border: medium none !important; height: 100vh !important; width: 100vw !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-table !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;" tabindex="0" title="Advertisement" aria-label="Advertisement"><ins id="aswift_4_anchor" style="border: medium none !important; height: 100vh !important; width: 100vw !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_4" name="aswift_4" style="width: 100vw !important; height: 100vh !important; inset: 0px auto auto 0px !important; position: absolute !important; clear: none !important; display: inline !important; float: none !important; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; padding: 0px !important; vertical-align: baseline !important; visibility: visible !important; z-index: auto !important;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="linux-kernel%20-%20%E5%A6%82%E4%BD%95%E5%9C%A8%E7%94%A8%E6%88%B7%E7%A9%BA%E9%97%B4%E4%B8%AD%E4%BD%BF%E7%94%A8NETLINK_KOBJECT_UEVENT%E5%8D%8F%E8%AE%AE_files/zrt_lookup_003.html" data-google-container-id="a!5" data-google-query-id="CJ3Eyq-NjvcCFY5xYAodwcUEIw" data-load-complete="true" width="" height="" frameborder="0"></iframe></ins></ins></ins></html>
