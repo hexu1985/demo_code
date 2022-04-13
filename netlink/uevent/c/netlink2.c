@@ -32,10 +32,14 @@ void MonitorNetlinkUevent()
     msg.msg_iovlen=1;
 
     sockfd=socket(AF_NETLINK,SOCK_RAW,NETLINK_KOBJECT_UEVENT);
-    if(sockfd==-1)
+    if(sockfd==-1) {
         printf("socket creating failed:%s\n",strerror(errno));
-    if(bind(sockfd,(struct sockaddr *)&sa,sizeof(sa))==-1)
+        exit(1);
+    }
+    if(bind(sockfd,(struct sockaddr *)&sa,sizeof(sa))==-1) {
         printf("bind error:%s\n",strerror(errno));
+        exit(1);
+    }
 
     int count = 0;
     for (;;) {
@@ -64,7 +68,9 @@ void MonitorNetlinkUevent()
 int main(int argc,char **argv)
 {
     printf("***********************start***********************\n");
+    fflush(stdout);
     MonitorNetlinkUevent();
     printf("***********************ends************************\n");
+    fflush(stdout);
     return 0;
 }
