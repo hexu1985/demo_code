@@ -57,7 +57,7 @@ UnixDomainSender::UnixDomainSender(const std::string& server_path): sockfd(-1)
 
     memset(&cliaddr, 0, sizeof(cliaddr));        /* bind an address for us */
     cliaddr.sun_family = AF_LOCAL;
-    strcpy(cliaddr.sun_path, tmpnam(NULL));
+    strcpy(cliaddr.sun_path, client_path.c_str());
 
     if (bind(sockfd, (struct sockaddr *) &cliaddr, sizeof(cliaddr)) < 0) {
         close(sockfd);
