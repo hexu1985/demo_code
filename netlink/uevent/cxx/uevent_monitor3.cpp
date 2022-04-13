@@ -8,6 +8,8 @@
 //该头文件需要放在netlink.h前面防止编译出现__kernel_sa_family未定义
 #include <sys/socket.h>
 #include <linux/netlink.h>
+#include <arpa/inet.h>
+#include <sys/un.h>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -15,8 +17,6 @@
 #include <tuple>
 #include <set>
 #include <unordered_map>
-
-#define UNIX_DOMAIN_OUTPUT  "/tmp/uevent"
 
 struct Uevent {
     std::string action;
@@ -27,6 +27,65 @@ struct Uevent {
     std::chrono::steady_clock::time_point timestamp;
 };
 
+class UnixDomainSender {
+public:
+    UnixDomainSender(const std::string& server_path);
+
+    bool Send(const std::string& message);
+
+private:
+    int sockfd;
+    struct sockaddr_un cliaddr, servaddr;
+};
+
+UnixDomainSender::UnixDomainSender(const std::string& server_path): sockfd(-1)
+{
+    if (server_path.empty()) {
+        std::cout << "server_path is empty!" << std::endl;
+        return;
+    }
+
+    std::string client_path = "/tmp/uevent_monitor.";
+    client_path += std::to_string(getpid());
+    std::cout << "client_path: " << client_path << std::endl;
+
+    sockfd = socket(AF_LOCAL, SOCK_DGRAM, 0);
+    if (sockfd < 0) {
+        std::cout << "socket() error: " << errno << std::endl;
+        return;
+    }
+
+    memset(&cliaddr, 0, sizeof(cliaddr));        /* bind an address for us */
+    cliaddr.sun_family = AF_LOCAL;
+    strcpy(cliaddr.sun_path, tmpnam(NULL));
+
+    if (bind(sockfd, (struct sockaddr *) &cliaddr, sizeof(cliaddr)) < 0) {
+        close(sockfd);
+        sockfd = -1;
+        std::cout << "bind() error: " << errno << std::endl;
+        return;
+    }
+
+    memset(&servaddr, 0, sizeof(servaddr));    /* fill in server's address */
+    servaddr.sun_family = AF_LOCAL;
+    strcpy(servaddr.sun_path, server_path.c_str());
+}
+
+bool UnixDomainSender::Send(const std::string& message)
+{
+    if (sockfd < 0) {
+        std::cout << "socket not open" << std::endl;
+        return false;
+    }
+    int n = sendto(sockfd, message.data(), message.size(), 0, 
+                    (struct sockaddr*) &servaddr, sizeof(servaddr));
+    if (n < 0) {
+        std::cout << "sendto error: " << errno << std::endl;
+        return false;
+    }
+    return true;
+}
+
 void print(const Uevent& uevent)
 {
     std::cout << "action: " << uevent.action << ", "
@@ -34,6 +93,17 @@ void print(const Uevent& uevent)
               << "subsystem: " << uevent.subsystem << ", "
               << "devname: " << uevent.devname << ", "
               << "devtype: " << uevent.devtype << std::endl;
+}
+
+std::string to_string(const Uevent& uevent)
+{
+    std::ostringstream os;
+    os << "action=" << uevent.action << "\n";
+    os << "devpath=" << uevent.devpath << "\n";
+    os << "subsystem=" << uevent.subsystem << "\n";
+    os << "devname=" << uevent.devname << "\n";
+    os << "devtype=" << uevent.devtype;
+    return os.str();
 }
 
 std::tuple<std::string, std::string> split_line(const std::string& line)
@@ -45,7 +115,7 @@ std::tuple<std::string, std::string> split_line(const std::string& line)
         return std::make_tuple(line.substr(0, pos), line.substr(pos+1));
 }
 
-bool str2Uevent(const std::string& data, std::chrono::steady_clock::time_point timestamp, Uevent& uevent)
+bool to_Uevent(const std::string& data, std::chrono::steady_clock::time_point timestamp, Uevent& uevent)
 {
     std::string line;
     std::istringstream is;
@@ -92,12 +162,13 @@ bool str2Uevent(const std::string& data, std::chrono::steady_clock::time_point t
     return true;
 }
 
-void notifyUevent(const Uevent& uevent)
+void notifyUevent(const Uevent& uevent, UnixDomainSender& sender)
 {
+    sender.Send(to_string(uevent));
     print(uevent);
 }
 
-void processUevent(const Uevent& uevent)
+void processUevent(const Uevent& uevent, UnixDomainSender& sender)
 {
     static std::unordered_map<std::string, std::chrono::steady_clock::time_point> udev_addtime_map;
     std::string action = uevent.action;
@@ -114,7 +185,7 @@ void processUevent(const Uevent& uevent)
             }
         } 
         udev_addtime_map[uevent.devpath] = uevent.timestamp;
-        notifyUevent(uevent);
+        notifyUevent(uevent, sender);
     } else if (action == "remove") {
         std::cout << "new remove action" << std::endl;
 
@@ -124,13 +195,13 @@ void processUevent(const Uevent& uevent)
             return;
         }
         udev_addtime_map.erase(uevent.devpath);
-        notifyUevent(uevent);
+        notifyUevent(uevent, sender);
     } else {
         std::cout << "other action: " << action << std::endl;
     }
 }
 
-void MonitorNetlinkUevent()
+void MonitorNetlinkUevent(UnixDomainSender& sender)
 {
     int sockfd;
     struct sockaddr_nl sa;
@@ -181,8 +252,8 @@ void MonitorNetlinkUevent()
             continue;
         }
 
-        if (str2Uevent(data.substr(pos), now, uevent)) {
-            processUevent(uevent);
+        if (to_Uevent(data.substr(pos), now, uevent)) {
+            processUevent(uevent, sender);
         }
 
         //std::cout << "received " << len << " bytes" << std::endl;
@@ -196,7 +267,13 @@ void MonitorNetlinkUevent()
 int main(int argc,char **argv)
 {
     printf("***********************start***********************\n");
-    MonitorNetlinkUevent();
+    std::string server_path = "/tmp/unix.dg";
+    if (argc == 2) {
+        server_path = argv[1];
+    }
+    std::cout << "server_path: " << server_path << std::endl;;
+    UnixDomainSender dg_sender(server_path);
+    MonitorNetlinkUevent(dg_sender);
     printf("***********************ends************************\n");
     return 0;
 }
