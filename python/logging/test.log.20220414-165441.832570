@@ -1,4 +1,0 @@
-[INFO][2022-04-14 16:54:41,832][MainThread:139685287495488][format_logging.py:55] hello info
-[ERROR][2022-04-14 16:54:41,832][MainThread:139685287495488][format_logging.py:56] hello error
-[INFO][2022-04-14 16:54:41,833][MainThread:139685287495488][a.py:8] print log
-[ERROR][2022-04-14 16:54:41,833][MainThread:139685287495488][a.py:9] print log

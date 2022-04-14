@@ -54,4 +54,5 @@ LOGGER = logging.getLogger()
 if __name__ == '__main__':
     LOGGER.info("hello info")
     LOGGER.error("hello error")
+    LOGGER.warning("hello warning")
     a.print_log()
