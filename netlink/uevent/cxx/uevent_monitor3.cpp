@@ -24,7 +24,7 @@ struct Uevent {
     std::string subsystem;
     std::string devname;
     std::string devtype;
-    std::chrono::steady_clock::time_point timestamp;
+    std::chrono::system_clock::time_point timestamp;
 };
 
 class UnixDomainSender {
@@ -88,11 +88,16 @@ bool UnixDomainSender::Send(const std::string& message)
 
 void print(const Uevent& uevent)
 {
+    time_t tt;
+    tt = std::chrono::system_clock::to_time_t ( uevent.timestamp );
+    std::cout << ctime(&tt) << std::endl;
     std::cout << "action: " << uevent.action << ", "
               << "devpath: " << uevent.devpath << ", "
               << "subsystem: " << uevent.subsystem << ", "
               << "devname: " << uevent.devname << ", "
-              << "devtype: " << uevent.devtype << std::endl;
+              << "devtype: " << uevent.devtype << ", "
+              << "timestamp: " << std::chrono::system_clock::to_time_t ( uevent.timestamp );
+    std::cout << std::endl;
 }
 
 std::string to_string(const Uevent& uevent)
@@ -102,7 +107,8 @@ std::string to_string(const Uevent& uevent)
     os << "devpath=" << uevent.devpath << "\n";
     os << "subsystem=" << uevent.subsystem << "\n";
     os << "devname=" << uevent.devname << "\n";
-    os << "devtype=" << uevent.devtype;
+    os << "devtype=" << uevent.devtype << "\n";
+    os << "timestamp=" << std::chrono::system_clock::to_time_t ( uevent.timestamp );
     return os.str();
 }
 
@@ -115,7 +121,7 @@ std::tuple<std::string, std::string> split_line(const std::string& line)
         return std::make_tuple(line.substr(0, pos), line.substr(pos+1));
 }
 
-bool to_Uevent(const std::string& data, std::chrono::steady_clock::time_point timestamp, Uevent& uevent)
+bool to_Uevent(const std::string& data, std::chrono::system_clock::time_point timestamp, Uevent& uevent)
 {
     std::string line;
     std::istringstream is;
@@ -170,7 +176,7 @@ void notifyUevent(const Uevent& uevent, UnixDomainSender& sender)
 
 void processUevent(const Uevent& uevent, UnixDomainSender& sender)
 {
-    static std::unordered_map<std::string, std::chrono::steady_clock::time_point> udev_addtime_map;
+    static std::unordered_map<std::string, std::chrono::system_clock::time_point> udev_addtime_map;
     std::string action = uevent.action;
 
     if (action == "add") {
@@ -223,11 +229,11 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
     int count = 0;
     std::string data;
     Uevent uevent;
-    std::chrono::steady_clock::time_point now;
+    std::chrono::system_clock::time_point now;
     for (;;) {
         memset(buf,0,4096);
         len=recv(sockfd,buf,4096,0);
-        now = std::chrono::steady_clock::now();
+        now = std::chrono::system_clock::now();
         if(len<0) {
             printf("receive error\n");
             continue;
