@@ -15,18 +15,18 @@
 .POSIX:
 .SUFFIXES:
 
-AS ?= as
+AS = as
 ASFLAGS += --32
-LD ?= ld
+LD = ld
 LDFLAGS += -melf_i386
 
-WRITERECORDS ?= write-records
+WRITERECORDS = write-records
 WRITERECORDSOBJ := write-record.o write-records.o
 
-READRECORDS ?= read-records
+READRECORDS = read-records
 READRECORDSOBJ := read-record.o count-chars.o write-newline.o read-records.o
 
-ADDYEAR ?= add-year
+ADDYEAR = add-year
 ADDYEAROBJ := add-year.o
 
 .PHONY: all
@@ -34,35 +34,35 @@ ADDYEAROBJ := add-year.o
 all: write-records read-records add-year 
 
 write-record.o: write-record.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 write-records.o: write-records.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 write-records: write-record.o write-records.o
-	$(LD) $(LDFLAGS) $? -o $@
+	$(LD) $(LDFLAGS) $^ -o $@
 
 read-record.o: read-record.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 count-chars.o: count-chars.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 write-newline.o: write-newline.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 read-records.o: read-records.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 read-records: read-record.o count-chars.o \
 	      write-newline.o read-records.o
-	$(LD) $(LDFLAGS) $? -o $@
+	$(LD) $(LDFLAGS) $^ -o $@
 
 add-year.o: add-year.s
-	$(AS) $(ASFLAGS) $? -o $@
+	$(AS) $(ASFLAGS) $^ -o $@
 
 add-year: add-year.o read-record.o write-record.o
-	$(LD) $(LDFLAGS) $? -o $@
+	$(LD) $(LDFLAGS) $^ -o $@
 
 clean:
 	rm -f $(WRITERECORDS) $(WRITERECORDSOBJ) $(READRECORDS) $(READRECORDSOBJ) $(ADDYEAR) $(ADDYEAROBJ)
