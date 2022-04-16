@@ -1,7 +1,5 @@
-AS = as
-ASFLAGS = --32 -g
-LD = ld 
-LDFLAGS = -m elf_i386
+AS = as --32 -g
+LD = ld -m elf_i386
 
 SOURCES = $(shell ls *.s)
 PROGS = $(SOURCES:%.s=%)
@@ -13,8 +11,8 @@ clean:
 	$(RM) $(PROGS) *.o
 
 %.o:%.s
-	$(AS) $(ASFLAGS) -o $@ $<
+	$(AS) -o $@ $<
 
 $(PROGS): %: %.o
-	$(LD) $(LDFLAGS) -o $@ $<
+	$(LD) -o $@ $<
 
