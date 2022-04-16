@@ -1,5 +1,5 @@
-AS = as --32
-LD = ld -m elf_i386
+AS = as -g 
+LD = ld
 all: exit minimum maximum maximum_255 maximum_counter maximum_ending_address hello-world power sum factorial toupper heynow
 
 clean:
