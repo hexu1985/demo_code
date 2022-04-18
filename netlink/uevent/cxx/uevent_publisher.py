@@ -38,11 +38,19 @@ class UeventMonitorProxy(threading.Thread):
         kill_old = subprocess.run(["bash", self.work_dir+"/kill_uevent_monitor.sh"])
         LOGGER.info('kill_uevent_monitor.sh returncode: {}'.format(kill_old.returncode))
 
-        with open(self.log_path, mode='w') as f:
-            # run uevent_monitor
-            uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
-            LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
-            error_exit("uevent_monitor already exit!")
+        try:
+            with open(self.log_path, mode='w') as f:
+                # run uevent_monitor
+                try:
+                    uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
+                except subprocess.CalledProcessError as err:
+                    LOGGER.error('run uevent_monitor error: {}'.err)
+                else:
+                    LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
+        except Exception as err:
+            LOGGER.error("open log file error: {}".format(err))
+
+        error_exit("uevent_monitor not run or already exit!")
 
 class UeventMonitorClient:
     def __init__(self, receiver_unix_domain_path):
