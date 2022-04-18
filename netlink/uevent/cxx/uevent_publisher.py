@@ -43,8 +43,9 @@ class UeventMonitorProxy(threading.Thread):
                 # run uevent_monitor
                 try:
                     uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
-                except subprocess.CalledProcessError as err:
-                    LOGGER.error('run uevent_monitor error: {}'.err)
+                except Exception as err:
+                    print("adbdddee")
+                    LOGGER.error('run uevent_monitor error: {}'.format(err))
                 else:
                     LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
         except Exception as err:
