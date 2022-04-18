@@ -13,9 +13,6 @@ all: $(PROGS)
 	@echo "PROGS = $(PROGS)" 
 
 clean:
-	$(RM) $(PROGS)
-
-distclean:
 	$(RM) $(PROGS) *.o
 
 %.o:%.cpp

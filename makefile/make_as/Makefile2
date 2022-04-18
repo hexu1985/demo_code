@@ -1,0 +1,48 @@
+AS = as -g 
+LD = ld
+all: exit maximum hello-world power factorial toupper heynow
+
+clean:
+	rm *.o exit maximum hello-world power factorial toupper heynow
+
+exit.o: exit.s
+	$(AS) -o $@ $< 
+
+exit: exit.o
+	$(LD) -o $@ $< 
+
+maximum.o: maximum.s
+	$(AS) -o $@ $< 
+
+maximum: maximum.o
+	$(LD) -o $@ $< 
+
+hello-world.o: hello-world.s
+	$(AS) -o $@ $< 
+
+hello-world: hello-world.o
+	$(LD) -o $@ $< 
+
+power.o: power.s
+	$(AS) -o $@ $< 
+
+power: power.o
+	$(LD) -o $@ $< 
+
+factorial.o: factorial.s
+	$(AS) -o $@ $< 
+
+factorial: factorial.o
+	$(LD) -o $@ $< 
+
+toupper.o: toupper.s
+	$(AS) -o $@ $< 
+
+toupper: toupper.o
+	$(LD) -o $@ $< 
+
+heynow.o: heynow.s
+	$(AS) -o $@ $< 
+
+heynow: heynow.o
+	$(LD) -o $@ $< 
