@@ -7,11 +7,14 @@ import threading
 import subprocess
 import socket
 import time
+import datetime
+import logging
+import signal
 
-CURRENT_FILE_PATH=""
+LOGGER = logging.getLogger()
 
 def error_exit(msg):
-    print(msg)
+    LOGGER.error(msg)
     os.kill(os.getpid(), signal.SIGKILL)
 
 class Uevent:
@@ -27,13 +30,18 @@ class UeventMonitorProxy(threading.Thread):
     def __init__(self, work_dir, receiver_unix_domain_path):
         super().__init__()
         self.work_dir = work_dir
-        self.cmd = [work_dir+"/uevent_monitor3", receiver_unix_domain_path]
-        self.log_path = work_dir+"/uevent_monitor3.log"
+        self.cmd = [work_dir+"/uevent_monitor", receiver_unix_domain_path]
+        self.log_path = work_dir+"/log/uevent_monitor.log.%s"%datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')
 
     def run(self):
+        # kill old uevent_monitor
+        kill_old = subprocess.run(["bash", self.work_dir+"/kill_uevent_monitor.sh"])
+        LOGGER.info('kill_uevent_monitor.sh returncode: {}'.format(kill_old.returncode))
+
         with open(self.log_path, mode='w') as f:
-            completed = subprocess.run(self.cmd, stdout=f, stderr=f)
-            print('returncode:', completed.returncode)
+            # run uevent_monitor
+            uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
+            LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
             error_exit("uevent_monitor already exit!")
 
 class UeventMonitorClient:
@@ -43,7 +51,7 @@ class UeventMonitorClient:
         if os.path.exists(self.receiver_unix_domain_path):
             os.remove( self.receiver_unix_domain_path )
          
-        print("starting unix domain socket server.")
+        LOGGER.info("starting unix domain socket server.")
         self.server = socket.socket( socket.AF_UNIX, socket.SOCK_DGRAM )
         self.server.bind(self.receiver_unix_domain_path)
 
@@ -72,7 +80,7 @@ class UeventMonitorClient:
     def receiveUevent(self):
         datagram = self.server.recv( 4096 )
         if not datagram:
-            print("receive empty data")
+            LOGGER.error("receive empty data")
             return None
         return self.toUevent(datagram.decode('ascii'))
 
@@ -81,29 +89,29 @@ class UeventPublisher(threading.Thread):
         super().__init__()
         self.observers = []
         self.work_dir = work_dir
-        self.unix_domain_path = "/tmp/UeventPublisher."+str(os.getpid())
+        self.unix_domain_path = "/tmp/UeventPublisher.unix.dg"
 
     def addObserver(self, observer):
         # 该方法非线程安全, 所以start以后就不能再add了
         if self.is_alive():
-            print('thread is running! Failed to add: {}'.format(observer))
+            LOGGER.error('thread is running! Failed to add: {}'.format(observer))
             return
 
         if observer not in self.observers:
             self.observers.append(observer)
         else:
-            print('Failed to add: {}'.format(observer))
+            LOGGER.error('Failed to add: {}'.format(observer))
 
     def removeObserver(self, observer):
         # 该方法非线程安全, 所以start以后就不能再remove了
         if self.is_alive():
-            print('thread is running! Failed to add: {}'.format(observer))
+            LOGGER.error('thread is running! Failed to add: {}'.format(observer))
             return
 
         try:
             self.observers.remove(observer)
         except ValueError:
-            print('Failed to remove: {}'.format(observer))
+            LOGGER.error('Failed to remove: {}'.format(observer))
 
     def notifyAddAction(self, uevent):
         [o.OnUeventAddAction(uevent) for o in self.observers]
@@ -124,33 +132,34 @@ class UeventPublisher(threading.Thread):
             elif uevent.action == 'remove':
                 self.notifyRemoveAction(uevent)
             else:
-                print("unfocus event type, action: {}".format(uevent.action))
+                LOGGER.warning("unfocus event type, action: {}".format(uevent.action))
 
-
-class DemoUeventObserver:
-    def __init__(self):
-        pass
-
-    def printUevent(self, uevent):
-        print("-"*20)
-        print("action: {}".format(uevent.action))
-        print("devpath: {}".format(uevent.devpath))
-        print("subsystem: {}".format(uevent.subsystem))
-        print("devname: {}".format(uevent.devname))
-        print("devtype: {}".format(uevent.devtype))
-        print("timestamp: {}".format(int(uevent.timestamp)))
-        print("-"*20)
-
-    def OnUeventAddAction(self, uevent):
-        print("OnUeventAddAction")
-        self.printUevent(uevent)
-
-    def OnUeventRemoveAction(self, uevent):
-        print("OnUeventRemoveAction")
-        self.printUevent(uevent)
 
 if __name__ == "__main__":
+    class DemoUeventObserver:
+        def __init__(self):
+            pass
+    
+        def printUevent(self, uevent):
+            print("-"*20)
+            print("action: {}".format(uevent.action))
+            print("devpath: {}".format(uevent.devpath))
+            print("subsystem: {}".format(uevent.subsystem))
+            print("devname: {}".format(uevent.devname))
+            print("devtype: {}".format(uevent.devtype))
+            print("timestamp: {}".format(int(uevent.timestamp)))
+            print("-"*20)
+    
+        def OnUeventAddAction(self, uevent):
+            print("OnUeventAddAction")
+            self.printUevent(uevent)
+    
+        def OnUeventRemoveAction(self, uevent):
+            print("OnUeventRemoveAction")
+            self.printUevent(uevent)
+
     print("uevent_monitor start")
+    logging.basicConfig(level=logging.DEBUG)
     CURRENT_FILE_PATH=os.path.dirname(sys.argv[0])
     if not CURRENT_FILE_PATH:
         CURRENT_FILE_PATH = os.getcwd()
