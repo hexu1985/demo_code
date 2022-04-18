@@ -34,22 +34,18 @@ class UeventMonitorProxy(threading.Thread):
         self.log_path = work_dir+"/log/uevent_monitor.log.%s"%datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')
 
     def run(self):
-        # kill old uevent_monitor
-        kill_old = subprocess.run(["bash", self.work_dir+"/kill_uevent_monitor.sh"])
-        LOGGER.info('kill_uevent_monitor.sh returncode: {}'.format(kill_old.returncode))
-
         try:
+            # kill old uevent_monitor
+            kill_old = subprocess.run(["bash", self.work_dir+"/kill_uevent_monitor.sh"])
+            LOGGER.info('kill_uevent_monitor.sh returncode: {}'.format(kill_old.returncode))
+
             with open(self.log_path, mode='w') as f:
                 # run uevent_monitor
-                try:
-                    uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
-                except Exception as err:
-                    print("adbdddee")
-                    LOGGER.error('run uevent_monitor error: {}'.format(err))
-                else:
-                    LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
+                uevent_monitor = subprocess.Popen(self.cmd, stdout=f, stderr=f)
+                uevent_monitor.wait()
+                LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
         except Exception as err:
-            LOGGER.error("open log file error: {}".format(err))
+            LOGGER.error("UeventMonitorProxy run error: {}".format(err))
 
         error_exit("uevent_monitor not run or already exit!")
 
