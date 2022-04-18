@@ -41,8 +41,7 @@ class UeventMonitorProxy(threading.Thread):
 
             with open(self.log_path, mode='w') as f:
                 # run uevent_monitor
-                uevent_monitor = subprocess.Popen(self.cmd, stdout=f, stderr=f)
-                uevent_monitor.wait()
+                uevent_monitor = subprocess.run(self.cmd, stdout=f, stderr=f)
                 LOGGER.info('uevent_monitor returncode: {}'.format(uevent_monitor.returncode))
         except Exception as err:
             LOGGER.error("UeventMonitorProxy run error: {}".format(err))
