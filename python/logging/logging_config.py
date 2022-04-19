@@ -51,7 +51,6 @@ LOGGING = {
 logging.config.dictConfig(LOGGING)
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
     LOGGER = logging.getLogger()
     LOGGER.info("hello info")
     LOGGER.error("hello error")
