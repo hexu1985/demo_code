@@ -3,7 +3,7 @@ import logging_config
 import a
 
 
-logging.basicConfig(level=logging.INFO)
+logging_config.init_logging_config('.', 'logging_config')
 LOGGER = logging.getLogger()
 LOGGER.info("hello info")
 LOGGER.error("hello error")
