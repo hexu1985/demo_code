@@ -29,15 +29,16 @@ class WorkerThread(threading.Thread):
             LOGGER.error("task attribute error: {}".format(e))
 
     def run(self):
-        LOGGER.info("worker {} is running".format(self.name))
+        LOGGER.info("worker thread {} start".format(self.name))
         while True:
             try:
                 self.fetch_and_exectue_task_once()
             except StopWorkerThreadException as e:
                 LOGGER.info("get stoptask and exit workthread")
                 break
-            except:
-                LOGGER.error("task execute unknown error: {}".format(sys.exc_info()[0]))
+            except Exception as e:
+                LOGGER.error("task execute error: {}".format(e))
+        LOGGER.info("worker thread {} stop".format(self.name))
 
     def putTask(self, task):
         self.task_queue.put(task)
