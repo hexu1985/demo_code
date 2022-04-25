@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo $#
 if [ $# -lt 1 ]
@@ -21,7 +21,7 @@ then
     exit 1
 fi
 
-if [ -z `ls -A $test_dir` ]
+if [ -z "`ls -A $test_dir`" ]
 then
     echo "$test_dir is empty dir"
     exit 1
