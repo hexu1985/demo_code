@@ -49,3 +49,30 @@ workflow
 - 各个工作流节点之间是串行的, 即执行完WorkflowNode("workflow/step01")后, 才会执行WorkflowNode("workflow/setp02"), 工作流节点之间的先后顺序按照子目录名的字典顺序来,
 - 依赖workflow_node.py
 
+#### workflow_service.py & main.py
+
+- 实现工作流服务类WorkflowService, 监听uevent和SIGUSR1, 每种事件都会触发启动一次工作流任务(prework -> workflow -> postwork), 
+- main.py中初始化日志workflow.service.log.*, 启动定时任务, 依赖python第三方库schedule
+
+#### start_workflow_service.sh & stop_workflow_service.sh
+
+- 启动停止workflow service脚本
+
+#### start_workflow_service_monitor.sh & stop_workflow_service_monitor.sh & workflow.service
+
+- start_workflow_service_monitor.sh: workflow启动及监控脚本, 
+- stop_workflow_service_monitor.sh: workflow停止和停止监控脚本
+- workflow.service: workflow service配置文件(cp到/lib/systemd/system/目录下)
+    ```
+    $ sudo systemctl daemon-reload
+    $ sudo systemctl start workflow.service
+    $ sudo systemctl enable workflow.service
+    ```
+
+#### sync_imgs_to_car.sh (postwork/step01/)
+
+- 版本数据隔日自动上车: 二进制全量版本（main/map/calibration/model），隔日自动上车外接盘
+- 源目录: /gondor/imgs/sync/
+- 目的目录: /media/apollo/xxx/imgs/
+- 同步方式: rsync -avP --delete
+- 目的盘过滤条件: 存在white-rhino-xxx目录, 存在imgs目录

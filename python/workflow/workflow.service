@@ -1,0 +1,19 @@
+[Unit]
+Description=workflow service
+After=network.target
+
+[Service]
+Type=simple
+User=apollo
+# 服务启动时执行的脚本，
+### 使用sh命令包括其他Linux系统命令时都要使用全路径，/bin/sh等，包括.sh文件也需要使用绝对路径，才能找到。
+ExecStart=/opt/data_platform/edge_server/workflow_service/start_workflow_service_monitor.sh
+# 服务停止时执行的脚本
+ExecStop=/opt/data_platform/edge_server/workflow_service/stop_workflow_service_monitor.sh
+# Restart=always 表示程序退出就会重启,未进行测试
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

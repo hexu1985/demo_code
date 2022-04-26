@@ -21,7 +21,7 @@ function check_dir_valid()
         return 1
     fi
     
-    echo "$test_dir is dir and no empty"
+    echo "$test_dir is dir and not empty"
     return 0
 }
 

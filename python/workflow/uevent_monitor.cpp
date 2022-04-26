@@ -243,7 +243,7 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
         }
 
         count++;
-        printf("***********************msg %d start***********************\n", count);
+        //printf("***********************msg %d start***********************\n", count);
 
         for(i=0;i<len;i++)
             if(buf[i]=='\0')
@@ -254,7 +254,7 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
 
         size_t pos = data.find("ACTION");
         if (pos == std::string::npos) {
-            std::cout << "not find ACTION" << std::endl;
+            //std::cout << "not find ACTION" << std::endl;
             continue;
         }
 
@@ -264,7 +264,7 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
 
         //std::cout << "received " << len << " bytes" << std::endl;
         //std::cout << data.substr(pos) << std::endl;
-        printf("***********************msg %d ends************************\n", count);
+        //printf("***********************msg %d ends************************\n", count);
         fflush(stdout);
     }
     close(sockfd);
