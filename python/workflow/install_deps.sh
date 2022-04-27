@@ -14,3 +14,10 @@ then
 else
     pip3 install schedule
 fi
+
+if pip3 show psutil
+then
+    echo "psutil already installed"
+else
+    pip3 install psutil
+fi
