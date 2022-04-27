@@ -69,7 +69,6 @@ def main():
     mount_points = get_mount_points()
     print("mount_points: {}".format(mount_points))
     date_str = get_today_date_str()
-    date_str = "20220426"
     print("date_str: {}".format(date_str))
     for mp in mount_points:
         mp_path = pathlib.Path(mp).resolve()
