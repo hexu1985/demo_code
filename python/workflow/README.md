@@ -69,6 +69,10 @@ workflow
     $ sudo systemctl enable workflow.service
     ```
 
+#### clean_7day_ago_dir.py (prework/step01/)
+
+- 清理"/gondor/yyyymmdd"目录, 保留7天内数据
+
 #### sync_imgs_to_car.sh (postwork/step01/)
 
 - 版本数据隔日自动上车: 二进制全量版本（main/map/calibration/model），隔日自动上车外接盘
