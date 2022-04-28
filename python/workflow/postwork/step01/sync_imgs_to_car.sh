@@ -28,19 +28,22 @@ function is_not_empty_dir()
 function is_valid_dst_mount_dir()
 {
     local test_dir=$1
+    echo "is_valid_dst_mount_dir(\"${test_dir}\")"
+    echo "ls -tlr \"${test_dir}\""
+    ls -tlr "${test_dir}"
     if ! mountpoint -q "$test_dir"
     then
         echo "$test_dir is no an mountpoint"
         return 1
     fi
 
-    if ! ls -1d "${test_dir}"/white-rhino-* >& /dev/null
+    if ! ls -1d "${test_dir}"/white-rhino-*
     then
         echo "$test_dir has no white-rhino-* subdir"
         return 1
     fi
 
-    if ! ls -1d "${test_dir}"/imgs >& /dev/null
+    if ! ls -1d "${test_dir}"/imgs
     then
         echo "$test_dir has no imgs subdir"
         return 1

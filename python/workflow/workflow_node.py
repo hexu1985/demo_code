@@ -27,6 +27,8 @@ class WorkflowNode:
         for f in p.glob("*"):
             if f.name[0] == '.':
                 continue
+            if not f.is_file():
+                continue
             if os.access(f, os.X_OK):
                 exefile_lst.append(f)
         exefile_lst.sort(key=lambda path: path.name)

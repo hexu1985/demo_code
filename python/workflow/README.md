@@ -80,3 +80,14 @@ workflow
 - 目的目录: /media/apollo/xxx/imgs/
 - 同步方式: rsync -avP --delete
 - 目的盘过滤条件: 存在white-rhino-xxx目录, 存在imgs目录
+
+#### sync_data_from_car.py
+
+- 同步车上数据和日志到边缘服务器
+    ```
+    同步流程:
+    遍历mountpoint对应的目录:
+        如果目录下存在white-rhino-*的目录,说明是车上的外接硬盘
+        遍历每个white-rhino-*目录:
+            把data目录下的bag, log目录和文件, 同步到/gondor/yyyymmdd/white-rhino-*/data目录下
+    ```

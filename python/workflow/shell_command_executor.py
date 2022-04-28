@@ -3,6 +3,10 @@
 import os
 import subprocess
 import logging
+import datetime
+import sys
+import os
+import pathlib
 
 LOGGER = logging.getLogger()
 
@@ -13,7 +17,17 @@ class ShellCommandExecutor:
         if not self.env:
             self.env = os.environ.copy()
         self.proc = None
+        self.logfile = None
+        log_dir = self.get_current_file_path()
+        self.logfile_path = log_dir+"/log/shell_command_executor.log.%s"%datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f')
         LOGGER.info("create ShellCommandExecutor(cmd=[{}])".format(self.cmd))
+
+    def get_current_file_path(self):
+        current_file_path=os.path.dirname(sys.argv[0])
+        if not current_file_path:
+            current_file_path = os.getcwd()
+        current_file_path = pathlib.Path(current_file_path).resolve()
+        return str(current_file_path)
 
     def __str__(self):
         return 'ShellCommandExecutor("{}")'.format(self.cmd)
@@ -23,10 +37,11 @@ class ShellCommandExecutor:
 
     def run(self):
         try:
+            self.logfile = open(self.logfile_path, 'w')
             self.proc = subprocess.Popen(self.cmd, shell=True, env=self.env, close_fds=True,
-                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            LOGGER.info('run cmd [{}]'.format(self.cmd))
-        except subprocess.CalledProcessError as err:
+                    stdout=self.logfile, stderr=self.logfile)
+            LOGGER.info('run cmd [{}], logfile_path: {}'.format(self.cmd, self.logfile_path))
+        except Exception as err:
             LOGGER.error('run cmd [{}] error: {}'.format(self.cmd, err))
 
     def wait(self):
@@ -35,9 +50,10 @@ class ShellCommandExecutor:
             return -1
 
         ret = self.proc.wait()
-        stdout = self.proc.stdout.read().decode('utf-8') if self.proc.stdout else ""
-        stderr = self.proc.stderr.read().decode('utf-8') if self.proc.stderr else ""
-        LOGGER.info("cmd: [{}] complete with ret: {}\n\tstdout:[{}]\n\tstderr:[{}]".format(self.cmd, ret, stdout, stderr))
+        print("*"*20, file=self.logfile)
+        print("cmd [{}]".format(self.cmd), file=self.logfile)
+        self.logfile.close()
+        LOGGER.info("cmd: [{}] complete with ret: {}, logfile_path: {}".format(self.cmd, ret, self.logfile_path))
 
 
 if __name__ == "__main__":
@@ -46,9 +62,9 @@ if __name__ == "__main__":
     cmds = []
 
     cmds.append(ShellCommandExecutor("cd /tmp && pwd"))
-    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH"', env = {"DISK_PATH":"abc"}))
-    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH" 1>&2', env = {"DISK_PATH":"abc"}))
-    cmds.append(ShellCommandExecutor('./nosuchfile.sh', env = {"DISK_PATH":"abc"}))
+    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH"'))
+    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH" 1>&2'))
+    cmds.append(ShellCommandExecutor('./nosuchfile.sh'))
 
     for cmd in cmds:
         cmd.run()
