@@ -6,10 +6,12 @@ import psutil
 import pathlib
 import datetime
 import collections
+import time
+import os
 
 DataDir = collections.namedtuple('DataDir', 'path carid')
 
-def shell_cmd(cmd, alert_on_failure=True):
+def shell_cmd(cmd):
     print('SHELL > {}'.format(cmd))
     proc = subprocess.Popen(cmd, shell=True, close_fds=True)
     ret = proc.wait()
@@ -41,6 +43,51 @@ def rsync_file(from_path, to_path):
     cmd_str = 'rsync -av "{}" "{}"'.format(from_path, to_path)
     shell_cmd(cmd_str)
 
+def delete_file(file_path):
+    try:
+        os.remove(file_path)
+        print("remove file {}".format(file_path))
+    except:
+        print("remove file {} failed: {}".format(file_path, sys.exc_info()[0]))
+
+def is_file_day_before(file_path, data_str):
+    t = os.path.getmtime(file_path)
+    if time.strftime("%Y%m%d", time.localtime(t)) == data_str:
+        return False
+
+    print("is_file_day_before matched: {}, data_str: {}".format(file_path, data_str))
+    return True
+
+def clean_tl_viz(tl_viz_dir, data_str):
+    if not os.path.isdir(tl_viz_dir):
+        return
+
+    for f_name in os.listdir(tl_viz_dir):
+        f_path = os.path.join(tl_viz_dir, f_name)
+        if not os.path.isfile(f_path): 
+            continue
+
+        if is_file_day_before(f_path, data_str):
+            delete_file(f_path)
+            continue
+
+def clean_log_dir(log_dir, t): 
+    data_str = time.strftime("%Y%m%d", time.localtime(t))
+
+    if not os.path.isdir(log_dir):
+        return
+
+    for f_name in os.listdir(log_dir):
+        f_path = os.path.join(log_dir, f_name)
+        if not os.path.isfile(f_path): 
+            continue
+
+        if is_file_day_before(f_path, data_str):
+            delete_file(f_path)
+            continue
+
+    clean_tl_viz(os.path.join(log_dir, "tl_viz"), data_str)
+
 def sync_log_data_dir(data_dir, carid):
     date_str = get_today_date_str()
     print("sync_log_data_dir")
@@ -48,10 +95,19 @@ def sync_log_data_dir(data_dir, carid):
     dst_data_dir = pathlib.Path("/gondor")/date_str/carid/"data"
     dst_log_dir = dst_data_dir/"log"
 
+    clean_log_dir(data_dir/"log", time.time())
     rsync_dir(data_dir/"log", dst_log_dir)
     for path in data_dir.glob("*"):
         if path.is_file():
             rsync_file(path, dst_data_dir/path.name)
+
+def get_7day_ago_date_str():
+    today = datetime.datetime.today()
+    sevenday_ago = today - datetime.timedelta(days=7)
+    datestr = sevenday_ago.strftime("%Y%m%d")
+    print("7day ago datestr: {}".format(datestr))
+
+    return datestr 
 
 def sync_bag_data_dir(data_dir, carid):
     print("sync_bag_data_dir")
@@ -60,8 +116,14 @@ def sync_bag_data_dir(data_dir, carid):
         print("{} is not dir".format(bag_dir))
         return
 
+    date_end = int(get_7day_ago_date_str())
+
     for record_dir in bag_dir.glob("[0-9]"*8+"-*"):
         date_str = record_dir.name[0:8]
+        date_int = int(date_str)
+        if date_int <= date_end:
+            print("{} is 7day ago, needn't async".format(record_dir))
+            continue
         dst_record_dir = pathlib.Path("/gondor")/date_str/carid/"data"/"bag"/record_dir.name
         rsync_dir(record_dir, dst_record_dir)
 
@@ -88,3 +150,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

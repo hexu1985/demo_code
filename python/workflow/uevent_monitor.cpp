@@ -149,7 +149,7 @@ bool to_Uevent(const std::string& data, std::chrono::system_clock::time_point ti
             key_set.insert(key);
         } else if (key == "DEVTYPE") {
             if (value != "partition") {
-                std::cout << "only focus partition device type, this device type: " << value << std::endl;
+                // std::cout << "only focus partition device type, this device type: " << value << std::endl;
                 return false;
             }
             uevent.devtype = value;
@@ -160,7 +160,7 @@ bool to_Uevent(const std::string& data, std::chrono::system_clock::time_point ti
     }
 
     if (key_set.size() != 5) {
-        std::cout << "key_set is not complete, key_set.size: " << key_set.size() << std::endl;
+        // std::cout << "key_set is not complete, key_set.size: " << key_set.size() << std::endl;
         return false;
     }
 
@@ -221,14 +221,18 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
     sa.nl_pid = 0;//getpid(); both is ok
 
     sockfd=socket(AF_NETLINK,SOCK_RAW,NETLINK_KOBJECT_UEVENT);
-    if(sockfd==-1)
+    if(sockfd==-1) {
         printf("socket creating failed:%s\n",strerror(errno));
-    if(bind(sockfd,(struct sockaddr *)&sa,sizeof(sa))==-1)
+        return;
+    }
+
+    if(bind(sockfd,(struct sockaddr *)&sa,sizeof(sa))==-1) {
         printf("bind error:%s\n",strerror(errno));
+        return;
+    }
 
     int count = 0;
     std::string data;
-    Uevent uevent;
     std::chrono::system_clock::time_point now;
     for (;;) {
         memset(buf,0,4096);
@@ -237,13 +241,12 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
         if(len<0) {
             printf("receive error\n");
             continue;
-        } else if(len<32||len>sizeof(buf)) {
+        } else if(len<32) {
             printf("invalid message");
             continue;
         }
 
         count++;
-        //printf("***********************msg %d start***********************\n", count);
 
         for(i=0;i<len;i++)
             if(buf[i]=='\0')
@@ -258,13 +261,17 @@ void MonitorNetlinkUevent(UnixDomainSender& sender)
             continue;
         }
 
+        Uevent uevent;
         if (to_Uevent(data.substr(pos), now, uevent)) {
             processUevent(uevent, sender);
         }
 
-        //std::cout << "received " << len << " bytes" << std::endl;
-        //std::cout << data.substr(pos) << std::endl;
-        //printf("***********************msg %d ends************************\n", count);
+        if (uevent.devtype == "partition") {
+            printf("***********************msg %d start***********************\n", count);
+            std::cout << "received " << len << " bytes" << std::endl;
+            std::cout << data.substr(pos) << std::endl;
+            printf("***********************msg %d ends************************\n", count);
+        }
         fflush(stdout);
     }
     close(sockfd);
