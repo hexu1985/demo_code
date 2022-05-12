@@ -2,6 +2,8 @@ import threading
 import logging
 import queue
 import time
+import sys
+import traceback
 
 LOGGER = logging.getLogger()
 
@@ -23,11 +25,8 @@ class WorkerThread(threading.Thread):
 
     def fetch_and_exectue_task_once(self):
         task = self.task_queue.get()
-        try:
-            if callable(task):
-                task()
-        except AttributeError as e:
-            LOGGER.error("task attribute error: {}".format(e))
+        if callable(task):
+            task()
 
     def run(self):
         LOGGER.info("worker {} is running".format(self.name))
@@ -38,7 +37,9 @@ class WorkerThread(threading.Thread):
                 LOGGER.info("get stoptask and exit workthread")
                 break
             except:
-                LOGGER.error("task execute unknown error: {}".format(sys.exc_info()[0]))
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                error_list = traceback.format_exception(exc_type, exc_value, exc_traceback)
+                LOGGER.error("task execute error: \n{}".format(''.join(error_list)))
 
     def putTask(self, task):
         self.task_queue.put(task)
@@ -50,6 +51,7 @@ class WorkerThread(threading.Thread):
         self.putTask(StopTask)
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
     class DemoTask:
         def __init__(self, name):
             self.name = name
