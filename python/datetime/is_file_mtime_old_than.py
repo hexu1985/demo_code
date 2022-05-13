@@ -14,7 +14,7 @@ def is_file_mtime_old_than(file_path, day):
 if __name__ == "__main__":
     today = datetime.date.today()
     if len(sys.argv) < 3:
-        print("usage: {} file -day".format(sys.argv[0]))
+        print("usage: {} file days_before_now".format(sys.argv[0]))
         sys.exit(1)
 
     delta = datetime.timedelta(days=int(sys.argv[2]))
