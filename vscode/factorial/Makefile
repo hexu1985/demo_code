@@ -1,9 +1,20 @@
-# Makefile Copyright 2008 Groetker, Holtmann, Keding, Wloka
 
-include ../../Makefile.include
+RM = rm -f
+CC = gcc
+CFLAGS = -Wall -g
+INCLUDES = 
+LDFLAGS =
+LDPATH =
 
-factorial:
-	gcc -Wall -o factorial -g factorial.c
+SOURCES = $(shell ls *.c)
+PROGS = $(subst .c,,$(SOURCES))
+#PROGS = $(SOURCES:%.c=%)
+
+all: $(PROGS)
+	@echo "PROGS = $(PROGS)" 
 
 clean:
-	rm -rf $(CLEAN_TARGETS) factorial
+	$(RM) $(PROGS)
+
+%: %.c
+	$(CC) -o $@ $(CFLAGS) $(INCLUDES) $^ $(LDFLAGS) $(LDPATH)
