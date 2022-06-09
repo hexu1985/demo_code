@@ -3,7 +3,7 @@ RM = rm -f
 CXX = g++
 CXXFLAGS = -Wall -g
 INCLUDES = 
-LDFLAGS =
+LDFLAGS = -ljpeg
 LDPATH =
 
 SOURCES = $(shell ls *.cpp)
