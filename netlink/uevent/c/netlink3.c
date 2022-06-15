@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <asm/types.h>
 #include <unistd.h>
@@ -46,7 +47,7 @@ void MonitorNetlinkUevent()
             if(*(buf+i)=='\0')
                 buf[i]='\n';
             else if(!isprint(*(buf+i)))
-                buf[i] == '.';
+                buf[i] = '.';
         }
         printf("received %d bytes\n%s\n",len,buf);
         printf("***********************msg %d ends************************\n", count);
