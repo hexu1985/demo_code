@@ -6,9 +6,8 @@ import datetime
 
 def init_logging_config(log_root, log_prefix, log_level=logging.INFO):
     # logging
-    LOG_ROOT = log_root
     LOG_FILE = os.path.join(
-        LOG_ROOT,
+        log_root,
         "%s.log.%s" % 
         (log_prefix, datetime.datetime.now().strftime('%Y%m%d-%H%M%S.%f'))
     )
@@ -48,11 +47,12 @@ def init_logging_config(log_root, log_prefix, log_level=logging.INFO):
     }
     
     logging.config.dictConfig(LOGGING)
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=log_level)
 
 if __name__ == '__main__':
-    init_logging_config('.', 'logging_config')
+    init_logging_config('.', 'logging_config', logging.DEBUG)
     LOGGER = logging.getLogger()
+    LOGGER.debug("hello debug")
     LOGGER.info("hello info")
     LOGGER.error("hello error")
     LOGGER.warning("hello warning")
