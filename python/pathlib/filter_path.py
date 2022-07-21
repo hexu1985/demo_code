@@ -2,5 +2,5 @@ import pathlib
 
 path = pathlib.Path(".")
 for subdir in path.glob("*"):
-    if str(subdir).endswith(".py"):
+    if subdir.name.endswith(".py"):
             print(subdir)
