@@ -36,9 +36,34 @@ $ pip install -r requirements.txt
 $ pip install Flask
 ```
 
-#### Run
+### Run
 
 ```shell
 python main.py
+```
+
+### 退出虚拟环境
+
+```
+(venv) $ deactivate
+```
+
+
+### Python虚拟环境和requirements.txt文件的使用
+
+可以执行之后，把你的依赖包写入requirements.txt，执行命令:
+```
+(venv) $ pip freeze > requirements.txt
+```
+
+打开requirements.txt ，也可以查看你的依赖包。
+
+如果确实你的依赖包，请检查。
+如果是导出少了，可以手动添加，否则不要手动添加未使用的包，以免增添累赘。
+
+然后可以通过pip install -r安装requirements.txt指定的依赖. 具体的
+
+```
+(venv) $ pip install -r requirements.txt
 ```
 
