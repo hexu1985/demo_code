@@ -13,7 +13,7 @@ import subprocess
 
 try:
     completed = subprocess.run(
-        'echo to stdout; echo to stderr 1>&2; exit 0',
+        'rsync -av ./test.sh car14:/tmp/',
         check=True,
         shell=True,
         stdout=subprocess.PIPE,
