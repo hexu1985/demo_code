@@ -20,4 +20,6 @@ proc = subprocess.Popen(
 for line in proc.stdout:
     line = line.rstrip()
     print("{}".format(line.decode('utf-8')))
+proc.wait()
 print('after proc')
+print('return code: {}'.format(proc.returncode))
