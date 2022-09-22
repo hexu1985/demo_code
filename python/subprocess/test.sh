@@ -1,9 +1,10 @@
 #!/bin/bash
 
-for i in `seq 1 10`
+for i in `seq 1 3`
 do
     echo "$0-$1 is running..."
     sleep 1
 done
 
-exit 0
+echo "error message" >&2
+exit 12
