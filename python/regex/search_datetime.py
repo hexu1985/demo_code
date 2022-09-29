@@ -4,7 +4,7 @@ import re
 import datetime
 
 def search_datetime(line):
-    pattern = '\\.'+'[0-9]'*8+'-'+'[0-9]'*6+'\\.'
+    pattern = r'\.'+'[0-9]'*8+'-'+'[0-9]'*6+r'\.'
     print("line: {}".format(line))
     results = re.search(pattern, line)
     if results is not None:

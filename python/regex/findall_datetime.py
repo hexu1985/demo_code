@@ -4,7 +4,7 @@ import re
 import datetime
 
 def findall_datetime(line):
-    pattern = '\\.'+'[0-9]'*8+'-'+'[0-9]'*6+'\\.'
+    pattern = r'\.'+'[0-9]'*8+'-'+'[0-9]'*6+r'\.'
     print("line: {}".format(line))
     for results in re.findall(pattern, line):
         print(results[1:-1])
