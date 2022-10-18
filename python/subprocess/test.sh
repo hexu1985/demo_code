@@ -3,6 +3,7 @@
 for i in `seq 1 3`
 do
     echo "$0-$1 is running..."
+    echo "$0-$1 is error..." >&2
     sleep 1
 done
 
