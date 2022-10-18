@@ -7,12 +7,10 @@ import logging
 LOGGER = logging.getLogger()
 
 class ShellCommandExecutor:
-    def __init__(self, cmd, env=None):
+    def __init__(self, cmd):
         self.cmd = cmd
-        self.env = env
-        if not self.env:
-            self.env = os.environ.copy()
         self.proc = None
+        self.pipe_r, self.pipe_w = os.pipe()
         LOGGER.info("create ShellCommandExecutor(cmd=[{}])".format(self.cmd))
 
     def __str__(self):
@@ -23,9 +21,10 @@ class ShellCommandExecutor:
 
     def run(self):
         try:
-            self.proc = subprocess.Popen(self.cmd, shell=True, env=self.env, close_fds=True,
-                    stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            self.proc = subprocess.Popen(self.cmd, shell=True, close_fds=True,
+                    stdout=self.pipe_w, stderr=self.pipe_w)
             LOGGER.info('run cmd [{}]'.format(self.cmd))
+            os.close(self.pipe_w)
         except subprocess.CalledProcessError as err:
             LOGGER.error('run cmd [{}] error: {}'.format(self.cmd, err))
 
@@ -34,10 +33,13 @@ class ShellCommandExecutor:
             LOGGER.error("cmd: [{}] is not run".format(self.cmd))
             return -1
 
+        output = os.fdopen(self.pipe_r)
+        for line in output:
+            LOGGER.info("cmd: [{}] output: {}".format(self.cmd, line.rstrip()))
+
         ret = self.proc.wait()
-        stdout = self.proc.stdout.read().decode('utf-8') if self.proc.stdout else ""
-        stderr = self.proc.stderr.read().decode('utf-8') if self.proc.stderr else ""
-        LOGGER.info("cmd: [{}] complete with ret: {}\n\tstdout:[{}]\n\tstderr:[{}]".format(self.cmd, ret, stdout, stderr))
+        LOGGER.info("cmd: [{}] complete with ret: {}".format(self.cmd, ret))
+        return ret
 
 
 if __name__ == "__main__":
@@ -46,9 +48,8 @@ if __name__ == "__main__":
     cmds = []
 
     cmds.append(ShellCommandExecutor("cd /tmp && pwd"))
-    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH"', env = {"DISK_PATH":"abc"}))
-    cmds.append(ShellCommandExecutor('echo "DISK_PATH=$DISK_PATH" 1>&2', env = {"DISK_PATH":"abc"}))
-    cmds.append(ShellCommandExecutor('./nosuchfile.sh', env = {"DISK_PATH":"abc"}))
+    cmds.append(ShellCommandExecutor("./test.sh 3"))
+    cmds.append(ShellCommandExecutor("./nosuchfile.sh"))
 
     for cmd in cmds:
         cmd.run()
