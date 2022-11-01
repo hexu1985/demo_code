@@ -9,7 +9,7 @@ conn= MySQLdb.connect(
         )
 cur = conn.cursor()
 
-dbname=test
+dbname="test"
 
 #创建数据表
 cur.execute("drop database if exists " + dbname)
