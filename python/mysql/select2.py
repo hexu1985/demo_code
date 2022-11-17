@@ -12,7 +12,7 @@ cur = conn.cursor()
 
 #获得表中有多少条数据
 aa=cur.execute("select * from student")
-print aa
+print(aa)
 
 #打印表中的多少数据
 info = cur.fetchmany(aa)
