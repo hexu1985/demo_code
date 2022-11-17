@@ -10,14 +10,9 @@ conn= MySQLdb.connect(
         )
 cur = conn.cursor()
 
-#获得表中有多少条数据
-aa=cur.execute("select * from student")
-print aa
+#创建数据表
+cur.execute("create table if not exists student(id int ,name varchar(20),class varchar(30),age varchar(10))")
 
-#打印表中的多少数据
-info = cur.fetchmany(aa)
-for ii in info:
-    print(ii)
 cur.close()
 conn.commit()
 conn.close()

@@ -10,14 +10,14 @@ conn= MySQLdb.connect(
         )
 cur = conn.cursor()
 
-#获得表中有多少条数据
-aa=cur.execute("select * from student")
-print aa
+#一次插入多条记录
+sqli="insert into student values(%s,%s,%s,%s)"
+cur.executemany(sqli,[
+    ('3','Tom','1 year 1 class','6'),
+    ('3','Jack','2 year 1 class','7'),
+    ('3','Yaheng','2 year 2 class','7'),
+    ])
 
-#打印表中的多少数据
-info = cur.fetchmany(aa)
-for ii in info:
-    print(ii)
 cur.close()
 conn.commit()
 conn.close()

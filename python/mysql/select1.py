@@ -27,11 +27,11 @@ cur.execute("select id, name, class, age from student")
 while True:
     data = cur.fetchone()
     if (data):
-        print "data: "
-        print "\tid: %s" % data[kId]
-        print "\tname: %s" % data[kName]
-        print "\tclass: %s" % data[kClass]
-        print "\tage: %s" % data[kAge]
+        print("data: ")
+        print("\tid: %s" % data[kId])
+        print("\tname: %s" % data[kName])
+        print("\tclass: %s" % data[kClass])
+        print("\tage: %s" % data[kAge])
     else:
         break
 

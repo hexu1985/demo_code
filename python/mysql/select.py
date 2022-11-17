@@ -21,7 +21,7 @@ cur.execute("select * from student")
 while True:
     data = cur.fetchone()
     if (data):
-        print data
+        print(data)
     else:
         break
 
