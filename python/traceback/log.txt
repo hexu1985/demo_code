@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "selfexception_print.py", line 13, in <module>
+    main()
+  File "selfexception_print.py", line 5, in main
+    firstMethod()
+  File "selfexception_print.py", line 7, in firstMethod
+    secondMethod()
+  File "selfexception_print.py", line 9, in secondMethod
+    thirdMethod()
+  File "selfexception_print.py", line 11, in thirdMethod
+    raise SelfException("自定义异常信息")
+SelfException: 自定义异常信息
