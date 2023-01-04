@@ -1,0 +1,27 @@
+
+# protobuf 3.14 安装笔记
+
+clone项目
+```
+$ git clone https://github.com/protocolbuffers/protobuf.git
+$ cd protobuf
+$ git submodule update --init --recursive
+$ ./autogen.sh
+```
+
+C++编译
+```
+./configure --prefix=/home/hexu/local/protobuf
+make
+make check
+sudo make install
+sudo ldconfig # refresh shared library cache.
+```
+
+
+
+
+
+
+
+
