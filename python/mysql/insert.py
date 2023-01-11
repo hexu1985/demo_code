@@ -10,8 +10,8 @@ conn= MySQLdb.connect(
         )
 cur = conn.cursor()
 
-sqli="insert into student values(%s,%s,%s,%s)"
-cur.execute(sqli, ('3','Tom','1 year 1 class','6'))
+sqli="insert into %s values(%s,%s,%s,%s)"
+cur.execute(sqli, ('student', '3','Tom','1 year 1 class','6'))
 
 cur.close()
 conn.commit()
