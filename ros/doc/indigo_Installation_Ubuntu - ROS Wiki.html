@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0047)https://wiki.ros.org/indigo/Installation/Ubuntu -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="google-site-verification" content="CjkdY6BqKWAVmQ78_iSq6J7ZZ9AoL7-CjFVBYGg9FU4">
+<link rel="shortcut icon" href="https://wiki.ros.org/custom/favicon.ico" type="image/ico">
+<link rel="stylesheet" href="./indigo_Installation_Ubuntu - ROS Wiki_files/bootstrap.min.css">
+<script type="text/javascript" async="" src="./indigo_Installation_Ubuntu - ROS Wiki_files/ga.js"></script><script src="./indigo_Installation_Ubuntu - ROS Wiki_files/jquery-1.11.0.min.js"></script>
+<script src="./indigo_Installation_Ubuntu - ROS Wiki_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="./indigo_Installation_Ubuntu - ROS Wiki_files/sorttable.js"></script>
+<script type="text/javascript" src="./indigo_Installation_Ubuntu - ROS Wiki_files/jquery.min.js"></script>                         
+<script type="text/javascript" src="./indigo_Installation_Ubuntu - ROS Wiki_files/seesaw.js"></script> 
+<script type="text/javascript" src="./indigo_Installation_Ubuntu - ROS Wiki_files/rosversion.js"></script> 
+<!--script type="text/javascript" src="/custom/libraries/RGraph.common.core.js" ></script Used for metrics only, should be conditional, not at the top-->
+<!--script type="text/javascript" src="/custom/libraries/RGraph.bar.js" ></script same as above -->
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17821189-2']);
+  _gaq.push(['_setDomainName', 'wiki.ros.org']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<meta name="robots" content="index,nofollow">
+
+<title>indigo/Installation/Ubuntu - ROS Wiki</title>
+<script type="text/javascript" src="./indigo_Installation_Ubuntu - ROS Wiki_files/common.js"></script>
+
+<script type="text/javascript">
+<!--
+var search_hint = "搜索";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="./indigo_Installation_Ubuntu - ROS Wiki_files/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="./indigo_Installation_Ubuntu - ROS Wiki_files/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="./indigo_Installation_Ubuntu - ROS Wiki_files/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="./indigo_Installation_Ubuntu - ROS Wiki_files/projection.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/moin_static197/rostheme/css/msie.css">
+<![endif]-->
+
+
+
+
+<link rel="canonical" href="http://wiki.ros.org/indigo/Installation/Ubuntu">
+
+<link rel="Start" href="https://wiki.ros.org/Documentation">
+<link rel="Alternate" title="维基标记" href="https://wiki.ros.org/indigo/Installation/Ubuntu?action=raw">
+<link rel="Alternate" media="print" title="打印视图" href="https://wiki.ros.org/indigo/Installation/Ubuntu?action=print">
+<link rel="Up" href="https://wiki.ros.org/indigo/Installation">
+<link rel="Search" href="https://wiki.ros.org/FindPage">
+<link rel="Index" href="https://wiki.ros.org/TitleIndex">
+<link rel="Glossary" href="https://wiki.ros.org/WordIndex">
+<link rel="Help" href="https://wiki.ros.org/HelpOnFormatting">
+</head>
+
+<body lang="zh" dir="ltr">
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="./indigo_Installation_Ubuntu - ROS Wiki_files/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5950817-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+if(f) f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+if(e) {
+  searchChange(e);
+  searchBlur(e);
+}
+
+function handleSubmit() {
+  var f = document.getElementById('searchform');
+  var t = document.getElementById('searchinput');
+  var r = document.getElementById('real_searchinput');
+
+  //alert("handleSubmit "+ t.value);
+  if(t.value.match(/review/)) {
+    r.value = t.value;
+  } else {
+    //r.value = t.value + " -PackageReviewCategory -StackReviewCategory -M3Review -DocReview -ApiReview -HelpOn -BadContent -LocalSpellingWords";
+    r.value = t.value + " -PackageReviewCategory -StackReviewCategory -DocReview -ApiReview";
+  }
+  //return validate(f);
+}
+//-->
+</script>
+
+<div id="dpage">
+  <div id="dpage-inner">
+    <div id="header"><div id="topnav">
+
+<!-- Alert box -->
+<!-- To enable/disable the alert box, uncomment/comment the block below and update the content below the button. -->
+<!--
+    <div class="alert alert-info alert-dismissable" style="text-align: center;">
+<script>
+jQuery(function( $ ){
+    alert_box_name = 'roswiki_roscon'
+    state = localStorage.getItem(alert_box_name);
+    if (!state) {
+      localStorage.setItem(alert_box_name, 'open');
+    }
+    state = localStorage.getItem(alert_box_name);
+    if (state == 'closed') {
+        $( '#topnav .alert' ).hide();
+    }
+    $( '.close' ).click(function () {
+	console.log('in .close.click');
+        localStorage.setItem(alert_box_name, 'closed');
+        $( '#topnav .alert' ).hide();
+  });
+});
+</script>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <a href="http://roscon.ros.org">ROSCon 2017</a> will be in Vancouver, September 21-22! <br>
+      The last few years have sold out: register now and take advantage of discounted hotel rates</a>.
+    </div>
+-->
+<!-- End Alert box -->
+
+      <table id="topnav-table">
+        <tbody><tr>
+          <td width="300" valign="top"><a href="https://wiki.ros.org/"><img border="0" src="./indigo_Installation_Ubuntu - ROS Wiki_files/ros_org.png" alt="ros.org" width="238" height="51"></a></td>
+          <td width="500" valign="middle">
+            <a href="http://www.ros.org/about-ros">About</a>
+            |
+            <a href="https://wiki.ros.org/Support">Support</a>
+            |
+            <a href="http://discourse.ros.org/">Discussion Forum</a>
+            |
+            <a href="http://index.ros.org/">Index</a>
+            |
+            <a href="http://status.ros.org/">Service Status</a>
+            |
+            <a href="http://answers.ros.org/">Q&amp;A answers.ros.org</a>
+          </td>
+
+      </tr>
+      <tr>
+        <td colspan="3" height="53" width="1024"><nobr><img src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_left.png" width="17" height="53" alt=""><a href="https://wiki.ros.org/"><img border="0" src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_documentation.png" width="237" height="53" alt="Documentation"></a><img src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_spacer.png" width="69" height="53"><a href="https://index.ros.org/packages"><img border="0" src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_browse_software.png" width="268" height="53" alt="Browse Software"></a><img src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_spacer.png" width="69" height="53"><a href="https://discourse.ros.org/c/general"><img border="0" src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_news.png" width="84" height="53" alt="News"></a><img src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_spacer.png" width="69" height="53"><a href="https://wiki.ros.org/ROS/Installation"><img border="0" src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_download.png" width="151" height="53" alt="Download"></a><img src="./indigo_Installation_Ubuntu - ROS Wiki_files/menu_right.png" width="60" height="53"></nobr></td>
+
+      </tr>
+    </tbody></table> <!-- topnav-table -->
+
+    </div> <!-- /#topav -->
+  </div> <!-- /#header -->
+
+
+<div id="header2">
+
+<ul id="pagelocation">
+<li><a href="https://wiki.ros.org/indigo">indigo</a></li><li><a href="https://wiki.ros.org/indigo/Installation">Installation</a></li><li><a class="backlink" href="https://wiki.ros.org/action/fullsearch/indigo/Installation/Ubuntu?action=fullsearch&amp;context=180&amp;value=linkto%3A%22indigo%2FInstallation%2FUbuntu%22" rel="nofollow" title="点击对这个标题进行全文检索">Ubuntu</a></li>
+</ul>
+
+<div id="locationline">
+</div>
+</div>
+
+<div id="sidebar">
+<h4>ROS 2 Documentation</h4><p>The ROS Wiki is for ROS 1. Are you using ROS 2 (Dashing/Foxy/Rolling)? <a href="http://docs.ros.org/en/rolling/">Check out the ROS 2 Documentation</a></p>
+<div class="sidepanel">
+<h1>维基</h1>
+
+<ul id="navibar">
+<li class="wikilink"><a href="https://wiki.ros.org/Distributions">Distributions</a></li><li class="wikilink"><a href="https://wiki.ros.org/ROS/Installation">ROS/Installation</a></li><li class="wikilink"><a href="https://wiki.ros.org/ROS/Tutorials">ROS/Tutorials</a></li><li class="wikilink"><a href="https://wiki.ros.org/RecentChanges">RecentChanges</a></li><li class="current"><a href="https://wiki.ros.org/indigo/Installation/Ubuntu">Ubuntu</a></li>
+</ul>
+
+</div>
+<div class="sidepanel">
+<h1>网页</h1>
+<ul class="editbar"><li><span class="disabled">只读网页</span></li><li class="toggleCommentsButton" style="display:none;"><a href="https://wiki.ros.org/indigo/Installation/Ubuntu#" class="nbcomment" onclick="toggleComments();return false;">注释</a></li><li><a class="nbinfo" href="https://wiki.ros.org/action/info/indigo/Installation/Ubuntu?action=info" rel="nofollow">信息</a></li><li><a class="nbattachments" href="https://wiki.ros.org/action/AttachFile/indigo/Installation/Ubuntu?action=AttachFile" rel="nofollow">附件</a></li><li>
+<form class="actionsmenu" method="GET" action="https://wiki.ros.org/indigo/Installation/Ubuntu">
+<div>
+    <label>更多操作：</label>
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="raw">源码</option>
+<option value="print">打印视图</option>
+<option value="RenderAsDocbook">输出Docbook格式</option>
+<option value="show" disabled="" class="disabled">删除缓存</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">拼写检查</option>
+<option value="LikePages">相似网页</option>
+<option value="LocalSiteMap">本站地图</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">改名</option>
+<option value="CopyPage">复制网页</option>
+<option value="DeletePage" disabled="" class="disabled">删除</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">我的网页</option>
+<option value="show" disabled="" class="disabled">订阅</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">删除垃圾广告</option>
+<option value="show" disabled="" class="disabled">恢复成此版本</option>
+<option value="PackagePages">网页打包</option>
+<option value="SyncPages">同步网页</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="CreatePdfDocument">CreatePdfDocument</option>
+<option value="Load">加载</option>
+<option value="RawFile">RawFile</option>
+<option value="Save">保存</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    <input type="submit" value="执行">
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('更多操作：');
+//-->
+</script>
+</form>
+</li></ul>
+
+</div>
+<div class="sidepanel">
+<h1>用户</h1>
+<ul id="username"><li><a href="https://wiki.ros.org/action/login/indigo/Installation/Ubuntu?action=login" id="login" rel="nofollow">登录</a></li></ul>
+</div>
+</div>
+
+<div id="page" lang="en" dir="ltr">
+
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867">
+</p><h1 id="Ubuntu_install_of_ROS_Indigo">Ubuntu install of ROS Indigo</h1>
+<span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line874">We are building Debian packages for several Ubuntu platforms, listed below. These packages are more efficient than source-based builds and are our preferred installation method for Ubuntu. <span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span></p><p class="line862">If you need to install from source (<strong>not recommended</strong>), please see <a href="https://wiki.ros.org/indigo/Installation/Source">source (download-and-compile) installation instructions</a>. <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span></p><p class="line867"></p><div dir="ltr" id="SupportBuildfarm.content" lang="en"><span class="anchor" id="SupportBuildfarm.top"></span>
+<span class="anchor" id="SupportBuildfarm.line-1"></span><p class="line867"><span class="anchor" id="SupportBuildfarm.line-2"></span><span class="anchor" id="SupportBuildfarm.line-3"></span><span class="anchor" id="SupportBuildfarm.line-4"></span><span class="anchor" id="SupportBuildfarm.line-5"></span></p><div class="important"><span class="anchor" id="SupportBuildfarm.line-1-1"></span><p class="line867"><strong>If you rely on these packages, please support OSRF.</strong> <span class="anchor" id="SupportBuildfarm.line-2-1"></span><span class="anchor" id="SupportBuildfarm.line-3-1"></span></p><p class="line862">These packages are built and hosted on infrastructure maintained and paid for by the <a class="http" href="http://www.osrfoundation.org/">Open Source Robotics Foundation</a>, a 501(c)(3) non-profit organization. If OSRF were to receive one penny for each downloaded package for just two months, we could cover our annual costs to manage, update, and host all of our online services.  Please consider <a class="https" href="https://www.openrobotics.org/support-the-ros-buildfarm">donating to OSRF today</a>.  </p></div><span class="anchor" id="SupportBuildfarm.line-6"></span><span class="anchor" id="SupportBuildfarm.bottom"></span></div> <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line867"></p><div class="table-of-contents"><p class="table-of-contents-heading">目录</p><ol><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Ubuntu_install_of_ROS_Indigo">Ubuntu install of ROS Indigo</a><ol><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Installation">Installation</a><ol><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Installation.2FUbuntu.2FSources.Configure_your_Ubuntu_repositories">Configure your Ubuntu repositories</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Installation.2FUbuntu.2FSources.Setup_your_sources.list">Setup your sources.list</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Installation.2FUbuntu.2FSources.Set_up_your_keys">Set up your keys</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Installation-1">Installation</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Initialize_rosdep">Initialize rosdep</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#indigo.2FInstallation.2FDebEnvironment.Environment_setup">Environment setup</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Getting_rosinstall">Getting rosinstall</a></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#Build_farm_status">Build farm status</a></li></ol></li><li>
+<a href="https://wiki.ros.org/indigo/Installation/Ubuntu#groovy.2FInstallation.2FPostInstall.Tutorials">Tutorials</a></li></ol></li></ol></div><p class="line874"> <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span></p><p class="line867">
+</p><h2 id="Installation">Installation</h2>
+<span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span><p class="line862">ROS Indigo <strong>ONLY</strong> supports Saucy (13.10) and Trusty (14.04) for debian packages.  <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span></p><p class="line867"></p><div dir="ltr" id="Installation.2FUbuntu.2FSources.content" lang="en"><span class="anchor" id="Installation.2FUbuntu.2FSources.top"></span>
+<span class="anchor" id="Installation.2FUbuntu.2FSources.line-1"></span><p class="line867">
+</p><h3 id="Installation.2FUbuntu.2FSources.Configure_your_Ubuntu_repositories">Configure your Ubuntu repositories</h3>
+<span class="anchor" id="Installation.2FUbuntu.2FSources.line-2"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-3"></span><p class="line862">Configure your Ubuntu repositories to allow "restricted," "universe," and "multiverse." You can <a class="https" href="https://help.ubuntu.com/community/Repositories/Ubuntu">follow the Ubuntu guide</a> for instructions on doing this. <span class="anchor" id="Installation.2FUbuntu.2FSources.line-4"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-5"></span></p><p class="line867">
+</p><h3 id="Installation.2FUbuntu.2FSources.Setup_your_sources.list">Setup your sources.list</h3>
+<span class="anchor" id="Installation.2FUbuntu.2FSources.line-6"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-7"></span><p class="line874">Setup your computer to accept software from packages.ros.org. <span class="anchor" id="Installation.2FUbuntu.2FSources.line-8"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-9"></span></p><ul><li style="list-style-type:none"><p class="line891"><small><span class="anchor" id="Installation.2FUbuntu.2FSources.line-10"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-11"></span></small></p><pre><small><span class="anchor" id="Installation.2FUbuntu.2FSources.line-1-1"></span>sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'</small></pre><p class="line891"><span class="anchor" id="Installation.2FUbuntu.2FSources.line-12"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-13"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-14"></span></p></li></ul><div><table><tbody><tr>  <td style="background-color: #FFFF00"><p class="line862"> <a href="https://wiki.ros.org/ROS/Installation/UbuntuMirrors">Mirrors</a></p></td>
+  <td><p class="line891"><a href="https://wiki.ros.org/DebianPackageSources">Source Debs</a> are also available</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="Installation.2FUbuntu.2FSources.line-15"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-16"></span><p class="line867">
+</p><h3 id="Installation.2FUbuntu.2FSources.Set_up_your_keys">Set up your keys</h3>
+<span class="anchor" id="Installation.2FUbuntu.2FSources.line-17"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-18"></span><ul><li style="list-style-type:none"><span class="anchor" id="Installation.2FUbuntu.2FSources.line-19"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-20"></span><span class="anchor" id="Installation.2FUbuntu.2FSources.line-21"></span><pre><span class="anchor" id="Installation.2FUbuntu.2FSources.line-1-2"></span>sudo apt install curl # if you haven't already installed curl
+<span class="anchor" id="Installation.2FUbuntu.2FSources.line-2-1"></span>curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -</pre><span class="anchor" id="Installation.2FUbuntu.2FSources.line-22"></span></li></ul><span class="anchor" id="Installation.2FUbuntu.2FSources.bottom"></span></div> <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span><p class="line867">
+</p><h3 id="Installation-1">Installation</h3>
+<span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span><p class="line874">First, make sure your Debian package index is up-to-date: <span class="anchor" id="line-22"></span></p><ul><li style="list-style-type:none"><span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span><pre><span class="anchor" id="line-1-1"></span>sudo apt-get update &amp;&amp; sudo apt-get install dpkg</pre><span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span><span class="anchor" id="line-39"></span><span class="anchor" id="line-40"></span><div class="background blue"><span class="anchor" id="line-1-2"></span><ul><li style="list-style-type:none"><p class="line862">If you are using Ubuntu Trusty <strong>14.04.2</strong> and experience dependency issues during the ROS installation, you may have to install some additional system dependencies.  <span class="anchor" id="line-2-1"></span></p><ul><li style="list-style-type:none"><p class="line891"><img alt="/!\" height="15" src="./indigo_Installation_Ubuntu - ROS Wiki_files/alert.png" title="/!\" width="15"> <strong>Do not install these packages if you are using 14.04, it will destroy your X server</strong>: <span class="anchor" id="line-3-1"></span><span class="anchor" id="line-4-1"></span><span class="anchor" id="line-5-1"></span></p><pre><span class="anchor" id="line-1-3"></span>sudo apt-get install xserver-xorg-dev-lts-trusty mesa-common-dev-lts-trusty libxatracker-dev-lts-trusty libopenvg1-mesa-dev-lts-trusty libgles2-mesa-dev-lts-trusty libgles1-mesa-dev-lts-trusty libgl1-mesa-dev-lts-trusty libgbm-dev-lts-trusty libegl1-mesa-dev-lts-trusty</pre><span class="anchor" id="line-6-1"></span><p class="line891"><img alt="/!\" height="15" src="./indigo_Installation_Ubuntu - ROS Wiki_files/alert.png" title="/!\" width="15"> <strong>Do not install the above packages if you are using 14.04, it will destroy your X server</strong> <span class="anchor" id="line-7-1"></span><span class="anchor" id="line-8-1"></span></p></li></ul><p class="line862">Alternatively, try installing <em>just</em> this to fix dependency issues: <span class="anchor" id="line-9-1"></span></p><ul><li style="list-style-type:none"><span class="anchor" id="line-10-1"></span><span class="anchor" id="line-11-1"></span><pre><span class="anchor" id="line-1-4"></span>sudo apt-get install libgl1-mesa-dev-lts-trusty</pre><span class="anchor" id="line-12-1"></span><span class="anchor" id="line-13-1"></span></li></ul></li></ul><p class="line862">For more information on this issue see this <a class="http" href="http://answers.ros.org/question/203610/ubuntu-14042-unmet-dependencies/">answers.ros.org thread</a> or this <a class="https" href="https://bugs.launchpad.net/ubuntu/+source/mesa-lts-utopic/+bug/1424059">launchpad issue</a> </p></div><span class="anchor" id="line-41"></span></li></ul><p class="line874">There are many different libraries and tools in ROS.  We provided four default configurations to get you started.  You can also install ROS packages individually. <span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span></p><ul><li style="list-style-type:none"><p class="line891"><strong>Desktop-Full Install: (Recommended)</strong> : ROS, <a href="https://wiki.ros.org/rqt">rqt</a>, <a href="https://wiki.ros.org/rviz">rviz</a>, robot-generic libraries, 2D/3D simulators and 2D/3D perception  <span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span></p><div class="background blue"><span class="anchor" id="line-1-5"></span><p class="line862">Indigo uses Gazebo <strong>2</strong> which is the default version of Gazebo on Trusty and is recommended. If you would like to instead use a newer version of Gazebo (5, 6 or 7), refer to <a class="http" href="http://gazebosim.org/tutorials?tut=ros_wrapper_versions">these instructions</a> on the Gazebo site. Note that installing a newer version of Gazebo will require you to build dependent packages (such as <tt class="backtick">turtlebot_gazebo</tt>) to be built from source. See also <a class="http" href="http://gazebosim.org/tutorials?tut=ros_wrapper_versions#UsingaspecificGazeboversionwithROS">Using a specific Gazebo version with ROS</a>. </p></div><span class="anchor" id="line-47"></span><ul><li style="list-style-type:none"><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span><pre><span class="anchor" id="line-1-6"></span>sudo apt-get install ros-indigo-desktop-full</pre><p class="line862"> or <a class="apt" href="apt:ros-indigo-desktop-full?refresh=yes">click here</a><span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span></p></li></ul><p class="line891"><strong>Desktop Install: </strong> ROS, <a href="https://wiki.ros.org/rqt">rqt</a>, <a href="https://wiki.ros.org/rviz">rviz</a>, and robot-generic libraries <span class="anchor" id="line-52"></span></p><ul><li style="list-style-type:none"><span class="anchor" id="line-53"></span><span class="anchor" id="line-54"></span><pre><span class="anchor" id="line-1-7"></span>sudo apt-get install ros-indigo-desktop</pre><p class="line862"> or <a class="apt" href="apt:ros-indigo-desktop?refresh=yes">click here</a><span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span></p></li></ul><p class="line891"><strong>ROS-Base: (Bare Bones)</strong> ROS package, build, and communication libraries. No GUI tools. <span class="anchor" id="line-57"></span><span class="anchor" id="line-58"></span></p><ul><li style="list-style-type:none"><span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span><pre><span class="anchor" id="line-1-8"></span>sudo apt-get install ros-indigo-ros-base</pre><p class="line862"> or <a class="apt" href="apt:ros-indigo-ros-base?refresh=yes">click here</a><span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><span class="anchor" id="line-63"></span></p></li></ul><p class="line891"><strong>Individual Package:</strong> You can also install a specific ROS package (replace underscores with dashes of the package name): <span class="anchor" id="line-64"></span></p><ul><li style="list-style-type:none"><span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><pre><span class="anchor" id="line-1-9"></span>sudo apt-get install ros-indigo-PACKAGE</pre> e.g. <span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><span class="anchor" id="line-69"></span><pre><span class="anchor" id="line-1-10"></span>sudo apt-get install ros-indigo-slam-gmapping</pre><span class="anchor" id="line-70"></span><span class="anchor" id="line-71"></span></li></ul></li></ul><p class="line874">To find available packages, use: <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span><span class="anchor" id="line-74"></span></p><pre><span class="anchor" id="line-1-11"></span>apt-cache search ros-indigo</pre><span class="anchor" id="line-75"></span><span class="anchor" id="line-76"></span><p class="line867">
+</p><h3 id="Initialize_rosdep">Initialize rosdep</h3>
+<span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><p class="line862">Before you can use ROS, you will need to initialize <tt class="backtick">rosdep</tt>. <tt class="backtick">rosdep</tt> enables you to easily install system dependencies for source you want to compile and is required to run some core components in ROS. <span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span></p><p class="line867"><span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span></p><pre><span class="anchor" id="line-1-12"></span>sudo rosdep init
+<span class="anchor" id="line-2-2"></span>rosdep update</pre><span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span><p class="line867"></p><div dir="ltr" id="indigo.2FInstallation.2FDebEnvironment.content" lang="en"><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.top"></span>
+<span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-1"></span><p class="line867"><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.additional"></span> <span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-2"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-3"></span></p><p class="line867">
+</p><h3 id="indigo.2FInstallation.2FDebEnvironment.Environment_setup">Environment setup</h3>
+<span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-4"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-5"></span><p class="line874">It's convenient if the ROS environment variables are automatically added to your bash session every time a new shell is launched: <span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-6"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-7"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-8"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-9"></span></p><pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-1-1"></span>echo "source /opt/ros/indigo/setup.bash" &gt;&gt; ~/.bashrc
+<span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-2-1"></span>source ~/.bashrc</pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-10"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-11"></span><p class="line867"><em>If you have more than one ROS distribution installed, <tt class="backtick">~/.bashrc</tt> must only source the <tt class="backtick">setup.bash</tt> for the version you are currently using.</em> <span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-12"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-13"></span></p><p class="line874">If you just want to change the environment of your current shell, you can type: <span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-14"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-15"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-16"></span></p><pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-1-2"></span>source /opt/ros/indigo/setup.bash</pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-17"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-18"></span><p class="line874">If you use zsh instead of bash you need to run the following commands to set up your shell: <span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-19"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-20"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-21"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-22"></span></p><pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-1-3"></span>echo "source /opt/ros/indigo/setup.zsh" &gt;&gt; ~/.zshrc
+<span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-2-2"></span>source ~/.zshrc</pre><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-23"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-24"></span><p class="line867"><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-25"></span></p><p class="line867"><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.line-26"></span><span class="anchor" id="indigo.2FInstallation.2FDebEnvironment.bottom"></span></p></div> <span class="anchor" id="line-86"></span><span class="anchor" id="line-87"></span><p class="line867">
+</p><h3 id="Getting_rosinstall">Getting rosinstall</h3>
+<span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><p class="line867"><a href="https://wiki.ros.org/rosinstall">rosinstall</a> is a frequently used command-line tool in ROS that is distributed separately.  It enables you to easily download many source trees for ROS packages with one command. <span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span></p><p class="line874">To install this tool on Ubuntu, run:  <span class="anchor" id="line-92"></span><span class="anchor" id="line-93"></span></p><p class="line867"><span class="anchor" id="line-94"></span><span class="anchor" id="line-95"></span></p><pre><span class="anchor" id="line-1-13"></span>sudo apt-get install python-rosinstall</pre><span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span><p class="line867">
+</p><h3 id="Build_farm_status">Build farm status</h3>
+<span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><p class="line862">The packages that you installed were built by <a class="http" href="http://jenkins.ros.org/">ROS build farm</a>.  You can check the status of individual packages <a class="http" href="http://www.ros.org/debbuild/indigo.html">here</a>. <span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span></p><p class="line867"></p><div dir="ltr" id="groovy.2FInstallation.2FPostInstall.content" lang="en"><span class="anchor" id="groovy.2FInstallation.2FPostInstall.top"></span>
+<span class="anchor" id="groovy.2FInstallation.2FPostInstall.line-1"></span><p class="line867">
+</p><h2 id="groovy.2FInstallation.2FPostInstall.Tutorials">Tutorials</h2>
+<span class="anchor" id="groovy.2FInstallation.2FPostInstall.line-2"></span><span class="anchor" id="groovy.2FInstallation.2FPostInstall.line-3"></span><p class="line862">Now, to test your installation, please proceed to the <a href="https://wiki.ros.org/ROS/Tutorials">ROS Tutorials</a>. <span class="anchor" id="groovy.2FInstallation.2FPostInstall.line-4"></span><span class="anchor" id="groovy.2FInstallation.2FPostInstall.bottom"></span></p></div> <span class="anchor" id="line-102"></span><hr><p class="line874"> <span class="anchor" id="line-103"></span><a href="https://wiki.ros.org/CategoryCategory">CategoryCategory</a> <span class="anchor" id="line-104"></span><span class="anchor" id="bottom"></span></p></div></div>
+<div id="pagebottom"></div>
+</div>
+
+<p id="pageinfo" class="info" lang="zh" dir="ltr">Wiki: indigo/Installation/Ubuntu  (2019-07-25 01:36:28由<span title="TullyFoote @ 70-35-50-58.static.wiline.com[70.35.50.58]"><a href="https://wiki.ros.org/TullyFoote" title="TullyFoote @ 70-35-50-58.static.wiline.com[70.35.50.58]">TullyFoote</a></span>编辑)</p>
+
+
+
+
+<div style="margin-top: 9px;" class="footer">
+Except where otherwise noted, the ROS wiki is licensed under the <br><a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0</a>
+<hr style="margin-top: 10px;">
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+<a href="https://www.openrobotics.org/"><img style="margin-top: -1px;" src="./indigo_Installation_Ubuntu - ROS Wiki_files/brought_by_horiz.png"><p></p></a>
+  </div>
+</div>
+</div>
+
+  </div> <!-- /#dpage-inner, /#dpage -->
+
+
+
+
+
+</body></html>
