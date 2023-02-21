@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)https://www.cnblogs.com/guyk/p/12405938.html -->
+<html lang="zh-cn" style="--olcb-folder-code-block-max-height:80vh;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="Eclipse Mosquitto是一个开源消息代理，实现了MQTT协议版本3.1和3.1.1.Mosquitto轻量,适用于低功耗单板计算机到完整服务器的所有设备.
+Mosquitto项目还提供了用">
+    <meta property="og:description" content="Eclipse Mosquitto是一个开源消息代理，实现了MQTT协议版本3.1和3.1.1.Mosquitto轻量,适用于低功耗单板计算机到完整服务器的所有设备.
+Mosquitto项目还提供了用">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ubuntu下Mosquitto安装及配置 - 生命在等待中延续 - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="https://img2018.cnblogs.com/blog/1303985/202002/1303985-20200205233114190-1666510427.png" type="image/svg+xml">
+    
+    <style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs), :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {background: rgb(245, 245, 245);
+        padding: 12px;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 3px;
+        border-color: transparent;
+        color: rgb(68, 68, 68);
+        font-family: "Courier New", sans-serif;
+        font-size: 12px</style><link rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/blog-common.min.css">
+    
+
+    
+        <link id="highlighter-theme-cnblogs" type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/cnblogs.css">
+    <link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/custom.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/bundle-simplememory-mobile-pure.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/guyk/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/guyk/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/guyk/wlwmanifest.xml">
+    <script type="text/javascript" async="" src="./ubuntu下Mosquitto安装及配置_files/analytics.js"></script><script>
+        var currentBlogId = 402780;
+        var currentBlogApp = 'guyk';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'SimpleMemory';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        try {
+            if (hasCustomScript && document.referrer && document.referrer.indexOf('baidu.com') >= 0) {
+                Object.defineProperty(document, 'referrer', { value: '' });
+                Object.defineProperty(Document.prototype, 'referrer', { get: function () { return ''; } });
+            }
+        } catch (error) { }
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 0;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = false;
+        window.codeHighlightTheme = 'cnblogs';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = false;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+    </script>
+        <script>
+            var currentPostDateAdded = '2020-03-04 00:41';
+        </script>
+    <script src="./ubuntu下Mosquitto安装及配置_files/jquery-2.2.0.min.js"></script>
+    <script src="./ubuntu下Mosquitto安装及配置_files/blog-common.min.js"></script><style>.medium-zoom-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  cursor: pointer;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+.medium-zoom-image {
+  cursor: pointer;
+  cursor: zoom-in;
+  /*
+    The `transition` is marked as "!important" for the animation to happen
+    even though it's overriden by another inline `transition` style attribute.
+
+    This is problematic with frameworks that generate inline styles on their
+    images (e.g. Gatsby).
+
+    See https://github.com/francoischalifour/medium-zoom/issues/110
+   */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+.medium-zoom-image--hidden {
+  visibility: hidden;
+}
+
+.medium-zoom-image--opened {
+  position: relative;
+  cursor: pointer;
+  cursor: zoom-out;
+  will-change: transform;
+}
+</style><script id="hljs-script" src="./ubuntu下Mosquitto安装及配置_files/highlight.min.js" type="text/javascript" async=""></script>
+    
+
+    
+<script id="mathjax" src="./ubuntu下Mosquitto安装及配置_files/MathJax.js" type="text/javascript" async=""></script><meta http-equiv="origin-trial" content="Az6AfRvI8mo7yiW5fLfj04W21t0ig6aMsGYpIqMTaX60H+b0DkO1uDr+7BrzMcimWzv/X7SXR8jI+uvbV0IJlwYAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+USTya+tNvDPaxUgJooz+LaVk5hPoAxpLvSxjogX4Mk8awCTQ9iop6zJ9d5ldgU7WmHqBlnQB41LHHRFxoaBwoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A7FovoGr67TUBYbnY+Z0IKoJbbmRmB8fCyirUGHavNDtD91CiGyHHSA2hDG9r9T3NjUKFi6egL3RbgTwhhcVDwUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><script src="./ubuntu下Mosquitto安装及配置_files/pubads_impl_2023021601.js" async=""></script><link rel="preload" href="./ubuntu下Mosquitto安装及配置_files/f(4).txt" as="script"><script type="text/javascript" src="./ubuntu下Mosquitto安装及配置_files/f(4).txt"></script><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover, .MJXp-munder {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > *, .MJXp-munder > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style><script src="./ubuntu下Mosquitto安装及配置_files/jquery.mousewheel.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="snapSvg" src="./ubuntu下Mosquitto安装及配置_files/snap.svg-min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="tools" src="./ubuntu下Mosquitto安装及配置_files/tools.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="src/script/lib/css.min" src="./ubuntu下Mosquitto安装及配置_files/css.min.js"></script><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/optiscroll.min.css"><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/menu_bubble.min.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="classie" src="./ubuntu下Mosquitto安装及配置_files/classie.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="optiscroll_ToProgress_rotate" src="./ubuntu下Mosquitto安装及配置_files/optiscroll_ToProgress_rotate.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main4" src="./ubuntu下Mosquitto安装及配置_files/main4.min.js"></script><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/font_543384_kv876ayucyc.css"><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/google-fonts.min.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="base" src="./ubuntu下Mosquitto安装及配置_files/base.min.js"></script><link href="./ubuntu下Mosquitto安装及配置_files/font_543384_ezv3l7gd9r7.css" rel="stylesheet" type="text/css"><link href="./ubuntu下Mosquitto安装及配置_files/jquery.mCustomScrollbar.min.css" rel="stylesheet" type="text/css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TweenMax_MyTween" src="./ubuntu下Mosquitto安装及配置_files/TweenMax_MyTween.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="clipboard" src="./ubuntu下Mosquitto安装及配置_files/clipboard.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="articleStatement" src="./ubuntu下Mosquitto安装及配置_files/articleStatement.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="RibbonsEffect" src="./ubuntu下Mosquitto安装及配置_files/RibbonsEffect.min.js"></script><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/jquery.fancybox.min.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="title" src="./ubuntu下Mosquitto安装及配置_files/articleTitle.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="bootstrap" src="./ubuntu下Mosquitto安装及配置_files/bootstrap.min.js"></script><link type="text/css" rel="stylesheet" href="./ubuntu下Mosquitto安装及配置_files/marvin.nav2.min.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="fancybox" src="./ubuntu下Mosquitto安装及配置_files/jquery.fancybox.min.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="marvin" src="./ubuntu下Mosquitto安装及配置_files/marvin.nav2.min.js"></script></head>
+<body class="skin-simplememory no-navbar mathjax2 hljs-engine" style="overflow: auto;"><div id="dayNightSwitch" class="generalWrapper">    <div class="onOff daySwitch">        <div class="star star1"></div>        <div class="star star2"></div>        <div class="star star3"></div>        <div class="star star4"></div>        <div class="star star5"></div>        <div class="star sky"></div>        <div class="sunMoon">            <div class="crater crater1"></div>            <div class="crater crater2"></div>            <div class="crater crater3"></div>            <div class="cloud part1"></div>            <div class="cloud part2"></div>        </div>    </div></div><div id="MathJax_Message" style="display: none;"></div>
+    <a name="top" style="display: none;"></a>
+    <div id="top_nav" class="navbar forpc navbar-custom">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                            <img src="./ubuntu下Mosquitto安装及配置_files/logo.svg" alt="博客园Logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.cnblogs.com/" onclick="countClicks(&#39;skin-navbar-sitehome&#39;)">首页</a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a>
+                </li>
+                <li>
+                    <a id="nav_brandzone" href="https://brands.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-brands&#39;)">专区</a>
+                </li>
+                <li>
+                    <a href="https://ing.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-ing&#39;)">闪存</a>
+                </li>
+                <li>
+                    <a href="https://edu.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-edu&#39;)">班级</a>
+                </li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off">
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="./ubuntu下Mosquitto安装及配置_files/search.svg" alt="搜索">
+                            <img class="hidden focus-visible" src="./ubuntu下Mosquitto安装及配置_files/enter.svg" alt="搜索">
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                <div class="keyword-wrapper">
+                                    <img src="./ubuntu下Mosquitto安装及配置_files/search.svg" alt="搜索">
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, &#39;guyk&#39;, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="./ubuntu下Mosquitto安装及配置_files/search.svg" alt="搜索">
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="./ubuntu下Mosquitto安装及配置_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="./ubuntu下Mosquitto安装及配置_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="./ubuntu下Mosquitto安装及配置_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="./ubuntu下Mosquitto安装及配置_files/lite-mode-on.svg" alt="简洁模式">
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="./ubuntu下Mosquitto安装及配置_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./ubuntu下Mosquitto安装及配置_files/lite-mode-check.svg" class="hide"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    
+
+    <!--done-->
+<div id="home" style="margin-top: 366px;">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/guyk/"><img id="blogLogo" src="./ubuntu下Mosquitto安装及配置_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/guyk/">生命在等待中延续</a>
+</h1>
+<h2>你的目标在哪里,你的结果就在哪里;你的时间在哪里,你的价值就在哪里</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li>
+</li>
+<li>
+
+</li>
+<li>
+
+
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/%E7%94%9F%E5%91%BD%E5%9C%A8%E7%AD%89%E5%BE%85%E4%B8%AD%E5%BB%B6%E7%BB%AD">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/guyk/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<span id="stats_post_count">随笔 - 68&nbsp; </span>
+<span id="stats_article_count">文章 - 1&nbsp; </span>
+<span id="stats-comment_count">评论 - 15&nbsp; </span>
+<span id="stats-total-view-count">阅读 - 
+<span title="总阅读数: 136683">
+13万</span></span>
+
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle post-del-title" href="https://www.cnblogs.com/guyk/p/12405938.html">
+    <span role="heading" aria-level="2">ubuntu下Mosquitto安装及配置</span>
+    
+</a><button class="cnblogs-toc-button" title="显示目录导航" aria-expanded="false"></button>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                    <div id="cnblogs_post_description" style="display: none">
+        
+        Eclipse Mosquitto是一个开源消息代理，实现了MQTT协议版本3.1和3.1.1.Mosquitto轻量,适用于低功耗单板计算机到完整服务器的所有设备.
+Mosquitto项目还提供了用于实现MQTT客户端的C库以及非常受欢迎的mosquitto_pub和mosquitto_sub命令行MQTT客户端.
+本文介绍了ubuntu server 18.04 LTS下,安装和简单测试Mosquitto
+    </div>
+<div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown">
+<span title-type="h1" class="header__span" style="transform:scale(1.0);"><h1 id="ubuntu下mosquitto安装及配置" tid="tid-wHZ82A" class="header__dev"><span style=""><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>0</i></b></span><b class="dev__developer"><span class="dev__title">ubuntu下Mosquitto安装及配置</span></b></h1></span>
+<p>本文最近一次修改日期:2020-03-04 1:43 周三</p>
+<p>Eclipse Mosquitto是一个开源消息代理，实现了MQTT协议版本3.1和3.1.1.Mosquitto轻量,适用于低功耗单板计算机到完整服务器的所有设备.</p>
+<p>Mosquitto项目还提供了用于实现MQTT客户端的C库以及非常受欢迎的mosquitto_pub和mosquitto_sub命令行MQTT客户端.</p>
+<p>本文抄自:飞虎兄的文章<a href="https://www.jianshu.com/p/9e3cb7042a2e" target="_blank" rel="noopener">Mosquitto 搭建及配置</a><br>
+本文参考:清明-心若淡定的文章<a href="https://www.cnblogs.com/saryli/p/9828938.html" target="_blank" rel="noopener">订阅mosquitto服务器状态各主题</a></p>
+<code-box id="FPDS87" style="position: relative;display: block;"><button code-id="FPDS87" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-FPDS87" aria-label="复制代码" style="opacity: 0; visibility: hidden;"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-FPDS87"><div id="mCSB_1" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-hWhKTe"><code-line class="line-numbers-rows"></code-line>所超代码,均已在ubuntu server 18.04 LTS上测试,
+<code-line class="line-numbers-rows"></code-line>订阅客户端数量 $SYS/broker/clients/active (1.4版本已取消 //经测试我用的1.6.8的客户端,这个命令并没有取消
+<code-line class="line-numbers-rows"></code-line>修改为$SYS/broker/clients/expired (当前连接的客户端数量) //这个命令什么也没返回,这是为什么?
+</code-pre></div></div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_1_scrollbar_horizontal" class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<p>其他服务器代理实现:<a href="https://github.com/mqtt/mqtt.github.io/wiki/servers" target="_blank" rel="noopener">https://github.com/mqtt/mqtt.github.io/wiki/servers</a><br>
+各操作系统安装指引:<a href="https://mosquitto.org/download/" target="_blank" rel="noopener">https://mosquitto.org/download/</a></p>
+<span title-type="h2" class="header__span" style="transform:scale(0.9);left: -37.00px;"><h2 id="mosquitto安装" tid="tid-ftBa3K" class="header__dev"><span style="position: relative;left: -5px;"><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>1</i></b></span><b class="dev__developer"><span class="dev__title">Mosquitto安装</span></b></h2></span>
+<ul>
+<li>添加存储库</li>
+</ul>
+<code-box id="CzEKDG" style="position: relative;display: block;"><button code-id="CzEKDG" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-CzEKDG" aria-label="复制代码" style="opacity: 0; visibility: hidden;"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_2 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-CzEKDG"><div id="mCSB_2" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_2_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-C2i3Mn"><code-line class="line-numbers-rows"></code-line>sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+</code-pre></div></div><div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_2_scrollbar_horizontal" class="mCSB_scrollTools mCSB_2_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>更新软件包</li>
+</ul>
+<code-box id="xRHJAC" style="position: relative;display: block;"><button code-id="xRHJAC" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-xRHJAC" aria-label="复制代码" style="opacity: 0; visibility: hidden;"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_3 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-xRHJAC"><div id="mCSB_3" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_3_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-HNbZN7"><code-line class="line-numbers-rows"></code-line>sudo apt-get update
+</code-pre></div></div><div id="mCSB_3_scrollbar_vertical" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_3_scrollbar_horizontal" class="mCSB_scrollTools mCSB_3_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_3_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>安装</li>
+</ul>
+<code-box id="kMdd5n" style="position: relative;display: block;"><button code-id="kMdd5n" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-kMdd5n" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_4 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-kMdd5n"><div id="mCSB_4" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_4_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-bcGbBK"><code-line class="line-numbers-rows"></code-line>sudo apt-get install mosquitto -y
+</code-pre></div></div><div id="mCSB_4_scrollbar_vertical" class="mCSB_scrollTools mCSB_4_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_4_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_4_scrollbar_horizontal" class="mCSB_scrollTools mCSB_4_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_4_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>安装命令行客户端</li>
+</ul>
+<code-box id="CjkF7d" style="position: relative;display: block;"><button code-id="CjkF7d" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-CjkF7d" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_5 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-CjkF7d"><div id="mCSB_5" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_5_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-7ka3tT"><code-line class="line-numbers-rows"></code-line>sudo apt-get install mosquitto-clients -y
+</code-pre></div></div><div id="mCSB_5_scrollbar_vertical" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_5_scrollbar_horizontal" class="mCSB_scrollTools mCSB_5_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_5_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<span title-type="h2" class="header__span" style="transform:scale(0.9);left: -37.00px;"><h2 id="配置" tid="tid-3bNtJa" class="header__dev"><span style="position: relative;left: -5px;"><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>2</i></b></span><b class="dev__developer"><span class="dev__title">配置</span></b></h2></span>
+<p>sudo nano /etc/mosquitto/mosquitto.conf</p>
+<code-box id="bXYx3j" style="position: relative;display: block;"><button code-id="bXYx3j" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-bXYx3j" aria-label="复制代码" style="opacity: 0; visibility: hidden;"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_6 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-bXYx3j"><div id="mCSB_6" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_6_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-b7AwSN"><code-line class="line-numbers-rows"></code-line>pid_file /var/run/mosquitto.pid
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 消息持久存储</span>
+<code-line class="line-numbers-rows"></code-line>persistence <span class="hljs-literal">true</span>
+<code-line class="line-numbers-rows"></code-line>persistence_location /var/lib/mosquitto/
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 日志文件</span>
+<code-line class="line-numbers-rows"></code-line>log_dest file /var/log/mosquitto/mosquitto.log
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 其他配置</span>
+<code-line class="line-numbers-rows"></code-line>include_dir /etc/mosquitto/conf.d
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 禁止匿名访问</span>
+<code-line class="line-numbers-rows"></code-line>allow_anonymous <span class="hljs-literal">false</span>
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 认证配置</span>
+<code-line class="line-numbers-rows"></code-line>password_file /etc/mosquitto/pwfile
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 权限配置</span>
+<code-line class="line-numbers-rows"></code-line>acl_file /etc/mosquitto/aclfile
+</code-pre></div></div><div id="mCSB_6_scrollbar_vertical" class="mCSB_scrollTools mCSB_6_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_6_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_6_scrollbar_horizontal" class="mCSB_scrollTools mCSB_6_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_6_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>认证配置pwfile</li>
+</ul>
+<p>创建文件</p>
+<code-box id="YKXjdM" style="position: relative;display: block;"><button code-id="YKXjdM" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-YKXjdM" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_7 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-YKXjdM"><div id="mCSB_7" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_7_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-knPKck"><code-line class="line-numbers-rows"></code-line>sudo <span class="hljs-built_in">touch</span> /etc/mosquitto/pwfile
+</code-pre></div></div><div id="mCSB_7_scrollbar_vertical" class="mCSB_scrollTools mCSB_7_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_7_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_7_scrollbar_horizontal" class="mCSB_scrollTools mCSB_7_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_7_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>开启服务开启</li>
+</ul>
+<code-box id="w7EdXj" style="position: relative;display: block;"><button code-id="w7EdXj" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-w7EdXj" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_8 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-w7EdXj"><div id="mCSB_8" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_8_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-C2dZSA"><code-line class="line-numbers-rows"></code-line>sudo mosquitto_passwd /etc/mosquitto/pwfile bootloader <span class="hljs-comment">#bootloader是我当前用户名</span>
+</code-pre></div></div><div id="mCSB_8_scrollbar_vertical" class="mCSB_scrollTools mCSB_8_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_8_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_8_scrollbar_horizontal" class="mCSB_scrollTools mCSB_8_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_8_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>权限配置aclfile</li>
+</ul>
+<code-box id="63yf8m" style="position: relative;display: block;"><button code-id="63yf8m" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-63yf8m" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_9 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-63yf8m"><div id="mCSB_9" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_9_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-3JjKAh"><code-line class="line-numbers-rows"></code-line>sudo nano /etc/mosquitto/aclfile
+</code-pre></div></div><div id="mCSB_9_scrollbar_vertical" class="mCSB_scrollTools mCSB_9_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_9_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_9_scrollbar_horizontal" class="mCSB_scrollTools mCSB_9_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_9_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<code-box id="spiCGi" style="position: relative;display: block;"><button code-id="spiCGi" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-spiCGi" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_10 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-spiCGi"><div id="mCSB_10" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_10_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-4phMia"><code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># user1只能发布以test为前缀的主题,订阅以$SYS开头的主题即系统主题</span>
+<code-line class="line-numbers-rows"></code-line>user user1
+<code-line class="line-numbers-rows"></code-line>topic write <span class="hljs-built_in">test</span>/<span class="hljs-comment">#</span>
+<code-line class="line-numbers-rows"></code-line>topic <span class="hljs-built_in">read</span> <span class="hljs-variable">$SYS</span>/<span class="hljs-comment">#</span>
+<code-line class="line-numbers-rows"></code-line>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># user2只能订阅以test为前缀的主题</span>
+<code-line class="line-numbers-rows"></code-line>user user2
+<code-line class="line-numbers-rows"></code-line>topic <span class="hljs-built_in">read</span> <span class="hljs-built_in">test</span>/<span class="hljs-comment">#</span>
+</code-pre></div></div><div id="mCSB_10_scrollbar_vertical" class="mCSB_scrollTools mCSB_10_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_10_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_10_scrollbar_horizontal" class="mCSB_scrollTools mCSB_10_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_10_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<span title-type="h2" class="header__span" style="transform:scale(0.9);left: -37.00px;"><h2 id="启动服务端" tid="tid-TxdeEM" class="header__dev"><span style="position: relative;left: -5px;"><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>3</i></b></span><b class="dev__developer"><span class="dev__title">启动服务端</span></b></h2></span>
+<code-box id="RRrs3b" style="position: relative;display: block;"><button code-id="RRrs3b" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-RRrs3b" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_11 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-RRrs3b"><div id="mCSB_11" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_11_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-RjFZSj"><code-line class="line-numbers-rows"></code-line><span class="hljs-comment">#-c：指定特定配置文件启动</span>
+<code-line class="line-numbers-rows"></code-line><span class="hljs-comment">#-d：后台运行</span>
+<code-line class="line-numbers-rows"></code-line>mosquitto -c /etc/mosquitto/mosquitto.conf -d
+</code-pre></div></div><div id="mCSB_11_scrollbar_vertical" class="mCSB_scrollTools mCSB_11_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_11_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_11_scrollbar_horizontal" class="mCSB_scrollTools mCSB_11_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_11_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<span title-type="h2" class="header__span" style="transform:scale(0.9);left: -37.00px;"><h2 id="测试" tid="tid-76ARRt" class="header__dev"><span style="position: relative;left: -5px;"><b class="dev__fe"><i>1</i></b><span class="dev__slash">|</span><b class="dev__ux"><i>4</i></b></span><b class="dev__developer"><span class="dev__title">测试</span></b></h2></span>
+<p>发布使用mosquitto_pub命令,订阅使用mosquitto_sub命令.常用参数介绍:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th style="text-align: center">参数</th>
+<th style="text-align: center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center">-h</td>
+<td style="text-align: center">服务器主机，默认localhost</td>
+</tr>
+<tr>
+<td style="text-align: center">-t</td>
+<td style="text-align: center">指定主题</td>
+</tr>
+<tr>
+<td style="text-align: center">-u</td>
+<td style="text-align: center">用户名</td>
+</tr>
+<tr>
+<td style="text-align: center">-P</td>
+<td style="text-align: center">密码</td>
+</tr>
+<tr>
+<td style="text-align: center">-i</td>
+<td style="text-align: center">客户端id，唯一</td>
+</tr>
+<tr>
+<td style="text-align: center">-m</td>
+<td style="text-align: center">发布的消息内容</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>订阅</li>
+</ul>
+<code-box id="RwPe4s" style="position: relative;display: block;"><button code-id="RwPe4s" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-RwPe4s" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_12 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-RwPe4s"><div id="mCSB_12" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_12_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-3FTWAA"><code-line class="line-numbers-rows"></code-line>mosquitto_sub -h localhost -t <span class="hljs-string">"test/#"</span> -u user2 -P 123456 -i <span class="hljs-string">"client1"</span>
+</code-pre></div></div><div id="mCSB_12_scrollbar_vertical" class="mCSB_scrollTools mCSB_12_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_12_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_12_scrollbar_horizontal" class="mCSB_scrollTools mCSB_12_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_12_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>订阅系统主题</li>
+</ul>
+<code-box id="7rhKrh" style="position: relative;display: block;"><button code-id="7rhKrh" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-7rhKrh" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_13 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-7rhKrh"><div id="mCSB_13" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_13_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-HE7SSs"><code-line class="line-numbers-rows"></code-line><span class="hljs-comment"># 订阅客户端存活连接数</span>
+<code-line class="line-numbers-rows"></code-line>mosquitto_sub -h localhost -u user1 -P 123456 -i <span class="hljs-string">"client2"</span> -t <span class="hljs-string">'$SYS/broker/clients/active'</span>  <span class="hljs-comment">#发布者 订阅 者都算存活连接</span>
+</code-pre></div></div><div id="mCSB_13_scrollbar_vertical" class="mCSB_scrollTools mCSB_13_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_13_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_13_scrollbar_horizontal" class="mCSB_scrollTools mCSB_13_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_13_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<ul>
+<li>发布</li>
+</ul>
+<code-box id="8srb53" style="position: relative;display: block;"><button code-id="8srb53" type="button" class="clipboard code-copay-btn" data-clipboard-action="copy" data-clipboard-target="#pre-8srb53" aria-label="复制代码"><i class="iconfont icon-fuzhi1"></i></button><pre class="highlighter-hljs mCustomScrollbar _mCS_14 mCS-autoHide mCS_no_scrollbar" highlighted="true" style="font-family: &quot;Ubuntu Mono&quot;, monospace !important; font-size: 14px !important; background-color: rgb(246, 248, 250); overflow: visible; position: relative;" id="pre-8srb53"><div id="mCSB_14" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_14_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><code-pre class="code-pre" id="pre-ibHE3f"><code-line class="line-numbers-rows"></code-line>mosquitto_pub -h localhost -t <span class="hljs-string">"test/abc"</span> -u user1 -P 123456 -i <span class="hljs-string">"client3"</span> -m <span class="hljs-string">"How are you?"</span>
+</code-pre></div></div><div id="mCSB_14_scrollbar_vertical" class="mCSB_scrollTools mCSB_14_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_14_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 0px; top: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_14_scrollbar_horizontal" class="mCSB_scrollTools mCSB_14_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_14_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></pre></code-box>
+<p><strong>其他</strong></p>
+<ul>
+<li>项目网站:<a href="https://www.eclipse.org/paho" target="_blank" rel="noopener">https://www.eclipse.org/paho</a></li>
+<li>Eclipse项目信息:<a href="https://projects.eclipse.org/projects/iot.paho" target="_blank" rel="noopener">https://projects.eclipse.org/projects/iot.paho</a></li>
+<li>GitHub:<a href="https://github.com/eclipse/paho.mqtt.java" target="_blank" rel="noopener">https://github.com/eclipse/paho.mqtt.java</a></li>
+<li>MQTT Java客户端的使用:<a href="https://www.jianshu.com/p/65e1748a930c" target="_blank" rel="noopener">https://www.jianshu.com/p/65e1748a930c</a></li>
+<li>Spring支持:<a href="https://www.jianshu.com/p/6b60858b7d44" target="_blank" rel="noopener">https://www.jianshu.com/p/6b60858b7d44</a></li>
+</ul>
+
+<br><p class="essaySuffix-eof">__EOF__</p><div class="essaySuffix-box"><div class="essaySuffix-box-left"><img src="./ubuntu下Mosquitto安装及配置_files/1303985-20200205230214573-26895043.png" alt=""></div><div class="essaySuffix-box-right"><span class="essaySuffix-right-title">本文作者</span>：<strong><span style="font-size: 12px;"><a href="https://www.cnblogs.com/guyk/p/12405938.html" target="_blank">生命在等待中延续</a></span></strong> <br><span style="font-weight: bold; white-space:nowrap;">本文链接</span>：<a href="https://www.cnblogs.com/guyk/p/12405938.html" target="_blank">https://www.cnblogs.com/guyk/p/12405938.html</a><br><span class="essaySuffix-right-title">关于博主</span>：评论和私信会在第一时间回复。或者<a href="https://msg.cnblogs.com/msg/send/guyk" target="_blank">直接私信</a>我。<br><span class="essaySuffix-right-title">版权声明</span>：本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" alt="BY-NC-SA" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！<br><span class="essaySuffix-right-title">声援博主</span>：如果您觉得文章对您有帮助，可以点击文章右下角<strong><span style="color: #ff0000; font-size: 12pt;">【<a id="post-up" onclick="votePost(12405938,&#39;Digg&#39;)" href="javascript:void(0);">推荐</a>】</span></strong>一下。您的鼓励是博主的最大动力！<br></div><div style="clear: both;"></div></div></div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/guyk/tag/%E5%B5%8C%E5%85%A5%E5%BC%8F/"><span class="iconfont icon-label_fill"></span>嵌入式</a>,             <a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E6%8E%A7/"><span class="iconfont icon-label_fill"></span>工控</a>,             <a href="https://www.cnblogs.com/guyk/tag/linux/"><span class="iconfont icon-label_fill"></span>linux</a></div>
+
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(12405938,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;586262fb-0dd2-4299-537a-08d52fc34315&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./ubuntu下Mosquitto安装及配置_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./ubuntu下Mosquitto安装及配置_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/guyk/" target="_blank"><img src="./ubuntu下Mosquitto安装及配置_files/20180928113044.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/guyk/">生命在等待中延续</a><br>
+            <a href="https://home.cnblogs.com/u/guyk/followers/">粉丝 - <span class="follower-count">27</span></a>
+            <a href="https://home.cnblogs.com/u/guyk/followees/">关注 - <span class="following-count">5</span></a><br>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow" class="follow-tip">
+                <a href="javascript:void(0);" onclick="follow(&#39;586262fb-0dd2-4299-537a-08d52fc34315&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(12405938,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(12405938,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/guyk/p/12377077.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/guyk/p/12377077.html" data-featured-image="" title="发布于 2020-02-28 14:29">一个arm开发板的研究笔记</a>
+    <br>
+    <a href="https://www.cnblogs.com/guyk/p/12421480.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/guyk/p/12421480.html" data-featured-image="" title="发布于 2020-03-05 17:36">manjaro-xfce-19.0.1-200228-安装记录</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc" style="display: block;">posted @ 
+<span id="post-date" data-date-updated-tip="enable" data-date-updated="2020-03-05 17:31" aria-expanded="false">2020-03-04 00:41</span>&nbsp;
+<a href="https://www.cnblogs.com/guyk/">生命在等待中延续</a>&nbsp;
+阅读(<span id="post_view_count">10354</span>)&nbsp;
+评论(<span id="post_comment_count">2</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=12405938" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(12405938);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;12405938&#39;, targetLink: &#39;https://www.cnblogs.com/guyk/p/12405938.html&#39;, title: &#39;ubuntu下Mosquitto安装及配置&#39; })">举报</a></div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+
+<script>
+    var cb_entryId = 12405938, cb_entryCreatedDate = '2020-03-04 00:41', cb_postType = 1, cb_postTitle = 'ubuntu下Mosquitto安装及配置';
+    var allowComments = true, cb_blogId = 402780, cb_blogApp = 'guyk', cb_blogUserGuid = '586262fb-0dd2-4299-537a-08d52fc34315';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");
+    updatePostStats(
+            [cb_entryId],
+            function(id, count) { $("#post_view_count").text(count) },
+            function(id, count) { $("#post_comment_count").text(count) })
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/guyk/p/12405938.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/guyk/p/12405938.html#top">返回顶部</a></div>
+    <div id="comment_form_container" style="visibility: visible;"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login(&#39;!comments&#39;);">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="under-post-card" style="display: block;">
+            <div id="div-gpt-ad-1592365906576-0" style="width: 300px; height: 250px;" data-google-query-id="CIyQqtugpv0CFQWC6QUdP9IPCw"><div id="google_ads_iframe_/1090369/C1_0__container__" style="border: 0pt none; display: inline-block; width: 300px; height: 250px;"><iframe frameborder="0" src="./ubuntu下Mosquitto安装及配置_files/container.html" id="google_ads_iframe_/1090369/C1_0" title="3rd party ad content" name="" scrolling="no" marginwidth="0" marginheight="0" width="300" height="250" data-is-safeframe="true" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" role="region" aria-label="Advertisement" tabindex="0" data-google-container-id="1" style="border: 0px; vertical-align: bottom;" data-load-complete="true"></iframe></div></div>
+    </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/huangxincheng/p/17136299.html" target="_blank">SQLSERVER 语句交错引发的死锁研究</a>
+    <br>
+· <a href="https://www.cnblogs.com/cicada-smile/p/17128905.html" target="_blank">这些「误区」99%的研发都踩过</a>
+    <br>
+· <a href="https://www.cnblogs.com/coco1s/p/17128906.html" target="_blank">由小见大！不规则造型按钮解决方案</a>
+    <br>
+· <a href="https://www.cnblogs.com/jiujuan/p/17116605.html" target="_blank">小公司需要使用微服务架构吗？ </a>
+    <br>
+· <a href="https://www.cnblogs.com/dragonir/p/17121487.html" target="_blank">Three.js 进阶之旅：物理效果-碰撞和声音</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>阅读排行：</b>
+    <br>
+ ·          <a href="https://www.cnblogs.com/thisiswhy/p/17136930.html" target="_blank">关于这个“微信提现”的问题，太炸裂了，以至于我写了段代码来验证！</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/wuhuacong/p/17136952.html" target="_blank">基于ChatGPT的API的C#接入研究</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/MingsonZheng/p/17135930.html" target="_blank">【译】.NET 7 中的性能改进（一）</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/Dotnet9-com/p/17139986.html" target="_blank">快学会这个技能-.NET API拦截技法</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/huangxincheng/p/17136299.html" target="_blank">SQLSERVER 语句交错引发的死锁研究</a>
+        <br>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem"><!--done-->
+<h3 class="catListTitle">公告</h3>
+
+<div id="blog-news"><div class="container">    <div class="menu-wrap optiscroll is-enabled" id="menuWrap" style="display:none"><div class=" optiscroll-content" style="right: -3px; bottom: -3px;">        <nav class="menu">            <!-- 个人简介 -->            <div class="introduce-box">                <div class="introduce-head">                    <div class="introduce-via" id="menuBlogAvatar"><img src="./ubuntu下Mosquitto安装及配置_files/1303985-20200205230214573-26895043.png"></div>                </div>                <div id="introduce">
+        昵称：
+        <a href="https://home.cnblogs.com/u/guyk/">
+            生命在等待中延续
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/guyk/" title="入园时间：2017-12-21">
+            5年2个月
+        </a>
+        <br>
+        粉丝：
+        <a class="follower-count" href="https://home.cnblogs.com/u/guyk/followers/">
+            27
+        </a>
+        <br>
+        关注：
+        <a class="folowing-count" href="https://home.cnblogs.com/u/guyk/followees/">
+            5
+        </a>
+        <div id="p_b_follow" class="follow-tip">
+<a href="javascript:void(0)" onclick="follow(&#39;586262fb-0dd2-4299-537a-08d52fc34315&#39;)">+加关注</a></div>
+        <script type="text/javascript">window['__document_write_ajax_callbacks__']['15']();</script>
+    </div>            </div>            <!-- 导航 -->            <div class="nav-title"></div>            <div class="icon-list">                <ul id="m-nav-list">                <li><a href="https://www.cnblogs.com/guyk/" target="_self"><i class="iconfont icon-homepage_fill"></i>首页</a></li><li><a href="https://msg.cnblogs.com/send/guyk" target="_blank"><i class="iconfont icon-zhifeiji"></i>联系</a></li><li><a href="javascript:void(0)" onclick="$(&#39;#blog_nav_rss&#39;).trigger(&#39;click&#39;);" data-rss="https://www.cnblogs.com/guyk/rss/"><i class="iconfont icon-qinmifu"></i>订阅</a></li><li><a href="https://i.cnblogs.com/" target="_blank"><i class="iconfont icon-setup_fill"></i>管理</a></li></ul>            </div>            <!-- 日历 -->            <span id="calendar-box"><div id="blog-calendar" style="visibility: visible;">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2023/01/21&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2023年2月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2023/03/21&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                        <td class="" align="center">
+                            3
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        4
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            5
+                        </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                            <td class="" align="center">
+                                10
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            11
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            12
+                        </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                            <td class="" align="center">
+                                17
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            18
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            19
+                        </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="CalTodayDay" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                            <td class="" align="center">
+                                24
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            25
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            26
+                        </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                2
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                3
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            4
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            5
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                9
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                10
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            11
+                        </td>
+                </tr>
+    </tbody>
+</table></div></span>            <!-- 找找看 -->            <div class="m-list-title"><span>找找看</span></div>            <div class="m-icon-list" id="sb-sidebarSearchBox"></div>            <!-- 积分与排名 -->            <div class="m-list-title"><span>积分排名<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-sidebarScorerank"></div>            <!-- 最新随笔 -->            <div class="m-list-title"><span>最新随笔<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-sidebarRecentposts"></div>            <!-- 我的标签 -->            <div class="m-list-title" style="display: block;"><span>我的标签<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-toptags"><div><ul><li><a href="https://www.cnblogs.com/guyk/tag/%E7%94%9F%E5%91%BD%E5%9C%A8%E7%AD%89%E5%BE%85%E4%B8%AD%E5%BB%B6%E7%BB%AD/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>生命在等待中延续(42)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/windows/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>windows(21)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E6%8E%A7/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>工控(13)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/SIEMENS/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>SIEMENS(10)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E8%A5%BF%E9%97%A8%E5%AD%90/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>西门子(10)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E5%85%B7/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>工具(7)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/linux/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>linux(7)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E8%AF%BB%E4%B9%A6/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>读书(6)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E8%87%AA%E5%8A%A8%E5%8C%96/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>自动化(6)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/%E6%8E%A7%E5%88%B6%E5%8F%B0/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>控制台(5)</a></li><li><a href="https://www.cnblogs.com/guyk/tag/"><span class="iconfont icon-label_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>更多</a></li></ul></div></div>            <!-- 随笔分类 -->            <div class="m-list-title"><span>随笔分类<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-classify"></div>            <!-- 文章分类 -->            <div class="m-list-title"><span>文章分类<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-ArticleCategory"></div>            <!-- 阅读排行 -->            <div class="m-list-title" style="display: block;"><span>阅读排行<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-topview"><div><ul><li><a href="https://www.cnblogs.com/guyk/p/9188496.html"><span class="iconfont icon-browse_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>manjaro更换深度桌面环境-deepin(16977)</a></li><li><a href="https://www.cnblogs.com/guyk/p/10541063.html"><span class="iconfont icon-browse_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>WinCC V7.5安装过程截图(13758)</a></li><li><a href="https://www.cnblogs.com/guyk/p/12405938.html"><span class="iconfont icon-browse_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>ubuntu下Mosquitto安装及配置(10353)</a></li><li><a href="https://www.cnblogs.com/guyk/p/11000432.html"><span class="iconfont icon-browse_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>提问的智慧 (提问前必读)(8878)</a></li><li><a href="https://www.cnblogs.com/guyk/p/8088058.html"><span class="iconfont icon-browse_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>C#动态获取本机可用串口的两种方式(7995)</a></li></ul></div></div>            <!-- 推荐排行 -->            <div class="m-list-title" style="display: block;"><span>推荐排行<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-topDiggPosts"><div><ul><li><a href="https://www.cnblogs.com/guyk/p/15769187.html"><span class="iconfont icon-like_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>WinCC 使用ActiveX控件，提示未 找到许可证信息。没有设计模式的有效许可证解决办法(1)</a></li><li><a href="https://www.cnblogs.com/guyk/p/15169789.html"><span class="iconfont icon-like_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>博图TIA中ModbusRTU Over TCP/IP通讯的实现(1)</a></li><li><a href="https://www.cnblogs.com/guyk/p/11528738.html"><span class="iconfont icon-like_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>OPC DA通讯 KEP6.4 DCOM 配置脚本(1)</a></li><li><a href="https://www.cnblogs.com/guyk/p/11000432.html"><span class="iconfont icon-like_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>提问的智慧 (提问前必读)(1)</a></li><li><a href="https://www.cnblogs.com/guyk/p/9188496.html"><span class="iconfont icon-like_fill" style="color: #888;font-size: 14px;margin-right: 5px;"></span>manjaro更换深度桌面环境-deepin(1)</a></li></ul></div></div>            <!-- 最新评论 -->            <div class="m-list-title"><span>最新评论<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-recentComments"></div>            <!-- 文章档案 -->            <div class="m-list-title"><span>文章档案<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-articlearchive"></div>            <!-- 随笔档案 -->            <div class="m-list-title"><span>随笔档案<span class="iconfont icon-select m-list-title-select"></span></span></div>            <div class="m-icon-list" id="sb-record"></div>            <!-- 自定义列表 -->            <span id="menuCustomList"></span>        </nav>        <button class="close-button" id="close-button">Close Menu</button>        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"></path>            <desc>Created with Snap</desc><defs></defs></svg>        </div>    </div><div class="optiscroll-v"><b class="optiscroll-vtrack"></b></div><div class="optiscroll-h"><b class="optiscroll-htrack"></b></div></div>    <button class="menu-button menu-button-scroll" id="open-button"></button>    <div class="content-wrap" id="content-wrap"></div><!-- /content-wrap --></div><div class="main-header" style="height: 40vh; background: url(&quot;https://cdn.jsdelivr.net/gh/BNDong/Cnblogs-Theme-SimpleMemory@master/img/webp/nothome_top_bg.webp&quot;) center center / cover no-repeat rgb(34, 34, 34);">    <canvas id="notHomeTopCanvas" width="1917" height="366"></canvas>    <div class="vertical">        <div class="main-header-content inner" style="max-width: 100vw;">            <h1 class="page-title" id="homeTopTitle" style="display: none;">生命在等待中延续</h1>            <h2 class="page-description" id="hitokoto"></h2>            <h3 class="page-author" id="hitokotoAuthor"></h3>            <h1 class="sb-title" id="sbTitle">
+    ubuntu下Mosquitto安装及配置
+    
+</h1>            <p class="article-info" id="articleInfo"><p class="article-info-text"><span class="postMeta"><i class="iconfont icon-time1"></i>发表于 2020-03-04 00:41<i class="iconfont icon-browse"></i>阅读：10354<i class="iconfont icon-interactive"></i>评论：2<i class="iconfont icon-hot"></i>推荐：0</span></p><a href="https://www.cnblogs.com/guyk/tag/%E5%B5%8C%E5%85%A5%E5%BC%8F/" target="_blank"><span class="article-info-tag article-tag-color">嵌入式</span></a><a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E6%8E%A7/" target="_blank"><span class="article-info-tag article-tag-color">工控</span></a><a href="https://www.cnblogs.com/guyk/tag/linux/" target="_blank"><span class="article-info-tag article-tag-color">linux</span></a></p>        </div>    </div>    <a class="scroll-down" href="javascript:void(0);" data-offset="-45" style="display: none;">        <span class="hidden">Scroll Down</span>        <i class="scroll-down-icon iconfont icon-fanhui"></i>    </a></div><div id="loading" style="display: none;"></div><div id="bottomProgressBar"><div id="top-progress-bar" style="position: relative; top: 0px; left: 0px; right: 0px; background-color: rgb(119, 182, 255); height: 2px; width: 19%; transition: width 0.2s ease 0s, opacity 0.6s ease 0s; opacity: 1;"></div></div><div id="rightMenu"><div id="rightDiggit" clickflg="false" onclick="votePost(12405938,&#39;Digg&#39;)"><span class="rightMenuSpan rightDiggitSpan">0</span><i class="iconfont icon-zan1"></i></div><div id="rightBuryit" clickflg="false" onclick="votePost(12405938,&#39;Bury&#39;)"><span class="rightMenuSpan rightBuryitSpan" style="display: none; opacity: 0.9;">0</span><i class="iconfont icon-buzan" style="transform: rotate(0deg); transform-origin: 50% 50%;"></i></div><div id="attention" clickflg="true"><span class="rightMenuSpan attentionSpan">已关注</span><i class="iconfont icon-dianzan1"></i></div><div id="toUpDown" data="up"><span class="rightMenuSpan toUpDownSpan">返回顶部</span><div id="toUpDownI" style="transform: rotate(0deg); transform-origin: 50% 50%;"><i class="iconfont icon-zhiding"></i></div></div></div>
+    <!------------------------------------------------------------------------------------------------------------------>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['7']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['8']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['1']();</script>
+<!------------------------------------------------------------------------------------------------------------------>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['9']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['2']();</script>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['10']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['11']();</script><script>window['__document_write_ajax_callbacks__']['3']();</script>
+<!------------------------------------------------------------------------------------------------------------------>
+<script type="text/javascript">window['__document_write_ajax_callbacks__']['12']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['4']();</script>
+<!-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<!-- Start of StatCounter Code for Default Guide -->
+    <div style="display: none" id="__document_write_ajax_div-14"></div><script type="text/javascript">window['__document_write_ajax_callbacks__']['14']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['13']();</script><script type="text/javascript">window['__document_write_ajax_callbacks__']['5']();</script>
+    <noscript><div class="statcounter"><a title="Web Analytics
+    Made Easy - StatCounter" href="http://statcounter.com/"
+    target="_blank"><img class="statcounter"
+    src="//c.statcounter.com/11591790/0/3f2d5b87/1/" alt="Web
+    Analytics Made Easy - StatCounter"></a></div></noscript>
+<!-- End of StatCounter Code for Default Guide -->
+<!------------------------------------------------------------------------------------------------------------------>
+    <div id="profile_block">
+        昵称：
+        <a href="https://home.cnblogs.com/u/guyk/">
+            生命在等待中延续
+        </a>
+        <br>
+        园龄：
+        <a href="https://home.cnblogs.com/u/guyk/" title="入园时间：2017-12-21">
+            5年2个月
+        </a>
+        <br>
+        粉丝：
+        <a class="follower-count" href="https://home.cnblogs.com/u/guyk/followers/">
+            27
+        </a>
+        <br>
+        关注：
+        <a class="folowing-count" href="https://home.cnblogs.com/u/guyk/followees/">
+            5
+        </a>
+        <div id="p_b_follow" class="follow-tip"></div>
+        <div style="display: none" id="__document_write_ajax_div-6"></div><script>window['__document_write_ajax_callbacks__']['6']();</script>
+    </div>
+</div>
+
+</div>
+<div id="sidebar_c3"></div>
+			<script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    
+</div>
+
+<!-- 常用链接 -->
+
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block"><div class="catListTag">
+    <h3 class="catListTitle"><a href="https://www.cnblogs.com/guyk/tag/" class="sidebar-card-title-a">我的标签</a></h3>
+<ul>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E7%94%9F%E5%91%BD%E5%9C%A8%E7%AD%89%E5%BE%85%E4%B8%AD%E5%BB%B6%E7%BB%AD/">生命在等待中延续<span class="tag-count">(42)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/windows/">windows<span class="tag-count">(21)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E6%8E%A7/">工控<span class="tag-count">(13)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/SIEMENS/">SIEMENS<span class="tag-count">(10)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E8%A5%BF%E9%97%A8%E5%AD%90/">西门子<span class="tag-count">(10)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E5%B7%A5%E5%85%B7/">工具<span class="tag-count">(7)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/linux/">linux<span class="tag-count">(7)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E8%AF%BB%E4%B9%A6/">读书<span class="tag-count">(6)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化<span class="tag-count">(6)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/guyk/tag/%E6%8E%A7%E5%88%B6%E5%8F%B0/">控制台<span class="tag-count">(5)</span></a>
+        </li>
+    <li>
+        <a href="https://www.cnblogs.com/guyk/tag/">更多</a>
+    </li>
+
+</ul>
+</div>
+
+</div>
+
+<!-- 积分与排名 -->
+
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+</div>
+
+<!-- 最新评论 -->
+
+
+
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block"><div class="catListView">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/guyk/most-viewed" class="sidebar-card-title-a">
+    阅读排行榜
+</a>
+
+    </h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/guyk/p/9188496.html">
+                            1. manjaro更换深度桌面环境-deepin(16977)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/guyk/p/10541063.html">
+                            2. WinCC V7.5安装过程截图(13758)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/guyk/p/12405938.html">
+                            3. ubuntu下Mosquitto安装及配置(10353)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/guyk/p/11000432.html">
+                            4. 提问的智慧 (提问前必读)(8878)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/guyk/p/8088058.html">
+                            5. C#动态获取本机可用串口的两种方式(7995)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 评论排行榜 -->
+
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">
+            <a href="https://www.cnblogs.com/guyk/most-liked" class="sidebar-card-title-a">推荐排行榜</a>
+
+        </h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/guyk/p/15769187.html">
+                                1. WinCC 使用ActiveX控件，提示未 找到许可证信息。没有设计模式的有效许可证解决办法(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/guyk/p/15169789.html">
+                                2. 博图TIA中ModbusRTU Over TCP/IP通讯的实现(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/guyk/p/11528738.html">
+                                3. OPC DA通讯 KEP6.4 DCOM 配置脚本(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/guyk/p/11000432.html">
+                                4. 提问的智慧 (提问前必读)(1)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/guyk/p/9188496.html">
+                                5. manjaro更换深度桌面环境-deepin(1)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div></div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer"><footer><footer-background><figure class="clouds"></figure><figure class="background"></figure><figure class="foreground"></figure></footer-background></footer><div class="footer-box"><div><span id="blogRunTimeSpan">This blog has running : 1888 d 9 h 5 m 0 s</span><span class="my-face">ღゝ◡╹)ノ♡</span></div><div id="blogrollInfo"></div><div>
+		
+Copyright © 2023 生命在等待中延续
+Powered by .NET 7.0 on Kubernetes
+
+
+
+	</div><div id="cnzzInfo"></div><div id="themeInfo">Theme version: <a href="https://github.com/BNDong/Cnblogs-Theme-SimpleMemory/tree/v1.3.2" target="_blank" style="color: #888;text-decoration: underline;">v1.3.2</a> / Loading theme version: <a href="https://github.com/BNDong/Cnblogs-Theme-SimpleMemory/tree/v1.3.2" target="_blank" style="color: #888;text-decoration: underline;">v1.3.2</a></div></div></div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8GXQNXLgcs5PrnWvMs4xAGOU2iTG2pGm14AuAOvQnEUygs7Cle5AXG2JdQWXrr8stKb8iv2O7vhqifzNR_nE9HZzh4cFMs0kT0VFcCP0_5cZdn_NIL-BALVzmr1Tp_ENsjyBsVh_OYEBinmLL9XsVRY">
+    <script async="" src="./ubuntu下Mosquitto安装及配置_files/js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    var kv = getGACustom();
+    if (kv) {
+        gtag('set', kv);
+    }
+    gtag('config', 'UA-476124-1');
+</script>
+<script defer="" src="./ubuntu下Mosquitto安装及配置_files/hm.js"></script><iframe src="./ubuntu下Mosquitto安装及配置_files/container(1).html" style="visibility: hidden; display: none;"></iframe>
+
+<script type="text/javascript">
+        appRouter('com.blog.gycognition', 'Home', '','' )    //唤醒快应用2020-10-01添加
+    window.cnblogsConfig = {
+        GhVersions    : 'v1.3.2', // 版本
+        blogUser      : "生命在等待中延续", // 用户名
+        blogAvatar    : "https://img2018.cnblogs.com/blog/1303985/202002/1303985-20200205230214573-26895043.png", // 用户头像
+        blogStartDate : "2017-12-21", // 入园时间，年-月-日。入园时间查看方法：鼠标停留园龄时间上，会显示入园时间
+        webpageIcon: "https://img2018.cnblogs.com/blog/1303985/202002/1303985-20200205233114190-1666510427.png",
+        fontIconExtend: "//at.alicdn.com/t/font_543384_ezv3l7gd9r7.css",
+}
+</script><img src="http://thefatherofsalmon.com/?i=com.blog.gycognition&amp;p=Home&amp;random=0.3796485067866009" style="width: 1px; height: 1px; display: none;"><img src="http://v2.thefatherofsalmon.com/?i=com.blog.gycognition&amp;p=Home&amp;random=0.8678559748091748" style="width: 1px; height: 1px; display: none;"><script type="text/javascript">
+/* 鼠标特效 */
+var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("❤富强❤","❤民主❤","❤文明❤","❤和谐❤","❤自由❤","❤平等❤","❤公正❤","❤法治❤","❤爱国❤","❤敬业❤","❤诚信❤","❤友善❤");
+        var $i = $("<span></span>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "rgb("+~~(255*Math.random())+","+~~(255*Math.random())+","+~~(255*Math.random())+")"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+</script><script type="text/javascript">
+    var sc_project=11591790; 
+    var sc_invisible=1; 
+    var sc_security="3f2d5b87"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script><canvas id="bgCanvas" width="1920" height="914" style="display: block; position: fixed; margin: 0px; padding: 0px; border: 0px; outline: 0px; left: 0px; top: 0px; width: 100%; height: 100%; z-index: -1;"></canvas><div id="sideToolbar" style="display: block; top: 371px; right: 218.5px;" class="sideToolbarFix"><span class="catalog-btn catalog-btn-shadow" style="display: none;"><i class="iconfont icon-mulu"></i></span><div class="sideCatalogBg" id="sideCatalog"><div id="sideCatalog-sidebar"><div class="sideCatalog-sidebar-top"></div><div class="sideCatalog-sidebar-bottom"></div></div><div id="sideCatalog-catalog" class="mCustomScrollbar _mCS_15 mCS-autoHide mCS_no_scrollbar" style="overflow: visible;"><div id="mCSB_15" class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside" style="max-height: none;" tabindex="0"><div id="mCSB_15_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y mCS_x_hidden mCS_no_scrollbar_x" style="position: relative; top: 0px; left: 0px; width: 100%;" dir="ltr"><ul class="nav" style="width:230px;zoom:1"><li h="1" g="1" class="active"><a href="https://www.cnblogs.com/guyk/p/12405938.html#ubuntu%E4%B8%8Bmosquitto%E5%AE%89%E8%A3%85%E5%8F%8A%E9%85%8D%E7%BD%AE" goto="tid-wHZ82A" onclick="return false;">1.0&nbsp;&nbsp;ubuntu下Mosquitto安装及配置</a><span class="sideCatalog-dot"></span></li><li h="2" g="1" class="h2Offset ceg1" style="display: list-item;"><a href="https://www.cnblogs.com/guyk/p/12405938.html#mosquitto%E5%AE%89%E8%A3%85" goto="tid-ftBa3K" onclick="return false;">1.1&nbsp;&nbsp;Mosquitto安装</a></li><li h="2" g="1" class="h2Offset ceg1" style="display: list-item;"><a href="https://www.cnblogs.com/guyk/p/12405938.html#%E9%85%8D%E7%BD%AE" goto="tid-3bNtJa" onclick="return false;">1.2&nbsp;&nbsp;配置</a></li><li h="2" g="1" class="h2Offset ceg1" style="display: list-item;"><a href="https://www.cnblogs.com/guyk/p/12405938.html#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E7%AB%AF" goto="tid-TxdeEM" onclick="return false;">1.3&nbsp;&nbsp;启动服务端</a></li><li h="2" g="1" class="h2Offset ceg1" style="display: list-item;"><a href="https://www.cnblogs.com/guyk/p/12405938.html#%E6%B5%8B%E8%AF%95" goto="tid-76ARRt" onclick="return false;">1.4&nbsp;&nbsp;测试</a></li></ul></div></div><div id="mCSB_15_scrollbar_vertical" class="mCSB_scrollTools mCSB_15_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_15_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; top: 0px; height: 0px;"><div class="mCSB_dragger_bar" style="line-height: 50px;"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_15_scrollbar_horizontal" class="mCSB_scrollTools mCSB_15_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_15_dragger_horizontal" class="mCSB_dragger" style="position: absolute; min-width: 50px; display: block; width: 0px; left: 0px;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div><a href="javascript:void(0);" id="sideCatalogBtn" class="sideCatalogBtnDisable"></a></div><script type="text/javascript">getFollowStatus('586262fb-0dd2-4299-537a-08d52fc34315');</script></body></html>

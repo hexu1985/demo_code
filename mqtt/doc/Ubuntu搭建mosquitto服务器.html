@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)https://blog.csdn.net/ldxicare/article/details/123786797 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="canonical" href="https://blog.csdn.net/ldxicare/article/details/123786797">
+    
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="report" content="{&quot;spm&quot;:&quot;1001.2101&quot;,&quot;extra&quot;:{&quot;titAb&quot;:&quot;new&quot;},&quot;pid&quot;:&quot;blog&quot;}">
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp"><link rel="alternate" media="handheld" href="https://blog.csdn.net/ldxicare/article/details/123786797#">
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <meta name="applicable-device" content="pc">
+    <link href="https://g.csdnimg.cn/static/logo/favicon32.ico" rel="shortcut icon" type="image/x-icon">
+    <title>Ubuntu搭建mosquitto服务器（MQTT服务器）_ubuntu mosquitto_Dyson90的博客-CSDN博客</title>
+    <script src="./Ubuntu搭建mosquitto服务器_files/f.txt"></script><script src="./Ubuntu搭建mosquitto服务器_files/f(1).txt" id="google_shimpl"></script><script type="text/javascript" async="" src="./Ubuntu搭建mosquitto服务器_files/auto_dup"></script><script type="text/javascript" async="" src="./Ubuntu搭建mosquitto服务器_files/trackad.js"></script><script src="./Ubuntu搭建mosquitto服务器_files/push.js"></script><script src="./Ubuntu搭建mosquitto服务器_files/push(1).js" id="ttzz"></script><script>
+      (function(){ 
+        var el = document.createElement("script"); 
+        el.src = "https://s3a.pstatp.com/toutiao/push.js?1abfa13dfe74d72d41d83c86d240de427e7cac50c51ead53b2e79d40c7952a23ed7716d05b4a0f683a653eab3e214672511de2457e74e99286eb2c33f4428830"; 
+        el.id = "ttzz"; 
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(el, s);
+      })(window)
+    </script>
+        <meta name="keywords" content="ubuntu mosquitto">
+        <meta name="csdn-baidu-search" content="{&quot;autorun&quot;:true,&quot;install&quot;:true,&quot;keyword&quot;:&quot;ubuntu mosquitto&quot;}">
+    <meta name="description" content="超详细介绍Ubuntu 搭建mosquitto服务器">
+    <script src="./Ubuntu搭建mosquitto服务器_files/blog.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/detail_enter-55b4b2a4d8.min.css">
+    <script type="application/ld+json">{"@context":"https://ziyuan.baidu.com/contexts/cambrian.jsonld","@id":"https://blog.csdn.net/ldxicare/article/details/123786797","appid":"1638831770136827","pubDate":"2022-03-28T09:12:52","title":"Ubuntu搭建mosquitto服务器（MQTT服务器）_ubuntu mosquitto_Dyson90的博客-CSDN博客","upDate":"2022-03-28T10:18:36"}</script>
+        <link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/skin3-template-762f7595fd.min.css">
+    <script src="./Ubuntu搭建mosquitto服务器_files/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var isCorporate = false;//注释删除enterprise
+        var username =  "ldxicare";
+        var skinImg = "white";
+        var blog_address = "https://blog.csdn.net/ldxicare";
+        var currentUserName = "u013454589";
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/ldxicare/article/details/123786797";
+        var blogUrl = "https://blog.csdn.net/";
+        var avatar = "https://profile.csdnimg.cn/4/E/5/3_ldxicare";
+        var articleTitle = "Ubuntu搭建mosquitto服务器（MQTT服务器）";
+        var articleDesc = "超详细介绍Ubuntu 搭建mosquitto服务器";
+        var articleTitles = "Ubuntu搭建mosquitto服务器（MQTT服务器）_ubuntu mosquitto_Dyson90的博客-CSDN博客";
+        var nickName = "Dyson90";
+        var articleDetailUrl = "https://blog.csdn.net/ldxicare/article/details/123786797";
+        if(window.location.host.split('.').length == 3) {
+            blog_address = blogUrl + username;
+        }
+        var skinStatus = "White";
+        var blogStaticHost = "https://csdnimg.cn/release/blogv2/"
+        var mallTestStyle = "control"
+    </script>
+    <script src="./Ubuntu搭建mosquitto服务器_files/saved_resource" type="text/javascript"></script>
+    <script src="./Ubuntu搭建mosquitto服务器_files/report.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+    <script src="./Ubuntu搭建mosquitto服务器_files/ds.js"></script>
+<link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/collection-box.css"><script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/user-login.js"></script><link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/user-medal.css"><script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/html2canvas.min.js"></script><style type="text/css">.hljs-ln{border-collapse:collapse}            .hljs-ln td{padding:0}            .hljs-ln-n{text-align: right;padding-right: 8px;}            .hljs-ln-n:before{content:attr(data-line-number)}</style><link rel="stylesheet" type="text/css" href="./Ubuntu搭建mosquitto服务器_files/side-toolbar.css"><meta http-equiv="origin-trial" content="Az6AfRvI8mo7yiW5fLfj04W21t0ig6aMsGYpIqMTaX60H+b0DkO1uDr+7BrzMcimWzv/X7SXR8jI+uvbV0IJlwYAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+USTya+tNvDPaxUgJooz+LaVk5hPoAxpLvSxjogX4Mk8awCTQ9iop6zJ9d5ldgU7WmHqBlnQB41LHHRFxoaBwoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A7FovoGr67TUBYbnY+Z0IKoJbbmRmB8fCyirUGHavNDtD91CiGyHHSA2hDG9r9T3NjUKFi6egL3RbgTwhhcVDwUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="Az6AfRvI8mo7yiW5fLfj04W21t0ig6aMsGYpIqMTaX60H+b0DkO1uDr+7BrzMcimWzv/X7SXR8jI+uvbV0IJlwYAAACFeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A+USTya+tNvDPaxUgJooz+LaVk5hPoAxpLvSxjogX4Mk8awCTQ9iop6zJ9d5ldgU7WmHqBlnQB41LHHRFxoaBwoAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A7FovoGr67TUBYbnY+Z0IKoJbbmRmB8fCyirUGHavNDtD91CiGyHHSA2hDG9r9T3NjUKFi6egL3RbgTwhhcVDwUAAACLeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjgwNjUyNzk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><link rel="preload" href="./Ubuntu搭建mosquitto服务器_files/f(2).txt" as="script"><script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/f(2).txt"></script><script async="" src="https://fundingchoicesmessages.google.com/i/ca-pub-1076724771190722?ers=2"></script><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+  <body class="nodata " style=""><div id="MathJax_Message" style="display: none;"></div>
+        <script>
+            var toolbarSearchExt = '{"landingWord":["ubuntu mosquitto"],"queryWord":"","tag":["服务器","物联网"],"title":"Ubuntu搭建mosquitto服务器（MQTT服务器）"}';
+        </script>
+    <script src="./Ubuntu搭建mosquitto服务器_files/csdn-toolbar.js" type="text/javascript"></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<link rel="stylesheet" href="./Ubuntu搭建mosquitto服务器_files/blog_code-01256533b5.min.css">
+<link rel="stylesheet" href="./Ubuntu搭建mosquitto服务器_files/chart-3456820cac.css">
+
+<script>
+    var articleId = 123786797;
+    var commentscount = 1;
+    var curentUrl = "https://blog.csdn.net/ldxicare/article/details/123786797";
+    var myUrl = "https://my.csdn.net/";
+    var highlight = ["mosquitto","ubuntu","mqtt","服务器","物联网","搭建"];//高亮数组
+    var isRecommendModule = true;
+    var isBaiduPre = true;
+    var baiduCount = 2;
+    var setBaiduJsCount = 10;
+    var share_card_url = "https://app-blog.csdn.net/share?article_id=123786797&username=ldxicare"
+	var articleType = 1;
+    var baiduKey = "ubuntu mosquitto";
+    var userNewReport = true;
+    var needInsertBaidu = true;
+    var recommendRegularDomainArr = ["blog.csdn.net/.+/article/details/","download.csdn.net/download/","edu.csdn.net/course/detail/","ask.csdn.net/questions/","bbs.csdn.net/topics/","www.csdn.net/gather_.+/"]
+    var codeStyle = "atom-one-light";
+    var baiduSearchType = "baidulandingword";
+     var sharData = "{\"hot\":[{\"id\":1,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/a5f4260710904e538002a6ab337939b3.png\"},{\"id\":2,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/188b37199a2c4b74b1d9ffc39e0d52de.png\"},{\"id\":3,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/14ded358b631444581edd98a256bc5af.png\"},{\"id\":4,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/1470f23a770444d986ad551b9c33c5be.png\"},{\"id\":5,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/c329f5181dc74f6c9bd28c982bb9f91d.png\"},{\"id\":6,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/ccd8a3305e81460f9c505c95b432a65f.png\"},{\"id\":7,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/bc89d8283389440d97fc4d30e30f45e1.png\"},{\"id\":8,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/452d485b4a654f5592390550d2445edf.png\"},{\"id\":9,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/f8b9939db2ed474a8f43a643015fc8b7.png\"},{\"id\":10,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/6de8864187ab4ed3b1db0856369c36ff.png\"},{\"id\":11,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/673cc3470ff74072acba958dc0c46e2d.png\"},{\"id\":12,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/930c119760ac4491804db80f9c6d4e3f.png\"},{\"id\":13,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/15e6befb05a24233bc2b65e96aa8d972.png\"},{\"id\":14,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/2075fd6822184b95a41e214de4daec13.png\"},{\"id\":15,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/859b1552db244eb6891a809263a5c657.png\"},{\"id\":16,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/0be2f920f1f74290a98921974a9613fd.png\"},{\"id\":17,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/2e97e00b43f14afab494ea55ef3f4a6e.png\"},{\"id\":18,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/ff4ab252f46e444686f5135d6ebbfec0.png\"},{\"id\":19,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/ae029bbe99564e79911657912d36524f.png\"},{\"id\":20,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/b3ece39963de440388728e9e7b9bf427.png\"},{\"id\":21,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/6f14651a99ba486e926d63b6fa692997.png\"},{\"id\":22,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/83ceddf050084875a341e32dcceca721.png\"},{\"id\":23,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/b90368b8fd5d4c6c8c79a707d877cf7c.png\"},{\"id\":24,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/aeffae14ecf14e079b2616528c9a393b.png\"},{\"id\":25,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/c5a06b5a13d44d16bed868fc3384897a.png\"},{\"id\":26,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/08b697658b844b318cea3b119e9541ef.png\"},{\"id\":27,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/68ccb0b8d09346ac961d2b5c1a8c77bf.png\"},{\"id\":28,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/a2227a247e37418cbe0ea972ba6a859b.png\"},{\"id\":29,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/3a42825fede748f9993e5bb844ad350d.png\"},{\"id\":30,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/8882abc1dd484224b636966ea38555c3.png\"},{\"id\":31,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/4f6a5f636a3e444d83cf8cc06d87a159.png\"},{\"id\":32,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/1953ef79c56b4407b78d7181bdff11c3.png\"},{\"id\":33,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/c04a2a4f772948ed85b5b0380ed36287.png\"},{\"id\":34,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/5b4fecd05091405ea04d8c0f53e9f2c7.png\"},{\"id\":35,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/b89f576d700344e280d6ceb2a66c2420.png\"},{\"id\":36,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/1c65780e11804bbd9971ebadb3d78bcf.png\"},{\"id\":37,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/d590db2055f345db9706eb68a7ec151a.png\"},{\"id\":38,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/fe602f80700b4f6fb3c4a9e4c135510e.png\"},{\"id\":39,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/39ff2fcd31e04feba301a071976a0ba7.png\"},{\"id\":40,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/f9b61b3d113f436b828631837f89fb39.png\"},{\"id\":41,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/df1aca5f610c4ad48cd16da88c9c8499.png\"},{\"id\":42,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/d7acf73a1e6b41399a77a85040e10961.png\"},{\"id\":43,\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/b7f1b63542524b97962ff649ab4e7e23.png\"}],\"vip\":[{\"id\":1,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101150.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101154.png\"},{\"id\":2,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101204.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101208.png\"},{\"id\":3,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101211.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101215.png\"},{\"id\":4,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101218.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101220.png\"},{\"id\":5,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101223.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220920101226.png\"},{\"id\":6,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100635.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100639.png\"},{\"id\":7,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100642.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100644.png\"},{\"id\":8,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100647.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100649.png\"},{\"id\":9,\"vipUrl\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100652.png\",\"url\":\"https:\\/\\/img-home.csdnimg.cn\\/images\\/20220922100655.png\"},{\"id\":10,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/55de67481fde4b04b97ad78f11fe369a.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/bb2418fb537e4d78b10d8765ccd810c5.png\"},{\"id\":11,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/579c713394584d128104ef1044023954.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/f420d9fbcf5548079d31b5e809b6d6cd.png\"},{\"id\":12,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/75b7f3155ba642f5a4cc16b7baf44122.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/a9030f5877be401f8b340b80b0d91e64.png\"},{\"id\":13,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/0903d33cafa54934be3780aa54ae958d.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/2cd8c8929f5a42fca5da2a0aeb456203.png\"},{\"id\":14,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/949fd7c22884439fbfc3c0e9c3b8dee7.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/dafbea9bd9eb4f3b962b48dc41657f89.png\"},{\"id\":15,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/4119cfddd71d4e6a8a27a18dbb74d90e.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/c56310c8b6384d9e85388e4e342ce508.png\"},{\"id\":16,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/121575274da142bcbbbbc2e8243dd411.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/5013993de06542f881018bb9abe2edf7.png\"},{\"id\":17,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/4d97aa6dd4fe4f09a6bef5bdf8a6abcd.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/76f23877b6ad4066ad45ce8e31b4b977.png\"},{\"id\":18,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/fdb619daf21b4c829de63b9ebc78859d.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/a1abe5d27a5441f599adfe662f510243.png\"},{\"id\":19,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/676b7707bb11410f8f56bc0ed2b2345c.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/7ac5b467fbf24e1d8c2de3f3332c4f54.png\"},{\"id\":20,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/0becb8cc227e4723b765bdd69a20fd4a.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/fdec85b26091486b9a89d0b8d45c3749.png\"},{\"id\":21,\"vipUrl\":\"https:\\/\\/img-blog.csdnimg.cn\\/1a6c06235ad44941b38c54cbc25a370c.png\",\"url\":\"https:\\/\\/img-blog.csdnimg.cn\\/410a06cda2d44b0c84578f88275caf70.png\"}],\"map\":{\"hot\":\"热门\",\"vip\":\"VIP\"}}";
+    
+    var canRead = true;
+    var blogMoveHomeArticle = false;
+    var showPcWindowAd = false;
+    var showHeadWord = true;
+    var showSearchText = "";
+    var linkPage = true;
+    var articleSource = 1;
+    var articleReport = '{"spm":"1001.2101","extra":{"titAb":"new"},"pid":"blog"}';
+    var isShowToQuestion = false;
+    var baiduSearchChannel = 'pc_relevant'
+    var baiduSearchIdentification = '.pc_relevant_landingrelevant'
+    var distRequestId = '1676970188716_62538'
+    var initRewardObject = {
+        giver: "u013454589",
+        anchor: "ldxicare",
+        articleId: "123786797",
+        sign: "d3971c31b76e17035e28269b3202e0f6",
+    }
+    var isLikeStatus = false;
+    var isUnLikeStatus = false;
+    var studyLearnWord = "";
+    var isCurrentUserVip = false;
+    var testNewStyle = "oldStyle"
+    var contentViewsHeight = 0;
+    var contentViewsCount = 0;
+    var contentViewsCountLimit = 5;
+    var isShowConcision = true
+    var isCookieConcision = false
+    var isHasDirectoryModel = false
+    var isShowSideModel = false
+    var isShowDirectoryModel = true
+    function getCookieConcision(sName){
+        var allCookie = document.cookie.split("; ");
+        for (var i=0; i < allCookie.length; i++){
+            var aCrumb = allCookie[i].split("=");
+            if (sName == aCrumb[0])
+                return aCrumb[1];
+        }
+        return null;
+    }
+    if (getCookieConcision('blog_details_concision') && getCookieConcision('blog_details_concision') == 0){
+        isCookieConcision = true
+        isShowSideModel = true
+        isShowDirectoryModel = false
+    }
+</script>
+<div class="main_father clearfix d-flex justify-content-center mainfather-concision" style="height:100%;"> 
+    <div class="container clearfix container-concision" id="mainBox">
+        <script>
+        if(!isCookieConcision){
+            $('.main_father').removeClass('mainfather-concision')
+            $('.main_father .container').removeClass('container-concision')
+        }
+        </script>
+        <main>
+<script type="text/javascript">
+    function getQueryString(name) {   
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象  
+      var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+      if( r != null ) return decodeURIComponent( r[2] ); return '';   
+    }
+    function stripscript(s){ 
+      var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]") 
+      var rs = ""; 
+      for (var i = 0; i < s.length; i++) { 
+        rs = rs+s.substr(i, 1).replace(pattern, ''); 
+      } 
+      return rs; 
+    }
+    var blogHotWords = stripscript(getQueryString('utm_term')).length > 1 ? stripscript(getQueryString('utm_term')) : ''
+</script>
+<div class="blog-content-box">
+        <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <h1 class="title-article" id="articleContentId">Ubuntu搭建mosquitto服务器（MQTT服务器）</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                    <img class="article-type-img" src="./Ubuntu搭建mosquitto服务器_files/original.png" alt="">
+                    <div class="bar-content">
+                    <a class="follow-nickName " href="https://blog.csdn.net/ldxicare" target="_blank" rel="noopener" title="Dyson90">Dyson90</a>
+                    <img class="article-time-img article-heard-img" src="./Ubuntu搭建mosquitto服务器_files/newUpTime2.png" alt="">
+                    <span class="time">已于&nbsp;2022-03-31 13:59:30&nbsp;修改</span>
+                    <img class="article-read-img article-heard-img" src="./Ubuntu搭建mosquitto服务器_files/articleReadEyes2.png" alt="">
+                    <span class="read-count">2449</span>
+                    <a id="blog_detail_zk_collection" class="un-collection" data-report-click="{&quot;mod&quot;:&quot;popu_823&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                        <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="./Ubuntu搭建mosquitto服务器_files/tobarCollect2.png" alt="">
+                        <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="./Ubuntu搭建mosquitto服务器_files/tobarCollectionActive2.png" alt="">
+                        <span class="name">收藏</span>
+                        <span class="get-collection">
+                            14
+                        </span>
+                    </a>
+                    </div>
+                </div>
+                <div class="blog-tags-box">
+                    <div class="tags-box artic-tag-box">
+                            <span class="label">分类专栏：</span>
+                                <a class="tag-link" href="https://blog.csdn.net/ldxicare/category_2360161.html" target="_blank" rel="noopener">开发环境搭建</a>
+                            <span class="label">文章标签：</span>
+                                <a data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;服务器&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;服务器\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E6%9C%8D%E5%8A%A1%E5%99%A8&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank" rel="noopener">服务器</a>
+                                <a data-report-click="{&quot;mod&quot;:&quot;popu_626&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4223&quot;,&quot;strategy&quot;:&quot;物联网&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;extra&quot;:&quot;{\&quot;searchword\&quot;:\&quot;物联网\&quot;}&quot;}" class="tag-link" href="https://so.csdn.net/so/search/s.do?q=%E7%89%A9%E8%81%94%E7%BD%91&amp;t=all&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank" rel="noopener">物联网</a>
+                    </div>
+                </div>
+                <div class="up-time"><span>于&nbsp;2022-03-28 10:18:36&nbsp;首次发布</span></div>
+                <div class="slide-content-box">
+                    <div class="article-copyright">
+                        <div class="creativecommons">
+                            版权声明：本文为博主原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。
+                        </div>
+                        <div class="article-source-link">
+                            本文链接：<a href="https://blog.csdn.net/ldxicare/article/details/123786797" target="_blank">https://blog.csdn.net/ldxicare/article/details/123786797</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="operating">
+                    <a class="href-article-edit slide-toggle">版权</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="blogHuaweiyunAdvert"></div>
+        <div id="blogColumnPayAdvert">
+            <div class="column-group">
+                <div class="column-group-item column-group0 column-group-item-one">
+                    <div class="item-l">
+                        <a class="item-target" href="https://blog.csdn.net/ldxicare/category_2360161.html" target="_blank" title="开发环境搭建" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6332&quot;}">
+                            <img class="item-target" src="./Ubuntu搭建mosquitto服务器_files/20201014180756928.png" alt="">
+                            <span class="title item-target">
+                                <span>
+                                <span class="tit">开发环境搭建</span>
+                                    <span class="dec">专栏收录该内容</span>
+                                </span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="item-m">
+                        <span>6 篇文章</span>
+                        <span>1 订阅</span>
+                    </div>
+                    <div class="item-r">
+                            <a class="item-target article-column-bt articleColumnFreeBt" data-id="2360161">订阅专栏</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+        <link rel="stylesheet" href="./Ubuntu搭建mosquitto服务器_files/kdoc_html_views-1a98987dfd.css">
+        <link rel="stylesheet" href="./Ubuntu搭建mosquitto服务器_files/ck_htmledit_views-6e43165c0a.css">
+                <div id="content_views" class="markdown_views prism-atom-one-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                    </svg>
+                    <h1><a id="UbuntumosquittoMQTT_0"></a>Ubuntu搭建mosquitto服务器（MQTT服务器）</h1> 
+<p>mosquitto 官网： <a href="https://mosquitto.org/">https://mosquitto.org</a></p> 
+<hr> 
+<h1><a id="mosquitto_6"></a>一、mosquitto简介</h1> 
+<p>一款实现了消息推送协议 MQTT v3.1 的开源消息代理软件，提供轻量级的，支持可发布/可订阅的的消息推送模式，使设备对设备之间的短消息通信变得简单，比如现在应用广泛的低功耗传感器，手机、嵌入式计算机、微型控制器等移动设备。一个典型的应用案例就是 Andy Stanford-ClarkMosquitto（MQTT协议创始人之一）在家中实现的远程监控和自动化。并在 OggCamp 的演讲上，对MQTT协议进行详细阐述。</p> 
+<hr> 
+<h1><a id="_10"></a>二、安装步骤</h1> 
+<h2><a id="1_11"></a>1.引入库</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+</code></pre> 
+<h2><a id="2_17"></a>2.安装</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> update 
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> mosquitto
+</code></pre> 
+<h2><a id="3_24"></a>3.安装客户端</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> mosquitto-clients
+</code></pre> 
+<hr> 
+<h1><a id="_31"></a>三、添加和修改配置</h1> 
+<h2><a id="1_32"></a>1.添加配置文件</h2> 
+<p>在<code>/etc/mosquitto/conf.d</code>目录下，添加配置文件<code>myconfig.conf</code> 配置文件：</p> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> <span class="token function">vi</span> /etc/mosquitto/conf.d/myconfig.conf
+</code></pre> 
+<p>粘入下面这些配置</p> 
+<pre><code class="prism language-bash"><span class="token comment">#添加监听端口（很重要，否则只能本机访问）</span>
+listener <span class="token number">1883</span>
+<span class="token comment">#-------------------------------------------</span>
+<span class="token comment"># 关闭匿名访问，客户端必须使用用户名</span>
+allow_anonymous <span class="token boolean">false</span>
+
+<span class="token comment">#指定 用户名-密码 文件</span>
+password_file /etc/mosquitto/pwfile.txt
+<span class="token comment">#--------------------------------------------</span>
+</code></pre> 
+<h2><a id="2_51"></a>2.添加账户及密码</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> mosquitto_passwd -c /etc/mosquitto/pwfile.txt 用户名
+</code></pre> 
+<p>回车后连续输入2次用户密码即可</p> 
+<h2><a id="3mosquitto_58"></a>3.启动mosquitto</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> <span class="token function">service</span> mosquitto start
+</code></pre> 
+<h2><a id="4mosquitto_64"></a>4.查看mosquitto运行状态</h2> 
+<pre><code class="prism language-bash"><span class="token function">sudo</span> <span class="token function">service</span> mosquitto status
+</code></pre> 
+<p><img src="./Ubuntu搭建mosquitto服务器_files/7dad579ff13b497eab6988840b39e47b.png" alt="mosquitto当前运行状态"></p> 
+<hr> 
+<h1><a id="_74"></a>四、运行测试</h1> 
+<h2><a id="1mosquittoclients__75"></a>1.mosquitto-clients 运行测试</h2> 
+<p>订阅主题（终端1）</p> 
+<pre><code class="prism language-bash">mosquitto_sub -h localhost -t <span class="token string">"lai001/#"</span> -u 用户名 -P 密码 -i “client1”
+</code></pre> 
+<p>发布主题（终端2）</p> 
+<pre><code class="prism language-bash">mosquitto_pub -h localhost -t <span class="token string">"lai001/testTopic"</span> -u 用户名 -P 密码 -m <span class="token string">"Hello MQTT from mosquitto-clients"</span>
+</code></pre> 
+<p><code>mosquitto_sub --help</code> 可以查看相关参数说明</p> 
+<h2><a id="2MQTTfx__92"></a>2.MQTT.fx 测试</h2> 
+<p><img src="./Ubuntu搭建mosquitto服务器_files/0ccb2a51a5e44b468cdd5f16f1771e62.png" alt="MQTT.fx配置"><img src="./Ubuntu搭建mosquitto服务器_files/f9f6eccd5c9a46969290f04477e83ec5.png" alt="MQTT.fx连接服务器"><img src="./Ubuntu搭建mosquitto服务器_files/95254d9082504cc4950ad8312bfc8035.png" alt="测试结果"></p> 
+<p>具体MQTT.fx 怎么订阅和发布主题，这里不做介绍。</p> 
+<hr> 
+<h1><a id="_101"></a>总结</h1> 
+<p>需要在配置文件中添加: <code>listener 1883</code> ，网上许多教程并没有提到，导致只能本机访问。</p>
+                </div>
+                <link href="./Ubuntu搭建mosquitto服务器_files/markdown_views-0407448025.css" rel="stylesheet">
+                <link href="./Ubuntu搭建mosquitto服务器_files/style-bb308a51ed.css" rel="stylesheet">
+        </div>
+        <div id="treeSkill"></div>
+    </article>
+  <script>
+  $(function() {
+    setTimeout(function () {
+      var mathcodeList = document.querySelectorAll('.htmledit_views img.mathcode');
+      if (mathcodeList.length > 0) {
+        var testImg = new Image();
+        testImg.onerror = function () {
+          mathcodeList.forEach(function (item) {
+            $(item).before('<span class="img-codecogs">\\(' + item.alt + '\\)</span>');
+            $(item).remove();
+          })
+          MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+        }
+        testImg.src = mathcodeList[0].src;
+      }
+    }, 1000)
+  })
+  </script>
+</div>
+<div class="more-toolbox-new" id="toolBarBox">
+    <div class="left-toolbox">
+        <div class="toolbox-left">
+            <div class="profile-box"><a class="profile-href" target="_blank" href="https://blog.csdn.net/ldxicare"><img class="profile-img" src="./Ubuntu搭建mosquitto服务器_files/3_ldxicare"><span class="profile-name">Dyson90</span></a></div>
+            <div class="profile-attend">
+                    <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view="{&quot;mod&quot;:&quot;1592215036_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4232&quot;,&quot;extend1&quot;:&quot;关注&quot;}">关注</a>
+                <a class="tool-item-follow active-animation" style="display:none;">关注</a>
+            </div>
+        </div>
+        <div class="toolbox-middle">
+        <ul class="toolbox-list">
+            <li class="tool-item tool-item-size tool-active is-like" id="is-like">
+            <a class="tool-item-href">
+                <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="./Ubuntu搭建mosquitto服务器_files/tobarThumbUpactive.png" alt="">
+                <img class="isactive" style="display:none" id="is-like-imgactive" src="./Ubuntu搭建mosquitto服务器_files/newHeart2021Active.png" alt="">
+                <img class="isdefault" style="display:block" id="is-like-img" src="./Ubuntu搭建mosquitto服务器_files/newHeart2021Black.png" alt="">  
+                <span id="spanCount" class="count ">
+                        1
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">点赞</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike">
+            <a class="tool-item-href">
+                <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="./Ubuntu搭建mosquitto服务器_files/newUnHeart2021Active.png" alt="">
+                <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="./Ubuntu搭建mosquitto服务器_files/newUnHeart2021Black.png" alt="">
+                <span id="unlikeCount" class="count "></span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">踩</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-collection ">
+            <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_824&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4130&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="./Ubuntu搭建mosquitto服务器_files/tobarCollectionActive.png" alt="">
+                <img class="isdefault" id="is-collection-img" style="display:block" src="./Ubuntu搭建mosquitto服务器_files/newCollectBlack.png" alt="">
+                <img class="isactive" id="is-collection-imgactive" style="display:none" src="./Ubuntu搭建mosquitto服务器_files/newCollectActive.png" alt="">
+                <span class="count get-collection " id="get-collection">
+                    14
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">收藏</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-item-reward">
+                <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;popu_830&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4237&quot;,&quot;dest&quot;:&quot;&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                <img class="isdefault reward-bt" id="rewardBtNew" src="./Ubuntu搭建mosquitto服务器_files/newRewardBlack.png" alt="打赏">
+                <span class="count"></span>
+                </a>
+                <div class="tool-hover-tip"><span class="text space">打赏</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-item-comment">
+            <a class="tool-item-href go-side-comment" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7009&quot;}">
+                <img class="isdefault" src="./Ubuntu搭建mosquitto服务器_files/newComment2021Black.png" alt="">
+                <span class="count">
+                    1
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">评论</span></div>
+            </li>
+            <li class="tool-item tool-item-bar">
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-QRcode" id="tool-share">
+                <a class="tool-item-href" href="javascript:;" data-report-click="{&quot;mod&quot;:&quot;1582594662_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4129&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <img class="isdefault" src="./Ubuntu搭建mosquitto服务器_files/newShareBlack.png" alt="">
+                </a>
+                <div class="QRcode" id="tool-QRcode">
+                    <div class="share-bg-icon icon1" id="shareBgIcon"></div>
+                    <div class="share-bg-box">
+                        <div class="share-content">
+                            <img class="share-avatar" src="./Ubuntu搭建mosquitto服务器_files/3_ldxicare" alt="">
+                            <div class="share-tit">Ubuntu搭建mosquitto服务器（MQTT服务器）</div>
+                            <div class="share-dec">超详细介绍Ubuntu 搭建mosquitto服务器</div>
+                            <a id="copyPosterUrl" class="url" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.7493&quot;}" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.7493&quot;}">复制链接</a>
+                        </div>
+                        <div class="share-code">
+                            <div class="share-code-box" id="shareCode"></div>
+                            <div class="share-code-text">扫一扫</div>
+                        </div>
+                        
+                    </div>
+                    <div class="share-code-type">
+                      
+                    </div>
+                </div>
+            </li>
+        </ul>
+        </div>
+        <div class="toolbox-right">
+                <div class="tool-directory">
+                    <a class="bt-columnlist-show" data-id="2360161" data-free="true" data-subscribe="false" data-title="开发环境搭建" data-img="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" data-url="https://blog.csdn.net/ldxicare/category_2360161.html" data-sum="6" data-people="1" data-price="0" data-oldprice="0" data-join="false" data-studyvip="false" data-studysubscribe="false" data-report-view="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}" data-report-click="{&quot;spm&quot;:&quot;1001.2101.3001.6334&quot;,&quot;extend1&quot;:&quot;专栏目录&quot;}">专栏目录</a>
+                </div>
+        </div>
+    </div>  
+</div>
+<script type="text/javascript" crossorigin="" src="./Ubuntu搭建mosquitto服务器_files/qrcode-7c90a92189.min.js"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/saved_resource(1)" type="text/javascript"></script>
+<script type="text/javascript" crossorigin="" src="./Ubuntu搭建mosquitto服务器_files/csdn-login-box.js"></script>
+<script type="text/javascript" crossorigin="" src="./Ubuntu搭建mosquitto服务器_files/collection-box.js"></script>
+                <div class="first-recommend-box recommend-box ">
+<div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/weixin_42097369/19100568" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~CTRLIST~Paid-1-19100568-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42097369/19100568&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://download.csdn.net/download/weixin_42097369/19100568" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~CTRLIST~Paid-1-19100568-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42097369/19100568&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-19100568-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-19100568-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1">Eclipse <em>Mosquitto</em>-一个开源<em>MQTT</em>代理-C/C++开发</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">05-26</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://download.csdn.net/download/weixin_42097369/19100568" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6661.1&quot;,&quot;mod&quot;:&quot;popu_871&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant_t0.none-task-download-2~default~CTRLIST~Paid-1-19100568-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_42097369/19100568&quot;}" data-report-query="spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-19100568-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-19100568-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">Eclipse <em>Mosquitto</em> <em>Mosquitto</em>是<em>MQTT</em>协议的版本3.1和3.1.1的<em>服务器</em>的开源实现。
+它还包括一个C和C ++客户端库，以及用于publi Eclipse <em>Mosquitto</em>的<em>mosquitto</em>_pub和<em>mosquitto</em>_sub实用程序<em>Mosquitto</em>是<em>MQTT</em>协议版本3.1和3.1.1的<em>服务器</em>的开源实现。
+它还包括一个C和C ++客户端库，以及用于发布和订阅的<em>mosquitto</em>_pub和<em>mosquitto</em>_sub实用程序。
+链接有关<em>MQTT</em>的更多信息，请参见以下链接：社区页面：http://<em>mqtt</em>.org/ <em>MQTT</em> v3.1.1标准：http://docs.oasis-open.org/<em>mqtt</em>/<em>mqtt</em>/v3.1.1/<em>mqtt</em>- v3.1.1.html <em>Mosquitto</em>项目信息可在以下位置获得：
+
+</div>
+			</a>
+		</div>
+	</div>
+</div>
+                </div>
+            <script src="./Ubuntu搭建mosquitto服务器_files/pc_wap_commontools-ad67eb7a7a.min.js" type="text/javascript" async=""></script>
+            <div class="second-recommend-box recommend-box ">
+<div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/weixin_38643141/14030748" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-download-2~default~CTRLIST~Paid-1-14030748-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_38643141/14030748&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://download.csdn.net/download/weixin_38643141/14030748" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-download-2~default~CTRLIST~Paid-1-14030748-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_38643141/14030748&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-14030748-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-14030748-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>mosquitto</em>之arm编译</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">01-06</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://download.csdn.net/download/weixin_38643141/14030748" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.1&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-download-2~default~CTRLIST~Paid-1-14030748-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;1&quot;,&quot;strategy&quot;:&quot;2~default~CTRLIST~Paid&quot;,&quot;dest&quot;:&quot;https://download.csdn.net/download/weixin_38643141/14030748&quot;}" data-report-query="spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-14030748-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7EPaid-1-14030748-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">编译前工作
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请安装arm交叉编译工具链，然后参考<em>mosquitto</em>之linux编译中CMake的使用方法，注意需要修改如下配置选项：
+CMAKE_AR，指定到交叉编译工具链中的ar程序，例如：/home/crosstool/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-ar。
+CMAKE_CXX_COMPILER，指定到交叉编译工具链中的g++程序，例如：/home/crosstool/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<a id="commentBox" name="commentBox"></a>
+<div id="pcCommentBox" class="comment-box comment-box-new2  login-comment-box-new" style="display:block">
+		<div class="has-comment" style="display:block">
+		<div class="has-comment-tit">评论<span class="count go-side-comment">1</span><span class="text go-side-comment">条</span><img class="go-side-comment more" src="./Ubuntu搭建mosquitto服务器_files/commentArrowRightWhite.png" alt=""><a class="has-comment-bt-right go-side-comment focus">写评论</a></div>
+			<div class="has-comment-con comment-operate-item"></div>
+		</div>
+		<div class="unhas-comment" style="display:none">
+			<div class="unhas-comment-left">评论</div>
+			<div class="unhas-comment-right"><a class="go-side-comment focus">写评论</a></div>
+		</div>
+</div>
+            <div class="recommend-box insert-baidu-box recommend-box-style ">
+                <div class="recommend-item-box no-index" style="display:none"></div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_16740151/article/details/128855337" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:\&quot;0.0\&quot;,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~AD_ESQUERY~yljh-2-128855337-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;default&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~AD_ESQUERY~yljh&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_16740151/article/details/128855337&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_16740151/article/details/128855337" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:\&quot;0.0\&quot;,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~AD_ESQUERY~yljh-2-128855337-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;default&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~AD_ESQUERY~yljh&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_16740151/article/details/128855337&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-2-128855337-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-2-128855337-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em> 编译<em>mosquitto</em></div>
+					<div class="tag">最新发布</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_16740151" target="_blank"><span class="blog-title">qq_16740151的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">02-02</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					13
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_16740151/article/details/128855337" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.2&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:\&quot;0.0\&quot;,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~AD_ESQUERY~yljh-2-128855337-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;default&quot;,&quot;index&quot;:&quot;2&quot;,&quot;strategy&quot;:&quot;2~default~AD_ESQUERY~yljh&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_16740151/article/details/128855337&quot;}" data-report-query="spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-2-128855337-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EAD_ESQUERY%7Eyljh-2-128855337-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1"><em>ubuntu</em> 编译<em>mosquitto</em></div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/jiangteddt/article/details/128416738" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~YuanLiJiHua~Position-3-128416738-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~YuanLiJiHua~Position&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/jiangteddt/article/details/128416738&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/jiangteddt/article/details/128416738" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~YuanLiJiHua~Position-3-128416738-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~YuanLiJiHua~Position&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/jiangteddt/article/details/128416738&quot;}" data-report-query="spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-3-128416738-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-3-128416738-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1">使用<em>mosquitto</em>部署<em>MQTT</em>服务</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/jiangteddt" target="_blank"><span class="blog-title">人生就是不断地学习</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-23</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					967
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/jiangteddt/article/details/128416738" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.3&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~YuanLiJiHua~Position-3-128416738-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;3&quot;,&quot;strategy&quot;:&quot;2~default~YuanLiJiHua~Position&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/jiangteddt/article/details/128416738&quot;}" data-report-query="spm=1001.2101.3001.6650.3&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-3-128416738-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EYuanLiJiHua%7EPosition-3-128416738-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">使用<em>mosquitto</em>部署<em>MQTT</em>服务</div>
+			</a>
+		</div>
+	</div>
+</div>
+		<dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix">
+			<div id="kp_box_59" data-pid="59"><div class="_6y1xg22c57g"><iframe id="iframeu6870209_0" name="iframeu6870209_0" src="./Ubuntu搭建mosquitto服务器_files/kcxm.html" width="962" height="40" scrolling="no" frameborder="0"></iframe></div>
+    <script type="text/javascript">
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u6870209",
+            container: "_6y1xg22c57g",
+            async: true
+        });
+    </script>
+    <!-- 多条广告如下脚本只需引入一次 -->
+    <script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/cm.js" async="async" defer="defer">
+    </script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=59&amp;adId=1023688&amp;a=1023688&amp;c=0&amp;k=Ubuntu搭建mosquitto服务器（MQTT服务器）&amp;spm=1001.2101.3001.5003&amp;articleId=123786797&amp;d=1&amp;t=3&amp;u=3867abd888cf4820b94cfc5ecdef9f52" style="display: block;width: 0px;height: 0px;"></div>
+		</dl>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_40762280/article/details/127485773" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-4-127485773-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40762280/article/details/127485773&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_40762280/article/details/127485773" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-4-127485773-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40762280/article/details/127485773&quot;}" data-report-query="spm=1001.2101.3001.6650.4&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-4-127485773-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-4-127485773-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>Ubuntu</em>下<em>搭建</em><em>mosquitto</em><em>服务器</em>及测试</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_40762280" target="_blank"><span class="blog-title">qq_40762280的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-24</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					604
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_40762280/article/details/127485773" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.4&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-4-127485773-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;4&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40762280/article/details/127485773&quot;}" data-report-query="spm=1001.2101.3001.6650.4&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-4-127485773-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-4-127485773-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1"><em>Ubuntu</em>下<em>搭建</em><em>mosquitto</em><em>服务器</em>，以及自测过程中遇到的问题和解决措施。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_29796781/article/details/80952078" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.5&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-5-80952078-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;5&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_29796781/article/details/80952078&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_29796781/article/details/80952078" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.5&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-5-80952078-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;5&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_29796781/article/details/80952078&quot;}" data-report-query="spm=1001.2101.3001.6650.5&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-5-80952078-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-5-80952078-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1">Win10 VMware <em>Ubuntu</em>14.04安装<em>Mosquitto</em> <em>MQTT</em><em>服务器</em><em>搭建</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_29796781" target="_blank"><span class="blog-title">qq_29796781的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-07</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					1827
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_29796781/article/details/80952078" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.5&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-5-80952078-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;5&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_29796781/article/details/80952078&quot;}" data-report-query="spm=1001.2101.3001.6650.5&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-5-80952078-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-5-80952078-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">1.介绍&nbsp; &nbsp;<em>MQTT</em> 是一个客户端服务端架构的发布/订阅模式的消息传输协议。它的设计思想是轻巧、开放、简单、规范，因此易于实现。这些特点使得它对很多场景来说都是很好的选择，包括受限的环境如机器与机器的通信（M2M）以及<em>物联网</em>环境（IoT），这些场景要求很小的代码封装或者网络带宽非常昂贵。本协议运行在 TCP/IP，或其它提供了有序、可靠、双向连接的网络连接上。它有以下特点:    A：使用发布/...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/KingRing_/article/details/115102149" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.6&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-6-115102149-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;6&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/KingRing_/article/details/115102149&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/KingRing_/article/details/115102149" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.6&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-6-115102149-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;6&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/KingRing_/article/details/115102149&quot;}" data-report-query="spm=1001.2101.3001.6650.6&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-6-115102149-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-6-115102149-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1">快速上手<em>mosquitto</em>在<em>ubuntu</em>18.04下的安装及测试</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/KingRing_" target="_blank"><span class="blog-title">King_的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">03-22</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					826
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/KingRing_/article/details/115102149" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.6&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-6-115102149-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;6&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/KingRing_/article/details/115102149&quot;}" data-report-query="spm=1001.2101.3001.6650.6&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-6-115102149-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-6-115102149-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">一、什么是<em>MQTT</em>
+<em>MQTT</em>是一种基于发布/订阅模式的“轻量级”通讯协议，该协议构建于TCP/IP协议上。<em>MQTT</em>最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务。作为一种低开销、低带宽占用的即时通讯协议，使其在<em>物联网</em>、小型设备、移动应用等方面有较广泛的应用。
+<em>MQTT</em>是一种通讯协议。而<em>mosquitto</em>是基于<em>MQTT</em>协议衍生的一个开源的broker。
+<em>mosquitto</em>分为三个部分。pub(发布者)，broker(代理、<em>服务器</em>)，sub(订阅者)，他们之间的逻辑关系为pub</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/zhongjiezheng/article/details/46011397" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.7&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-7-46011397-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;7&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zhongjiezheng/article/details/46011397&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/zhongjiezheng/article/details/46011397" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.7&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-7-46011397-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;7&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zhongjiezheng/article/details/46011397&quot;}" data-report-query="spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-46011397-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-46011397-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>Ubuntu</em> 上安装<em>mosquitto</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/zhongjiezheng" target="_blank"><span class="blog-title">zhengzhongjie的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">05-26</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					614
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/zhongjiezheng/article/details/46011397" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.7&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-7-46011397-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;7&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/zhongjiezheng/article/details/46011397&quot;}" data-report-query="spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-46011397-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-46011397-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">安装时需要库 
+sudo apt-get install libssl-dev 
+sudo apt-get install libc-ares-dev 
+sudo apt-get install libc-ares2 
+sudo apt-get install uuid-dev 
+make 
+make install</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/xxx11144/article/details/50602741" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.8&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-8-50602741-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;8&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/xxx11144/article/details/50602741&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/xxx11144/article/details/50602741" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.8&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-8-50602741-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;8&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/xxx11144/article/details/50602741&quot;}" data-report-query="spm=1001.2101.3001.6650.8&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-8-50602741-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-8-50602741-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em>下<em>mosquitto</em>的安装使用</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/xxx11144" target="_blank"><span class="blog-title">姚棉伟的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-28</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					3180
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/xxx11144/article/details/50602741" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.8&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-8-50602741-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;8&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/xxx11144/article/details/50602741&quot;}" data-report-query="spm=1001.2101.3001.6650.8&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-8-50602741-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-8-50602741-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">一、安装： 
+1.获取<em>mosquitto</em>包 
+ 
+2.解压 
+ 
+3.进入目录 
+ 
+4..make 
+ 
+5.sudo make install 
+ 
+这5个步骤一般可以的完成的了，才怪！ 
+通常完成一件事总是要遇到一些挫折的，没出现意外我反而觉得奇怪嘞 
+你可能会遇到以下问题，不要怕！ 
+例如 
+ 
+sudo apt-get install libc-ares-dev解决 
+再如： 
+ 
+sud</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_42411153/article/details/95310684" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.9&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-9-95310684-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;9&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42411153/article/details/95310684&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_42411153/article/details/95310684" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.9&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-9-95310684-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;9&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42411153/article/details/95310684&quot;}" data-report-query="spm=1001.2101.3001.6650.9&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-9-95310684-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-9-95310684-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>Ubuntu</em> 16.04本地<em>搭建</em><em>MQTT</em> <em>Mosquitto</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_42411153" target="_blank"><span class="blog-title">极客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-10</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					1552
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_42411153/article/details/95310684" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.9&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-9-95310684-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;9&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_42411153/article/details/95310684&quot;}" data-report-query="spm=1001.2101.3001.6650.9&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-9-95310684-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-9-95310684-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1"><em>Mosquitto</em>是一款实现了 <em>MQTT</em> v3.1 协议的开源消息代理软件，包括了<em>服务器</em>端和客户端，可以跨平台部署，提供轻量级的，支持发布/订阅的的消息推送模式，使设备对设备之间的短消息通信简单易用。以下是在<em>Ubuntu</em>16.04环境下，本地<em>搭建</em><em>MQTT</em><em>服务器</em>和客户端：
+
+一、安装<em>mosquitto</em>
+
+1.1引入<em>mosquitto</em>仓库并更新
+
+sudo apt-add-repository pp...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/RichXan/article/details/97308722" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.10&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-10-97308722-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;10&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/RichXan/article/details/97308722&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/RichXan/article/details/97308722" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.10&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-10-97308722-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;10&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/RichXan/article/details/97308722&quot;}" data-report-query="spm=1001.2101.3001.6650.10&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-10-97308722-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-10-97308722-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em>安装<em>MQTT</em><em>服务器</em><em>mosquitto</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/RichXan" target="_blank"><span class="blog-title">RichXan的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-26</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					295
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/RichXan/article/details/97308722" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.10&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-10-97308722-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;10&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/RichXan/article/details/97308722&quot;}" data-report-query="spm=1001.2101.3001.6650.10&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-10-97308722-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-10-97308722-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">查看<em>mosquitto</em>服务是否开启
+   sudo service <em>mosquitto</em> status
+
+开启/停止 <em>mosquitto</em>服务：
+  sudo service <em>mosquitto</em> start
+
+  sudo service <em>mosquitto</em> stop
+
+查看<em>ubuntu</em>的ip地址， 使用ifconfig命令查看
+Ip地址  192.168.15.228
+
+...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/u014213012/article/details/80841643" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.11&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-11-80841643-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;11&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u014213012/article/details/80841643&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/u014213012/article/details/80841643" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.11&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-11-80841643-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;11&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u014213012/article/details/80841643&quot;}" data-report-query="spm=1001.2101.3001.6650.11&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-11-80841643-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-11-80841643-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>mosquitto</em>编译<em>ubuntu</em>12.04</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/u014213012" target="_blank"><span class="blog-title">u014213012的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-28</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					670
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/u014213012/article/details/80841643" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.11&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-11-80841643-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;11&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u014213012/article/details/80841643&quot;}" data-report-query="spm=1001.2101.3001.6650.11&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-11-80841643-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-11-80841643-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">一 编译源码和安装(1)下载源代码包&nbsp;http://<em>mosquitto</em>.org/files/source/【1】解压tar -xfv <em>mosquitto</em>-1.5.tar.gz【2】进入目录cd <em>mosquitto</em>-1.5【3】编译make【4】安装sudo make install(2) 安装注意点【1】编译找不到openssl/ssl.h【解决方法】——安装openssl&nbsp; sudo apt-g...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/u011983700/article/details/120634230" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.12&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-12-120634230-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;12&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u011983700/article/details/120634230&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/u011983700/article/details/120634230" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.12&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-12-120634230-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;12&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u011983700/article/details/120634230&quot;}" data-report-query="spm=1001.2101.3001.6650.12&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-12-120634230-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-12-120634230-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>Ubuntu</em> <em>mosquitto</em> 安装及配置</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/u011983700" target="_blank"><span class="blog-title">u011983700的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-07</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					2038
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/u011983700/article/details/120634230" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.12&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-12-120634230-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;12&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/u011983700/article/details/120634230&quot;}" data-report-query="spm=1001.2101.3001.6650.12&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-12-120634230-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-12-120634230-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">sudo apt-add-repository ppa:<em>mosquitto</em>-dev/<em>mosquitto</em>-ppa
+sudo apt-get update
+sudo apt-get install <em>mosquitto</em> -y
+sudo apt-get install <em>mosquitto</em>-clients -y
+
+通过上诉命令完成<em>mosquitto</em>的安装，版本<em>mosquitto</em> version 2.0.10。
+
+修改配置文件，用以启用<em>mosquitto</em>的各项功能。
+
+
+# Place your local conf.</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_40130731/article/details/117521061" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.13&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-13-117521061-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;13&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40130731/article/details/117521061&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_40130731/article/details/117521061" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.13&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-13-117521061-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;13&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40130731/article/details/117521061&quot;}" data-report-query="spm=1001.2101.3001.6650.13&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-13-117521061-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-13-117521061-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em>系统<em>搭建</em><em>mosquitto</em>（适用rk3399）</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_40130731" target="_blank"><span class="blog-title">qq_40130731的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-03</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					53
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_40130731/article/details/117521061" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.13&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-13-117521061-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;13&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_40130731/article/details/117521061&quot;}" data-report-query="spm=1001.2101.3001.6650.13&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-13-117521061-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-13-117521061-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">rk3399的<em>ubuntu</em>系统<em>搭建</em><em>mosquitto</em>
+<em>mosquitto</em>环境<em>搭建</em>
+在安装软件之前大家请下载相关文件
+链接：https://pan.baidu.com/s/1OS5khmQ0vdc6N7rpKTZL0g 
+提取码：cvh9
+如遇问题也可以参考另一位博主的文章https://www.cnblogs.com/chen1-kerr/p/7258487.html
+
+将<em>mosquitto</em>-1.6.8.tar.gz文件拷到开发板中，在终端跳转到准备好的<em>mosquitto</em>-1.6.8.tar.gz文件路径下</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_45946988/article/details/115426851" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.14&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-14-115426851-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;14&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_45946988/article/details/115426851&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_45946988/article/details/115426851" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.14&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-14-115426851-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;14&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_45946988/article/details/115426851&quot;}" data-report-query="spm=1001.2101.3001.6650.14&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-14-115426851-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-14-115426851-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em><em>搭建</em><em>MQTT</em> <em>Mosquitto</em>服务并使用</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_45946988" target="_blank"><span class="blog-title">qq_45946988的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">04-04</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					480
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_45946988/article/details/115426851" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.14&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-14-115426851-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;14&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/qq_45946988/article/details/115426851&quot;}" data-report-query="spm=1001.2101.3001.6650.14&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-14-115426851-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-14-115426851-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">引入<em>mosquitto</em>仓库并更新
+
+ sudo apt-add-repository ppa:<em>mosquitto</em>-dev/<em>mosquitto</em>-ppa
+
+
+2.  更新依赖
+  sudo apt-get update  
+
+
+3. 安装<em>mosquitto</em>
+  sudo apt-get install <em>mosquitto</em>
+
+
+4. 安装完毕后开启<em>mosquitto</em>服务并检测<em>mosquitto</em>服务状态
+sudo service <em>mosquitto</em> start
+sudo service <em>mosquitto</em> sta.</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/libin55/article/details/122866881" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.15&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-15-122866881-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;15&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/libin55/article/details/122866881&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/libin55/article/details/122866881" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.15&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-15-122866881-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;15&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/libin55/article/details/122866881&quot;}" data-report-query="spm=1001.2101.3001.6650.15&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-15-122866881-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-15-122866881-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1"><em>ubuntu</em>18.04系统<em>mqtt</em>+tls<em>服务器</em><em>搭建</em>——<em>mosquitto</em>配置</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/libin55" target="_blank"><span class="blog-title"></span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">02-11</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					1985
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/libin55/article/details/122866881" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.15&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-15-122866881-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;15&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/libin55/article/details/122866881&quot;}" data-report-query="spm=1001.2101.3001.6650.15&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-15-122866881-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-15-122866881-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">前言
+设备端调试<em>mqtt</em>+ssl的功能，由于没有现成的<em>服务器</em>接入使用，考虑使用本地<em>ubuntu</em>安装<em>mosquitto</em>服务来进行，加快调试进度
+
+如有异议，请指正
+
+安装<em>mosquitto</em>
+引入<em>mosquitto</em>仓库
+sudo apt-add-repository ppa:<em>mosquitto</em>-dev/<em>mosquitto</em>-ppa
+
+更新软件包
+sudo apt-get update
+
+安装<em>mosquitto</em>
+sudo apt-get install <em>mosquitto</em>-clients -y
+
+证书生成
+open</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_40407893/article/details/102499805" data-report-view="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.16&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-16-102499805-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;16&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40407893/article/details/102499805&quot;}">
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_40407893/article/details/102499805" class="tit" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.16&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-16-102499805-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;16&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40407893/article/details/102499805&quot;}" data-report-query="spm=1001.2101.3001.6650.16&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-16-102499805-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-16-102499805-blog-123786797.pc_relevant_landingrelevant">
+					<div class="left ellipsis-online ellipsis-online-1">在<em>Ubuntu</em>上安装和使用基于<em>MQTT</em>协议的代理<em>服务器</em><em>Mosquitto</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_40407893" target="_blank"><span class="blog-title">weixin_40407893的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-11</span>
+					<span class="info-block read"><img class="read-img" src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					819
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_40407893/article/details/102499805" target="_blank" data-report-click="{&quot;ab&quot;:&quot;new&quot;,&quot;spm&quot;:&quot;1001.2101.3001.6650.16&quot;,&quot;mod&quot;:&quot;popu_387&quot;,&quot;extra&quot;:&quot;{\&quot;highlightScore\&quot;:0.0,\&quot;utm_medium\&quot;:\&quot;distribute.pc_relevant.none-task-blog-2~default~ESLANDING~default-16-102499805-blog-123786797.pc_relevant_landingrelevant\&quot;,\&quot;dist_request_id\&quot;:\&quot;1676970188716_62538\&quot;}&quot;,&quot;dist_request_id&quot;:&quot;1676970188716_62538&quot;,&quot;ab_strategy&quot;:&quot;enhancedownloadv1_v2&quot;,&quot;index&quot;:&quot;16&quot;,&quot;strategy&quot;:&quot;2~default~ESLANDING~default&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/weixin_40407893/article/details/102499805&quot;}" data-report-query="spm=1001.2101.3001.6650.16&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-16-102499805-blog-123786797.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-16-102499805-blog-123786797.pc_relevant_landingrelevant">
+				<div class="desc ellipsis-online ellipsis-online-1">    
+    Eclipse <em>Mosquitto</em>是一个开源消息代理<em>服务器</em>，实现了<em>MQTT</em>协议版本3.1和3.1.1。<em>Mosquitto</em>轻量，适用于低功耗单板计算机到完整<em>服务器</em>的所有设备。<em>Mosquitto</em>项目还提供了用于实现<em>MQTT</em>客户端的C库以及非常受欢迎的<em>mosquitto</em>_pub和<em>mosquitto</em>_sub命令行<em>MQTT</em>客户端。
+1. 下载安装
+    以<em>Ubuntu</em> 18.04为例，下...</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<div id="recommendNps" class="recommend-nps-box common-nps-box">
+  <h3 class="aside-title">“相关推荐”对你有帮助么？</h3>
+  <div class="aside-content">
+      <ul class="newnps-list">
+          <li class="newnps-item" data-type="非常没帮助">
+              <div class="newnps-img-box">
+                  <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel1.png" alt="">
+                  <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey1.png" alt="">
+              </div>
+              <div class="newnps-text">非常没帮助</div>
+          </li>
+          <li class="newnps-item" data-type="没帮助">
+              <div class="newnps-img-box">
+                  <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel2.png" alt="">
+                  <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey2.png" alt="">
+              </div>
+              <div class="newnps-text">没帮助</div>
+          </li>
+          <li class="newnps-item" data-type="一般">
+              <div class="newnps-img-box">
+                  <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel3.png" alt="">
+                  <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey3.png" alt="">
+              </div>
+              <div class="newnps-text">一般</div>
+          </li>
+          <li class="newnps-item" data-type="有帮助">
+              <div class="newnps-img-box">
+                  <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel4.png" alt="">
+                  <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey4.png" alt="">
+              </div>
+              <div class="newnps-text">有帮助</div>
+          </li>
+          <li class="newnps-item" data-type="非常有帮助">
+              <div class="newnps-img-box">
+                  <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel5.png" alt="">
+                  <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey5.png" alt="">
+              </div>
+              <div class="newnps-text">非常有帮助</div>
+          </li>
+      </ul>
+      <div class="newnps-form-box">
+      <div class="newnps-form">
+          <input type="text" placeholder="请输入建议或反馈后点击提交" class="newnps-input">
+          <span class="newnps-btn">提交</span>
+      </div>
+      </div>
+  </div>
+</div>            <div class="template-box">
+                <span>©️2022 CSDN</span>
+                <span>皮肤主题：大白</span>
+                <span> 设计师：CSDN官方博客</span>
+                <span>
+                    <a href="https://blog.csdn.net/" class="back-home c-blue c-blue-hover c-blue-focus">返回首页</a>
+                </span>
+            </div>
+<div class="blog-footer-bottom" style="margin-top:10px;"></div>
+<script src="./Ubuntu搭建mosquitto服务器_files/csdn-footer.js" data-isfootertrack="false" type="text/javascript"></script>
+<script type="text/javascript">
+    window.csdn.csdnFooter.options = {
+        el: '.blog-footer-bottom',
+        type: 2
+    }
+</script>        </main>
+<aside class="blog_container_aside">
+<div id="asideProfile" class="aside-box">
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/ldxicare" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4121&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                <img src="./Ubuntu搭建mosquitto服务器_files/3_ldxicare" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex flex-column profile-intro-name-box">
+            <div class="profile-intro-name-boxTop">
+                <a href="https://blog.csdn.net/ldxicare" target="_blank" class="" id="uid" title="Dyson90" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4122&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <span class="name " username="ldxicare">Dyson90</span>
+                </a>
+                <span>
+                </span>
+                <span class="flag expert-blog">
+                <span class="bubble">CSDN认证博客专家</span>
+                </span>
+                <span class="flag company-blog">
+                <span class="bubble">CSDN认证企业博客</span>
+                </span>
+            </div>
+            <div class="profile-intro-name-boxFooter">
+                <span class="personal-home-page personal-home-years" title="已加入 CSDN 12年">码龄12年</span>
+                    <span class="personal-home-page">
+                    <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证">
+                    <img src="./Ubuntu搭建mosquitto服务器_files/nocErtification.png" alt="">
+                    暂无认证
+                    </a>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="22">
+            <a href="https://blog.csdn.net/ldxicare" data-report-click="{&quot;mod&quot;:&quot;1598321000_001&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4310&quot;}" data-report-query="t=1">  
+                <dt><span class="count">22</span></dt>
+                <dd class="font">原创</dd>
+            </a>
+        </dl>
+        <dl class="text-center" data-report-click="{&quot;mod&quot;:&quot;1598321000_002&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4311&quot;}" title="207381">
+            <a href="https://blog.csdn.net/rank/list/weekly" target="_blank">
+                <dt><span class="count">20万+</span></dt>
+                <dd class="font">周排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" title="1696626">
+            <a href="https://blog.csdn.net/rank/list/total" data-report-click="{&quot;mod&quot;:&quot;1598321000_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4312&quot;}" target="_blank">
+                <dt><span class="count">169万+</span></dt>
+                <dd class="font">总排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" style="min-width:58px" title="29335">  
+            <dt><span class="count">2万+</span></dt>
+            <dd>访问</dd>
+        </dl>
+        <dl class="text-center" title="3级,点击查看等级说明">
+            <dt><a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank">
+                <img class="level" src="./Ubuntu搭建mosquitto服务器_files/blog3.png">
+            </a>
+            </dt>
+            <dd>等级</dd>
+        </dl>
+    </div>
+    <div class="item-rank"></div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="452">
+            <dt><span class="count">452</span></dt>
+            <dd>积分</dd>
+        </dl>
+         <dl class="text-center" id="fanBox" title="1">
+            <dt><span class="count" id="fan">1</span></dt>
+            <dd>粉丝</dd>
+        </dl>
+        <dl class="text-center" title="10">
+            <dt><span class="count">10</span></dt>
+            <dd>获赞</dd>
+        </dl>
+        <dl class="text-center" title="1">
+            <dt><span class="count">1</span></dt>
+            <dd>评论</dd>
+        </dl>
+        <dl class="text-center" title="46">
+            <dt><span class="count">46</span></dt>
+            <dd>收藏</dd>
+        </dl>
+    </div>
+    <div class="aside-box-footer" data-report-view="{&quot;spm&quot;:&quot;3001.4296&quot;}">
+        <div class="badge-box d-flex">
+            <div class="badge d-flex">
+                <div class="icon-badge" title="分享精英">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="./Ubuntu搭建mosquitto服务器_files/fenxiangjingying@240.png" alt="分享精英">
+                    </div>
+                </div>
+                <div class="icon-badge" title="持之以恒">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="./Ubuntu搭建mosquitto服务器_files/chizhiyiheng@240.png" alt="持之以恒">
+                    </div>
+                </div>
+                <div class="icon-badge" title="勤写标兵">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click="{&quot;spm&quot;:&quot;3001.4296&quot;}" src="./Ubuntu搭建mosquitto服务器_files/qixiebiaobing4@240.png" alt="勤写标兵">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-intro-name-boxOpration">
+        <div class="opt-letter-watch-box">
+        <a class="bt-button personal-letter" href="https://im.csdn.net/chat/ldxicare" target="_blank" rel="noopener">私信</a>
+        </div>
+        <div class="opt-letter-watch-box"> 
+            <a class="personal-watch bt-button" id="btnAttent">关注</a>  
+        </div>
+    </div>
+</div>
+ <div id="asideSearchArticle" class="aside-box">
+	<div class="aside-content search-comter">
+    <div class="aside-search aside-search-blog">         
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章">
+        <a class="btn-search-blog">
+                    <img src="./Ubuntu搭建mosquitto服务器_files/csdn-sou.png">
+        </a>
+    </div>
+    </div>
+</div>
+
+
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list">
+			<li>
+				<a href="https://blog.csdn.net/ldxicare/article/details/52032979" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/52032979&quot;,&quot;ab&quot;:&quot;new&quot;}">
+				AndroidStudio NDK Gradle配置
+					<img src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					<span class="read">8403</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/ldxicare/article/details/123786797" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123786797&quot;,&quot;ab&quot;:&quot;new&quot;}">
+				Ubuntu搭建mosquitto服务器（MQTT服务器）
+					<img src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					<span class="read">2440</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/ldxicare/article/details/52258590" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/52258590&quot;,&quot;ab&quot;:&quot;new&quot;}">
+				Cortex-M KEIL特殊用法
+					<img src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					<span class="read">2095</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/ldxicare/article/details/52207532" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/52207532&quot;,&quot;ab&quot;:&quot;new&quot;}">
+				在Android Service中使用AsyncTask执行任务
+					<img src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					<span class="read">2032</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/ldxicare/article/details/80893880" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_541&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4139&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/80893880&quot;,&quot;ab&quot;:&quot;new&quot;}">
+				keil C51 Startup.A51都做了啥？
+					<img src="./Ubuntu搭建mosquitto服务器_files/readCountWhite.png" alt="">
+					<span class="read">1969</span>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="asideCategory" class="aside-box ">
+    <h3 class="aside-title">分类专栏</h3>
+    <div class="aside-content">
+        <ul>
+            <li>
+                <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_2360161.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_2360161.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <div class="special-column-bar "></div>
+                    <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756928.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                    <span class="title oneline">
+                        开发环境搭建
+                    </span>
+                </a>
+                <span class="special-column-num">6篇</span>
+            </li>
+            <li>
+                <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_6063264.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_6063264.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <div class="special-column-bar "></div>
+                    <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756925.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                    <span class="title oneline">
+                        C/C++
+                    </span>
+                </a>
+                <span class="special-column-num">4篇</span>
+            </li>
+            <li>
+                <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_7762935.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_7762935.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <div class="special-column-bar "></div>
+                    <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756780.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                    <span class="title oneline">
+                        单片机
+                    </span>
+                </a>
+                <span class="special-column-num">3篇</span>
+            </li>
+            <li>
+                <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_7773496.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_7773496.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <div class="special-column-bar "></div>
+                    <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756757.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                    <span class="title oneline">
+                        Android
+                    </span>
+                </a>
+                <span class="special-column-num">9篇</span>
+            </li>
+            <li>
+                <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_6330315.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_6330315.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                    <div class="special-column-bar "></div>
+                    <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756780.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                    <span class="title oneline">
+                        综合
+                    </span>
+                </a>
+                <span class="special-column-num">1篇</span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="asideNewComments" class="aside-box">
+    <h3 class="aside-title">最新评论</h3>
+    <div class="aside-content">
+        <ul class="newcomment-list">
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/ldxicare/article/details/123786797#comments_24207977" data-report-click="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123786797#comments_24207977&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_542&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4231&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123786797#comments_24207977&quot;,&quot;ab&quot;:&quot;new&quot;}">Ubuntu搭建mosquitto服务器（MQTT服务器）</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/weixin_43917126" class="user-name" target="_blank">weixin_43917126: </a>
+                    <span class="code-comments">楼主你好，请问服务器的地址是多少</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="asideNewNps" class="aside-box common-nps-box">
+    <h3 class="aside-title">您愿意向朋友推荐“博客详情页”吗？</h3>
+    <div class="aside-content">
+        <ul class="newnps-list">
+            <li class="newnps-item" data-type="强烈不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel1.png" alt="">
+                    <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey1.png" alt="">
+                </div>
+                <div class="newnps-text">强烈不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel2.png" alt="">
+                    <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey2.png" alt="">
+                </div>
+                <div class="newnps-text">不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="一般般">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel3.png" alt="">
+                    <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey3.png" alt="">
+                </div>
+                <div class="newnps-text">一般般</div>
+            </li>
+            <li class="newnps-item" data-type="推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel4.png" alt="">
+                    <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey4.png" alt="">
+                </div>
+                <div class="newnps-text">推荐</div>
+            </li>
+            <li class="newnps-item" data-type="强烈推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="./Ubuntu搭建mosquitto服务器_files/npsFeel5.png" alt="">
+                    <img class="newnps-img default" src="./Ubuntu搭建mosquitto服务器_files/npsFeelGrey5.png" alt="">
+                </div>
+                <div class="newnps-text">强烈推荐</div>
+            </li>
+        </ul>
+        <div class="newnps-form-box">
+        <div class="newnps-form">
+            <input type="text" placeholder="请输入建议或反馈后点击提交" class="newnps-input">
+            <span class="newnps-btn">提交</span>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="asideArchive" class="aside-box" style="display:block!important; width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/ldxicare/article/details/124001978" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/124001978&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/124001978&quot;,&quot;ab&quot;:&quot;new&quot;}">Ubuntu安装Apache2+mysql+php+phpmyadmin</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/ldxicare/article/details/123953194" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123953194&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123953194&quot;,&quot;ab&quot;:&quot;new&quot;}">Qt5.12.9 Window及Llinux平台运行环境部署（应用发布）</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/ldxicare/article/details/123930031" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4136&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123930031&quot;,&quot;ab&quot;:&quot;new&quot;}" data-report-view="{&quot;mod&quot;:&quot;popu_382&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/article/details/123930031&quot;,&quot;ab&quot;:&quot;new&quot;}">移植Qt5.12.9 for imx6ull</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2022&amp;month=04" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2022&amp;month=04&quot;}"><span class="year">2022年</span><span class="num">4篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2019&amp;month=09" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2019&amp;month=09&quot;}"><span class="year">2019年</span><span class="num">1篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2018&amp;month=07" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2018&amp;month=07&quot;}"><span class="year">2018年</span><span class="num">2篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2016&amp;month=08" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2016&amp;month=08&quot;}"><span class="year">2016年</span><span class="num">13篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2015&amp;month=04" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2015&amp;month=04&quot;}"><span class="year">2015年</span><span class="num">2篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/ldxicare?type=blog&amp;year=2014&amp;month=06" target="_blank" data-report-click="{&quot;mod&quot;:&quot;popu_538&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4138&quot;,&quot;ab&quot;:&quot;new&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare?type=blog&amp;year=2014&amp;month=06&quot;}"><span class="year">2014年</span><span class="num">1篇</span></a></div>
+        </div>
+    </div>
+</div>
+	<div id="footerRightAds" class="isShowFooterAds">
+		<div class="aside-box">
+			<div id="kp_box_57" data-pid="57"><script async="" src="./Ubuntu搭建mosquitto服务器_files/f(3).txt" crossorigin="anonymous" data-checked-head="true"></script>
+<!-- PC-博客-详情页-左下视窗-0-79 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1076724771190722" data-ad-slot="4787882818" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=57&amp;adId=1015190&amp;a=1015190&amp;c=0&amp;k=Ubuntu搭建mosquitto服务器（MQTT服务器）&amp;spm=1001.2101.3001.5001&amp;articleId=123786797&amp;d=1&amp;t=3&amp;u=60688c6b0cfb49759aedf38806abb529" style="display: block;width: 0px;height: 0px;"></div>
+		</div>
+	</div>
+    <!-- 详情页显示目录 -->
+<!--文章目录-->
+<div id="asidedirectory" class="aside-box">
+    <div class="groupfile" id="directory">
+        <h3 class="aside-title">目录</h3>
+        <div class="align-items-stretch group_item">
+            <div class="pos-box">
+            <div class="scroll-box">
+                <div class="toc-box"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).parents("p.text-center").remove();
+	})
+</script>
+<script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/user-tooltip.js"></script>
+<script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/user-medal.js"></script>    </div>
+<div class="recommend-right align-items-stretch clearfix" id="rightAside" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right">
+                                <div class="programmer1Box">
+                        <div id="kp_box_530" data-pid="530"><script async="" src="./Ubuntu搭建mosquitto服务器_files/f(3).txt" crossorigin="anonymous" data-checked-head="true"></script>
+<!-- PC-博客-详情页-右上视窗-0-79 -->
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1076724771190722" data-ad-slot="2214239108" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=530&amp;adId=1015188&amp;a=1015188&amp;c=0&amp;k=Ubuntu搭建mosquitto服务器（MQTT服务器）&amp;spm=1001.2101.3001.4647&amp;articleId=123786797&amp;d=1&amp;t=3&amp;u=36367488253e4663b119b86c85381669" style="display: block;width: 0px;height: 0px;"></div>
+                    </div>
+            <div class="flex-column aside-box groupfile" id="groupfile">
+                <div class="groupfile-div">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div id="recommendAdBox">
+                    <div id="kp_box_479" data-pid="479"><div class="_gnumici5vli"><iframe id="iframeu5883818_0" name="iframeu5883818_0" src="./Ubuntu搭建mosquitto服务器_files/kcxm(1).html" width="300" height="250" scrolling="no" frameborder="0"></iframe></div>
+    <script type="text/javascript">
+        (window.slotbydup = window.slotbydup || []).push({
+            id: "u5883818",
+            container: "_gnumici5vli",
+            async: true
+        });
+    </script>
+    <!-- 多条广告如下脚本只需引入一次 -->
+    <script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/cm.js" async="async" defer="defer">
+    </script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=479&amp;adId=1015221&amp;a=1015221&amp;c=0&amp;k=Ubuntu搭建mosquitto服务器（MQTT服务器）&amp;spm=1001.2101.3001.4834&amp;articleId=123786797&amp;d=1&amp;t=3&amp;u=fe9b04e3994a480eb07342e14ab7a645" style="display: block;width: 0px;height: 0px;"></div>
+                </div>
+            <div class="aside-box kind_person d-flex flex-column">
+                    <h3 class="aside-title">分类专栏</h3>
+                    <div class="align-items-stretch kindof_item" id="kind_person_column">
+                        <div class="aside-content">
+                            <ul>
+                                <li>
+                                    <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_2360161.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_2360161.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                        <div class="special-column-bar "></div>
+                                        <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756928.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                                        <span class="">
+                                            开发环境搭建
+                                        </span>
+                                    </a>
+                                    <span class="special-column-num">6篇</span>
+                                </li>
+                                <li>
+                                    <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_6063264.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_6063264.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                        <div class="special-column-bar "></div>
+                                        <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756925.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                                        <span class="">
+                                            C/C++
+                                        </span>
+                                    </a>
+                                    <span class="special-column-num">4篇</span>
+                                </li>
+                                <li>
+                                    <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_7762935.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_7762935.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                        <div class="special-column-bar "></div>
+                                        <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756780.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                                        <span class="">
+                                            单片机
+                                        </span>
+                                    </a>
+                                    <span class="special-column-num">3篇</span>
+                                </li>
+                                <li>
+                                    <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_7773496.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_7773496.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                        <div class="special-column-bar "></div>
+                                        <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756757.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                                        <span class="">
+                                            Android
+                                        </span>
+                                    </a>
+                                    <span class="special-column-num">9篇</span>
+                                </li>
+                                <li>
+                                    <a class="clearfix special-column-name" target="_blank" href="https://blog.csdn.net/ldxicare/category_6330315.html" data-report-click="{&quot;mod&quot;:&quot;popu_537&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4137&quot;,&quot;strategy&quot;:&quot;pc付费专栏左侧入口&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare/category_6330315.html&quot;,&quot;ab&quot;:&quot;new&quot;}">
+                                        <div class="special-column-bar "></div>
+                                        <img src="./Ubuntu搭建mosquitto服务器_files/20201014180756780.png" alt="" onerror="this.src=&#39;https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64&#39;">
+                                        <span class="">
+                                            综合
+                                        </span>
+                                    </a>
+                                    <span class="special-column-num">1篇</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<div class="recommend-right1  align-items-stretch clearfix" id="rightAsideConcision" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right-concision">
+            <div class="flex-column aside-box groupfile" id="groupfileConcision">
+                <div class="groupfile-div1">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</div><script type="text/javascript" async="" data-bdms-faccdee21b68="eyJhcHBfa2V5IjoiODgwMCIsImFwcF92aWV3IjoicHJvbW90ZSIsImJyb3dzZXJfdXJsIjoiaHR0cHM6Ly9zb2ZpcmUuYmFpZHUuY29tL2RhdGEvdWEvYWIuanNvbiIsImZvcm1fZGVzYyI6IiIsInNlbmRfaW50ZXJ2YWwiOjUwLCJzZW5kX21ldGhvZCI6M30=" src="./Ubuntu搭建mosquitto服务器_files/dfxaf3-635b4cd6.js"></script>
+<div class="mask-dark"></div>
+<script src="./Ubuntu搭建mosquitto服务器_files/sandalstrap.min.js"></script>
+<div class="skin-boxshadow"></div>
+<div class="directory-boxshadow"></div>
+<div class="comment-side-box-shadow comment-side-tit-close" id="commentSideBoxshadow">
+<div class="comment-side-content">
+	<div class="comment-side-tit">
+	<div class="comment-side-tit-count">评论&nbsp;<span class="count">1</span></div>
+	<img class="comment-side-tit-close" src="./Ubuntu搭建mosquitto服务器_files/closeBt.png"></div>
+	<div id="pcCommentSideBox" class="comment-box comment-box-new2 " style="display:block">
+		<div class="comment-edit-box d-flex">
+			<div class="user-img">
+				<a href="https://blog.csdn.net/u013454589" target="_blank">
+					<img src="./Ubuntu搭建mosquitto服务器_files/3_u013454589">
+				</a>
+			</div>
+			<form id="commentform">
+				<textarea class="comment-content" name="comment_content" id="comment_content" placeholder="欢迎高质量的评论，低质的评论会被折叠" maxlength="1000"></textarea>
+				<div class="comment-operate-box">
+					<div class="comment-operate-l">
+						<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+					</div>
+					<div class="comment-operate-c">
+						&nbsp;
+					</div>
+					<div class="comment-operate-r">
+						<div class="comment-operate-item comment-emoticon">
+							<img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="./Ubuntu搭建mosquitto服务器_files/commentEmotionIcon.png" alt="表情包">
+							<span class="comment-operate-tip">插入表情</span>
+							<div class="comment-emoticon-box comment-operate-isshow">
+								<div class="comment-emoticon-img-box"></div>
+							</div>
+						</div>
+						<div class="comment-operate-item comment-code">
+							<img class="comment-operate-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="./Ubuntu搭建mosquitto服务器_files/commentCodeIcon.png" alt="表情包">
+							<span class="comment-operate-tip">代码片</span>
+							<div class="comment-code-box comment-operate-isshow">
+								<ul id="commentCode">
+									<li><a data-code="html">HTML/XML</a></li>
+									<li><a data-code="objc">objective-c</a></li>
+									<li><a data-code="ruby">Ruby</a></li>
+									<li><a data-code="php">PHP</a></li>
+									<li><a data-code="csharp">C</a></li>
+									<li><a data-code="cpp">C++</a></li>
+									<li><a data-code="javascript">JavaScript</a></li>
+									<li><a data-code="python">Python</a></li>
+									<li><a data-code="java">Java</a></li>
+									<li><a data-code="css">CSS</a></li>
+									<li><a data-code="sql">SQL</a></li>
+									<li><a data-code="plain">其它</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="comment-operate-item">
+							<input type="hidden" id="comment_replyId" name="comment_replyId">
+							<input type="hidden" id="article_id" name="article_id" value="123786797">
+							<input type="hidden" id="comment_userId" name="comment_userId" value="">
+							<input type="hidden" id="commentId" name="commentId" value="">
+							<a data-report-click="{&quot;mod&quot;:&quot;1582594662_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4227&quot;,&quot;ab&quot;:&quot;new&quot;}">
+							<input type="submit" class="btn-comment btn-comment-input" value="评论">
+							</a>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="comment-list-container">
+			<div class="comment-list-box comment-operate-item">
+			</div>
+			<div id="lookGoodComment" class="look-good-comment side-look-comment">
+				<a class="look-more-comment">查看更多评论<img src="./Ubuntu搭建mosquitto服务器_files/commentArrowDownWhite.png" alt=""></a>
+			</div>
+			<div id="lookFlodComment" class="look-flod-comment">
+					<span class="count"></span>&nbsp;条评论被折叠&nbsp;<a class="look-more-flodcomment">查看</a>
+			</div>
+			<div class="opt-box text-center">
+				<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+			</div>
+		</div>
+	</div>
+	<div id="pcFlodCommentSideBox" class="pc-flodcomment-sidebox">
+		<div class="comment-fold-tit"><span id="lookUnFlodComment" class="back"><img src="./Ubuntu搭建mosquitto服务器_files/commentArrowLeftWhite.png" alt=""></span>被折叠的&nbsp;<span class="count"></span>&nbsp;条评论
+		 <a href="https://blogdev.blog.csdn.net/article/details/122245662" class="tip" target="_blank">为什么被折叠?</a>
+		 <a href="https://bbs.csdn.net/forums/FreeZone" class="park" target="_blank">
+		 <img src="./Ubuntu搭建mosquitto服务器_files/iconPark.png">到【灌水乐园】发言</a>                                
+		</div>
+		<div class="comment-fold-content"></div>
+		<div id="lookBadComment" class="look-bad-comment side-look-comment">
+			<a class="look-more-comment">查看更多评论<img src="./Ubuntu搭建mosquitto服务器_files/commentArrowDownWhite.png" alt=""></a>
+		</div>
+	</div>
+</div>
+</div>
+<div id="rewardNew" class="reward-popupbox-new">
+	<p class="rewad-title">打赏作者<span class="reward-close"><img src="./Ubuntu搭建mosquitto服务器_files/closeBt.png"></span></p>
+	<dl class="profile-box">
+		<dd>
+		<a href="https://blog.csdn.net/ldxicare" data-report-click="{&quot;mod&quot;:&quot;popu_379&quot;,&quot;dest&quot;:&quot;https://blog.csdn.net/ldxicare&quot;,&quot;ab&quot;:&quot;new&quot;}">
+			<img src="./Ubuntu搭建mosquitto服务器_files/3_ldxicare" class="avatar_pic">
+		</a>
+		</dd>
+		<dt>
+			<p class="blog-name">Dyson90</p>
+			<p class="blog-discript">你的鼓励将是我创作的最大动力</p>
+		</dt>
+	</dl>
+	<div class="reward-box-new">
+			<div class="reward-content"><div class="reward-right"></div></div>
+	</div>
+	<div class="money-box">
+				<span class="choose-money choosed" data-id="2">¥2</span>
+				<span class="choose-money " data-id="4">¥4</span>
+				<span class="choose-money " data-id="6">¥6</span>
+				<span class="choose-money " data-id="10">¥10</span>
+				<span class="choose-money " data-id="20">¥20</span>
+				<input id="customizeMoney" class="customize-money" name="" type="" value="" placeholder="自定义">
+				<div class="customize-tip">输入1-500的整数</div>
+	</div>
+	<div class="pay-box">
+		<div class="pay-type-blance pay-type active" data-type="blance">
+			<img class="unchoose" src="./Ubuntu搭建mosquitto服务器_files/newUnChoose.png" alt="">
+			<img class="choose" src="./Ubuntu搭建mosquitto服务器_files/newChoose.png" alt="">
+			<span class="pay-type-name">余额支付</span>
+			<span class="pay-type-num">(余额：-- )</span>
+		</div>
+		<div class="pay-type-money pay-type" data-type="money">
+			<img class="unchoose" src="./Ubuntu搭建mosquitto服务器_files/newUnChoose.png" alt="">
+			<img class="choose" src="./Ubuntu搭建mosquitto服务器_files/newChoose.png" alt="">
+			<span class="pay-type-name">扫码支付</span>
+		</div>
+	</div>
+	<div class="sure-box">
+		<div class="sure-box-money">
+			<div class="code-box">
+				<div class="code-num-box">
+					<span class="code-name">扫码支付：</span><span class="code-num">¥2</span>
+				</div>
+				<div class="code-img-box">
+					<div class="renovate">
+					<img src="./Ubuntu搭建mosquitto服务器_files/pay-time-out.png">
+					<span>获取中</span>
+					</div>
+				</div>
+				<div class="code-pay-box">
+					<img src="./Ubuntu搭建mosquitto服务器_files/newWeiXin.png" alt="">
+					<img src="./Ubuntu搭建mosquitto服务器_files/newZhiFuBao.png" alt="">
+					<span>扫码支付</span>
+				</div>
+			</div>
+		</div>
+		<div class="sure-box-blance">
+			<p class="tip">您的余额不足，请更换扫码支付或<a target="_blank" data-report-click="{&quot;mod&quot;:&quot;1597646289_003&quot;,&quot;spm&quot;:&quot;1001.2101.3001.4302&quot;}" href="https://i.csdn.net/#/wallet/balance/recharge?utm_source=RewardVip" class="go-invest">充值</a></p>
+			<p class="is-have-money"><a class="reward-sure">打赏作者</a></p>
+		</div>
+	</div>
+</div>
+<div class="pay-code">
+    <div class="pay-money">实付<span class="pay-money-span" data-nowprice="" data-oldprice="">元</span></div>
+    <div class="content-blance"><a class="blance-bt" href="javascript:;">使用余额支付</a></div>
+    <div class="content-code">
+    <div id="payCode" data-id="">
+            <div class="renovate">
+                <img src="./Ubuntu搭建mosquitto服务器_files/pay-time-out.png">
+                <span>点击重新获取</span>
+            </div>
+        </div>
+        <div class="pay-style"><span><img src="./Ubuntu搭建mosquitto服务器_files/weixin.png"></span><span><img src="./Ubuntu搭建mosquitto服务器_files/zhifubao.png"></span><span><img src="./Ubuntu搭建mosquitto服务器_files/jingdong.png"></span><span class="text">扫码支付</span></div>
+    </div>
+    <div class="bt-close"><svg t="1567152543821" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"><defs><style type="text/css"></style></defs><path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path></svg></div>
+    <!-- <p style="margin-top: 8px;font-size: 14px;" class="text-center">支付成功即可阅读</p> -->
+    <div class="pay-balance">
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span>
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span>  
+    <div class="pay-code-tile">
+        <img src="./Ubuntu搭建mosquitto服务器_files/pay-help.png" alt="">
+        <div class="pay-code-content">
+            <div class="span">
+                <p class="title">抵扣说明：</p>
+                <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、C币套餐、付费专栏及课程。</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="./Ubuntu搭建mosquitto服务器_files/recharge.png" alt=""><span>余额充值</span></a>
+</div>
+<div style="display:none;">
+	<img src="https://blog.csdn.net/ldxicare/article/details/123786797" onerror="setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href=&quot;\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74&quot;}},3000);">
+</div>
+<div class="keyword-dec-box" id="keywordDecBox"></div>
+
+<script src="./Ubuntu搭建mosquitto服务器_files/pc_wap_highlight-8defd55d6e.min.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/pc_wap_common-2d7348f790.min.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/edit_copy_code-2d3931414f.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="./Ubuntu搭建mosquitto服务器_files/atom-one-light.css">
+<script src="./Ubuntu搭建mosquitto服务器_files/user-accusation.js" type="text/javascript"></script>
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            qr: {
+                isShow: false,
+            },
+            guide: {
+                isShow: true
+            }
+        }
+    }
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            window.csdn.loginBox.key({
+              biz: 'blog',
+              subBiz: 'other_service',
+              cb: function(){
+                window.csdn.feedback({
+                  "type":'blog',
+                  "rtype":'article',
+                  "rid":articleId,
+                  "reportedName":username,
+                  "submitOptions":{
+                    "title":articleTitle,
+                    "contentUrl":articleDetailUrl
+                  },
+                  "callback":function(){
+                    showToast({
+                      text: "感谢您的举报，我们会尽快审核！",
+                      bottom: '10%', 
+                      zindex: 9000, 
+                      speed: 500,
+                      time: 1500
+                    })
+                  }
+                })
+              }
+            })
+        });
+    })
+</script>
+    <script src="./Ubuntu搭建mosquitto服务器_files/baidu-search.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/qrcode.js"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/qrcode.min.js"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/user-ordercart.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/user-ordertip.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/order-payment.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/common-3b2c6b436b.min.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/detail-d423030cf2.min.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/column-2e5cf567c5.min.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/side-toolbar.js" type="text/javascript"></script>
+<script src="./Ubuntu搭建mosquitto服务器_files/copyright.js" type="text/javascript"></script>
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+</script>
+<script type="text/javascript" src="./Ubuntu搭建mosquitto服务器_files/MathJax.js"></script>
+<script type="text/x-mathjax-config;executed=true">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none",
+                ignoreClass:"title-article"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript" crossorigin="" src="./Ubuntu搭建mosquitto服务器_files/csdn-login-box.js"></script>
+<div>
+  <div class="csdn-side-toolbar ">
+    
+    <a class="option-box" data-type="guide">
+      <img src="./Ubuntu搭建mosquitto服务器_files/guide.png" alt="" srcset="">
+      <span class="show-txt">新手<br>引导</span>
+    </a>
+    
+    
+    
+    
+    
+    <a class="option-box" data-type="cs">
+      <img src="./Ubuntu搭建mosquitto服务器_files/kefu.png" alt="" srcset="">
+      <span class="show-txt">客服</span>
+    </a>
+    
+    
+    
+    <a class="option-box" data-type="report">
+      <span class="show-txt" style="display:flex;opacity:100;">举报</span>
+    </a>
+    
+    
+    <a class="option-box" data-type="gotop">
+      <img src="./Ubuntu搭建mosquitto服务器_files/fanhuidingbucopy.png" alt="" srcset="">
+      <span class="show-txt">返回<br>顶部</span>
+    </a>
+    
+  </div>
+  </div><iframe name="__uspapiLocator" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;" src="./Ubuntu搭建mosquitto服务器_files/saved_resource.html"></iframe><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_0_host" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;" tabindex="0" title="Advertisement" aria-label="Advertisement"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" src="./Ubuntu搭建mosquitto服务器_files/ads.html" data-google-container-id="a!1" data-load-complete="true"></iframe></div></ins><iframe name="googlefcPresent" style="display: none; width: 0px; height: 0px; border: none; z-index: -1000; left: -1000px; top: -1000px;" src="./Ubuntu搭建mosquitto服务器_files/saved_resource(2).html"></iframe></body><iframe id="google_esf" name="google_esf" src="./Ubuntu搭建mosquitto服务器_files/zrt_lookup.html" style="display: none;"></iframe></html>
