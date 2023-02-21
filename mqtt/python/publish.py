@@ -17,7 +17,7 @@ def publish(broker="127.0.0.1", port=1883):
 if __name__ == "__main__":
     parser = ArgumentParser(description='use MQTT publish a message')
     parser.add_argument('--host', type=str, default='127.0.0.1', help='IP address of broker (default: %(default)s)')
-    parser.add_argument('--port', '-p', type=int, default=1060, help='port number of broker (default: %(default)s)')
+    parser.add_argument('--port', '-p', type=int, default=1883, help='port number of broker (default: %(default)s)')
     args = parser.parse_args()
 
     print("args: {}".format(args))
