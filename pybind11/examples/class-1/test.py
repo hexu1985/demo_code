@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from build import example
+import example
 
 p = example.Pet("Molly")
 print(p)
