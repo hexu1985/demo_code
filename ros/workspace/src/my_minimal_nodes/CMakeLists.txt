@@ -157,6 +157,10 @@ add_executable(my_minimal_subscriber src/minimal_subscriber.cpp)
 
 target_link_libraries(my_minimal_subscriber ${catkin_LIBRARIES})
 
+add_executable(sleepy_minimal_publisher src/sleepy_minimal_publisher.cpp)
+
+target_link_libraries(sleepy_minimal_publisher ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############
