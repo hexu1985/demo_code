@@ -34,4 +34,9 @@ $ rosrun my_minimal_nodes my_minimal_subscriber
 
 # cd workspace/src
 $ cs_create_pkg my_minimal_nodes2 roscpp std_msgs
+
+# start ros exe by launch file
+# cd workspace dir
+$ source devel/setup.bash
+$ roslaunch my_minimal_nodes my_minimal_nodes.launch
 ```
