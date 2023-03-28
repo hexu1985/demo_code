@@ -5,6 +5,13 @@ function alarm_timeout() {
     exit 1
 }
 
+function sleep_and_signal() {
+    local nsec=$1
+    local target_pid=$2
+    sleep $nsec 
+    kill -SIGUSR1 $target_pid
+}
+
 function xxx() {
     while true
     do
@@ -16,7 +23,7 @@ function xxx() {
 function timeout() {
     local nsec=$1
     func=$2
-    ./sleep_and_signal.sh $nsec $$ &
+    sleep_and_signal $nsec $$ &
     $func
 }
 
