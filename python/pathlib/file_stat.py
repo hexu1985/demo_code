@@ -11,3 +11,7 @@ stat = current_path.stat()
 print("atime: {}".format(create_datetime(stat.st_atime)))
 print("mtime: {}".format(create_datetime(stat.st_mtime)))
 print("ctime: {}".format(create_datetime(stat.st_ctime)))
+
+print("atime: {}".format(stat.st_atime))
+print("mtime: {}".format(stat.st_mtime))
+print("ctime: {}".format(stat.st_ctime))

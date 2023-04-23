@@ -16,13 +16,13 @@ def mkdir_if_not_exists(dir_path):
         else:
             return True
     else:
-        path.mkdir()
+        path.mkdir(parents=True, exist_ok=True)
         return True
 
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    if mkdir_if_not_exists("./log"):
+    if mkdir_if_not_exists("./log/abc"):
         LOGGER.info("mkdir ok")
     else:
         LOGGER.info("mkdir failed")
