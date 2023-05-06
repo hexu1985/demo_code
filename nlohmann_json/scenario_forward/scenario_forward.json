@@ -1,0 +1,89 @@
+{
+    "map": "baohe",
+    "length": 5.0,
+    "width": 2.0,
+    "height": 1.5,
+    "start_position": {
+        "x": 528381.78,
+        "y": 3511935.39,
+        "heading": -0.006,
+        "speed": 0.0,
+        "acceleration": 0.0
+    },
+    "end_position": {
+        "x": 528423.10,
+        "y": 3511935.65
+    },
+    "simulator_time": 20.0,
+    "parking_position": {
+        "x": 0.0,
+        "y": 0.0
+    },
+    "agent": [
+        {
+            "id": "1",
+            "type": 0,
+            "height": 1.5,
+            "width": 2.0,
+            "length": 3.0,
+            "motion_type": 0,
+            "start_time": 0.0,
+            "start_position": {
+                "x": 528409.90,
+                "y": 3511935.30,
+                "speed": 0.0,
+                "heading": -0.00071
+            },
+            "tracked_position": [
+            ]
+        },
+        {
+            "id": "2",
+            "type": 0,
+            "height": 1.5,
+            "width": 2.0,
+            "length": 5.0,
+            "motion_type": 0,
+            "start_time": 0.0,
+            "start_position": {
+                "x": 528416.39,
+                "y": 3511935.37,
+                "speed": 0.0,
+                "heading": -0.00071
+            },
+            "tracked_position": [
+            ]
+        },
+        {
+            "id": "3",
+            "type": 0,
+            "height": 1.5,
+            "width": 2.0,
+            "length": 3.0,
+            "motion_type": 1,
+            "start_time": 5.0,
+            "start_position": {
+                "x": 528366.81,
+                "y": 3511935.37,
+                "speed": 2.0,
+                "heading": -0.00071
+            },
+            "tracked_position": [
+                {
+                    "x": 528387.94,
+                    "y": 3511935.40,
+                    "speed": 1.0,
+                    "heading": -0.00071
+                },
+                {
+                    "x": 528404.58,
+                    "y": 3511935.36,
+                    "speed": 0.0,
+                    "heading": 0.00071
+                }
+            ]
+        }
+    ],
+    "traffic_lights": [
+    ]
+}
