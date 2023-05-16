@@ -62,3 +62,25 @@ $ rostopic list
 $ rostopic echo example_topic
 ```
 
+### `2.2.1 服务消息` 中 记录下来的一些命令
+
+```
+# cd workspace/src
+$ cs_create_pkg example_ros_service roscpp std_msgs
+# add ExampleServiceMsg.srv
+# cd workspace dir
+$ catkin_make
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ source devel/setup.bash
+$ rosrun example_ros_service example_ros_service
+# tty3
+$ rosservice list
+$ rosservice call lookup_by_name 'Ted'
+# tty4
+$ source devel/setup.bash
+$ rosrun example_ros_service example_ros_client
+```
