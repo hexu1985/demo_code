@@ -84,3 +84,6 @@ $ rosservice call lookup_by_name 'Ted'
 $ source devel/setup.bash
 $ rosrun example_ros_service example_ros_client
 ```
+
+### `2.3 在ROS中使用C++类` 中 记录下来的一些命令
+
