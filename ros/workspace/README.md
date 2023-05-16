@@ -62,11 +62,11 @@ $ rostopic list
 $ rostopic echo example_topic
 ```
 
-### `2.2.1 服务消息` 中 记录下来的一些命令
+### `2.2 服务介绍` 中 记录下来的一些命令
 
 ```
 # cd workspace/src
-$ cs_create_pkg example_ros_service roscpp std_msgs
+$ cs_create_pkg example_ros_service roscpp std_msgs std_srvs
 # add ExampleServiceMsg.srv
 # cd workspace dir
 $ catkin_make
@@ -87,3 +87,6 @@ $ rosrun example_ros_service example_ros_client
 
 ### `2.3 在ROS中使用C++类` 中 记录下来的一些命令
 
+```
+# cd workspace/src
+$ cs_create_pkg example_ros_class roscpp std_msgs
