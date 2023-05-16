@@ -89,4 +89,16 @@ $ rosrun example_ros_service example_ros_client
 
 ```
 # cd workspace/src
-$ cs_create_pkg example_ros_class roscpp std_msgs
+$ cs_create_pkg example_ros_class roscpp std_msgs std_srvs
+# cd workspace dir
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ rosrun example_ros_class example_ros_class
+# tty3
+$ rosservice call example_minimal_service
+# tty4
+$ rostopic pub -r 2 example_class_input_topic std_msgs/Float32 2.0
+```
