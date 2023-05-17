@@ -102,3 +102,27 @@ $ rosservice call example_minimal_service
 # tty4
 $ rostopic pub -r 2 example_class_input_topic std_msgs/Float32 2.0
 ```
+
+### `2.4 在ROS中创建库模块` 中 记录下来的一些命令
+
+```
+# cd workspace/src
+$ cs_create_pkg creating_a_ros_library roscpp std_msgs std_srvs
+# cd workspace dir
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ rosrun creating_a_ros_library ros_library_test_main
+# tty3
+$ rosservice call example_minimal_service
+# tty4
+$ rostopic pub -r 2 example_class_input_topic std_msgs/Float32 2.0
+# ================================================================
+# cd workspace/src
+$ cs_create_pkg using_a_ros_library roscpp std_msgs std_srvs creating_a_ros_library
+# cd workspace dir
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+```
