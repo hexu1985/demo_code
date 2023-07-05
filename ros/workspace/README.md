@@ -126,3 +126,41 @@ $ cs_create_pkg using_a_ros_library roscpp std_msgs std_srvs creating_a_ros_libr
 # add cpp file and update CMakeLists.txt
 $ catkin_make
 ```
+
+### `2.5 动作服务器和动作客户端介绍` 中 记录下来的一些命令
+
+```
+# cd workspace/src
+$ cs_create_pkg example_action_server roscpp actionlib
+# add action/demo.action
+# update package.xml
+# cd workspace dir
+$ catkin_make
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_server
+# tty3
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_client
+# tty4
+$ source devel/setup.bash
+$ rostopic echo example_action/goal 
+```
+
+timer_client & example_action_server_w_fdbk
+```
+# tty1
+$ roscore
+# tty2
+$ rosrun rqt_console rqt_console
+# tty3
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_server_w_fdbk
+# tty4
+$ source devel/setup.bash
+$ rosrun example_action_server timer_client
+```
