@@ -126,3 +126,71 @@ $ cs_create_pkg using_a_ros_library roscpp std_msgs std_srvs creating_a_ros_libr
 # add cpp file and update CMakeLists.txt
 $ catkin_make
 ```
+
+### `2.5 动作服务器和动作客户端介绍` 中 记录下来的一些命令
+
+```
+# cd workspace/src
+$ cs_create_pkg example_action_server roscpp actionlib
+# add action/demo.action
+# update package.xml
+# cd workspace dir
+$ catkin_make
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_server
+# tty3
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_client
+# tty4
+$ source devel/setup.bash
+$ rostopic echo example_action/goal 
+```
+
+timer_client & example_action_server_w_fdbk
+```
+# tty1
+$ roscore
+# tty2
+$ rosrun rqt_console rqt_console
+# tty3
+$ source devel/setup.bash
+$ rosrun example_action_server example_action_server_w_fdbk
+# tty4
+$ source devel/setup.bash
+$ rosrun example_action_server timer_client
+```
+
+### `2.6 参数服务器介绍` 中 记录下来的一些命令
+
+```
+$ rosparam set /gains "p: 1.0
+i: 2.0
+d: 3.0"
+$ rosparam list
+$ rosparam get /gains/d
+$ rosparam get /gains
+$ rosparam dump param_dump
+```
+
+read_param_from_node
+
+```
+# cd workspace/src
+$ cs_create_pkg example_param_server roscpp std_msgs
+# add launch/jnt1_gains.yaml  launch/load_gains.launch
+# cd workspace dir
+# add cpp file and update CMakeLists.txt
+$ catkin_make
+# tty1
+$ roscore
+# tty2
+$ roslaunch example_parameter_server load_gains.launch
+$ rosrun example_parameter_server read_param_from_node 
+$ rosparam delete /joint1_gains
+$ rosrun example_parameter_server read_param_from_node 
+```
