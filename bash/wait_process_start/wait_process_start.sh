@@ -34,11 +34,11 @@ fi
 
 for i in $(seq ${WAITING_TIMEOUT_SEC})
 do
-    process_count=`count_process "${PROCESS_CMD_PATTERN}" "${CURRENT_FILE_NAME}"`
-    ((debug)) && echo "process_count: ${process_count}"
-    if (( process_count >= 1 ))
+    count=`count_process "${PROCESS_CMD_PATTERN}" "${CURRENT_FILE_NAME}"`
+    ((debug)) && echo "count: ${count}"
+    if (( count >= 1 ))
     then
-        echo "found ${PROCESS_CMD_PATTERN}, count ${process_count}"
+        echo "found ${PROCESS_CMD_PATTERN}, count ${count}"
         exit 0
     fi
     sleep 1
