@@ -23,12 +23,14 @@ def init_logging_config(log_root, log_prefix, log_level=logging.INFO):
         },
         "handlers": {
             "console": {
-                "level": "DEBUG",
+#                "level": "DEBUG",
+                "level": log_level,
                 "class": "logging.StreamHandler",
                 "formatter": "standard"
             },
             "default": {
-                "level": "INFO",
+#                "level": "INFO",
+                "level": log_level,
                 "class": "logging.handlers.RotatingFileHandler",
                 "filename": LOG_FILE,
                 "maxBytes": 1024 * 1024 * 30,
@@ -47,10 +49,9 @@ def init_logging_config(log_root, log_prefix, log_level=logging.INFO):
     }
     
     logging.config.dictConfig(LOGGING)
-    logging.basicConfig(level=log_level)
 
 if __name__ == '__main__':
-    init_logging_config('.', 'logging_config', logging.DEBUG)
+    init_logging_config('.', 'logging_config', logging.INFO)
     LOGGER = logging.getLogger()
     LOGGER.debug("hello debug")
     LOGGER.info("hello info")
