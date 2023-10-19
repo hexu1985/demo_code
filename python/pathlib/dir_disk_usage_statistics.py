@@ -8,15 +8,7 @@ def get_file_size(path):
     try:
         f = pathlib.Path(path)
 
-        if not f.is_file():
-            print("{} is not file".format(f))
-            return 0
-
-        if f.is_symlink():
-            print("{} is link".format(f))
-            return 0
-
-        stat_info = f.stat()
+        stat_info = f.lstat()
         return stat_info.st_size
 
     except:
@@ -25,12 +17,13 @@ def get_file_size(path):
 
 def dir_disk_usage_statistics(dir_path):
     p = pathlib.Path(dir_path)
-    totol_size = 0
+    total_size = 0
     for f in p.rglob('*'):
         print("get_file_size({})".format(f))
-        totol_size += get_file_size(f)
+        total_size += get_file_size(f)
 
-    return totol_size
+    total_size += get_file_size(dir_path)
+    return total_size
 
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
