@@ -17,12 +17,10 @@ def get_file_size(path):
 
 def dir_disk_usage_statistics(dir_path):
     p = pathlib.Path(dir_path)
-    total_size = 0
+    total_size = get_file_size(dir_path)
     for f in p.rglob('*'):
         print("get_file_size({})".format(f))
         total_size += get_file_size(f)
-
-    total_size += get_file_size(dir_path)
     return total_size
 
 if __name__ == "__main__":
