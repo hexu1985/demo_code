@@ -1,0 +1,245 @@
+/* 评论开始 */
+/* 用户头像 */
+.blog_comment_body > img.user-avatar {
+    position: absolute;
+    left: -72px;
+    top: 0px;
+    width: 48px;
+    height: 48px;
+}
+.myself .blog_comment_body > img.user-avatar {
+    left: initial;
+    right: -72px;
+}
+#blog-comments-placeholder {
+    border: solid 1px #CCC;
+    border-radius: 5px;
+}
+div#comments_pager_top {
+    display: none;
+}
+#blog-comments-placeholder > br {
+    display: none;
+}
+/* 评论列表 */
+.feedbackManage {
+    width: 130px;
+    display: none;
+    position: absolute;
+    right: 150px;
+    top: 6px;
+}
+.feedbackItem:hover .feedbackManage {
+    display: block;
+}
+/* 所有评论里面的A标签 */
+.feedbackItem a {
+    color: #989898 !important;
+    transition: all .2s;
+}
+.feedbackItem a:hover {
+    color: #FF661C !important;
+    text-decoration: underline;
+}
+/* 评论分割线 */
+.feedbackCon {
+    background: none;
+    clear: both;
+    margin: 10px 0 0 30px;
+}
+/* 楼层 */
+.feedbackListSubtitle a.layer {
+    background: #B2E866;
+    color: #414141 !important;
+    padding: 2px 4px;
+    border-radius: 2px;
+    margin-right: 4px;
+    /*display: none;*/
+}
+/* 评论人 */
+.feedbackListSubtitle a[target="_blank"] {
+    color: #FF6969 !important;
+}
+/* 评论时间 */
+.feedbackItem .comment_date {
+    color: #BCBCBC;
+    margin-right: 4px;
+}
+/* 楼主颜色 */
+.feedbackListSubtitle {
+    color: #0AB300;
+}
+/* 支持与反对 */
+.comment_vote {
+    float: right;
+    margin-top: -34px;
+    display: none;
+}
+/* 鼠标经过时显示支持与反对 */
+.feedbackItem:hover .comment_vote {
+    display: block;
+}
+/* 评论内容颜色 */
+.feedbackItem {
+    color: #464646;
+    position: relative;
+}
+/* 评论背景色 */
+.blog_comment_body {
+    background: #B2E866;
+    float: left;
+    padding: 8px 12px;
+    border-radius: 10px;
+    position: relative;
+    overflow: visible;
+    margin-left: 33px;
+    max-width: 500px;
+}
+/* 评论三角形 */
+.blog_comment_body:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: -17px;
+    top: 9px;
+    width: 0;
+    height: 0;
+    border-right: solid 18px #B2E866;
+    border-top: solid 6px rgba(0, 0, 0, 0);
+    border-bottom: solid 10px rgba(0, 0, 0, 0);
+}
+/* 评论头像 */
+.blog_comment_body:after {
+    content: attr(data-louceng);
+    display: none;
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    left: -72px;
+    top: 0px;
+    text-align: center;
+    line-height: 48px;
+    font-size: 18px;
+    color: #FFF;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.42);
+    font-family: 'Microsoft Yahei';
+    background: linear-gradient(top , rgb(116, 218, 45) 12% , rgb(135, 255, 75) 35% , rgb(71, 179, 28) 86%);
+    background: -o-linear-gradient(top , rgb(116, 218, 45) 12% , rgb(135, 255, 75) 35% , rgb(71, 179, 28) 86%);
+    background: -ms-linear-gradient(top , rgb(116, 218, 45) 12% , rgb(135, 255, 75) 35% , rgb(71, 179, 28) 86%);
+    background: -moz-linear-gradient(top , rgb(116, 218, 45) 12% , rgb(135, 255, 75) 35% , rgb(71, 179, 28) 86%);
+    background: -webkit-linear-gradient(top , #74DA2D 12% , #87FF4B 35% , #47B31C 86%);
+    background-size: contain;
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+0) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_00.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+1) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_01.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+2) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_02.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+3) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_03.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+4) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_04.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+5) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_05.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+6) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_06.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+7) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_07.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+8) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_08.bmp);
+}
+#blog-comments-placeholder .feedbackItem:nth-child(10n+9) .blog_comment_body:after {
+    background-image: url(//files.cnblogs.com/files/liuxianan/auto_avatar_09.bmp);
+}
+
+
+/* 清除浮动 */
+.feedbackCon:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+/* 引用边框 */
+.comment_quote {
+    border: 1px solid #63921F;
+    border-radius: 3px;
+}
+/* 隐藏小图标 */
+.feedbackItem .sendMsg2This {
+    display: none;
+}
+
+/* 楼主自己的样式 */
+.myself .blog_comment_body {
+    float: right;
+    margin-right: 72px;
+    background: #98DDFF;
+}
+.myself .blog_comment_body:before {
+    right: -17px;
+    left: initial;
+    border-left: solid 18px #98DDFF;
+    border-right: none;
+}
+.myself .blog_comment_body:after {
+    content: '';
+    display: none;
+    width: 48px;
+    height: 48px;
+    background-image: url(//pic.cnblogs.com/avatar/352797/20160108090502.png) !important;
+    background-size: contain;
+    position: absolute;
+    right: -72px;
+    top: 0px;
+    left: initial;
+}
+.myself .feedbackCon{
+	margin: 10px 0 0 0px;
+}
+.myself .comment_vote {
+    float: left;
+    margin-left: -20px;
+}
+.myself .comment_quote {
+    border: 1px solid #4491B7;
+}
+.myself .feedbackListSubtitle {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.myself .feedbackListSubtitle a.layer {
+    display: inline-block;
+}
+.myself .feedbackManage {
+    left: 66px;
+    right: initial;
+    top: 8px;
+    padding-top:2px;
+}
+/*评论带头像，且支持旋转*/
+.feedbackCon img.user-avatar:hover {
+    -webkit-transform: rotateZ(360deg);
+    -moz-transform: rotateZ(360deg);
+    -ms-transform: rotateZ(360deg);
+    -o-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+}
+.feedbackCon img {
+    border-radius: 40px;
+    -webkit-transition: all 0.6s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+}
+/* 评论结束 */

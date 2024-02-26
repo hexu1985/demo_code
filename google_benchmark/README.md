@@ -48,4 +48,6 @@ sudo make install
 
 现在安装完成了，我们来看看benchmark如何使用。
 
+### 参考资料：
 
+- [Google benchmark入门到精通系列链接](https://zhuanlan.zhihu.com/p/492920760)
