@@ -1,0 +1,30 @@
+div.postBody h1, div.postBody h2, div.postBody h3 {
+    background-color: #3f51b5;
+    background-image: linear-gradient(to right bottom, #00bcd4, #3f51b5);
+    color: white;
+    padding: 8px 15px;
+    margin-top: 1em !important;
+    margin-bottom: 2em !important;
+    border-left: 10px solid lightblue;
+    text-shadow: #666666 1px 1px 1px;
+    box-shadow: #666666 1px 1px 2px;
+}
+
+.postBody a {
+    color: #4e4099;
+}
+
+h1.postTitle {
+    border-left: 10px solid lightblue;
+}
+
+#bookmark {
+    border-left: 10px solid #FFF68F;
+    background: unset;
+}
+
+.postBody blockquote {
+    background: rgba(235,235,235,0.5);
+    border-left: 5px solid gray;
+    font-style: italic;
+}

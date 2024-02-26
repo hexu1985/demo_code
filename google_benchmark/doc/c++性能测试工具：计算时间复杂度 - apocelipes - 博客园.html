@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://www.cnblogs.com/apocelipes/p/11108483.html -->
+<html lang="zh-cn" style="--olcb-folder-code-block-max-height: 80vh; --cnb-code-bg: rgb(0, 0, 0); --cnb-code-font-size: 13px; --cnb-code-color: rgb(234, 234, 234);"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="origin-when-cross-origin">
+    <meta name="description" content="有时候除了测量算法的具体性能指数，我们也会希望测试出算法的时间复杂度，以便我们对待测试的算法的性能有一个更加直观的了解。 测量时间复杂度 google benchmark已经为我们提供了类似的功能，而且使用相当简单。 具体的解释在后面，我们先来看几个例子，我们人为制造几个时间复杂度分别为 , , 的">
+    <meta property="og:description" content="有时候除了测量算法的具体性能指数，我们也会希望测试出算法的时间复杂度，以便我们对待测试的算法的性能有一个更加直观的了解。 测量时间复杂度 google benchmark已经为我们提供了类似的功能，而且使用相当简单。 具体的解释在后面，我们先来看几个例子，我们人为制造几个时间复杂度分别为 , , 的">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>c++性能测试工具：计算时间复杂度 - apocelipes - 博客园</title>
+        <link rel="canonical" href="https://www.cnblogs.com/apocelipes/p/11108483.html">
+    <link id="favicon" rel="shortcut icon" href="https://common.cnblogs.com/favicon.svg" type="image/svg+xml">
+    
+    <style>#home :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs), :not(.cnblogs_code):not(.cnblogs_Highlighter)>pre:not([highlighted]):not([class*="brush:"]) code:not(.hljs) {background: rgb(0, 0, 0);
+        padding: 13px;
+        border: 0px none rgb(234, 234, 234);
+        border-radius: 0px;
+        border-color: transparent;
+        color: rgb(234, 234, 234);
+        font-family: monospace;
+        font-size: 13px</style><link rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/blog-common.min.css">
+    
+
+    <link id="MainCss" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/bundle-darkgreentrip.min.css">
+        <link id="highlighter-theme-tomorrow-night-bright" type="text/css" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/tomorrow-night-bright.css">
+    <link type="text/css" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/custom.css">
+    
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/bundle-darkgreentrip-mobile.min.css">
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/apocelipes/rss">
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/apocelipes/rsd.xml">
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/apocelipes/wlwmanifest.xml">
+    <script>
+        var currentBlogId = 442086;
+        var currentBlogApp = 'apocelipes';
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'darkgreentrip';
+        var visitorUserId = '';
+        var hasCustomScript = true;
+        window.cb_enable_mathjax = true;
+        window.mathEngine = 1;
+        window.codeHighlightEngine = 1;
+        window.enableCodeLineNumber = true;
+        window.codeHighlightTheme = 'tomorrow-night-bright';
+        window.darkModeCodeHighlightTheme = 'vs2015';
+        window.isDarkCodeHighlightTheme = true;
+        window.isDarkModeCodeHighlightThemeDark = true;
+        window.isDisableCodeHighlighter = false;
+        window.enableCodeThemeTypeFollowSystem = false;
+        window.enableMacStyleCodeBlock = false;
+    </script>
+        <script>
+            window.currentPostId = 11108483;
+            window.currentPostDateAdded = '2019-06-30 01:45';
+        </script>
+    <script src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/jquery-3.3.1.min.js"></script>
+    <script src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/blog-common.min.js"></script><style>.medium-zoom-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 300ms;
+  will-change: opacity;
+}
+
+.medium-zoom--opened .medium-zoom-overlay {
+  cursor: pointer;
+  cursor: zoom-out;
+  opacity: 1;
+}
+
+.medium-zoom-image {
+  cursor: pointer;
+  cursor: zoom-in;
+  /*
+    The `transition` is marked as "!important" for the animation to happen
+    even though it's overriden by another inline `transition` style attribute.
+
+    This is problematic with frameworks that generate inline styles on their
+    images (e.g. Gatsby).
+
+    See https://github.com/francoischalifour/medium-zoom/issues/110
+   */
+  transition: transform 300ms cubic-bezier(0.2, 0, 0.2, 1) !important;
+}
+
+.medium-zoom-image--hidden {
+  visibility: hidden;
+}
+
+.medium-zoom-image--opened {
+  position: relative;
+  cursor: pointer;
+  cursor: zoom-out;
+  will-change: transform;
+}
+</style><script id="hljs-script" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/highlight.min.js" type="text/javascript" async=""></script>
+        <script>updateCustomBlogReferrer();</script>
+    
+<meta http-equiv="origin-trial" content="AymqwRC7u88Y4JPvfIF2F37QKylC04248hLCdJAsh8xgOfe/dVJPV3XS3wLFca1ZMVOtnBfVjaCMTVudWM//5g4AAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjk1MTY3OTk5LCJpc1RoaXJkUGFydHkiOnRydWV9"><meta property="og:image" content="https://img2018.cnblogs.com/blog/1434464/201906/1434464-20190630014036457-1448575692.jpg"><script id="mathjax" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/tex-mml-chtml.js" type="text/javascript" defer=""></script><script src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/noerrors.js" charset="UTF-8"></script><script src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/extpfeil.js" charset="UTF-8"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://mathjax.cnblogs.com/3_2_1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style><script id="hljs-line-numbers" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/highlightjs-line-numbers.min.js" type="text/javascript" async=""></script><style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style></head>
+<body class="skin-darkgreentrip has-navbar mathjax3 has-bannerbar hljs-engine">
+    <a name="top"></a>
+        <a href="https://click.aliyun.com/m/1000389127/" onclick="countCreativeClicks(&#39;C0-阿里云-幻兽帕鲁&#39;)" target="_blank" rel="nofollow">
+            <div class="bannerbar forpc" style="background-size: contain;background-color:#f7f7f7;">
+                <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/35695-20240201114621412-1859930540.jpg" style="margin: 0 auto" onload="countCreativeImpressions(&#39;C0-阿里云-幻兽帕鲁&#39;)">
+                
+                
+                <span id="c0_impression" style="display:none"></span>
+            </div>
+        </a>
+        <div id="bannerbar" class="bannerbar-mobile bannerbar-text-mobile formobile">
+                <a href="https://click.aliyun.com/m/1000389127/" onclick="countCreativeClicks(&#39;M2-阿里云-幻兽帕鲁&#39;)" rel="nofollow">
+                    <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/35695-20240201114527036-1771824885.jpg" alt="" onload="countCreativeImpressionsOnMobile(&#39;M2-阿里云-幻兽帕鲁&#39;)">
+                    <span id="m2_impression" style="display:none"></span>
+                </a>
+        </div>
+    <div id="top_nav" class="navbar forpc">
+        <nav id="nav_main" class="navbar-main">
+            <ul id="nav_left" class="navbar-list navbar-left">
+                <li class="navbar-branding">
+                    <a href="https://www.cnblogs.com/" title="开发者的网上家园" role="banner">
+                        <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/logo.svg" alt="博客园Logo">
+                    </a>
+                </li>
+                <li><a href="https://cnblogs.vip/">会员</a></li>
+                <li><a href="https://www.cnblogs.com/cmt/p/17974346">周边</a></li>
+                <li>
+                    <a href="https://news.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-news&#39;)">新闻</a>
+                </li>
+                <li>
+                    <a href="https://q.cnblogs.com/" onclick="countClicks(&#39;nav&#39;, &#39;skin-navbar-q&#39;)">博问</a>
+                </li>
+                <li>
+                    <a href="https://ai.hanghang.com/page/4649915" target="_blank">AI培训</a>
+                </li>
+                <li><a href="https://market.cnblogs.com/" target="_blank">云市场</a></li>
+            </ul>
+            <ul id="nav_right" class="navbar-list navbar-right">
+                <li>
+                    <form id="zzk_search" class="navbar-search dropdown" action="https://zzk.cnblogs.com/s" method="get" role="search">
+                        <input name="w" id="zzk_search_input" placeholder="代码改变世界" type="search" tabindex="3" autocomplete="off">
+                        <button id="zzk_search_button" onclick="window.navbarSearchManager.triggerActiveOption()">
+                            <img id="search_icon" class="focus-hidden" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/search.svg" alt="搜索">
+                            <img class="hidden focus-visible" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/enter.svg" alt="搜索">
+                        </button>
+                        <ul id="navbar_search_options" class="dropdown-menu quick-search-menu">
+                            <li tabindex="0" class="active" onclick="zzkSearch(event, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                <div class="keyword-wrapper">
+                                    <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/search.svg" alt="搜索">
+                                    <div class="keyword"></div>
+                                </div>
+                                <span class="search-area">所有博客</span>
+                            </li>
+                                    <li tabindex="1" onclick="zzkBlogSearch(event, &#39;apocelipes&#39;, document.getElementById(&#39;zzk_search_input&#39;).value)">
+                                        <div class="keyword-wrapper">
+                                            <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/search.svg" alt="搜索">
+                                            <div class="keyword"></div>
+                                        </div>
+                                        <span class="search-area">当前博客</span>
+                                    </li>
+                        </ul>
+                    </form>
+                </li>
+                <li id="navbar_login_status" class="navbar-list">
+                    <a class="navbar-user-info navbar-blog" href="https://i.cnblogs.com/EditPosts.aspx?opt=1" alt="写随笔" title="写随笔" style="display: none;">
+                        <img id="new_post_icon" class="navbar-icon" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/newpost.svg" alt="写随笔">
+                    </a>
+                    <a id="navblog-myblog-icon" class="navbar-user-info navbar-blog" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx" alt="我的博客" title="我的博客" style="display: none;">
+                        <img id="myblog_icon" class="navbar-icon" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/myblog.svg" alt="我的博客">
+                    </a>
+                    <a class="navbar-user-info navbar-message navbar-icon-wrapper" href="https://msg.cnblogs.com/" alt="短消息" title="短消息" style="display: none;">
+                        <img id="msg_icon" class="navbar-icon" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/message.svg" alt="短消息">
+                        <span id="msg_count" style="display: none"></span>
+                    </a>
+                    <a id="navbar_lite_mode_indicator" data-current-page="blog" style="display: none" href="javascript:void(0)" alt="简洁模式" title="简洁模式启用，您在访问他人博客时会使用简洁款皮肤展示">
+                        <img class="navbar-icon" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/lite-mode-on.svg" alt="简洁模式">
+                    </a>
+                    <div id="user_info" class="navbar-user-info dropdown" style="display: none;">
+                        <a class="dropdown-button" href="https://home.cnblogs.com/">
+                            <img id="user_icon" class="navbar-avatar" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/avatar-default.svg" alt="用户头像">
+                        </a>
+                        <div class="dropdown-menu">
+                            <a id="navblog-myblog-text" href="https://passport.cnblogs.com/GetBlogApplyStatus.aspx">我的博客</a>
+                            <a href="https://home.cnblogs.com/">我的园子</a>
+                            <a href="https://account.cnblogs.com/settings/account">账号设置</a>
+                            <a href="javascript:void(0)" id="navbar_lite_mode_toggle" title="简洁模式会使用简洁款皮肤显示所有博客">
+    简洁模式 <img id="navbar_lite_mode_on" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/lite-mode-check.svg" class="hide" style="display: none;"><span id="navbar_lite_mode_spinner" class="hide">...</span>
+</a>
+                            <a href="javascript:void(0)" onclick="account.logout();">退出登录</a>
+                        </div>
+                    </div>
+                    <a class="navbar-anonymous" href="https://account.cnblogs.com/signup" style="display: inline;">注册</a>
+                    <a class="navbar-anonymous" href="javascript:void(0);" onclick="account.login()" style="display: inline;">登录</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <div id="page_begin_html">
+        <link type="text/css" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/feedback.css">
+
+<link type="text/css" rel="stylesheet" href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/maodian.css">
+
+<!--右上角的github标签-->
+<a href="https://github.com/apocelipes"><img width="149" height="149" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/forkme_left_green_007200.png" class="attachment-full size-full" alt="Fork me on GitHub" data-recalc-dims="1"></a>
+    </div>
+
+    <!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+        <a id="lnkBlogLogo" href="https://www.cnblogs.com/apocelipes/"><img id="blogLogo" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/logo.gif" alt="返回主页"></a>		
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/apocelipes">apocelipes</a>
+</h1>
+<h2></h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/apocelipes/">
+首页</a>
+</li>
+<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/apocelipes">
+联系</a></li>
+<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/apocelipes/rss/">
+订阅</a>
+<!--<partial name="./Shared/_XmlLink.cshtml" model="Model" /></li>--></li>
+<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+</ul>
+
+
+		<div class="blogStats">
+			<span id="stats_post_count">随笔 - 84&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 144&nbsp; </span>
+<span id="stats-total-view-count">阅读 - 
+<span title="总阅读数: 838160">
+83万</span></span>
+
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="post_detail">
+    <!--done-->
+    <div id="topics">
+        <div class="post">
+            <h1 class="postTitle">
+                
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/apocelipes/p/11108483.html">
+    <span role="heading" aria-level="2">c++性能测试工具：计算时间复杂度</span>
+    
+
+</a>
+
+            </h1>
+            <div class="clear"></div>
+            <div class="postBody">
+                <div id="cnblogs_post_body" class="blogpost-body cnblogs-markdown"><p>作者：<a rel="nofollow noopener" target="_blank" href="https://github.com/apocelipes">@apocelipes</a><br>本文为作者原创，转载请注明出处：<a rel="nofollow noopener" class="uri" href="https://www.cnblogs.com/apocelipes/p/11108483.html">https://www.cnblogs.com/apocelipes/p/11108483.html</a></p><hr>
+<p>有时候除了测量算法的具体性能指数，我们也会希望测试出算法的时间复杂度，以便我们对待测试的算法的性能有一个更加直观的了解。</p>
+<h2 id="测量时间复杂度">测量时间复杂度</h2>
+<p>google benchmark已经为我们提供了类似的功能，而且使用相当简单。</p>
+<p>具体的解释在后面，我们先来看几个例子，我们人为制造几个时间复杂度分别为<code>O(n)</code>, <code>O(logn)</code>, <code>O(n^n)</code>的测试用例：</p>
+<pre class="highlighter-hljs code-theme-dark" data-dark-theme="true" highlighted="true"><code class="language-c++ highlighter-hljs hljs language-c hljs-line-numbers" data-dark-theme="true"><table class="hljs-ln"><tbody><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="1"><div class="hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="1"><span class="hljs-comment">// 这里都是为了演示而写成的代码，没有什么实际意义</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="2"><div class="hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="2"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">bench_N</span><span class="hljs-params">(benchmark::State&amp; state)</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="3"><div class="hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="3">{</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="4"><div class="hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="4">    <span class="hljs-type">int</span> n = <span class="hljs-number">0</span>;</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="5"><div class="hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="5">    <span class="hljs-keyword">for</span> ([[maybe_unused]] <span class="hljs-keyword">auto</span> _ : state) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="6"><div class="hljs-ln-n" data-line-number="6"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="6">        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; state.range(<span class="hljs-number">0</span>); ++i) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="7"><div class="hljs-ln-n" data-line-number="7"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="7">            benchmark::DoNotOptimize(n += <span class="hljs-number">2</span>); <span class="hljs-comment">// 这个函数防止编译器将表达式优化，会略微降低一些性能</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="8"><div class="hljs-ln-n" data-line-number="8"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="8">        }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="9"><div class="hljs-ln-n" data-line-number="9"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="9">    }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="10"><div class="hljs-ln-n" data-line-number="10"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="10">    state.SetComplexityN(state.range(<span class="hljs-number">0</span>));</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="11"><div class="hljs-ln-n" data-line-number="11"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="11">}</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="12"><div class="hljs-ln-n" data-line-number="12"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="12">BENCHMARK(bench_N)-&gt;RangeMultiplier(<span class="hljs-number">10</span>)-&gt;Range(<span class="hljs-number">10</span>, <span class="hljs-number">1000000</span>)-&gt;Complexity();</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="13"><div class="hljs-ln-n" data-line-number="13"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="13"> </td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="14"><div class="hljs-ln-n" data-line-number="14"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="14"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">bench_LogN</span><span class="hljs-params">(benchmark::State&amp; state)</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="15"><div class="hljs-ln-n" data-line-number="15"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="15">{</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="16"><div class="hljs-ln-n" data-line-number="16"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="16">    <span class="hljs-type">int</span> n = <span class="hljs-number">0</span>;</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="17"><div class="hljs-ln-n" data-line-number="17"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="17">    <span class="hljs-keyword">for</span> ([[maybe_unused]] <span class="hljs-keyword">auto</span> _ : state) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="18"><div class="hljs-ln-n" data-line-number="18"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="18">        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; state.range(<span class="hljs-number">0</span>); i *= <span class="hljs-number">2</span>) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="19"><div class="hljs-ln-n" data-line-number="19"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="19">            benchmark::DoNotOptimize(n += <span class="hljs-number">2</span>);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="20"><div class="hljs-ln-n" data-line-number="20"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="20">        }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="21"><div class="hljs-ln-n" data-line-number="21"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="21">    }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="22"><div class="hljs-ln-n" data-line-number="22"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="22">    state.SetComplexityN(state.range(<span class="hljs-number">0</span>));</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="23"><div class="hljs-ln-n" data-line-number="23"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="23">}</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="24"><div class="hljs-ln-n" data-line-number="24"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="24">BENCHMARK(bench_LogN)-&gt;RangeMultiplier(<span class="hljs-number">10</span>)-&gt;Range(<span class="hljs-number">10</span>, <span class="hljs-number">1000000</span>)-&gt;Complexity();</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="25"><div class="hljs-ln-n" data-line-number="25"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="25"> </td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="26"><div class="hljs-ln-n" data-line-number="26"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="26"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">bench_Square</span><span class="hljs-params">(benchmark::State&amp; state)</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="27"><div class="hljs-ln-n" data-line-number="27"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="27">{</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="28"><div class="hljs-ln-n" data-line-number="28"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="28">    <span class="hljs-type">int</span> n = <span class="hljs-number">0</span>;</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="29"><div class="hljs-ln-n" data-line-number="29"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="29">    <span class="hljs-keyword">auto</span> len = state.range(<span class="hljs-number">0</span>);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="30"><div class="hljs-ln-n" data-line-number="30"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="30">    <span class="hljs-keyword">for</span> ([[maybe_unused]] <span class="hljs-keyword">auto</span> _ : state) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="31"><div class="hljs-ln-n" data-line-number="31"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="31">        <span class="hljs-keyword">for</span> (<span class="hljs-type">int64_t</span> i = <span class="hljs-number">1</span>; i &lt; len*len; ++i) {</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="32"><div class="hljs-ln-n" data-line-number="32"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="32">            benchmark::DoNotOptimize(n += <span class="hljs-number">2</span>);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="33"><div class="hljs-ln-n" data-line-number="33"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="33">        }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="34"><div class="hljs-ln-n" data-line-number="34"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="34">    }</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="35"><div class="hljs-ln-n" data-line-number="35"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="35">    state.SetComplexityN(len);</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="36"><div class="hljs-ln-n" data-line-number="36"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="36">}</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="37"><div class="hljs-ln-n" data-line-number="37"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="37">BENCHMARK(bench_Square)-&gt;RangeMultiplier(<span class="hljs-number">10</span>)-&gt;Range(<span class="hljs-number">10</span>, <span class="hljs-number">100000</span>)-&gt;Complexity();</td></tr></tbody></table></code></pre>
+<p>如何传递参数和生成批量测试我们在上一篇已经介绍过了，这里不再重复。</p>
+<p>需要关注的是新出现的<code>state.SetComplexityN</code>和<code>Complexity</code>。</p>
+<p>首先是<code>state.SetComplexityN</code>，参数是一个64位整数，用来表示算法总体需要处理的数据总量。benchmark会根据这个数值，再加上运行耗时以及<code>state</code>的迭代次数计算出一个用于后面预估平均时间复杂度的值。</p>
+<p><code>Complexity</code>会根据同一组的多个测试用例计算出一个较接近的平均时间复杂度和一个均方根值，需要和<code>state.SetComplexityN</code>配合使用。</p>
+<p><code>Complexity</code>还有一个参数，可以接受一个函数或是<code>benchmark::BigO</code>枚举，它的作用是提示benchmark该测试用例的时间复杂度，默认值为<code>benchmark::oAuto</code>，测试中会自动帮我们计算出时间复杂度。对于较为复杂的算法，而我们又有预期的时间按复杂度，这时我们就可以将其传给这个方法，比如对于第二个测试用例，我们还可以这样写：</p>
+<pre class="highlighter-hljs code-theme-dark" data-dark-theme="true" highlighted="true"><code class="language-c++ highlighter-hljs hljs language-c hljs-line-numbers" data-dark-theme="true"><table class="hljs-ln"><tbody><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="1"><div class="hljs-ln-n" data-line-number="1"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="1"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">bench_LogN</span><span class="hljs-params">(benchmark::State&amp; state)</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="2"><div class="hljs-ln-n" data-line-number="2"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="2">{</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="3"><div class="hljs-ln-n" data-line-number="3"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="3">    <span class="hljs-comment">// 中间部分与前面一样，略过</span></td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="4"><div class="hljs-ln-n" data-line-number="4"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="4">}</td></tr><tr><td class="hljs-ln-line hljs-ln-numbers" data-line-number="5"><div class="hljs-ln-n" data-line-number="5"></div></td><td class="hljs-ln-line hljs-ln-code" data-line-number="5">BENCHMARK(bench_LogN)-&gt;RangeMultiplier(<span class="hljs-number">10</span>)-&gt;Range(<span class="hljs-number">10</span>, <span class="hljs-number">1000000</span>)-&gt;Complexity(benchmark::oLogN);</td></tr></tbody></table></code></pre>
+<p>在选择正确的提示后对测试结果几乎没有影响，除了偏差值可以降得更低，使结果更准确。</p>
+<p><code>Complexity</code>在计算时间复杂度时会保留复杂度的系数，因此，如果我们发现给出的提示的时间复杂度前的系数过大的话，就意味着我们的预估发生了较大的偏差，同时它还会计算出RMS值，同样反应了时间复杂度的偏差情况。</p>
+<p>运行我们的测试：</p>
+<p><img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/1434464-20190630014036457-1448575692.jpg" alt="" loading="lazy" class="medium-zoom-image"></p>
+<p>可以看到，自动的时间复杂度计算基本是准确的，可以在我们对算法进行测试时提供一个有效的参考。</p>
+
+</div>
+<div class="clear"></div>
+<div id="blog_post_info_block" role="contentinfo">
+
+
+
+<div id="EntryTag">
+    标签: 
+            <a href="https://www.cnblogs.com/apocelipes/tag/c%2B%2B/">c++</a>
+</div>
+    <div id="blog_post_info">
+<div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(11108483,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+        <a id="green_channel_follow" onclick="follow(&#39;28e89586-65af-4580-500c-08d5ddce222f&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareManager.wechatShare()">微信分享</a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/apocelipes/" target="_blank"><img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/20230708104308.png" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="https://home.cnblogs.com/u/apocelipes/">apocelipes</a>
+                <img class="post-footer-vip-logo" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/vip.png" title="博客园VIP会员">
+            <br>
+            <a href="https://home.cnblogs.com/u/apocelipes/followers/">粉丝 - <span class="follower-count">106</span></a>
+            <a href="https://home.cnblogs.com/u/apocelipes/followees/">关注 - <span class="following-count">9</span></a><br>
+                <a href="https://cnblogs.vip/" target="_blank">会员号：2976</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow" class="follow-tip">
+                <a href="javascript:void(0);" onclick="follow(&#39;28e89586-65af-4580-500c-08d5ddce222f&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(11108483,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(11108483,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+
+<script type="text/javascript">
+    currentDiggType = 0;
+</script>
+</div>
+    <div class="clear"></div>
+    <div id="post_next_prev">
+
+    <a href="https://www.cnblogs.com/apocelipes/p/11067594.html" class="p_n_p_prefix">« </a> 上一篇：    <a href="https://www.cnblogs.com/apocelipes/p/11067594.html" data-featured-image="" title="发布于 2019-06-22 02:34">c++性能测试工具：google benchmark入门（二）</a>
+    <br>
+    <a href="https://www.cnblogs.com/apocelipes/p/11116725.html" class="p_n_p_prefix">» </a> 下一篇：    <a href="https://www.cnblogs.com/apocelipes/p/11116725.html" data-featured-image="" title="发布于 2019-07-01 21:03">golang中判断两个slice是否相等</a>
+
+</div>
+</div>
+            </div>
+            <div class="postDesc">posted @ 
+<span id="post-date" data-last-update-days="1702.6933001484028" data-date-created="BlogServer.Application.Dto.BlogPost.BlogPostDto" data-date-updated="2019-06-30 01:45" aria-expanded="false">2019-06-30 01:45</span>&nbsp;
+<a href="https://www.cnblogs.com/apocelipes">apocelipes</a>&nbsp;
+阅读(<span id="post_view_count">5586</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=11108483" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(11108483);return false;">收藏</a>&nbsp;
+<a href="javascript:void(0)" onclick="reportManager.report({ currentUserId: &#39;&#39;, targetType: &#39;blogPost&#39;, targetId: &#39;11108483&#39;, targetLink: &#39;https://www.cnblogs.com/apocelipes/p/11108483.html&#39;, title: &#39;c++性能测试工具：计算时间复杂度&#39; })">举报</a>
+</div>
+        </div>
+	    
+	    
+    </div><!--end: topics 文章、评论容器-->
+</div>
+<script>
+    var cb_entryId = 11108483, cb_entryCreatedDate = '2019-06-30 01:45', cb_postType = 1, cb_postTitle = 'c++性能测试工具：计算时间复杂度';
+    var allowComments = true, cb_blogId = 442086, cb_blogApp = 'apocelipes', cb_blogUserGuid = '28e89586-65af-4580-500c-08d5ddce222f';
+    mermaidRender.render()
+    markdown_highlight()
+    zoomManager.apply("#cnblogs_post_body img:not(.code_img_closed):not(.code_img_opened)");    
+</script>
+<a id="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav">
+            <a class="comment-nav-left forpc" href="https://cnblogs.vip/" target="_blank">会员力量，点亮园子希望</a>
+        <div class="comment-nav-right">
+            <span id="span_refresh_tips"></span><a href="https://www.cnblogs.com/apocelipes/p/11108483.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/apocelipes/p/11108483.html#top">返回顶部</a>
+        </div>
+    </div>
+    <div id="comment_form_container"><div class="login_tips">
+    登录后才能查看或发表评论，立即 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return account.login(&#39;!comments&#39;);">登录</a> 或者
+    <a href="https://www.cnblogs.com/">逛逛</a> 博客园首页
+</div>
+</div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+        <div id="cnblogs_ch"><a href="https://www.cnblogs.com/cmt/p/17995766" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-阿里云-幻兽帕鲁&#39;})">【推荐】发个阿里云广告，对园子很重要：阿里云上部署幻兽帕鲁</a><br><a href="https://www.cnblogs.com/cmt/p/17974346" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-博客园-鼠标垫&#39;})">【推荐】园子的第一款简陋鼠标垫，是否是您值得拥有的周边</a><br><a href="https://www.dujinfang.com/2024/01/10/rename.html?f=cnblogs-ch" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-大道至简&#39;})">【推荐】编程路上的催化剂：大道至简，给所有人看的编程书</a><br><a href="https://www.cnblogs.com/cmt/p/17520031.html" target="_blank" onclick="gtag(&#39;event&#39;, &#39;click&#39;, {&#39;event_category&#39;: &#39;ad&#39;, &#39;event_label&#39;: &#39;T2-cnblogs-vip&#39;})">【推荐】会员力量，点亮园子希望，期待您升级成为园子会员</a><br></div>
+    <div id="opt_under_post"></div>
+        <div id="cnblogs_c1" class="under-post-card">
+            <a href="https://www.cnblogs.com/cmt/p/17520031.html" rel="nofollow" target="_blank" onclick="countCreativeClicks(&#39;C1-博客园-会员&#39;)">
+                <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/35695-20231121143812081-926795020.png" onload="countCreativeImpressions(&#39;C1-博客园-会员&#39;)" alt="">
+                <span id="c1_impression" style="display:none"></span>
+            </a>
+        </div>
+    <div id="under_post_card1"><div class="under-post-card">
+<b>编辑推荐：</b>
+<br>
+
+· <a href="https://www.cnblogs.com/youzhibing/p/18019399" target="_blank">都说了能不动就别动，非要去调整，出生产事故了吧</a>
+    <br>
+· <a href="https://www.cnblogs.com/wenbochang/p/18028302" target="_blank">Redis 分布式锁的正确使用姿势</a>
+    <br>
+· <a href="https://www.cnblogs.com/jiujuan/p/18029741" target="_blank">聊一聊程序员沟通相关的问题</a>
+    <br>
+· <a href="https://www.cnblogs.com/wlovet/p/18027307" target="_blank">优化接口设计的思路系列：分页接口的设计和优化</a>
+    <br>
+· <a href="https://www.cnblogs.com/huangxincheng/p/18025970" target="_blank">记一次 .NET某列控连锁系统 崩溃分析</a>
+    <br>
+</div></div>
+    <div id="under_post_card2"><div class="itnews under-post-card">
+    <b>阅读排行：</b>
+    <br>
+ ·          <a href="https://www.cnblogs.com/StarbucksBoy/p/18032298" target="_blank">在做程序员的道路上，你掌握了什么概念或技术使你感觉自我提升突飞猛进？</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/youzhibing/p/18029435" target="_blank">都说了能不动就别动，非要去调整，出生产事故了吧 → 补充</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/anding/p/17625911.html" target="_blank">前端树形Tree数据结构使用-‍♂️各种姿势总结</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/jiang-xiao-bei/p/18031815" target="_blank">美团面试：说说OOM三大场景和解决方案？ （绝对史上最全）</a>
+        <br>
+ ·          <a href="https://www.cnblogs.com/artech/p/18031078/mvc_app_model_1" target="_blank">ASP.NET Core MVC应用模型的构建[1]: 应用的蓝图</a>
+        <br>
+</div></div>
+    <div id="HistoryToday" class="under-post-card"></div>
+    <script type="text/javascript">
+        var commentManager = new blogCommentManager();
+        commentManager.renderComments(0);
+        fixPostBody();
+        window.footnoteTipManager.generateFootnoteTips();
+
+            window.tocManager.displayDisableTocTips = false;
+            window.tocManager.generateToc();
+            
+                setTimeout(function() { countViews(cb_blogId, cb_entryId); }, 50);
+            
+            deliverT2();
+            deliverC1C2();
+            loadNewsAndKb();
+            
+                LoadPostCategoriesTags(cb_blogId, cb_entryId);
+            
+            LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+            GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+            loadOptUnderPost();
+            GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+                </script>
+</div>
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+	<div id="sideBar">
+		<div id="sideBarMain">
+			<div id="sidebar_news" class="newsItem">
+    <h3 class="catListTitle">公告</h3>
+<div id="blog-news">    
+    <div id="sidebar_news_content">
+<div id="profile_block">
+    昵称：
+    <a href="https://home.cnblogs.com/u/apocelipes/">
+        apocelipes
+    </a>
+        <img class="sidebar-vip-logo" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/vip.png" title="博客园VIP会员">
+    <br>
+    园龄：
+    <a href="https://home.cnblogs.com/u/apocelipes/" title="入园时间：2018-07-04">
+        5年7个月
+    </a>
+    <br>
+    粉丝：
+    <a class="follower-count" href="https://home.cnblogs.com/u/apocelipes/followers/">
+        106
+    </a>
+    <br>
+    关注：
+    <a class="folowing-count" href="https://home.cnblogs.com/u/apocelipes/followees/">
+        9
+    </a>
+    <div id="p_b_follow" class="follow-tip">
+<a href="javascript:void(0)" onclick="follow(&#39;28e89586-65af-4580-500c-08d5ddce222f&#39;)">+加关注</a></div>
+    <script>getFollowStatus('28e89586-65af-4580-500c-08d5ddce222f');</script>
+</div>
+</div>
+</div>
+<script>loadBlogNews();</script>
+
+ 
+</div>
+<div id="sidebar_c3"></div>
+			<div id="blog-calendar" style="">
+
+<table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar" border="0">
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <table class="CalTitle" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2024/01/26&#39;); return false;">&lt;</a>
+                            </td>
+                            <td align="center">2024年2月</td>
+                            <td align="right" class="CalNextPrev">
+                                <a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2024/03/26&#39;); return false;">&gt;</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    <tr>
+        <th class="CalDayHeader" align="center" abbr="日" scope="col">日</th>
+        <th class="CalDayHeader" align="center" abbr="一" scope="col">一</th>
+        <th class="CalDayHeader" align="center" abbr="二" scope="col">二</th>
+        <th class="CalDayHeader" align="center" abbr="三" scope="col">三</th>
+        <th class="CalDayHeader" align="center" abbr="四" scope="col">四</th>
+        <th class="CalDayHeader" align="center" abbr="五" scope="col">五</th>
+        <th class="CalDayHeader" align="center" abbr="六" scope="col">六</th>
+    </tr>
+            <tr>
+                            <td class="CalOtherMonthDay" align="center">28</td>
+                            <td class="CalOtherMonthDay" align="center">29</td>
+                            <td class="CalOtherMonthDay" align="center">30</td>
+                            <td class="CalOtherMonthDay" align="center">31</td>
+                        <td class="" align="center">
+                            1
+                        </td>
+                        <td class="" align="center">
+                            2
+                        </td>
+                    <td class="CalWeekendDay" align="center">
+                        3
+                    </td>
+            </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            4
+                        </td>
+                            <td class="" align="center">
+                                5
+                            </td>
+                            <td class="" align="center">
+                                6
+                            </td>
+                            <td class="" align="center">
+                                7
+                            </td>
+                            <td class="" align="center">
+                                8
+                            </td>
+                            <td class="" align="center">
+                                9
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            10
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            11
+                        </td>
+                            <td class="" align="center">
+                                12
+                            </td>
+                            <td class="" align="center">
+                                13
+                            </td>
+                            <td class="" align="center">
+                                14
+                            </td>
+                            <td class="" align="center">
+                                15
+                            </td>
+                            <td class="" align="center">
+                                16
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            17
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            18
+                        </td>
+                            <td class="" align="center">
+                                19
+                            </td>
+                            <td class="" align="center">
+                                20
+                            </td>
+                            <td class="" align="center">
+                                21
+                            </td>
+                            <td class="" align="center">
+                                22
+                            </td>
+                            <td class="" align="center">
+                                23
+                            </td>
+                        <td class="CalWeekendDay" align="center">
+                            24
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalWeekendDay" align="center">
+                            25
+                        </td>
+                            <td class="CalTodayDay" align="center">
+                                26
+                            </td>
+                            <td class="" align="center">
+                                27
+                            </td>
+                            <td class="" align="center">
+                                28
+                            </td>
+                            <td class="" align="center">
+                                29
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                1
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            2
+                        </td>
+                </tr>
+                <tr>
+                        <td class="CalOtherMonthDay" align="center">
+                            3
+                        </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                4
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                5
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                6
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                7
+                            </td>
+                            <td class="CalOtherMonthDay" align="center">
+                                8
+                            </td>
+                        <td class="CalOtherMonthDay" align="center">
+                            9
+                        </td>
+                </tr>
+    </tbody>
+</table></div><script>loadBlogDefaultCalendar();</script>			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><!-- 搜索 -->
+<div id="sidebar_search" class="sidebar-block">
+    <div class="mySearch my-search">
+        <h3 class="catListTitle">搜索</h3>
+        <div id="sidebar_search_box">
+            <div id="widget_my_zzk" class="div_my_zzk">
+                <input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk">
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- 常用链接 -->
+<div id="sidebar_shortcut" class="sidebar-block"><div class="catListLink">
+<h3 class="catListTitle">
+常用链接
+</h3>
+<ul>
+    <li><a href="https://www.cnblogs.com/apocelipes/p/" title="我的博客的随笔列表">我的随笔</a></li>
+<li><a href="https://www.cnblogs.com/apocelipes/MyComments.html" title="我的发表过的评论列表">我的评论</a></li>
+<li><a href="https://www.cnblogs.com/apocelipes/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li>
+<li><a href="https://www.cnblogs.com/apocelipes/comments" title="我的博客的评论列表">最新评论</a></li>
+<li><a href="https://www.cnblogs.com/apocelipes/tag/" title="我的博客的标签列表">我的标签</a></li>
+
+</ul>
+</div>
+
+</div>
+
+<!-- 最新随笔 -->
+
+
+<!-- 我的标签 -->
+<div id="sidebar_toptags" class="sidebar-block"><div class="catListTag">
+    <h3 class="catListTitle"><a href="https://www.cnblogs.com/apocelipes/tag/" class="sidebar-card-title-a">我的标签</a></h3>
+<ul>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/golang/">golang<span class="tag-count">(43)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/c%2B%2B/">c++<span class="tag-count">(21)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/Qt/">Qt<span class="tag-count">(18)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/Linux/">Linux<span class="tag-count">(8)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/python/">python<span class="tag-count">(5)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/%E7%AE%97%E6%B3%95/">算法<span class="tag-count">(4)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构<span class="tag-count">(4)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/java/">java<span class="tag-count">(3)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/%E7%88%AC%E8%99%AB/">爬虫<span class="tag-count">(2)</span></a>
+        </li>
+        <li>
+            <a href="https://www.cnblogs.com/apocelipes/tag/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%92%8C%E7%8E%AF%E5%A2%83/">开发工具和环境<span class="tag-count">(2)</span></a>
+        </li>
+    <li>
+        <a href="https://www.cnblogs.com/apocelipes/tag/">更多</a>
+    </li>
+
+</ul>
+</div>
+
+</div>
+
+<!-- 积分与排名 -->
+<div id="sidebar_scorerank" class="sidebar-block"><div class="catListBlogRank">
+<h3 class="catListTitle">积分与排名</h3>
+<ul>
+	<li class="liScore">
+		积分 -	
+200977
+	</li>
+	<li class="liRank">
+		排名 -	
+5691
+	</li>
+</ul>
+</div>
+
+
+
+</div>
+
+<!-- 随笔分类、随笔档案、文章分类、新闻分类、相册、链接 -->
+<div id="sidebar_categories">
+
+    <div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+        <h3 class="catListTitle">
+            
+随笔档案
+
+
+        </h3>
+
+        <ul>
+
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2024/01" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2024年1月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/09" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年9月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/08" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年8月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/07" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年7月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/05" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年5月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/03" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年3月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2023/02" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2023年2月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2022/11" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2022年11月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2022/07" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2022年7月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2022/05" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2022年5月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/07" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年7月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/06" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年6月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/05" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年5月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/03" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年3月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="true" style="display: block">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/02" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年2月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2021/01" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2021年1月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2020/12" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2020年12月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2020/10" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2020年10月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2020/09" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2020年9月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2020/08" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2020年8月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2020/03" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2020年3月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/09" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年9月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/08" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年8月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/07" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年7月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/06" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年6月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/05" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年5月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/04" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年4月(1)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/03" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年3月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/02" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年2月(6)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2019/01" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2019年1月(5)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/12" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年12月(5)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/11" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年11月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/10" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年10月(2)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/09" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年9月(3)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/08" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年8月(7)</a>
+ 
+                </li>                
+                <li data-category-list-item-visible="false" style="display: none">
+                    
+<a href="https://www.cnblogs.com/apocelipes/p/archive/2018/07" style="--cnb-category-item-link-indent-size: calc(0 * 1em)" class="category-item-link" rel="" target="">2018年7月(8)</a>
+ 
+                </li>                
+            <li>
+                <a href="javascript:void(0)" onclick="sideColumnManager.loadMore(this)">更多</a>
+            </li>
+        </ul>
+
+
+    </div>    
+</div>
+
+<!-- 最新评论 -->
+<!-- 阅读排行榜 -->
+<div id="sidebar_topviewedposts" class="sidebar-block"><div class="catListView">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/apocelipes/most-viewed" class="sidebar-card-title-a">
+    阅读排行榜
+</a>
+
+    </h3>
+    <div id="TopViewPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/9534885.html">
+                            1. golang包管理解决之道——go modules初探(69332)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/9537659.html">
+                            2. 在go modules里使用go get进行包管理(65836)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/10899484.html">
+                            3. 使用vs2019进行Linux远程开发(60750)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/9861315.html">
+                            4. 了解golang的可变参数（... parameters），这一篇就够了(56194)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/10284346.html">
+                            5. Python3.7 dataclass使用指南(36521)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 评论排行榜 -->
+<div id="sidebar_topcommentedposts" class="sidebar-block"><div class="catListFeedback">
+    <h3 class="catListTitle">
+        <a href="https://www.cnblogs.com/apocelipes/most-commented" class="sidebar-card-title-a">评论排行榜</a>
+
+    </h3>
+    <div id="TopFeedbackPostsBlock">
+        <ul style="word-break:break-all">
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/10899484.html">
+                            1. 使用vs2019进行Linux远程开发(33)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/17368617.html">
+                            2. golang中一种不常见的switch语句写法(14)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/17235955.html">
+                            3. 小心golang中的无类型常量(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/11431808.html">
+                            4. vs2019+cmake实现Linux远程开发(9)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.cnblogs.com/apocelipes/p/10295096.html">
+                            5. 再探go modules：使用与细节(8)
+                        </a>
+                    </li>
+        </ul>
+    </div>
+</div></div>
+
+<!-- 推荐排行榜 -->
+<div id="sidebar_topdiggedposts" class="sidebar-block">
+<div id="topdigg_posts_wrap">
+    <div class="catListView">
+        <h3 class="catListTitle">
+            <a href="https://www.cnblogs.com/apocelipes/most-liked" class="sidebar-card-title-a">推荐排行榜</a>
+
+        </h3>
+        <div id="TopDiggPostsBlock">
+            <ul style="word-break: break-all">
+                        <li>
+                            <a href="https://www.cnblogs.com/apocelipes/p/10899484.html">
+                                1. 使用vs2019进行Linux远程开发(34)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/apocelipes/p/14415033.html">
+                                2. 彻底理解c++的隐式类型转换(16)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/apocelipes/p/16931410.html">
+                                3. 为什么标准库的模板变量都是inline的(13)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/apocelipes/p/11431808.html">
+                                4. vs2019+cmake实现Linux远程开发(10)
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.cnblogs.com/apocelipes/p/10346928.html">
+                                5. shared_ptr和动态数组(9)
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+</div></div><div id="sidebar_recentcomments" class="sidebar-block"><div class="catListComment">
+<h3 class="catListTitle"><a href="https://www.cnblogs.com/apocelipes/comments" class="sidebar-card-title-a">最新评论</a></h3>
+    <div class="RecentCommentBlock">
+        <ul>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/apocelipes/p/17576990.html">1. Re:想在golang里用好泛型还挺难的</a></li>
+                <li class="recent_comment_body">@rainydew 编译期不能挨个确认里面的A *B *C每个都有Hello()吧 其实编译期是做得到的，按惯例其他语言也是在编译期做的检查。 即使取巧一些，也可以先检查实际类型是否在类型集合里，然后...</li>
+                <li class="recent_comment_author">--apocelipes</li>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/apocelipes/p/11116725.html">2. Re:golang中判断两个slice是否相等</a></li>
+                <li class="recent_comment_body"><p>slices.Equal 没有<br>
+if (a == nil) != (b == nil) {<br>
+return false<br>
+}<br>
+很蛋疼啊</p>
+</li>
+                <li class="recent_comment_author">--ddatsh</li>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/apocelipes/p/17576990.html">3. Re:想在golang里用好泛型还挺难的</a></li>
+                <li class="recent_comment_body">主要是编译器没那么聪明 func SayHello[T A|B](a *T) {a.Hello()} 现在考虑一下可能会被改成 func SayHello[T A|B|~C](a T) {a.Hell...</li>
+                <li class="recent_comment_author">--rainydew</li>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/apocelipes/p/17576990.html">4. Re:想在golang里用好泛型还挺难的</a></li>
+                <li class="recent_comment_body"><p>好文，我基本遇到了同样的问题；<br>
+创建对象方面，如果只是运行静态函数，就*new(T)；如果涉及到成员，我是用反射创建；<br>
+T约束在复杂情况，确实吃瘪；</p>
+</li>
+                <li class="recent_comment_author">--寻雨</li>
+                <li class="recent_comment_title"><a href="https://www.cnblogs.com/apocelipes/p/17576990.html">5. Re:想在golang里用好泛型还挺难的</a></li>
+                <li class="recent_comment_body">@紫色的奥特曼 刷评论？...</li>
+                <li class="recent_comment_author">--Amos01</li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+
+</div>
+                    <script>loadBlogSideColumn();</script>
+			</div>			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright © 2024 apocelipes
+<br><span id="poweredby">Powered by .NET 8.0 on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+
+    <div id="page_end_html">
+        <script type="text/javascript">  
+    var setMyBlog = {
+        setCopyright: function() {
+            //设置版权信息，转载出处自动根据页面url生成
+            var info_str = '<p>作者：<a rel="nofollow noopener"  target="_blank">@apocelipes</a><br>'+
+                '本文为作者原创，转载请注明出处：<a rel="nofollow noopener"  class="uri"></a></p><hr></hr>', 
+                info = $(info_str),
+                info_a = info.find("a"),
+                url = window.location.href;
+            $(info_a[0]).attr("href","https://github.com/apocelipes");
+            $(info_a[1]).attr("href",url).text(url);
+            $("#cnblogs_post_body").prepend(info);
+        },
+        setCodeRow: function(){
+            // 代码行号显示
+            var pre = $("pre.sourceCode"); //选中需要更改的部分
+            if(pre && pre.length){
+                pre.each(function() {
+                    var item = $(this);
+                    var lang = item.attr("class").split(" ")[1]; //判断高亮的语言
+                    item.html(item.html().replace(/<[^>]+>/g,"")); //将<pre>标签中的html标签去掉
+                    item.removeClass().addClass("brush: " + lang +";"); //根据语言添加笔刷
+                    SyntaxHighlighter.all();
+                })
+            }
+        },
+        runAll: function() {
+            /* 运行所有方法
+             * setCopyright() 设置版权信息
+             * setCodeRow() 代码行号显示
+             */ 
+            this.setCopyright();
+            this.setCodeRow();
+        }
+    }
+    setMyBlog.runAll();
+</script>
+
+<!-- lightbox的样式 -->
+<link href="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/lightbox.css" rel="stylesheet">
+<!-- lightbox.js核心代码 -->
+<script src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/lightbox-plus-jquery.js"></script>
+<script type="text/javascript">$('#cnblogs_post_body img').wrap(function(){return "<a rel="nofollow noopener"  href='"+$(this).attr("src")+"' data-lightbox='example-set'></a>"});</script>
+<script type="text/javascript">$(".code_img_closed").unwrap();</script>
+<script type="text/javascript">$(".code_img_opened").unwrap();</script>
+    </div>
+
+    <input type="hidden" id="antiforgery_token" value="CfDJ8C838EyK0EpKpQQcC9VwxBnqKinx9i_RqsgENhkGSFmi8UcDMXbX1EJ57bliOQDb-JyAmZjJZgvaJo6Xu3inEp-3EPXu3nQmYJqqD2--HWGl9uhRS9UlNC5nU389NYVkSAT00hwuKP-Djw32ai_nOEI">
+    <script async="" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-M95P3TTWJZ');
+</script>
+<script defer="" src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/hm.js"></script>
+
+
+<div style="z-index: 998; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); display: none; flex-direction: column; align-items: center; justify-content: center">
+<div style="background: #fff;padding: 30px; margin: 30px; border-radius: 16px;">
+  <div style="width: 200px; height: 200px; background: rgba(255, 255, 255, 0.8); position: absolute; top: -100px; right: -100px; border-radius: 100px"></div>
+  <div style="text-align: center; font-size: 18px; margin-bottom: 10px;">点击右上角即可分享</div>
+  <img src="./c++性能测试工具：计算时间复杂度 - apocelipes - 博客园_files/35695-20230906145857937-1471873834.gif" alt="微信分享提示">
+</div>   
+    </div><div id="lightboxOverlay" tabindex="-1" class="lightboxOverlay" style="display: none;"></div><div id="lightbox" tabindex="-1" class="lightbox" style="display: none;"><div class="lb-outerContainer"><div class="lb-container"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=""><div class="lb-nav"><a class="lb-prev" aria-label="Previous image" href="https://www.cnblogs.com/apocelipes/p/11108483.html"></a><a class="lb-next" aria-label="Next image" href="https://www.cnblogs.com/apocelipes/p/11108483.html"></a></div><div class="lb-loader"><a class="lb-cancel"></a></div></div></div><div class="lb-dataContainer"><div class="lb-data"><div class="lb-details"><span class="lb-caption"></span><span class="lb-number"></span></div><div class="lb-closeContainer"><a class="lb-close"></a></div></div></div></div></body></html>

@@ -51,3 +51,4 @@ sudo make install
 ### 参考资料：
 
 - [Google benchmark入门到精通系列链接](https://zhuanlan.zhihu.com/p/492920760)
+- [Google benchmark User Guide](https://google.github.io/benchmark/user_guide.html)
